@@ -45,10 +45,12 @@ u.keymap('i', '?', '?<C-g>U', nt)
 -- sort
 u.keymap('v', 'gs', ":sort<CR>", nt)
 
--- better search jumping and line joining
+-- better search/block jumping and line joining
 u.keymap('n', 'n', 'nzzzv', nt)
 u.keymap('n', 'N', 'Nzzzv', nt)
 u.keymap('n', 'J', 'mzJ`z', nt)
+u.keymap('n', '}', '}zzzv', nt)
+u.keymap('n', '{', '{zzzv', nt)
 
 -- add blank lines on top or bottom of the current line
 u.keymap('n', '<C-j>', 'o<Esc>k', nt)

@@ -4,12 +4,12 @@ local python_arguments = {}
 local isort = {formatCommand = "isort --quiet -", formatStdin = true}
 local yapf = {formatCommand = "yapf --quiet", formatStdin = true}
 local black = {formatCommand = "black --quiet -", formatStdin = true}
-local flake8 = { -- !TODO: replace with path argument
+local flake8 = { -- !TODO : replace with path argument
   LintCommand = "flake8 --ignore=W503,W504,W391 --exit-zero --stdin-display-name ${INPUT} -",
   lintStdin = true,
   lintFormats = {"%f:%l:%c: %m"}
 }
-local mypy = { -- !TODO: replace with path argument NOT WORKING
+local mypy = { -- !TODO : replace with path argument NOT WORKING
   LintCommand = "mypy --show-column-numbers",
   lintStdin = true,
   lintFormats = {

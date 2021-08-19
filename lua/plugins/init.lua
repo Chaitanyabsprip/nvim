@@ -13,7 +13,6 @@ end
 local packer = require("packer")
 local use = packer.use
 return packer.startup(function()
-
   use "Nash0x7E2/awesome-flutter-snippets"
   use {
     'NTBBloodbath/rest.nvim',
@@ -57,10 +56,11 @@ return packer.startup(function()
     end
   }
   use "akinsho/flutter-tools.nvim"
+  use 'akinsho/nvim-bufferline.lua'
   use {
     "akinsho/nvim-toggleterm.lua",
     config = function()
-      require("plugin-config.toggleterm")
+      require("plugins.toggleterm")
     end
   }
   use "arkav/lualine-lsp-progress"
@@ -74,18 +74,18 @@ return packer.startup(function()
       })
     end
   }
-  use {
-    'beauwilliams/focus.nvim',
-    config = function()
-      local focus = require('focus')
-      focus.enable = true
-      focus.width = 120
-      focus.height = 40
-      focus.treewidth = 25
-      focus.cursorline = true
-      focus.signcolumn = true
-    end
-  }
+  -- use {
+  --   'beauwilliams/focus.nvim',
+  --   config = function()
+  --     local focus = require('focus')
+  --     focus.enable = true
+  --     focus.width = 120
+  --     focus.height = 40
+  --     focus.treewidth = 25
+  --     focus.cursorline = true
+  --     focus.signcolumn = true
+  --   end
+  -- }
   use { -- better surround plugin needed
     "blackCauldron7/surround.nvim",
     config = function()
@@ -193,6 +193,7 @@ return packer.startup(function()
     end,
     cmd = {'UndotreeToggle'}
   }
+  use "mfussenegger/nvim-dap"
   use "mfussenegger/nvim-jdtls"
   use "mhinz/vim-startify"
   use "neovim/nvim-lspconfig"
@@ -202,11 +203,11 @@ return packer.startup(function()
       require("colorizer").setup {}
     end
   }
-
   use "dstein64/vim-startuptime"
   use "nvim-lua/plenary.nvim"
   use "nvim-lua/popup.nvim"
   use "nvim-telescope/telescope.nvim"
+  use "nvim-telescope/telescope-dap.nvim"
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
   use "nvim-treesitter/nvim-treesitter-refactor"
   use {
@@ -217,21 +218,147 @@ return packer.startup(function()
   }
   use "rafamadriz/friendly-snippets"
   use "ray-x/lsp_signature.nvim"
-  use "wbthomason/packer.nvim" -- Packer can manage itself
+  use "rcarriga/nvim-dap-ui"
+  use {
+    'rcarriga/nvim-notify',
+    config = function()
+      ---Send a notification
+      -- @param msg of the notification to show to the user
+      -- @param level Optional log level
+      -- @param opts Dictionary with optional options (timeout, etc)
+      vim.notify = function(msg, level, opts)
+        local l = vim.log.levels
+        assert(type(msg) == 'string', 'msg should be a string')
+        assert(type(level) ~= 'table',
+               'level should be one of vim.log.levels or a string')
+        opts = opts or {}
+        level = level or l.INFO
+        local levels = {
+          [l.DEBUG] = 'Debug',
+          [l.INFO] = 'Information',
+          [l.WARN] = 'Warning',
+          [l.ERROR] = 'Error'
+        }
+        opts.title = opts.title or type(level) == 'string' and level or
+                         levels[level]
+        local notify = require 'notify'
+        notify(msg, level, opts)
+      end
+    end
+  }
+  use {
+    'rhysd/conflict-marker.vim',
+    config = function()
+      -- require('as.highlights').plugin('conflictMarker', {
+      --   'ConflictMarkerBegin', {guibg = '#2f7366'}
+      -- }, {'ConflictMarkerOurs', {guibg = '#2e5049'}}, {
+      --   'ConflictMarkerTheirs', {guibg = '#344f69'}
+      -- }, {'ConflictMarkerEnd', {guibg = '#2f628e'}}, {
+      --   'ConflictMarkerCommonAncestorsHunk', {guibg = '#754a81'}
+      -- })
+      -- disable the default highlight group
+      vim.g.conflict_marker_highlight_group = ''
+      -- Include text after begin and end markers
+      vim.g.conflict_marker_begin = '^<<<<<<< .*$'
+      vim.g.conflict_marker_end = '^>>>>>>> .*$'
+    end
+  }
+  use "wbthomason/packer.nvim"
   use "windwp/lsp-fastaction.nvim"
   use "windwp/nvim-autopairs"
   use "windwp/nvim-ts-autotag"
+
   -- ***************************      THEME      ********************************
+
   use "arzg/vim-substrata"
-  use "ayu-theme/ayu-vim"
-  use {"dracula/vim", as = "dracula"}
-  use "folke/tokyonight.nvim"
+  use {
+    "ayu-theme/ayu-vim",
+    config = function()
+      vim.g.ayucolor = "mirage"
+      _G.toggle_ayucolor = function()
+        if vim.g.ayucolor_num == nil then
+          vim.g.ayucolor_num = 0
+        end
+        local colors = {'mirage', 'dark', 'light'}
+        ---@diagnostic disable-next-line: undefined-field
+        vim.g.colo_num = ((vim.g.colo_num % table.getn(colors)) + 1)
+        vim.g.ayucolor = colors[vim.g.colo_num]
+        vim.api.nvim_exec("colorscheme ayu", false)
+        print(vim.g.ayucolor)
+      end
+    end
+  }
+  use {
+    "dracula/vim",
+    as = "dracula",
+    config = function()
+      vim.g.dracula_colorterm = true
+    end
+  }
+  use {
+    "rose-pine/neovim",
+    as = "rose-pine",
+    config = function()
+      -- @usage 'base' | 'moon' | 'dawn' | 'rose-pine[-moon][-dawn]'
+      vim.g.rose_pine_variant = 'base'
+      vim.g.rose_pine_enable_italics = true
+      vim.g.rose_pine_disable_background = false
+      -- Toggle variant
+      vim.api.nvim_set_keymap('n', '<c-m>',
+                              [[<cmd>lua require('rose-pine.functions').toggle_variant()<cr>]],
+                              {noremap = true, silent = true})
+    end
+  }
+  use {
+    "folke/tokyonight.nvim",
+    config = function()
+      vim.g.tokyonight_colors = {border = "#7aa2f7", bg = "#262C3A"}
+      vim.g.tokyonight_dark_float = true
+      vim.g.tokyonight_dark_sidebar = true
+      vim.g.tokyonight_day_brightness = 1
+      vim.g.tokyonight_hide_inactive_statusline = false
+      vim.g.tokyonight_italic_comments = true
+      vim.g.tokyonight_italic_functions = true
+      vim.g.tokyonight_italic_keywords = true
+      vim.g.tokyonight_italic_variables = false
+      vim.g.tokyonight_sidebars = {'packer'}
+      vim.g.tokyonight_style = 'night'
+      vim.g.tokyonight_transparent = false
+    end
+  }
   use "hoob3rt/lualine.nvim"
   use "kyazdani42/blue-moon"
-  use "marko-cerovac/material.nvim"
+  use {
+    "marko-cerovac/material.nvim",
+    config = function()
+      vim.g.material_borders = true
+      vim.g.material_contrast = true
+      vim.g.material_disable_background = false
+      vim.g.material_italic_comments = true
+      vim.g.material_italic_functions = true
+      vim.g.material_italic_keywords = true
+      vim.g.material_italic_variables = false
+      vim.g.material_style = 'deep ocean'
+
+      vim.api.nvim_set_keymap('n', '<leader>m',
+                              [[:lua require('material.functions').toggle_style(true)<CR>]],
+                              {noremap = true, silent = true})
+    end
+  }
   use "p00f/nvim-ts-rainbow"
   use "projekt0n/github-nvim-theme"
   use "romainl/flattened"
-  use 'shaunsingh/moonlight.nvim'
+  use {
+    "shaunsingh/moonlight.nvim",
+    config = function()
+      vim.g.moonlight_borders = true
+      vim.g.moonlight_contrast = true
+      vim.g.moonlight_disable_background = false
+      vim.g.moonlight_italic_comments = true
+      vim.g.moonlight_italic_functions = true
+      vim.g.moonlight_italic_keywords = true
+      vim.g.moonlight_italic_variables = false
+    end
+  }
   -- ****************************************************************************
 end)

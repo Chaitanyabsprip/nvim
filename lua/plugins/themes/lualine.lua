@@ -32,7 +32,9 @@ require('lualine').setup {
     -- theme = 'github',
     -- theme = 'moonlight',
     -- theme = 'palenight',
-    theme = 'tokyonight',
+    -- theme = 'tokyonight',
+    theme = 'rose-pine',
+
     section_separators = {"", ""},
     component_separators = {"", ""}
     -- disabled_filetypes = {"startify"}
