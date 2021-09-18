@@ -16,19 +16,18 @@ require'compe'.setup {
   documentation = true,
 
   source = {
-    path = {kind = "   (Path)"},
     buffer = {kind = "   (Buffer)"},
-    -- calc = {kind = "   (Calc)"},
-    vsnip = {kind = "   (Snippet)", priority = 10000},
-    nvim_lsp = {kind = "   (LSP)"},
+    emoji = {
+      kind = " ﲃ  (Emoji)" -- filetypes = {"markdown", "text"}
+    },
+    nvim_lsp = {kind = "   (LSP)", priority = 9998},
     nvim_lua = {kind = "  "},
-    -- spell = {kind = "   (Spell)"},
-    tags = false,
-    vim_dadbod_completion = true,
+    path = {kind = "   (Path)"},
     snippets_nvim = {kind = "  ", priority = 9999},
+    tags = false,
     treesitter = {kind = "  "},
-    emoji = {kind = " ﲃ  (Emoji)", filetypes = {"markdown", "text"}}
-    -- for emoji press : (idk if that in compe tho)
+    vim_dadbod_completion = true,
+    vsnip = {kind = "   (Snippet)", priority = 10000}
   }
 }
 
@@ -69,16 +68,17 @@ _G.s_tab_complete = function()
   end
 end
 
-u.keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-u.keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-u.keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-u.keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
--- u.keymap("i", "<CR>", "compe#confirm('<CR>')", {noremap = true, silent = true, expr = true})
-u.keymap("i", "<C-Space>", 'compe#complete()',
-         {noremap = true, silent = true, expr = true})
-u.keymap("i", "<C-e>", "compe#close('<C-e>')",
-         {noremap = true, silent = true, expr = true})
-u.keymap("i", "<C-f>", "compe#scroll({ 'delta': +4 })",
-         {noremap = true, silent = true, expr = true})
-u.keymap("i", "<C-d>", "compe#scroll({ 'delta': -4 })",
-         {noremap = true, silent = true, expr = true})
+u.kmap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+u.kmap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+u.kmap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+u.kmap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+-- u.kmap("i", "<CR>", "compe#confirm('<CR>')",
+--          {noremap = true, silent = true, expr = true})
+u.kmap("i", "<A-Space>", 'compe#complete()',
+       {noremap = true, silent = true, expr = true})
+u.kmap("i", "<A-e>", "compe#close('<C-e>')",
+       {noremap = true, silent = true, expr = true})
+u.kmap("i", "<C-f>", "compe#scroll({ 'delta': +4 })",
+       {noremap = true, silent = true, expr = true})
+u.kmap("i", "<C-d>", "compe#scroll({ 'delta': -4 })",
+       {noremap = true, silent = true, expr = true})

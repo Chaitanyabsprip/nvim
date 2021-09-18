@@ -44,8 +44,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/home/chaitanya/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/home/chaitanya/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/home/chaitanya/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/home/chaitanya/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/home/chaitanya/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
+local package_path_str = "/Users/chaitanyasharma/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/Users/chaitanyasharma/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/Users/chaitanyasharma/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/Users/chaitanyasharma/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/Users/chaitanyasharma/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -69,299 +69,354 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["auto-session"] = {
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/auto-session"
+  },
   ["awesome-flutter-snippets"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/awesome-flutter-snippets"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/awesome-flutter-snippets"
   },
-  ["ayu-vim"] = {
+  ["conflict-marker.vim"] = {
+    config = { "\27LJ\2\nu\0\0\2\0\6\0\t6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0'\1\5\0=\1\4\0K\0\1\0\17^>>>>>>> .*$\24conflict_marker_end\17^<<<<<<< .*$\26conflict_marker_begin\6g\bvim\0" },
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/ayu-vim"
-  },
-  ["blue-moon"] = {
-    loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/blue-moon"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/conflict-marker.vim"
   },
   ["dart-vim-plugin"] = {
     config = { "\27LJ\2\nh\0\0\3\0\5\0\t6\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\3\0'\2\4\0B\0\2\1K\0\1\0#let dart_html_in_string=v:true\bcmd\24dart_format_on_save\6g\bvim\0" },
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/dart-vim-plugin"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/dart-vim-plugin"
   },
   ["dependency-assist.nvim"] = {
     config = { "\27LJ\2\n?\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\22dependency_assist\frequire\0" },
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/dependency-assist.nvim"
-  },
-  dracula = {
-    loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/dracula"
-  },
-  flattened = {
-    loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/flattened"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/dependency-assist.nvim"
   },
   ["flutter-tools.nvim"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/flutter-tools.nvim"
-  },
-  ["focus.nvim"] = {
-    config = { "\27LJ\2\nâ\1\0\0\3\0\b\0\0166\0\0\0'\2\1\0B\0\2\2+\1\2\0=\1\2\0)\1x\0=\1\3\0)\1(\0=\1\4\0)\1\25\0=\1\5\0+\1\2\0=\1\6\0+\1\2\0=\1\a\0K\0\1\0\15signcolumn\15cursorline\14treewidth\vheight\nwidth\venable\nfocus\frequire\0" },
-    loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/focus.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/flutter-tools.nvim"
   },
   ["friendly-snippets"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/friendly-snippets"
-  },
-  ["github-nvim-theme"] = {
-    loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/github-nvim-theme"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/friendly-snippets"
   },
   kommentary = {
-    config = { "\27LJ\2\n´\1\0\0\4\0\5\0\b6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0005\3\4\0B\0\3\1K\0\1\0\1\0\3 prefer_single_line_comments\2\22ignore_whitespace\2\31use_consistent_indentation\2\fdefault\23configure_language\22kommentary.config\frequire\0" },
+    config = { "\27LJ\2\n´\1\0\0\4\0\5\0\b6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0005\3\4\0B\0\3\1K\0\1\0\1\0\3\31use_consistent_indentation\2 prefer_single_line_comments\2\22ignore_whitespace\2\fdefault\23configure_language\22kommentary.config\frequire\0" },
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/kommentary"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/kommentary"
   },
   ["lsp-fastaction.nvim"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/lsp-fastaction.nvim"
-  },
-  ["lsp-rooter.nvim"] = {
-    config = { "\27LJ\2\nZ\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\15ignore_lsp\1\0\0\1\2\0\0\befm\nsetup\15lsp-rooter\frequire\0" },
-    loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/lsp-rooter.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/lsp-fastaction.nvim"
   },
   ["lsp-trouble.nvim"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/lsp-trouble.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/lsp-trouble.nvim"
+  },
+  ["lsp_extensions.nvim"] = {
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/lsp_extensions.nvim"
   },
   ["lsp_signature.nvim"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim"
   },
   ["lspkind-nvim"] = {
     config = { "\27LJ\2\n8\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\tinit\flspkind\frequire\0" },
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/lspkind-nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/lspkind-nvim"
   },
   ["lua-dev.nvim"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/lua-dev.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/lua-dev.nvim"
   },
   ["lualine-lsp-progress"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/lualine-lsp-progress"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/lualine-lsp-progress"
   },
   ["lualine.nvim"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/lualine.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/lualine.nvim"
   },
   ["markdown-preview.nvim"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim"
   },
   ["material.nvim"] = {
+    config = { "\27LJ\2\nﬁ\3\0\0\6\0\17\0)6\0\0\0009\0\1\0+\1\2\0=\1\2\0006\0\0\0009\0\1\0+\1\2\0=\1\3\0006\0\0\0009\0\1\0+\1\1\0=\1\4\0006\0\0\0009\0\1\0+\1\2\0=\1\5\0006\0\0\0009\0\1\0+\1\2\0=\1\6\0006\0\0\0009\0\1\0+\1\2\0=\1\a\0006\0\0\0009\0\1\0+\1\1\0=\1\b\0006\0\0\0009\0\1\0'\1\n\0=\1\t\0006\0\0\0009\0\v\0009\0\f\0'\2\r\0'\3\14\0'\4\15\0005\5\16\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2>:lua require('material.functions').toggle_style(true)<CR>\14<leader>m\6n\20nvim_set_keymap\bapi\15deep ocean\19material_style\30material_italic_variables\29material_italic_keywords\30material_italic_functions\29material_italic_comments material_disable_background\22material_contrast\21material_borders\6g\bvim\0" },
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/material.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/material.nvim"
   },
-  ["moonlight.nvim"] = {
+  ["numb.nvim"] = {
+    config = { "\27LJ\2\ne\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\3\17show_numbers\2\16number_only\1\20show_cursorline\2\nsetup\tnumb\frequire\0" },
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/moonlight.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/numb.nvim"
   },
   ["nvim-autopairs"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/nvim-autopairs"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-autopairs"
+  },
+  ["nvim-bufferline.lua"] = {
+    config = { "\27LJ\2\n\v\0\0\1\0\0\0\1K\0\1\0\0" },
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-bufferline.lua"
   },
   ["nvim-colorizer.lua"] = {
     config = { "\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14colorizer\frequire\0" },
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua"
   },
   ["nvim-compe"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/nvim-compe"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-compe"
+  },
+  ["nvim-dap"] = {
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-dap"
+  },
+  ["nvim-dap-ui"] = {
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-dap-ui"
+  },
+  ["nvim-gps"] = {
+    config = { "\27LJ\2\n£\1\0\0\4\0\a\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0024\3\0\0=\3\6\2B\0\2\1K\0\1\0\14languages\nicons\1\0\1\14separator\t -> \1\0\3\18function-name\tÔûî \16method-name\tÔö¶ \15class-name\tÔ†ñ \nsetup\rnvim-gps\frequire\0" },
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-gps"
   },
   ["nvim-jdtls"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/nvim-jdtls"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-jdtls"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"
+  },
+  ["nvim-notify"] = {
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-notify"
   },
   ["nvim-toggleterm.lua"] = {
-    config = { "\27LJ\2\n8\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\29plugin-config.toggleterm\frequire\0" },
+    config = { "\27LJ\2\n\v\0\0\1\0\0\0\1K\0\1\0\0" },
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/nvim-toggleterm.lua"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-toggleterm.lua"
   },
   ["nvim-tree.lua"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/nvim-tree.lua"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
+  },
+  ["nvim-treesitter-context"] = {
+    config = { "\27LJ\2\nY\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\venable\2\rthrottle\2\nsetup\23treesitter-context\frequire\0" },
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-treesitter-context"
   },
   ["nvim-treesitter-refactor"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/nvim-treesitter-refactor"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-treesitter-refactor"
   },
   ["nvim-ts-autotag"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/nvim-ts-autotag"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-ts-autotag"
   },
   ["nvim-ts-rainbow"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/nvim-ts-rainbow"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-ts-rainbow"
   },
   ["nvim-web-devicons"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
   },
   ["packer.nvim"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/packer.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/packer.nvim"
   },
   ["plenary.nvim"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/plenary.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/plenary.nvim"
   },
   ["popup.nvim"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/popup.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/popup.nvim"
+  },
+  ["project.nvim"] = {
+    config = { "\27LJ\2\n°\3\0\0\6\0\18\0\0256\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\0025\3\6\0=\3\a\0025\3\b\0=\3\t\0026\3\n\0009\3\v\0039\3\f\3'\5\r\0B\3\2\2=\3\14\2B\0\2\0016\0\0\0'\2\15\0B\0\2\0029\0\16\0'\2\17\0B\0\2\1K\0\1\0\rprojects\19load_extension\14telescope\rdatapath\tdata\fstdpath\afn\bvim\15ignore_lsp\1\2\0\0\befm\rpatterns\1\14\0\0\17pubspec.yaml\17package.json\14config.py\rsetup.py\15cargo.toml\rMakefile\rmakefile\t.git\15.gitignore\v_darcs\b.hg\t.bzr\t.svn\22detection_methods\1\3\0\0\blsp\fpattern\1\0\3\16show_hidden\1\16manual_mode\1\17silent_chdir\1\nsetup\17project_nvim\frequire\0" },
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/project.nvim"
   },
   ["rest.nvim"] = {
     config = { "\27LJ\2\n∏\1\0\0\6\0\n\0\0146\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0016\0\3\0009\0\4\0009\0\5\0'\2\6\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2,<cmd>lua require('rest-nvim').run()<CR>\15<leader>rn\6n\20nvim_set_keymap\bapi\bvim\nsetup\14rest-nvim\frequire\0" },
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/rest.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/rest.nvim"
+  },
+  ["rose-pine"] = {
+    config = { "\27LJ\2\né\1\0\0\2\0\6\0\r6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0+\1\2\0=\1\4\0006\0\0\0009\0\1\0+\1\1\0=\1\5\0K\0\1\0!rose_pine_disable_background\29rose_pine_enable_italics\tbase\22rose_pine_variant\6g\bvim\0" },
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/rose-pine"
+  },
+  ["rust-tools.nvim"] = {
+    config = { "\27LJ\2\n<\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\15rust-tools\frequire\0" },
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/rust-tools.nvim"
+  },
+  ["session-lens"] = {
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/session-lens"
   },
   snap = {
-    config = { "\27LJ\2\ní\2\0\0\t\1\v\2#-\0\0\0009\0\0\0005\2\4\0-\3\0\0009\3\1\3'\5\2\0B\3\2\2*\5\0\0-\6\0\0009\6\1\6'\b\3\0B\6\2\0A\3\1\2=\3\5\2-\3\0\0009\3\1\3'\5\6\0B\3\2\0029\3\a\3=\3\a\2-\3\0\0009\3\1\3'\5\6\0B\3\2\0029\3\b\3=\3\b\0024\3\3\0-\4\0\0009\4\1\4'\6\t\0B\4\2\0?\4\1\0=\3\n\2B\0\2\1K\0\1\0\0¿\nviews\20preview.vimgrep\16multiselect\vselect\19select.vimgrep\rproducer\1\0\0\29producer.ripgrep.vimgrep\19consumer.limit\bget\brun¿ö\f\3ÄÄ¿ô\4Ä\2\0\0\b\1\v\1\"-\0\0\0009\0\0\0005\2\4\0-\3\0\0009\3\1\3'\5\2\0B\3\2\2-\5\0\0009\5\1\5'\a\3\0B\5\2\0A\3\0\2=\3\5\2-\3\0\0009\3\1\3'\5\6\0B\3\2\0029\3\a\3=\3\a\2-\3\0\0009\3\1\3'\5\6\0B\3\2\0029\3\b\3=\3\b\0024\3\3\0-\4\0\0009\4\1\4'\6\t\0B\4\2\0?\4\0\0=\3\n\2B\0\2\1K\0\1\0\0¿\nviews\17preview.file\16multiselect\vselect\16select.file\rproducer\1\0\0\26producer.ripgrep.file\17consumer.fzf\bget\brun\3ÄÄ¿ô\4ë\1\1\0\6\0\n\0\0176\0\0\0'\2\1\0B\0\2\0029\1\2\0009\1\3\0015\3\4\0005\4\5\0003\5\6\0B\1\4\0019\1\2\0009\1\3\0015\3\a\0005\4\b\0003\5\t\0B\1\4\0012\0\0ÄK\0\1\0\0\1\2\0\0\15<Leader>ff\1\2\0\0\6n\0\1\2\0\0\15<Leader>fg\1\2\0\0\6n\bmap\rregister\tsnap\frequire\0" },
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/snap"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/snap"
+  },
+  sniprun = {
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/sniprun"
   },
   ["surround.nvim"] = {
     config = { "\27LJ\2\n:\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\rsurround\frequire\0" },
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/surround.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/surround.nvim"
   },
-  ["tabout.nvim"] = {
-    config = { "\27LJ\2\n»\2\0\0\5\0\r\0\0256\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0004\3\b\0005\4\4\0>\4\1\0035\4\5\0>\4\2\0035\4\6\0>\4\3\0035\4\a\0>\4\4\0035\4\b\0>\4\5\0035\4\t\0>\4\6\0035\4\n\0>\4\a\3=\3\v\0024\3\0\0=\3\f\2B\0\2\1K\0\1\0\fexclude\ftabouts\1\0\2\topen\6<\nclose\6>\1\0\2\topen\6{\nclose\6}\1\0\2\topen\6[\nclose\6]\1\0\2\topen\6(\nclose\6)\1\0\2\topen\6`\nclose\6`\1\0\2\topen\6\"\nclose\6\"\1\0\2\topen\6'\nclose\6'\1\0\4\21ignore_beginning\2\15completion\2\15act_as_tab\2\vtabkey\n<Tab>\nsetup\vtabout\frequire\0" },
+  ["telescope-dap.nvim"] = {
     loaded = true,
-    needs_bufread = false,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/opt/tabout.nvim",
-    wants = { "nvim-treesitter" }
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/telescope-dap.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/telescope.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/telescope.nvim"
   },
   ["todo-comments.nvim"] = {
-    config = { "\27LJ\2\n©\3\0\0\6\0\23\0\0296\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\21\0005\3\6\0005\4\3\0005\5\4\0=\5\5\4=\4\a\0035\4\b\0=\4\t\0035\4\n\0=\4\v\0035\4\f\0005\5\r\0=\5\5\4=\4\14\0035\4\15\0005\5\16\0=\5\5\4=\4\17\0035\4\18\0005\5\19\0=\5\5\4=\4\20\3=\3\22\2B\0\2\1K\0\1\0\rkeywords\1\0\0\tNOTE\1\2\0\0\tINFO\1\0\2\ticon\tÔ°ß \ncolor\thint\tPERF\1\4\0\0\nOPTIM\16PERFORMANCE\rOPTIMIZE\1\0\1\ticon\tÔôë \tWARN\1\3\0\0\fWARNING\bXXX\1\0\2\ticon\tÔÅ± \ncolor\fwarning\tHACK\1\0\2\ticon\tÔíê \ncolor\fwarning\tTODO\1\0\2\ticon\tÔÄå \ncolor\tinfo\bFIX\1\0\0\balt\1\6\0\0\nFIXME\bBUG\nFIXIT\nISSUE\bXXX\1\0\2\ticon\tÔÜà \ncolor\nerror\nsetup\18todo-comments\frequire\0" },
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/todo-comments.nvim"
-  },
-  ["tokyonight.nvim"] = {
-    loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/tokyonight.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/todo-comments.nvim"
   },
   ["twilight.nvim"] = {
-    commands = { "Twilight" },
-    config = { "\27LJ\2\nÿ\1\0\0\5\0\v\0\0156\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\6\0005\3\3\0005\4\4\0=\4\5\3=\3\a\0025\3\b\0=\3\t\0024\3\0\0=\3\n\2B\0\2\1K\0\1\0\fexclude\vexpand\1\5\0\0\rfunction\vmethod\ntable\17if_statement\fdimming\1\0\1\fcontext\3\n\ncolor\1\3\0\0\vNormal\f#ffffff\1\0\2\rinactive\2\nalpha\4\0ÄÄ¿˛\3\nsetup\rtwilight\frequire\0" },
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/opt/twilight.nvim"
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/twilight.nvim"
   },
   undotree = {
     commands = { "UndotreeToggle" },
     config = { "\27LJ\2\nk\0\0\6\0\a\0\t6\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0005\5\6\0B\0\5\1K\0\1\0\1\0\1\fnoremap\2\24:UndotreeToggle<CR>\n<C-u>\6n\20nvim_set_keymap\bapi\bvim\0" },
     loaded = false,
     needs_bufread = false,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/opt/undotree"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/undotree"
   },
-  ["vim-startify"] = {
+  ["vim-fish"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/vim-startify"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/vim-fish"
   },
   ["vim-startuptime"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/vim-startuptime"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/vim-startuptime"
   },
-  ["vim-substrata"] = {
+  ["vim-test"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/vim-substrata"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/vim-test"
+  },
+  ["vim-ultest"] = {
+    config = { "\27LJ\2\n6\0\0\2\0\3\0\0056\0\0\0009\0\1\0)\1\0\0=\1\2\0K\0\1\0\25ultest_output_on_run\6g\bvim\0" },
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/vim-ultest"
   },
   ["vim-vsnip"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/vim-vsnip"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/vim-vsnip"
   },
-  ["wilder.nvim"] = {
+  ["vim-workman"] = {
     loaded = true,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/start/wilder.nvim"
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/vim-workman"
+  },
+  ["visual-split.vim"] = {
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/visual-split.vim"
+  },
+  ["yabs.nvim"] = {
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/yabs.nvim"
   },
   ["zen-mode.nvim"] = {
-    commands = { "ZenMode" },
-    config = { "\27LJ\2\n&\0\1\4\0\2\0\0046\1\0\0'\3\1\0B\1\2\1K\0\1\0\rZEN MODE\nprint)\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16NORMAL MODE\nprintï\1\1\0\5\0\f\0\0156\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\6\0005\3\4\0005\4\3\0=\4\5\3=\3\a\0023\3\b\0=\3\t\0023\3\n\0=\3\v\2B\0\2\1K\0\1\0\ron_close\0\fon_open\0\fplugins\1\0\0\nkitty\1\0\0\1\0\2\tfont\a+4\fenabled\2\nsetup\rzen-mode\frequire\0" },
-    loaded = false,
-    needs_bufread = false,
-    path = "/home/chaitanya/.local/share/nvim/site/pack/packer/opt/zen-mode.nvim"
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/zen-mode.nvim"
   }
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: snap
-time([[Config for snap]], true)
-try_loadstring("\27LJ\2\ní\2\0\0\t\1\v\2#-\0\0\0009\0\0\0005\2\4\0-\3\0\0009\3\1\3'\5\2\0B\3\2\2*\5\0\0-\6\0\0009\6\1\6'\b\3\0B\6\2\0A\3\1\2=\3\5\2-\3\0\0009\3\1\3'\5\6\0B\3\2\0029\3\a\3=\3\a\2-\3\0\0009\3\1\3'\5\6\0B\3\2\0029\3\b\3=\3\b\0024\3\3\0-\4\0\0009\4\1\4'\6\t\0B\4\2\0?\4\1\0=\3\n\2B\0\2\1K\0\1\0\0¿\nviews\20preview.vimgrep\16multiselect\vselect\19select.vimgrep\rproducer\1\0\0\29producer.ripgrep.vimgrep\19consumer.limit\bget\brun¿ö\f\3ÄÄ¿ô\4Ä\2\0\0\b\1\v\1\"-\0\0\0009\0\0\0005\2\4\0-\3\0\0009\3\1\3'\5\2\0B\3\2\2-\5\0\0009\5\1\5'\a\3\0B\5\2\0A\3\0\2=\3\5\2-\3\0\0009\3\1\3'\5\6\0B\3\2\0029\3\a\3=\3\a\2-\3\0\0009\3\1\3'\5\6\0B\3\2\0029\3\b\3=\3\b\0024\3\3\0-\4\0\0009\4\1\4'\6\t\0B\4\2\0?\4\0\0=\3\n\2B\0\2\1K\0\1\0\0¿\nviews\17preview.file\16multiselect\vselect\16select.file\rproducer\1\0\0\26producer.ripgrep.file\17consumer.fzf\bget\brun\3ÄÄ¿ô\4ë\1\1\0\6\0\n\0\0176\0\0\0'\2\1\0B\0\2\0029\1\2\0009\1\3\0015\3\4\0005\4\5\0003\5\6\0B\1\4\0019\1\2\0009\1\3\0015\3\a\0005\4\b\0003\5\t\0B\1\4\0012\0\0ÄK\0\1\0\0\1\2\0\0\15<Leader>ff\1\2\0\0\6n\0\1\2\0\0\15<Leader>fg\1\2\0\0\6n\bmap\rregister\tsnap\frequire\0", "config", "snap")
-time([[Config for snap]], false)
--- Config for: surround.nvim
-time([[Config for surround.nvim]], true)
-try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\rsurround\frequire\0", "config", "surround.nvim")
-time([[Config for surround.nvim]], false)
--- Config for: nvim-colorizer.lua
-time([[Config for nvim-colorizer.lua]], true)
-try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14colorizer\frequire\0", "config", "nvim-colorizer.lua")
-time([[Config for nvim-colorizer.lua]], false)
--- Config for: lspkind-nvim
-time([[Config for lspkind-nvim]], true)
-try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\tinit\flspkind\frequire\0", "config", "lspkind-nvim")
-time([[Config for lspkind-nvim]], false)
--- Config for: lsp-rooter.nvim
-time([[Config for lsp-rooter.nvim]], true)
-try_loadstring("\27LJ\2\nZ\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\15ignore_lsp\1\0\0\1\2\0\0\befm\nsetup\15lsp-rooter\frequire\0", "config", "lsp-rooter.nvim")
-time([[Config for lsp-rooter.nvim]], false)
--- Config for: kommentary
-time([[Config for kommentary]], true)
-try_loadstring("\27LJ\2\n´\1\0\0\4\0\5\0\b6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0005\3\4\0B\0\3\1K\0\1\0\1\0\3 prefer_single_line_comments\2\22ignore_whitespace\2\31use_consistent_indentation\2\fdefault\23configure_language\22kommentary.config\frequire\0", "config", "kommentary")
-time([[Config for kommentary]], false)
--- Config for: focus.nvim
-time([[Config for focus.nvim]], true)
-try_loadstring("\27LJ\2\nâ\1\0\0\3\0\b\0\0166\0\0\0'\2\1\0B\0\2\2+\1\2\0=\1\2\0)\1x\0=\1\3\0)\1(\0=\1\4\0)\1\25\0=\1\5\0+\1\2\0=\1\6\0+\1\2\0=\1\a\0K\0\1\0\15signcolumn\15cursorline\14treewidth\vheight\nwidth\venable\nfocus\frequire\0", "config", "focus.nvim")
-time([[Config for focus.nvim]], false)
+-- Config for: conflict-marker.vim
+time([[Config for conflict-marker.vim]], true)
+try_loadstring("\27LJ\2\nu\0\0\2\0\6\0\t6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0'\1\5\0=\1\4\0K\0\1\0\17^>>>>>>> .*$\24conflict_marker_end\17^<<<<<<< .*$\26conflict_marker_begin\6g\bvim\0", "config", "conflict-marker.vim")
+time([[Config for conflict-marker.vim]], false)
+-- Config for: nvim-treesitter-context
+time([[Config for nvim-treesitter-context]], true)
+try_loadstring("\27LJ\2\nY\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\venable\2\rthrottle\2\nsetup\23treesitter-context\frequire\0", "config", "nvim-treesitter-context")
+time([[Config for nvim-treesitter-context]], false)
+-- Config for: material.nvim
+time([[Config for material.nvim]], true)
+try_loadstring("\27LJ\2\nﬁ\3\0\0\6\0\17\0)6\0\0\0009\0\1\0+\1\2\0=\1\2\0006\0\0\0009\0\1\0+\1\2\0=\1\3\0006\0\0\0009\0\1\0+\1\1\0=\1\4\0006\0\0\0009\0\1\0+\1\2\0=\1\5\0006\0\0\0009\0\1\0+\1\2\0=\1\6\0006\0\0\0009\0\1\0+\1\2\0=\1\a\0006\0\0\0009\0\1\0+\1\1\0=\1\b\0006\0\0\0009\0\1\0'\1\n\0=\1\t\0006\0\0\0009\0\v\0009\0\f\0'\2\r\0'\3\14\0'\4\15\0005\5\16\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2>:lua require('material.functions').toggle_style(true)<CR>\14<leader>m\6n\20nvim_set_keymap\bapi\15deep ocean\19material_style\30material_italic_variables\29material_italic_keywords\30material_italic_functions\29material_italic_comments material_disable_background\22material_contrast\21material_borders\6g\bvim\0", "config", "material.nvim")
+time([[Config for material.nvim]], false)
 -- Config for: dart-vim-plugin
 time([[Config for dart-vim-plugin]], true)
 try_loadstring("\27LJ\2\nh\0\0\3\0\5\0\t6\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\0009\0\3\0'\2\4\0B\0\2\1K\0\1\0#let dart_html_in_string=v:true\bcmd\24dart_format_on_save\6g\bvim\0", "config", "dart-vim-plugin")
 time([[Config for dart-vim-plugin]], false)
--- Config for: nvim-toggleterm.lua
-time([[Config for nvim-toggleterm.lua]], true)
-try_loadstring("\27LJ\2\n8\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\29plugin-config.toggleterm\frequire\0", "config", "nvim-toggleterm.lua")
-time([[Config for nvim-toggleterm.lua]], false)
--- Config for: todo-comments.nvim
-time([[Config for todo-comments.nvim]], true)
-try_loadstring("\27LJ\2\n©\3\0\0\6\0\23\0\0296\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\21\0005\3\6\0005\4\3\0005\5\4\0=\5\5\4=\4\a\0035\4\b\0=\4\t\0035\4\n\0=\4\v\0035\4\f\0005\5\r\0=\5\5\4=\4\14\0035\4\15\0005\5\16\0=\5\5\4=\4\17\0035\4\18\0005\5\19\0=\5\5\4=\4\20\3=\3\22\2B\0\2\1K\0\1\0\rkeywords\1\0\0\tNOTE\1\2\0\0\tINFO\1\0\2\ticon\tÔ°ß \ncolor\thint\tPERF\1\4\0\0\nOPTIM\16PERFORMANCE\rOPTIMIZE\1\0\1\ticon\tÔôë \tWARN\1\3\0\0\fWARNING\bXXX\1\0\2\ticon\tÔÅ± \ncolor\fwarning\tHACK\1\0\2\ticon\tÔíê \ncolor\fwarning\tTODO\1\0\2\ticon\tÔÄå \ncolor\tinfo\bFIX\1\0\0\balt\1\6\0\0\nFIXME\bBUG\nFIXIT\nISSUE\bXXX\1\0\2\ticon\tÔÜà \ncolor\nerror\nsetup\18todo-comments\frequire\0", "config", "todo-comments.nvim")
-time([[Config for todo-comments.nvim]], false)
+-- Config for: numb.nvim
+time([[Config for numb.nvim]], true)
+try_loadstring("\27LJ\2\ne\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\3\17show_numbers\2\16number_only\1\20show_cursorline\2\nsetup\tnumb\frequire\0", "config", "numb.nvim")
+time([[Config for numb.nvim]], false)
 -- Config for: dependency-assist.nvim
 time([[Config for dependency-assist.nvim]], true)
 try_loadstring("\27LJ\2\n?\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\22dependency_assist\frequire\0", "config", "dependency-assist.nvim")
 time([[Config for dependency-assist.nvim]], false)
+-- Config for: nvim-bufferline.lua
+time([[Config for nvim-bufferline.lua]], true)
+try_loadstring("\27LJ\2\n\v\0\0\1\0\0\0\1K\0\1\0\0", "config", "nvim-bufferline.lua")
+time([[Config for nvim-bufferline.lua]], false)
+-- Config for: nvim-gps
+time([[Config for nvim-gps]], true)
+try_loadstring("\27LJ\2\n£\1\0\0\4\0\a\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0024\3\0\0=\3\6\2B\0\2\1K\0\1\0\14languages\nicons\1\0\1\14separator\t -> \1\0\3\18function-name\tÔûî \16method-name\tÔö¶ \15class-name\tÔ†ñ \nsetup\rnvim-gps\frequire\0", "config", "nvim-gps")
+time([[Config for nvim-gps]], false)
+-- Config for: nvim-colorizer.lua
+time([[Config for nvim-colorizer.lua]], true)
+try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14colorizer\frequire\0", "config", "nvim-colorizer.lua")
+time([[Config for nvim-colorizer.lua]], false)
+-- Config for: kommentary
+time([[Config for kommentary]], true)
+try_loadstring("\27LJ\2\n´\1\0\0\4\0\5\0\b6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0005\3\4\0B\0\3\1K\0\1\0\1\0\3\31use_consistent_indentation\2 prefer_single_line_comments\2\22ignore_whitespace\2\fdefault\23configure_language\22kommentary.config\frequire\0", "config", "kommentary")
+time([[Config for kommentary]], false)
+-- Config for: project.nvim
+time([[Config for project.nvim]], true)
+try_loadstring("\27LJ\2\n°\3\0\0\6\0\18\0\0256\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\0025\3\6\0=\3\a\0025\3\b\0=\3\t\0026\3\n\0009\3\v\0039\3\f\3'\5\r\0B\3\2\2=\3\14\2B\0\2\0016\0\0\0'\2\15\0B\0\2\0029\0\16\0'\2\17\0B\0\2\1K\0\1\0\rprojects\19load_extension\14telescope\rdatapath\tdata\fstdpath\afn\bvim\15ignore_lsp\1\2\0\0\befm\rpatterns\1\14\0\0\17pubspec.yaml\17package.json\14config.py\rsetup.py\15cargo.toml\rMakefile\rmakefile\t.git\15.gitignore\v_darcs\b.hg\t.bzr\t.svn\22detection_methods\1\3\0\0\blsp\fpattern\1\0\3\16show_hidden\1\16manual_mode\1\17silent_chdir\1\nsetup\17project_nvim\frequire\0", "config", "project.nvim")
+time([[Config for project.nvim]], false)
 -- Config for: rest.nvim
 time([[Config for rest.nvim]], true)
 try_loadstring("\27LJ\2\n∏\1\0\0\6\0\n\0\0146\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0016\0\3\0009\0\4\0009\0\5\0'\2\6\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2,<cmd>lua require('rest-nvim').run()<CR>\15<leader>rn\6n\20nvim_set_keymap\bapi\bvim\nsetup\14rest-nvim\frequire\0", "config", "rest.nvim")
 time([[Config for rest.nvim]], false)
+-- Config for: rust-tools.nvim
+time([[Config for rust-tools.nvim]], true)
+try_loadstring("\27LJ\2\n<\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\15rust-tools\frequire\0", "config", "rust-tools.nvim")
+time([[Config for rust-tools.nvim]], false)
+-- Config for: vim-ultest
+time([[Config for vim-ultest]], true)
+try_loadstring("\27LJ\2\n6\0\0\2\0\3\0\0056\0\0\0009\0\1\0)\1\0\0=\1\2\0K\0\1\0\25ultest_output_on_run\6g\bvim\0", "config", "vim-ultest")
+time([[Config for vim-ultest]], false)
+-- Config for: rose-pine
+time([[Config for rose-pine]], true)
+try_loadstring("\27LJ\2\né\1\0\0\2\0\6\0\r6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0+\1\2\0=\1\4\0006\0\0\0009\0\1\0+\1\1\0=\1\5\0K\0\1\0!rose_pine_disable_background\29rose_pine_enable_italics\tbase\22rose_pine_variant\6g\bvim\0", "config", "rose-pine")
+time([[Config for rose-pine]], false)
+-- Config for: nvim-toggleterm.lua
+time([[Config for nvim-toggleterm.lua]], true)
+try_loadstring("\27LJ\2\n\v\0\0\1\0\0\0\1K\0\1\0\0", "config", "nvim-toggleterm.lua")
+time([[Config for nvim-toggleterm.lua]], false)
+-- Config for: lspkind-nvim
+time([[Config for lspkind-nvim]], true)
+try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\tinit\flspkind\frequire\0", "config", "lspkind-nvim")
+time([[Config for lspkind-nvim]], false)
+-- Config for: surround.nvim
+time([[Config for surround.nvim]], true)
+try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\rsurround\frequire\0", "config", "surround.nvim")
+time([[Config for surround.nvim]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file UndotreeToggle lua require("packer.load")({'undotree'}, { cmd = "UndotreeToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Twilight lua require("packer.load")({'twilight.nvim'}, { cmd = "Twilight", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file ZenMode lua require("packer.load")({'zen-mode.nvim'}, { cmd = "ZenMode", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 time([[Defining lazy-load commands]], false)
 
 if should_profile then save_profiles() end

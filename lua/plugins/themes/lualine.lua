@@ -1,3 +1,5 @@
+-- local gps = require("nvim-gps")
+
 local get_lsp_client = function(msg)
   msg = msg or 'No Active Lsp'
   local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
@@ -5,7 +7,6 @@ local get_lsp_client = function(msg)
   if next(clients) == nil then
     return msg
   end
-
   for _, client in ipairs(clients) do
     local filetypes = client.config.filetypes
     local client_name = client.name
@@ -26,6 +27,14 @@ local function trailing_whitespace()
   end
 end
 
+-- local function gps_location()
+--   if gps.is_available() then
+--     return gps.get_location()
+--   else
+--     return ""
+--   end
+-- end
+
 require('lualine').setup {
   options = {
     -- theme = 'ayu_mirage',
@@ -35,12 +44,21 @@ require('lualine').setup {
     -- theme = 'tokyonight',
     theme = 'rose-pine',
 
-    section_separators = {"", ""},
-    component_separators = {"", ""}
-    -- disabled_filetypes = {"startify"}
+    -- section_separators = {"", ""},
+    section_separators = "",
+    component_separators = {"", ""},
+    disabled_filetypes = {"startify"}
   },
   sections = {
-    lualine_a = {{'mode', icon = ''}},
+    lualine_a = {
+      {
+        'mode',
+        icon = '',
+        format = function(mode_name)
+          return mode_name:sub(1, 1)
+        end
+      }
+    },
     lualine_b = {
       'branch',
       {'diff', symbols = {added = ' ', modified = ' ', removed = '  '}}
@@ -54,6 +72,7 @@ require('lualine').setup {
     },
     lualine_x = {
       {
+        -- gps_location,
         'lsp_progress',
         display_components = {'spinner', {'title', 'percentage', 'message'}},
         spinner_symbols = {

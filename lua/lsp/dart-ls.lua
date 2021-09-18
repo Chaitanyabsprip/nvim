@@ -1,14 +1,20 @@
 require("flutter-tools").setup {
   -- closing_tags = {highlight = "Comment", prefix = "> // ", enabled = true},
-  -- dev_tools = {autostart = true, auto_open_browser = true},
-  flutter_path = "/home/chaitanya/Programs/flutter/bin/flutter",
+  dev_tools = {autostart = true, auto_open_browser = true},
+  debugger = {enabled = true},
+  flutter_path = "/Users/chaitanyasharma/Downloads/flutter/bin/flutter",
   lsp = {
     on_attach = LSP.common_on_attach,
     capabilities = LSP.capabilities,
-    settings = {showTodos = false, completeFunctionCalls = true},
+    init_options = {
+      onlyAnalyzeProjectsWithOpenFiles = true,
+      suggestFromUnimportedLibraries = true,
+      closingLabels = true
+    },
     root_dir = require'lspconfig'.util.root_pattern(".git", ".gitignore",
                                                     "pubspec.yaml",
-                                                    vim.fn.getcwd())
+                                                    vim.fn.getcwd()),
+    settings = {showTodos = false, completeFunctionCalls = true}
   },
   ui = {border = "rounded"},
   widget_guides = {enabled = false}

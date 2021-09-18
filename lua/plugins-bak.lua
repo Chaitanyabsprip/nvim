@@ -1,15 +1,8 @@
--- use "NTBBloodbath/rest.nvim"
--- use "dag/vim-fish"
 -- use "dstein64/vim-startuptime"
---[[ use {
-    "f-person/git-blame.nvim",
-    config = function()
-      vim.g.gitblame_enabled = false
-    end
-  } ]] -- use {
---   "folke/todo-comments.nvim",
+-- use {
+--   "f-person/git-blame.nvim",
 --   config = function()
---     require("todo-comments").setup {}
+--     vim.g.gitblame_enabled = false
 --   end
 -- }
 -- use {
@@ -19,7 +12,6 @@
 --   end
 -- }
 -- use "haringsrob/nvim_context_vt"
--- use "jbyuki/instant.nvim"
 -- use "jubnzv/virtual-types.nvim"
 -- use "kevinhwang91/nvim-bqf"
 -- use "jose-elias-alvarez/null-ls.nvim"
@@ -30,8 +22,7 @@
 --     tnoremap <silent> <M-i> <C-\><C-n>:RnvimrResize<CR>
 --     nnoremap <silent> <M-o> :RnvimrToggle<CR>
 --     tnoremap <silent> <M-o> <C-\><C-n>:RnvimrToggle<CR>
---   ]]
---   end,
+--   ]] --   end,
 --   cmd = {'RnvimrToggle'}
 -- }
 -- use "lilyinstarlight/vim-sonic-pi"
@@ -39,7 +30,6 @@
 -- use 'matbme/JABS.nvim'
 -- use "metakirby5/codi.vim"
 -- use "natebosch/dartlang-snippets"
--- use "nvim-lua/lsp_extensions.nvim"
 -- use "nvim-telescope/telescope-media-files.nvim"
 -- use {
 --   "rmagatti/goto-preview",
@@ -53,7 +43,6 @@
 --     }
 --   end
 -- }
--- use "romgrk/nvim-treesitter-context"
 -- use "sbdchd/neoformat"
 -- use {
 --   "simrat39/symbols-outline.nvim",
@@ -108,5 +97,4 @@
 --   run = './install.sh',
 --   requires = 'hrsh7th/nvim-compe'
 -- }
--- use "lukas-reineke/indent-blankline.nvim"
 -- use {"glepnir/galaxyline.nvim", branch = "main"}

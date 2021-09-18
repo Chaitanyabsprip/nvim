@@ -60,7 +60,7 @@ function General_Toggle()
   general:toggle()
 end
 
-u.keymap("n", "<leader>tf", "<cmd>lua Floaterm_toggle()<CR>",
-         {noremap = true, silent = true})
-u.keymap("n", "<leader>tt", "<cmd>lua General_Toggle()<CR>",
-         {noremap = true, silent = true})
+u.kmap("n", "<leader>tf", "<cmd>lua Floaterm_toggle()<CR>",
+       {noremap = true, silent = true})
+u.kmap("n", "<leader>tt", "<cmd>lua General_Toggle()<CR>",
+       {noremap = true, silent = true})

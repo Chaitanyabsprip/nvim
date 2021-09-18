@@ -34,25 +34,26 @@ require('telescope').setup {
   }
 }
 
-u.keymap('n', '<leader>fd', '<cmd>Telescope fd<CR>', opts)
-u.keymap('n', '<leader>fe', '<cmd>Telescope file_browser<CR><ESC>', opts)
-u.keymap('n', '<leader>fb', '<cmd>Telescope buffers<CR>', opts)
+u.kmap('n', '<leader>fd', '<cmd>Telescope fd<CR>', opts)
+u.kmap('n', '<leader>fe', '<cmd>Telescope file_browser<CR><ESC>', opts)
+-- u.kmap('n', '<leader>fb', '<cmd>Telescope buffers<CR>', opts)
+u.kmap('n', '<A-p>', '<cmd>Telescope projects<CR>', opts)
 
 -- Lsp integration with telescope
-u.keymap('n', '<leader>gr', '<cmd>Telescope lsp_references<CR><ESC>', opts)
-u.keymap('n', '<leader>gd', '<cmd>Telescope lsp_definitions<CR><ESC>', opts)
-u.keymap('n', '<leader>gi', '<cmd>Telescope lsp_implementations<CR><ESC>', opts)
-u.keymap('n', '<leader>tdd', '<cmd>Telescope lsp_document_diagnostics<CR><ESC>',
-         opts)
-u.keymap('n', '<leader>tdw',
-         '<cmd>Telescope lsp_workspace_diagnostics<CR><ESC>', opts)
+u.kmap('n', '<leader>nr', '<cmd>Telescope lsp_references<CR><ESC>', opts)
+u.kmap('n', '<leader>nd', '<cmd>Telescope lsp_definitions<CR><ESC>', opts)
+u.kmap('n', '<leader>ni', '<cmd>Telescope lsp_implementations<CR><ESC>', opts)
+u.kmap('n', '<leader>tdd', '<cmd>Telescope lsp_document_diagnostics<CR><ESC>',
+       opts)
+u.kmap('n', '<leader>tdw', '<cmd>Telescope lsp_workspace_diagnostics<CR><ESC>',
+       opts)
 
 -- Git integration with telescope
-u.keymap('n', '<leader>gs', '<cmd>Telescope git_status<CR><ESC>', opts)
-u.keymap('n', '<leader>gc', '<cmd>Telescope git_commits<CR><ESC>', opts)
-u.keymap('n', '<leader>gb', '<cmd>Telescope git_branches<CR><ESC>', opts)
+-- u.kmap('n', '<leader>gs', '<cmd>Telescope git_status<CR><ESC>', opts)
+-- u.kmap('n', '<leader>gc', '<cmd>Telescope git_commits<CR><ESC>', opts)
+-- u.kmap('n', '<leader>gb', '<cmd>Telescope git_branches<CR><ESC>', opts)
 
 -- Misc Telescope
-u.keymap('n', '<leader>tht', '<cmd>Telescope help_tags<CR>', opts)
-u.keymap('n', '<leader>thk', '<cmd>Telescope keymaps<CR>', opts)
-u.keymap('n', '<leader>thi', '<cmd>Telescope highlights<CR><ESC>', opts)
+u.kmap('n', '<leader>tht', '<cmd>Telescope help_tags<CR>', opts)
+u.kmap('n', '<leader>thk', '<cmd>Telescope keymaps<CR>', opts)
+u.kmap('n', '<leader>thi', '<cmd>Telescope highlights<CR><ESC>', opts)

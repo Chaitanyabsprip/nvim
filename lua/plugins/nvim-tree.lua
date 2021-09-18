@@ -1,5 +1,7 @@
+local u = require("utils")
 local ntst = {noremap = true, silent = true}
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+
 vim.g.nvim_tree_bindings = {
   {key = {"<CR>", "o", "<2-LeftMouse>", "l"}, cb = tree_cb("edit")},
   {key = {"<2-RightMouse>", "<C-]>", "cd"}, cb = tree_cb("cd")},
@@ -34,19 +36,22 @@ vim.g.nvim_tree_bindings = {
   {key = "g?", cb = tree_cb("toggle_help")}
 }
 
-vim.g.nvim_tree_git_hl = 1
-vim.g.nvim_tree_highlight_opened_files = 1
-vim.g.nvim_tree_group_empty = 1
-vim.g.nvim_tree_lsp_diagnostics = 1
-vim.g.nvim_tree_side = 'right'
-vim.g.nvim_tree_width = 50
+vim.g.nvim_add_trailing = 1
 vim.g.nvim_tree_auto_ignore_ft = 'startify'
 vim.g.nvim_tree_follow = 0
-vim.g.nvim_tree_indent_markers = 0
 vim.g.nvim_tree_git_hl = 1
-vim.g.nvim_tree_tab_open = 1
-vim.g.nvim_add_trailing = 1
+vim.g.nvim_tree_git_hl = 1
+vim.g.nvim_tree_group_empty = 1
+vim.g.nvim_tree_highlight_opened_files = 1
 vim.g.nvim_tree_hijack_cursor = 0
+vim.g.nvim_tree_indent_markers = 0
+vim.g.nvim_tree_lsp_diagnostics = 1
+vim.g.nvim_tree_side = 'right'
+vim.g.nvim_tree_tab_open = 1
+vim.g.nvim_tree_width = 50
+vim.cmd [[ let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } ]]
 
-vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeToggle<CR>', ntst)
-vim.api.nvim_set_keymap('n', '<S-r>', ':NvimTreeRefresh<CR>', ntst)
+u.kmap('n', '<S-r>', ':NvimTreeRefresh<CR>', ntst)
+u.kmap('n', '<leader>e', ':NvimTreeToggle<CR>', ntst)
+u.kmap('n', '<leader>nf', '<CMD>NvimTreeFindFile<CR>', ntst)
+

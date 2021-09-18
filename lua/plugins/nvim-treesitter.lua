@@ -17,12 +17,6 @@ require'nvim-treesitter.configs'.setup {
       node_decremental = "grm"
     }
   },
-  refactor = {
-    -- highlight_current_scope = {enable = true},
-    highlight_definition = {enable = true},
-    navigation = {enable = true},
-    smart_rename = {enable = true}
-  },
   -- nvim-ts-rainbow For rainbow parenthesis
   rainbow = {enable = true},
   autopairs = {enable = true},
@@ -30,7 +24,7 @@ require'nvim-treesitter.configs'.setup {
   autotag = {enable = true},
   ensure_installed = {
     'python', 'dart', 'java', 'c', 'ruby', 'go', 'yaml', 'bash', 'jsonc',
-    'clojure', 'lua', 'scss', 'json', 'html', 'kotlin', 'rust',
-    'c_sharp', 'cpp', 'typescript', 'comment'
+    'clojure', 'lua', 'scss', 'json', 'html', 'kotlin', 'rust', 'c_sharp',
+    'cpp', 'typescript', 'comment'
   }
 }

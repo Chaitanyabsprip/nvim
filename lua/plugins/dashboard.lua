@@ -18,9 +18,9 @@ vim.g.dashboard_default_executive = "telescope"
 -- vim.g.dashboard_custom_shortcut_icon['find_word'] = ' '
 -- vim.g.dashboard_custom_shortcut_icon['book_marks'] = ' '
 
-vim.g.dashboard_preview_command = 'cat'
-vim.g.dashboard_preview_pipeline = 'lolcat'
-vim.g.dashboard_preview_file = -- "home/chaitanya/.config/nvim/lua/plugin-config/neovim.cat"
-"/home/chaitanya/.config/nvim/lua/plugin-config/neovim.cat"
-vim.g.dashboard_preview_file_height = 12
-vim.g.dashboard_preview_file_width = 80
+-- vim.g.dashboard_preview_command = 'cat'
+-- vim.g.dashboard_preview_pipeline = 'lolcat'
+-- vim.g.dashboard_preview_file = -- "home/chaitanya/.config/nvim/lua/plugin-config/neovim.cat"
+-- "/home/chaitanya/.config/nvim/lua/plugin-config/neovim.cat"
+-- vim.g.dashboard_preview_file_height = 12
+-- vim.g.dashboard_preview_file_width = 80

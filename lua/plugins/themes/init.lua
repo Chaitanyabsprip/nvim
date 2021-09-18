@@ -26,5 +26,6 @@ vim.api.nvim_set_keymap('n', '<leader>c', '<CMD>call v:lua.toggle_colo()<CR>',
 -- require'material'.set()
 -- require'moonlight'.set()
 vim.cmd [[ colo rose-pine ]]
+-- vim.cmd [[ colo blue-moon ]]
 -- vim.cmd [[ colo tokyonight ]]
 -- vim.cmd [[ colo github ]]

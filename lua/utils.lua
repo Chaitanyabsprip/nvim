@@ -10,13 +10,14 @@ function M.has_width_gt(cols)
   return vim.fn.winwidth(0) / 2 > cols
 end
 
-function M.keymap(mode, key, command, opts)
+function M.kmap(mode, key, command, opts)
   vim.api.nvim_set_keymap(mode, key, command, opts)
 end
 
 function M.buf_kmap(bufnr, mode, key, command, opts)
   vim.api.nvim_buf_set_keymap(bufnr, mode, key, command, opts)
 end
+
 function M.execr(cmd)
   local fh = assert(io.popen(cmd))
   local data = fh:read('*a')
@@ -25,3 +26,4 @@ function M.execr(cmd)
 end
 
 return M
+
