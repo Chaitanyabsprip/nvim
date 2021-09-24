@@ -50,4 +50,5 @@ require("lsp.rust-ls")
 vim.cmd [[ source ~/.config/nvim/vimscript/init.vim]]
 vim.schedule(function()
   vim.cmd [[source ~/.config/nvim/vimscript/highlights.vim]]
+  require("plugins.vgit")
 end)

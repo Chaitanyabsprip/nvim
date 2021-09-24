@@ -66,5 +66,5 @@ vim.wo.foldnestmax = 20
 vim.wo.number = true
 vim.wo.numberwidth = 1
 vim.wo.relativenumber = true
-vim.wo.signcolumn = "number"
+vim.wo.signcolumn = "yes"
 vim.wo.wrap = false

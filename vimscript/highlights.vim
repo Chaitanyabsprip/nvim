@@ -6,3 +6,6 @@ hi! FoldColumn guifg=#575279
 hi! LspReferenceRead cterm=none gui=none guibg=#26233a guifg=none
 hi! LspReferenceText cterm=none gui=none guibg=#26233a guifg=none
 hi! LspReferenceWrite cterm=none gui=none guibg=#26233a guifg=none
+
+" VGit
+hi! VGitLineBlame cterm=none gui=none guifg=#fff guibg=none

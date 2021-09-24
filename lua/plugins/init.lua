@@ -98,7 +98,7 @@ return packer.startup(function()
 
   -- - - - - - - - - - - - - - - - - - GIT - - - - - - - - - - - - - - - - - -
 
-  -- use {'tanvirtin/vgit.nvim', requires = 'nvim-lua/plenary.nvim'}
+  use {'tanvirtin/vgit.nvim', requires = 'nvim-lua/plenary.nvim'}
   use {
     "rhysd/conflict-marker.vim",
     config = function()
@@ -114,10 +114,30 @@ return packer.startup(function()
   -- - - - - - - - - - - - - - - - - UTILITIES - - - - - - - - - - - - - - - -
 
   use {
-    "akinsho/nvim-toggleterm.lua",
+    "matbme/JABS.nvim",
     config = function()
+      local ui = vim.api.nvim_list_uis()[1]
+      require'jabs'.setup {
+        position = 'corner', -- center, corner
+        width = 70,
+        height = 10,
+        border = 'single', -- none, single, double, rounded, solid, shadow, (or an array or chars)
+
+        -- Options for preview window
+        preview_position = 'bottom', -- top, bottom, left, right
+        preview = {
+          width = 100,
+          height = 30,
+          border = 'double' -- none, single, double, rounded, solid, shadow, (or an array or chars)
+        },
+
+        -- the options below are ignored when position = 'center'
+        col = ui.width * 0.55, -- Window appears on the right
+        row = ui.height / 2 -- Window appears in the vertical middle
+      }
     end
   }
+  use {"akinsho/nvim-toggleterm.lua"}
   use {"nicwest/vim-workman"}
   use {
     "norcalli/nvim-colorizer.lua",
@@ -264,11 +284,11 @@ return packer.startup(function()
   use {
     "rose-pine/neovim",
     as = "rose-pine",
+    commit = "da185c1",
     config = function()
-      -- @usage 'base' | 'moon' | 'dawn' | 'rose-pine[-moon][-dawn]'
       vim.g.rose_pine_variant = 'base'
       vim.g.rose_pine_enable_italics = true
-      vim.g.rose_pine_disable_background = false
+      vim.g.rose_pine_disable_background = true
     end
   }
 

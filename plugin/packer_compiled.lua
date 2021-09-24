@@ -69,6 +69,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["JABS.nvim"] = {
+    config = { "\27LJ\2\n”\2\0\0\5\0\r\2\0206\0\0\0009\0\1\0009\0\2\0B\0\1\2:\0\1\0006\1\3\0'\3\4\0B\1\2\0029\1\5\0015\3\6\0005\4\a\0=\4\b\0039\4\t\0\24\4\0\4=\4\n\0039\4\v\0\25\4\1\4=\4\f\3B\1\2\1K\0\1\0\brow\vheight\bcol\nwidth\fpreview\1\0\3\vborder\vdouble\vheight\3\30\nwidth\3d\1\0\5\vborder\vsingle\vheight\3\n\nwidth\3F\rposition\vcorner\21preview_position\vbottom\nsetup\tjabs\frequire\18nvim_list_uis\bapi\bvimµæÌ™\19™³†ÿ\3\4\0" },
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/JABS.nvim"
+  },
   ["auto-session"] = {
     loaded = true,
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/auto-session"
@@ -143,12 +148,12 @@ _G.packer_plugins = {
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim"
   },
   ["material.nvim"] = {
-    config = { "\27LJ\2\nÞ\3\0\0\6\0\17\0)6\0\0\0009\0\1\0+\1\2\0=\1\2\0006\0\0\0009\0\1\0+\1\2\0=\1\3\0006\0\0\0009\0\1\0+\1\1\0=\1\4\0006\0\0\0009\0\1\0+\1\2\0=\1\5\0006\0\0\0009\0\1\0+\1\2\0=\1\6\0006\0\0\0009\0\1\0+\1\2\0=\1\a\0006\0\0\0009\0\1\0+\1\1\0=\1\b\0006\0\0\0009\0\1\0'\1\n\0=\1\t\0006\0\0\0009\0\v\0009\0\f\0'\2\r\0'\3\14\0'\4\15\0005\5\16\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2>:lua require('material.functions').toggle_style(true)<CR>\14<leader>m\6n\20nvim_set_keymap\bapi\15deep ocean\19material_style\30material_italic_variables\29material_italic_keywords\30material_italic_functions\29material_italic_comments material_disable_background\22material_contrast\21material_borders\6g\bvim\0" },
+    config = { "\27LJ\2\nÞ\3\0\0\6\0\17\0)6\0\0\0009\0\1\0+\1\2\0=\1\2\0006\0\0\0009\0\1\0+\1\2\0=\1\3\0006\0\0\0009\0\1\0+\1\1\0=\1\4\0006\0\0\0009\0\1\0+\1\2\0=\1\5\0006\0\0\0009\0\1\0+\1\2\0=\1\6\0006\0\0\0009\0\1\0+\1\2\0=\1\a\0006\0\0\0009\0\1\0+\1\1\0=\1\b\0006\0\0\0009\0\1\0'\1\n\0=\1\t\0006\0\0\0009\0\v\0009\0\f\0'\2\r\0'\3\14\0'\4\15\0005\5\16\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2>:lua require('material.functions').toggle_style(true)<CR>\14<leader>m\6n\20nvim_set_keymap\bapi\15deep ocean\19material_style\30material_italic_variables\29material_italic_keywords\30material_italic_functions\29material_italic_comments material_disable_background\22material_contrast\21material_borders\6g\bvim\0" },
     loaded = true,
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/material.nvim"
   },
   ["numb.nvim"] = {
-    config = { "\27LJ\2\ne\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\3\17show_numbers\2\16number_only\1\20show_cursorline\2\nsetup\tnumb\frequire\0" },
+    config = { "\27LJ\2\ne\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\3\16number_only\1\20show_cursorline\2\17show_numbers\2\nsetup\tnumb\frequire\0" },
     loaded = true,
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/numb.nvim"
   },
@@ -179,7 +184,7 @@ _G.packer_plugins = {
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-dap-ui"
   },
   ["nvim-gps"] = {
-    config = { "\27LJ\2\n£\1\0\0\4\0\a\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0024\3\0\0=\3\6\2B\0\2\1K\0\1\0\14languages\nicons\1\0\1\14separator\t -> \1\0\3\18function-name\tïž” \16method-name\tïš¦ \15class-name\tï – \nsetup\rnvim-gps\frequire\0" },
+    config = { "\27LJ\2\n£\1\0\0\4\0\a\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0024\3\0\0=\3\6\2B\0\2\1K\0\1\0\14languages\nicons\1\0\1\14separator\t -> \1\0\3\16method-name\tïš¦ \15class-name\tï – \18function-name\tïž” \nsetup\rnvim-gps\frequire\0" },
     loaded = true,
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-gps"
   },
@@ -196,7 +201,6 @@ _G.packer_plugins = {
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-notify"
   },
   ["nvim-toggleterm.lua"] = {
-    config = { "\27LJ\2\n\v\0\0\1\0\0\0\1K\0\1\0\0" },
     loaded = true,
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-toggleterm.lua"
   },
@@ -209,7 +213,7 @@ _G.packer_plugins = {
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
   },
   ["nvim-treesitter-context"] = {
-    config = { "\27LJ\2\nY\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\venable\2\rthrottle\2\nsetup\23treesitter-context\frequire\0" },
+    config = { "\27LJ\2\nY\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\rthrottle\2\venable\2\nsetup\23treesitter-context\frequire\0" },
     loaded = true,
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/nvim-treesitter-context"
   },
@@ -247,12 +251,12 @@ _G.packer_plugins = {
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/project.nvim"
   },
   ["rest.nvim"] = {
-    config = { "\27LJ\2\n¸\1\0\0\6\0\n\0\0146\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0016\0\3\0009\0\4\0009\0\5\0'\2\6\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2,<cmd>lua require('rest-nvim').run()<CR>\15<leader>rn\6n\20nvim_set_keymap\bapi\bvim\nsetup\14rest-nvim\frequire\0" },
+    config = { "\27LJ\2\n¸\1\0\0\6\0\n\0\0146\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0016\0\3\0009\0\4\0009\0\5\0'\2\6\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2,<cmd>lua require('rest-nvim').run()<CR>\15<leader>rn\6n\20nvim_set_keymap\bapi\bvim\nsetup\14rest-nvim\frequire\0" },
     loaded = true,
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/rest.nvim"
   },
   ["rose-pine"] = {
-    config = { "\27LJ\2\nŽ\1\0\0\2\0\6\0\r6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0+\1\2\0=\1\4\0006\0\0\0009\0\1\0+\1\1\0=\1\5\0K\0\1\0!rose_pine_disable_background\29rose_pine_enable_italics\tbase\22rose_pine_variant\6g\bvim\0" },
+    config = { "\27LJ\2\nŽ\1\0\0\2\0\6\0\r6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0+\1\2\0=\1\4\0006\0\0\0009\0\1\0+\1\2\0=\1\5\0K\0\1\0!rose_pine_disable_background\29rose_pine_enable_italics\tbase\22rose_pine_variant\6g\bvim\0" },
     loaded = true,
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/rose-pine"
   },
@@ -301,6 +305,10 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/undotree"
   },
+  ["vgit.nvim"] = {
+    loaded = true,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/vgit.nvim"
+  },
   ["vim-fish"] = {
     loaded = true,
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/vim-fish"
@@ -341,17 +349,33 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: rust-tools.nvim
+time([[Config for rust-tools.nvim]], true)
+try_loadstring("\27LJ\2\n<\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\15rust-tools\frequire\0", "config", "rust-tools.nvim")
+time([[Config for rust-tools.nvim]], false)
+-- Config for: JABS.nvim
+time([[Config for JABS.nvim]], true)
+try_loadstring("\27LJ\2\n”\2\0\0\5\0\r\2\0206\0\0\0009\0\1\0009\0\2\0B\0\1\2:\0\1\0006\1\3\0'\3\4\0B\1\2\0029\1\5\0015\3\6\0005\4\a\0=\4\b\0039\4\t\0\24\4\0\4=\4\n\0039\4\v\0\25\4\1\4=\4\f\3B\1\2\1K\0\1\0\brow\vheight\bcol\nwidth\fpreview\1\0\3\vborder\vdouble\vheight\3\30\nwidth\3d\1\0\5\vborder\vsingle\vheight\3\n\nwidth\3F\rposition\vcorner\21preview_position\vbottom\nsetup\tjabs\frequire\18nvim_list_uis\bapi\bvimµæÌ™\19™³†ÿ\3\4\0", "config", "JABS.nvim")
+time([[Config for JABS.nvim]], false)
+-- Config for: rose-pine
+time([[Config for rose-pine]], true)
+try_loadstring("\27LJ\2\nŽ\1\0\0\2\0\6\0\r6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0+\1\2\0=\1\4\0006\0\0\0009\0\1\0+\1\2\0=\1\5\0K\0\1\0!rose_pine_disable_background\29rose_pine_enable_italics\tbase\22rose_pine_variant\6g\bvim\0", "config", "rose-pine")
+time([[Config for rose-pine]], false)
+-- Config for: surround.nvim
+time([[Config for surround.nvim]], true)
+try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\rsurround\frequire\0", "config", "surround.nvim")
+time([[Config for surround.nvim]], false)
 -- Config for: conflict-marker.vim
 time([[Config for conflict-marker.vim]], true)
 try_loadstring("\27LJ\2\nu\0\0\2\0\6\0\t6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0'\1\5\0=\1\4\0K\0\1\0\17^>>>>>>> .*$\24conflict_marker_end\17^<<<<<<< .*$\26conflict_marker_begin\6g\bvim\0", "config", "conflict-marker.vim")
 time([[Config for conflict-marker.vim]], false)
 -- Config for: nvim-treesitter-context
 time([[Config for nvim-treesitter-context]], true)
-try_loadstring("\27LJ\2\nY\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\venable\2\rthrottle\2\nsetup\23treesitter-context\frequire\0", "config", "nvim-treesitter-context")
+try_loadstring("\27LJ\2\nY\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\2\rthrottle\2\venable\2\nsetup\23treesitter-context\frequire\0", "config", "nvim-treesitter-context")
 time([[Config for nvim-treesitter-context]], false)
 -- Config for: material.nvim
 time([[Config for material.nvim]], true)
-try_loadstring("\27LJ\2\nÞ\3\0\0\6\0\17\0)6\0\0\0009\0\1\0+\1\2\0=\1\2\0006\0\0\0009\0\1\0+\1\2\0=\1\3\0006\0\0\0009\0\1\0+\1\1\0=\1\4\0006\0\0\0009\0\1\0+\1\2\0=\1\5\0006\0\0\0009\0\1\0+\1\2\0=\1\6\0006\0\0\0009\0\1\0+\1\2\0=\1\a\0006\0\0\0009\0\1\0+\1\1\0=\1\b\0006\0\0\0009\0\1\0'\1\n\0=\1\t\0006\0\0\0009\0\v\0009\0\f\0'\2\r\0'\3\14\0'\4\15\0005\5\16\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2>:lua require('material.functions').toggle_style(true)<CR>\14<leader>m\6n\20nvim_set_keymap\bapi\15deep ocean\19material_style\30material_italic_variables\29material_italic_keywords\30material_italic_functions\29material_italic_comments material_disable_background\22material_contrast\21material_borders\6g\bvim\0", "config", "material.nvim")
+try_loadstring("\27LJ\2\nÞ\3\0\0\6\0\17\0)6\0\0\0009\0\1\0+\1\2\0=\1\2\0006\0\0\0009\0\1\0+\1\2\0=\1\3\0006\0\0\0009\0\1\0+\1\1\0=\1\4\0006\0\0\0009\0\1\0+\1\2\0=\1\5\0006\0\0\0009\0\1\0+\1\2\0=\1\6\0006\0\0\0009\0\1\0+\1\2\0=\1\a\0006\0\0\0009\0\1\0+\1\1\0=\1\b\0006\0\0\0009\0\1\0'\1\n\0=\1\t\0006\0\0\0009\0\v\0009\0\f\0'\2\r\0'\3\14\0'\4\15\0005\5\16\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2>:lua require('material.functions').toggle_style(true)<CR>\14<leader>m\6n\20nvim_set_keymap\bapi\15deep ocean\19material_style\30material_italic_variables\29material_italic_keywords\30material_italic_functions\29material_italic_comments material_disable_background\22material_contrast\21material_borders\6g\bvim\0", "config", "material.nvim")
 time([[Config for material.nvim]], false)
 -- Config for: dart-vim-plugin
 time([[Config for dart-vim-plugin]], true)
@@ -359,7 +383,7 @@ try_loadstring("\27LJ\2\nh\0\0\3\0\5\0\t6\0\0\0009\0\1\0)\1\0\0=\1\2\0006\0\0\00
 time([[Config for dart-vim-plugin]], false)
 -- Config for: numb.nvim
 time([[Config for numb.nvim]], true)
-try_loadstring("\27LJ\2\ne\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\3\17show_numbers\2\16number_only\1\20show_cursorline\2\nsetup\tnumb\frequire\0", "config", "numb.nvim")
+try_loadstring("\27LJ\2\ne\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\3\16number_only\1\20show_cursorline\2\17show_numbers\2\nsetup\tnumb\frequire\0", "config", "numb.nvim")
 time([[Config for numb.nvim]], false)
 -- Config for: dependency-assist.nvim
 time([[Config for dependency-assist.nvim]], true)
@@ -369,10 +393,6 @@ time([[Config for dependency-assist.nvim]], false)
 time([[Config for nvim-bufferline.lua]], true)
 try_loadstring("\27LJ\2\n\v\0\0\1\0\0\0\1K\0\1\0\0", "config", "nvim-bufferline.lua")
 time([[Config for nvim-bufferline.lua]], false)
--- Config for: nvim-gps
-time([[Config for nvim-gps]], true)
-try_loadstring("\27LJ\2\n£\1\0\0\4\0\a\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0024\3\0\0=\3\6\2B\0\2\1K\0\1\0\14languages\nicons\1\0\1\14separator\t -> \1\0\3\18function-name\tïž” \16method-name\tïš¦ \15class-name\tï – \nsetup\rnvim-gps\frequire\0", "config", "nvim-gps")
-time([[Config for nvim-gps]], false)
 -- Config for: nvim-colorizer.lua
 time([[Config for nvim-colorizer.lua]], true)
 try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14colorizer\frequire\0", "config", "nvim-colorizer.lua")
@@ -385,34 +405,22 @@ time([[Config for kommentary]], false)
 time([[Config for project.nvim]], true)
 try_loadstring("\27LJ\2\n¡\3\0\0\6\0\18\0\0256\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\0025\3\6\0=\3\a\0025\3\b\0=\3\t\0026\3\n\0009\3\v\0039\3\f\3'\5\r\0B\3\2\2=\3\14\2B\0\2\0016\0\0\0'\2\15\0B\0\2\0029\0\16\0'\2\17\0B\0\2\1K\0\1\0\rprojects\19load_extension\14telescope\rdatapath\tdata\fstdpath\afn\bvim\15ignore_lsp\1\2\0\0\befm\rpatterns\1\14\0\0\17pubspec.yaml\17package.json\14config.py\rsetup.py\15cargo.toml\rMakefile\rmakefile\t.git\15.gitignore\v_darcs\b.hg\t.bzr\t.svn\22detection_methods\1\3\0\0\blsp\fpattern\1\0\3\16show_hidden\1\16manual_mode\1\17silent_chdir\1\nsetup\17project_nvim\frequire\0", "config", "project.nvim")
 time([[Config for project.nvim]], false)
+-- Config for: nvim-gps
+time([[Config for nvim-gps]], true)
+try_loadstring("\27LJ\2\n£\1\0\0\4\0\a\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0024\3\0\0=\3\6\2B\0\2\1K\0\1\0\14languages\nicons\1\0\1\14separator\t -> \1\0\3\16method-name\tïš¦ \15class-name\tï – \18function-name\tïž” \nsetup\rnvim-gps\frequire\0", "config", "nvim-gps")
+time([[Config for nvim-gps]], false)
 -- Config for: rest.nvim
 time([[Config for rest.nvim]], true)
-try_loadstring("\27LJ\2\n¸\1\0\0\6\0\n\0\0146\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0016\0\3\0009\0\4\0009\0\5\0'\2\6\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2,<cmd>lua require('rest-nvim').run()<CR>\15<leader>rn\6n\20nvim_set_keymap\bapi\bvim\nsetup\14rest-nvim\frequire\0", "config", "rest.nvim")
+try_loadstring("\27LJ\2\n¸\1\0\0\6\0\n\0\0146\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0016\0\3\0009\0\4\0009\0\5\0'\2\6\0'\3\a\0'\4\b\0005\5\t\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2,<cmd>lua require('rest-nvim').run()<CR>\15<leader>rn\6n\20nvim_set_keymap\bapi\bvim\nsetup\14rest-nvim\frequire\0", "config", "rest.nvim")
 time([[Config for rest.nvim]], false)
--- Config for: rust-tools.nvim
-time([[Config for rust-tools.nvim]], true)
-try_loadstring("\27LJ\2\n<\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\15rust-tools\frequire\0", "config", "rust-tools.nvim")
-time([[Config for rust-tools.nvim]], false)
--- Config for: vim-ultest
-time([[Config for vim-ultest]], true)
-try_loadstring("\27LJ\2\n6\0\0\2\0\3\0\0056\0\0\0009\0\1\0)\1\0\0=\1\2\0K\0\1\0\25ultest_output_on_run\6g\bvim\0", "config", "vim-ultest")
-time([[Config for vim-ultest]], false)
--- Config for: rose-pine
-time([[Config for rose-pine]], true)
-try_loadstring("\27LJ\2\nŽ\1\0\0\2\0\6\0\r6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0+\1\2\0=\1\4\0006\0\0\0009\0\1\0+\1\1\0=\1\5\0K\0\1\0!rose_pine_disable_background\29rose_pine_enable_italics\tbase\22rose_pine_variant\6g\bvim\0", "config", "rose-pine")
-time([[Config for rose-pine]], false)
--- Config for: nvim-toggleterm.lua
-time([[Config for nvim-toggleterm.lua]], true)
-try_loadstring("\27LJ\2\n\v\0\0\1\0\0\0\1K\0\1\0\0", "config", "nvim-toggleterm.lua")
-time([[Config for nvim-toggleterm.lua]], false)
 -- Config for: lspkind-nvim
 time([[Config for lspkind-nvim]], true)
 try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\tinit\flspkind\frequire\0", "config", "lspkind-nvim")
 time([[Config for lspkind-nvim]], false)
--- Config for: surround.nvim
-time([[Config for surround.nvim]], true)
-try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\rsurround\frequire\0", "config", "surround.nvim")
-time([[Config for surround.nvim]], false)
+-- Config for: vim-ultest
+time([[Config for vim-ultest]], true)
+try_loadstring("\27LJ\2\n6\0\0\2\0\3\0\0056\0\0\0009\0\1\0)\1\0\0=\1\2\0K\0\1\0\25ultest_output_on_run\6g\bvim\0", "config", "vim-ultest")
+time([[Config for vim-ultest]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
