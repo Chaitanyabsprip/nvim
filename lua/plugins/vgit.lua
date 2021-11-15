@@ -62,9 +62,9 @@ require('vgit').setup({
   hls = {
     VGitViewWordAdd = {bg = '#5d7a22', fg = p.text},
     VGitViewWordRemove = {bg = p.love, fg = p.text},
-    VGitSignAdd = t.loadPlugins().SignAdd,
-    VGitSignChange = t.loadPlugins().SignChange,
-    VGitSignRemove = t.loadPlugins().SignRemove,
+    VGitSignAdd = t.plugins.SignAdd,
+    VGitSignChange = t.plugins.SignChange,
+    VGitSignRemove = t.plugins.SignRemove,
     VGitIndicator = {fg = '#a6e22e', bg = nil},
     VGitStatus = {fg = '#bb9af7', bg = '#3b4261'},
     VGitBorderFocus = {fg = '#7AA6DA', bg = nil},
@@ -114,12 +114,12 @@ require('vgit').setup({
   }
 })
 
-u.kmap('n', '<leader>gp', ':VGit buffer_hunk_preview<CR>', ntst)
-u.kmap('n', '<leader>gr', ':VGit hunk_reset<CR>', ntst)
-u.kmap('n', '<leader>gk', ':VGit hunk_up<CR>', ntst)
-u.kmap('n', '<leader>gj', ':VGit hunk_down<CR>', ntst)
-u.kmap('n', '<leader>gf', ':VGit buffer_diff_preview<CR>', ntst)
-u.kmap('n', '<leader>gh', ':VGit buffer_history_preview<CR>', ntst)
-u.kmap('n', '<leader>gu', ':VGit buffer_reset<CR>', ntst)
-u.kmap('n', '<leader>gd', ':VGit diff<CR>', ntst)
-u.kmap('n', '<leader>gq', ':VGit hunks_quickfix_list<CR>', ntst)
+-- u.kmap('n', '<leader>gp', ':VGit buffer_hunk_preview<CR>', ntst)
+-- u.kmap('n', '<leader>gr', ':VGit hunk_reset<CR>', ntst)
+-- u.kmap('n', '<leader>gk', ':VGit hunk_up<CR>', ntst)
+-- u.kmap('n', '<leader>gj', ':VGit hunk_down<CR>', ntst)
+-- u.kmap('n', '<leader>gf', ':VGit buffer_diff_preview<CR>', ntst)
+-- u.kmap('n', '<leader>gh', ':VGit buffer_history_preview<CR>', ntst)
+-- u.kmap('n', '<leader>gu', ':VGit buffer_reset<CR>', ntst)
+-- u.kmap('n', '<leader>gd', ':VGit diff<CR>', ntst)
+-- u.kmap('n', '<leader>gq', ':VGit hunks_quickfix_list<CR>', ntst)

@@ -22,10 +22,10 @@ u.kmap('i', 'jk', '<Esc>', nt)
 u.kmap('i', 'kj', '<Esc>', nt)
 
 -- terminal binds
-u.kmap('t', '<Esc>', '<C-\\><C-n>', ntst)
-u.kmap('t', '<A-[>', '<C-\\><C-n>', nt)
-u.kmap('t', 'jk', '<C-\\><C-n>', nt)
-u.kmap('t', 'kj', '<C-\\><C-n>', nt)
+-- u.kmap('t', '<Esc>', '<C-\\><C-n>', ntst)
+-- u.kmap('t', '<A-[>', '<C-\\><C-n>', nt)
+-- u.kmap('t', 'jk', '<C-\\><C-n>', nt)
+-- u.kmap('t', 'kj', '<C-\\><C-n>', nt)
 
 -- move lines up and down
 u.kmap('n', '<M-j>', ':m .+1<CR>==', ntst)
@@ -90,6 +90,7 @@ u.kmap('n', '<leader>L', ':wincmd L<CR>', ntst)
 
 -- close current window
 u.kmap('n', '<leader>q', ':q<CR>', ntst)
+u.kmap('n', '<leader>x', ':bd<CR>', ntst)
 
 -- window resize
 u.kmap('n', ')', ':vertical resize +5<CR>', ntst)

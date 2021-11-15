@@ -37,9 +37,8 @@ vim.o.incsearch = true
 vim.o.mouse = 'a'
 vim.o.pumheight = 10
 vim.o.pyxversion = 3
-vim.o.scrolloff = 16
-vim.o.sessionoptions =
-    "blank,buffers,curdir,folds,help,options,tabpages,winsize,resize,winpos,terminal"
+vim.o.scrolloff = 8
+vim.o.sessionoptions = "buffers,curdir,winsize,resize,winpos"
 vim.o.shell = '/usr/bin/env fish'
 vim.o.shiftwidth = 2
 vim.o.showbreak = '↪'
@@ -54,6 +53,8 @@ vim.o.undofile = true
 vim.o.updatetime = 500
 vim.o.wildmenu = true
 vim.o.writebackup = false
+
+vim.opt.completeopt = {'menuone', 'menu', 'noselect'}
 
 vim.wo.colorcolumn = '81'
 vim.wo.conceallevel = 0

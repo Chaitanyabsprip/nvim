@@ -1,7 +1,7 @@
 require("flutter-tools").setup {
   -- closing_tags = {highlight = "Comment", prefix = "> // ", enabled = true},
   dev_tools = {autostart = true, auto_open_browser = true},
-  debugger = {enabled = true},
+  debugger = {enabled = false},
   flutter_path = "/Users/chaitanyasharma/Downloads/flutter/bin/flutter",
   lsp = {
     on_attach = LSP.common_on_attach,

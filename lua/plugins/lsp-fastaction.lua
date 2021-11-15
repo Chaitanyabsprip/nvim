@@ -1,4 +1,23 @@
-local fastaction = require("lsp-fastaction")
-local u = require("utils")
-fastaction.setup({hide_cursor = true, action_data = {}})
+local fastaction = require('lsp-fastaction')
 
+local opts = {
+  hide_cursor = true,
+  action_data = {
+    dart = {
+      {order = 1, pattern = 'import library', key = 'i'},
+      {order = 1, pattern = 'organize imports', key = 'o'},
+      {order = 2, pattern = 'sort member', key = 's'},
+      {order = 2, pattern = 'wrap with widget', key = 'w'},
+      {order = 3, pattern = 'extract widget', key = 'x'},
+      {order = 4, pattern = 'column', key = 'c'},
+      {order = 4, pattern = 'extract method', key = 'e'},
+      {order = 4, pattern = 'padding', key = 'p'},
+      {order = 4, pattern = 'remove', key = 'r'},
+      {order = 4, pattern = 'wrap with padding', key = 'p'},
+      {order = 5, pattern = 'extract local', key = 'v'},
+      {order = 5, pattern = 'add', key = 'a'}
+    }
+  }
+}
+
+fastaction.setup(opts)

@@ -5,10 +5,99 @@
 --     vim.g.gitblame_enabled = false
 --   end
 -- }
+-- use "jbyuki/instant.nvim"
+-- use {"iamcco/markdown-preview.nvim", run = "cd app && yarn install"}
 -- use {
 --   'glacambre/firenvim',
 --   run = function()
 --     vim.fn['firenvim#install'](0)
+--   end
+-- }
+-- use {"nicwest/vim-workman"}
+-- use {"nvim-treesitter/nvim-treesitter-refactor"}
+-- use {"folke/lua-dev.nvim"}
+-- use {"pianocomposer321/yabs.nvim"}
+-- use {
+--   "ayu-theme/ayu-vim",
+--   config = function()
+--     vim.g.ayucolor = "mirage"
+--     _G.toggle_ayucolor = function()
+--       if vim.g.ayucolor_num == nil then
+--         vim.g.ayucolor_num = 0
+--       end
+--       local colors = {'mirage', 'dark', 'light'}
+--       ---@diagnostic disable-next-line: undefined-field
+--       vim.g.colo_num = ((vim.g.colo_num % table.getn(colors)) + 1)
+--       vim.g.ayucolor = colors[vim.g.colo_num]
+--       vim.api.nvim_exec("colorscheme ayu", false)
+--       print(vim.g.ayucolor)
+--     end
+--   end
+-- }
+-- use {"mfussenegger/nvim-dap"}
+-- use {
+--   "shaunsingh/moonlight.nvim",
+--   config = function()
+--     vim.g.moonlight_borders = true
+--     vim.g.moonlight_contrast = true
+--     vim.g.moonlight_disable_background = false
+--     vim.g.moonlight_italic_comments = true
+--     vim.g.moonlight_italic_functions = true
+--     vim.g.moonlight_italic_keywords = true
+--     vim.g.moonlight_italic_variables = false
+--   end
+-- }
+-- use {
+--   "marko-cerovac/material.nvim",
+--   config = function()
+--     vim.g.material_borders = true
+--     vim.g.material_contrast = true
+--     vim.g.material_disable_background = false
+--     vim.g.material_italic_comments = true
+--     vim.g.material_italic_functions = true
+--     vim.g.material_italic_keywords = true
+--     vim.g.material_italic_variables = false
+--     vim.g.material_style = 'deep ocean'
+--     vim.api.nvim_set_keymap('n', '<leader>m',
+--                             ":lua require('material.functions').toggle_style(true)<CR>",
+--                             {noremap = true, silent = true})
+--   end
+-- }
+-- use {"michaelb/sniprun", run = "bash ./install.sh"}
+-- use {"rcarriga/nvim-dap-ui"}
+-- use {"nvim-telescope/telescope-dap.nvim"}
+-- use {
+--   "SmiteshP/nvim-gps",
+--   requires = "nvim-treesitter/nvim-treesitter",
+--   config = function()
+--     require("nvim-gps").setup({
+--       icons = {
+--         ["class-name"] = ' ', -- Classes and class-like objects
+--         ["function-name"] = ' ', -- Functions
+--         ["method-name"] = ' ' -- Methods (functions inside class-like objects)
+--       },
+--       languages = {},
+--       separator = ' -> '
+--     })
+--   end
+-- }
+-- use {
+--   "NTBBloodbath/rest.nvim",
+--   config = function()
+--     require('rest-nvim').setup()
+--     vim.api.nvim_set_keymap("n", "<leader>rn",
+--                             "<cmd>lua require('rest-nvim').run()<CR>",
+--                             {noremap = true, silent = true})
+--   end
+-- }
+-- use {
+--   "nacro90/numb.nvim",
+--   config = function()
+--     require('numb').setup {
+--       show_numbers = true, -- Enable 'number' for the window while peeking
+--       show_cursorline = true, -- Enable 'cursorline' for the window while peeking
+--       number_only = false -- Peek only when the command is only a number instead of when it starts with a number
+--     }
 --   end
 -- }
 -- use "haringsrob/nvim_context_vt"
@@ -27,7 +116,6 @@
 -- }
 -- use "lilyinstarlight/vim-sonic-pi"
 -- use "mattn/emmet-vim"
--- use 'matbme/JABS.nvim'
 -- use "metakirby5/codi.vim"
 -- use "natebosch/dartlang-snippets"
 -- use "nvim-telescope/telescope-media-files.nvim"

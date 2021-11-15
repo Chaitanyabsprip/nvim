@@ -1,5 +1,4 @@
 -- local gps = require("nvim-gps")
-
 local get_lsp_client = function(msg)
   msg = msg or 'No Active Lsp'
   local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
@@ -23,7 +22,7 @@ local function trailing_whitespace()
   if trail ~= 0 then
     return ''
   else
-    return nil
+    return ''
   end
 end
 

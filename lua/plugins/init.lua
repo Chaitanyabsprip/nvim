@@ -16,12 +16,12 @@ return packer.startup(function()
   -- - - - - - - - - - - - - - - - - - XXX - - - - - - - - - - - - - - - - - -
 
   -- - - - - - - - - - - - - - - - - - LSP - - - - - - - - - - - - - - - - - -
-  use "arkav/lualine-lsp-progress"
-  use "akinsho/flutter-tools.nvim"
+  use {"akinsho/flutter-tools.nvim"}
+  use {"arkav/lualine-lsp-progress"}
   use {"folke/lsp-trouble.nvim"}
-  use "mfussenegger/nvim-jdtls"
-  use "neovim/nvim-lspconfig"
-  use "nvim-lua/lsp_extensions.nvim"
+  use {"jose-elias-alvarez/null-ls.nvim"}
+  use {"neovim/nvim-lspconfig"}
+  use {"nvim-lua/lsp_extensions.nvim"}
   use {
     "onsails/lspkind-nvim",
     config = function()
@@ -59,23 +59,13 @@ return packer.startup(function()
     end
   }
   use {"camspiers/snap"}
-  use {"kyazdani42/nvim-tree.lua", requires = {"kyazdani42/nvim-web-devicons"}}
+  use {"kyazdani42/nvim-tree.lua", requires = "kyazdani42/nvim-web-devicons"}
   use {"nvim-telescope/telescope.nvim", requires = {"nvim-lua/plenary.nvim"}}
 
   -- - - - - - - - - - - - - - - - - - XXX - - - - - - - - - - - - - - - - - -
 
   -- - - - - - - - - - - - - - - - - EDITING - - - - - - - - - - - - - - - - -
 
-  use {
-    "b3nj5m1n/kommentary",
-    config = function()
-      require"kommentary.config".configure_language("default", {
-        prefer_single_line_comments = true,
-        use_consistent_indentation = true,
-        ignore_whitespace = true
-      })
-    end
-  }
   use { -- better surround plugin needed
     "blackCauldron7/surround.nvim",
     config = function()
@@ -83,28 +73,29 @@ return packer.startup(function()
     end
   }
   use {
-    "mbbill/undotree",
+    'numToStr/Comment.nvim',
     config = function()
-      vim.api.nvim_set_keymap('n', '<C-u>', ':UndotreeToggle<CR>',
-                              {noremap = true})
-    end,
-    cmd = {'UndotreeToggle'}
+      require('Comment').setup()
+    end
   }
   use {"windwp/nvim-autopairs"}
-  use "windwp/nvim-ts-autotag"
-  use "wellle/visual-split.vim"
 
   -- - - - - - - - - - - - - - - - - - XXX - - - - - - - - - - - - - - - - - -
 
   -- - - - - - - - - - - - - - - - - - GIT - - - - - - - - - - - - - - - - - -
 
-  use {'tanvirtin/vgit.nvim', requires = 'nvim-lua/plenary.nvim'}
+  use {
+    "lewis6991/gitsigns.nvim",
+    requires = {"nvim-lua/plenary.nvim"}
+    -- tag = 'release' -- To use the latest release
+  }
   use {
     "rhysd/conflict-marker.vim",
     config = function()
       -- vim.g.conflict_marker_highlight_group = ''
       -- Include text after begin and end markers
       vim.g.conflict_marker_begin = '^<<<<<<< .*$'
+      vim.g.conflict_marker_common_ancestors = '^||||||| .*$'
       vim.g.conflict_marker_end = '^>>>>>>> .*$'
     end
   }
@@ -113,6 +104,11 @@ return packer.startup(function()
 
   -- - - - - - - - - - - - - - - - - UTILITIES - - - - - - - - - - - - - - - -
 
+  use {"akinsho/nvim-bufferline.lua"}
+  use {"akinsho/nvim-toggleterm.lua"}
+  use {"folke/twilight.nvim"}
+  use {"folke/zen-mode.nvim"}
+  use {"kyazdani42/nvim-web-devicons"}
   use {
     "matbme/JABS.nvim",
     config = function()
@@ -122,7 +118,6 @@ return packer.startup(function()
         width = 70,
         height = 10,
         border = 'single', -- none, single, double, rounded, solid, shadow, (or an array or chars)
-
         -- Options for preview window
         preview_position = 'bottom', -- top, bottom, left, right
         preview = {
@@ -130,103 +125,56 @@ return packer.startup(function()
           height = 30,
           border = 'double' -- none, single, double, rounded, solid, shadow, (or an array or chars)
         },
-
         -- the options below are ignored when position = 'center'
         col = ui.width * 0.55, -- Window appears on the right
         row = ui.height / 2 -- Window appears in the vertical middle
       }
     end
   }
-  use {"akinsho/nvim-toggleterm.lua"}
-  use {"nicwest/vim-workman"}
+  use {
+    "nathom/filetype.nvim",
+    config = function()
+      vim.g.did_load_filetypes = 1
+    end
+  }
   use {
     "norcalli/nvim-colorizer.lua",
     config = function()
       require("colorizer").setup {}
     end
   }
-  use {
-    "nacro90/numb.nvim",
-    config = function()
-      require('numb').setup {
-        show_numbers = true, -- Enable 'number' for the window while peeking
-        show_cursorline = true, -- Enable 'cursorline' for the window while peeking
-        number_only = false -- Peek only when the command is only a number instead of when it starts with a number
-      }
-    end
-  }
-  use {
-    "akinsho/nvim-bufferline.lua",
-    config = function()
-    end
-  }
+  use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
+  use {"nvim-lua/plenary.nvim"}
+  use {"nvim-lua/popup.nvim"}
   use {"rmagatti/auto-session", requires = {"rmagatti/session-lens"}}
-  use {
-    "NTBBloodbath/rest.nvim",
-    config = function()
-      require('rest-nvim').setup()
-      vim.api.nvim_set_keymap("n", "<leader>rn",
-                              "<cmd>lua require('rest-nvim').run()<CR>",
-                              {noremap = true, silent = true})
-    end
-  }
-  use {
-    "SmiteshP/nvim-gps",
-    requires = "nvim-treesitter/nvim-treesitter",
-    config = function()
-      require("nvim-gps").setup({
-        icons = {
-          ["class-name"] = ' ', -- Classes and class-like objects
-          ["function-name"] = ' ', -- Functions
-          ["method-name"] = ' ' -- Methods (functions inside class-like objects)
-        },
-        languages = { -- You can disable any language individually here
-          -- ["c"] = false,
-          -- ["cpp"] = false,
-          -- ["go"] = true,
-          -- ["java"] = true,
-          -- ["javascript"] = true,
-          -- ["lua"] = true,
-          -- ["python"] = true,
-          -- ["rust"] = true,
-          -- ["dart"] = tue
-        },
-        separator = ' -> '
-      })
-    end
-  }
-  use "dstein64/vim-startuptime"
-  use {"folke/todo-comments.nvim"}
-  use {"folke/twilight.nvim"}
-  use {"folke/zen-mode.nvim"}
-  use {"iamcco/markdown-preview.nvim", run = "cd app && yarn install"}
   use {'rcarriga/nvim-notify'}
   use {
     "romgrk/nvim-treesitter-context",
     config = function()
-      require'treesitter-context'.setup {
-        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-        throttle = true -- Throttles plugin updates (may improve performance)
-      }
+      require'treesitter-context'.setup {enable = true, throttle = true}
     end
   }
-  use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
-  use "nvim-treesitter/nvim-treesitter-refactor"
-  use "nvim-lua/plenary.nvim"
-  use "nvim-lua/popup.nvim"
-  use "nvim-telescope/telescope-dap.nvim"
-  use "kyazdani42/nvim-web-devicons"
-  -- use {"mhinz/vim-startify"}
-  -- use "jbyuki/instant.nvim"
 
   -- - - - - - - - - - - - - - - - - - XXX - - - - - - - - - - - - - - - - - -
 
   -- - - - - - - - - - - - - COMPLETION AND SNIPPETS - - - - - - - - - - - - -
 
-  use "Nash0x7E2/awesome-flutter-snippets"
-  use "rafamadriz/friendly-snippets"
-  use {"hrsh7th/nvim-compe"}
-  use "hrsh7th/vim-vsnip"
+  use {"dmitmel/cmp-cmdline-history"}
+  use {"github/copilot.vim"}
+  use {"hrsh7th/cmp-emoji"}
+  use {"hrsh7th/cmp-nvim-lsp"}
+  use {"hrsh7th/cmp-nvim-lsp-document-symbol"}
+  use {"hrsh7th/cmp-nvim-lua"}
+  use {"hrsh7th/cmp-buffer"}
+  use {"hrsh7th/cmp-path"}
+  use {"hrsh7th/cmp-cmdline"}
+  use {"hrsh7th/nvim-cmp"}
+  use {"hrsh7th/cmp-vsnip"}
+  use {"hrsh7th/vim-vsnip"}
+  use {"lukas-reineke/cmp-rg"}
+  use {"lukas-reineke/cmp-under-comparator"}
+  use {"Nash0x7E2/awesome-flutter-snippets"}
+  use {"rafamadriz/friendly-snippets"}
 
   -- - - - - - - - - - - - - - - - - - XXX - - - - - - - - - - - - - - - - - -
 
@@ -237,7 +185,7 @@ return packer.startup(function()
       require"dependency_assist".setup()
     end
   }
-  use "dag/vim-fish"
+  use {"dag/vim-fish"}
   use {
     "dart-lang/dart-vim-plugin",
     config = function()
@@ -245,11 +193,8 @@ return packer.startup(function()
       vim.cmd "let dart_html_in_string=v:true"
     end
   }
-  use "folke/lua-dev.nvim"
-  use {"mfussenegger/nvim-dap"}
-  use {"michaelb/sniprun", run = "bash ./install.sh"}
-  use {"pianocomposer321/yabs.nvim"}
-  use "rcarriga/nvim-dap-ui"
+  -- use {"folke/lua-dev.nvim"}
+  use {"jparise/vim-graphql"}
   use {
     "rcarriga/vim-ultest",
     requires = {"vim-test/vim-test"},
@@ -258,96 +203,39 @@ return packer.startup(function()
       vim.g.ultest_output_on_run = 0
     end
   }
-  use "wbthomason/packer.nvim"
+  use {"wbthomason/packer.nvim"}
 
   -- ***************************      THEME      ********************************
-
-  -- use "arzg/vim-substrata"
-  -- use {
-  --   "ayu-theme/ayu-vim",
-  --   config = function()
-  --     vim.g.ayucolor = "mirage"
-  --     _G.toggle_ayucolor = function()
-  --       if vim.g.ayucolor_num == nil then
-  --         vim.g.ayucolor_num = 0
-  --       end
-  --       local colors = {'mirage', 'dark', 'light'}
-  --       ---@diagnostic disable-next-line: undefined-field
-  --       vim.g.colo_num = ((vim.g.colo_num % table.getn(colors)) + 1)
-  --       vim.g.ayucolor = colors[vim.g.colo_num]
-  --       vim.api.nvim_exec("colorscheme ayu", false)
-  --       print(vim.g.ayucolor)
-  --     end
-  --   end
-  -- }
 
   use {
     "rose-pine/neovim",
     as = "rose-pine",
-    commit = "da185c1",
     config = function()
       vim.g.rose_pine_variant = 'base'
       vim.g.rose_pine_enable_italics = true
       vim.g.rose_pine_disable_background = true
     end
   }
-
-  -- use {
-  --   "folke/tokyonight.nvim",
-  --   config = function()
-  --     vim.g.tokyonight_colors = {border = "#7aa2f7", bg = "#262C3A"}
-  --     vim.g.tokyonight_dark_float = true
-  --     vim.g.tokyonight_dark_sidebar = true
-  --     vim.g.tokyonight_day_brightness = 1
-  --     vim.g.tokyonight_hide_inactive_statusline = false
-  --     vim.g.tokyonight_italic_comments = true
-  --     vim.g.tokyonight_italic_functions = true
-  --     vim.g.tokyonight_italic_keywords = true
-  --     vim.g.tokyonight_italic_variables = false
-  --     vim.g.tokyonight_sidebars = {'packer'}
-  --     vim.g.tokyonight_style = 'night'
-  --     vim.g.tokyonight_transparent = false
-  --   end
-  -- }
-
-  use {"hoob3rt/lualine.nvim"}
-
-  -- use "kyazdani42/blue-moon"
-
   use {
-    "marko-cerovac/material.nvim",
+    "folke/tokyonight.nvim",
     config = function()
-      vim.g.material_borders = true
-      vim.g.material_contrast = true
-      vim.g.material_disable_background = false
-      vim.g.material_italic_comments = true
-      vim.g.material_italic_functions = true
-      vim.g.material_italic_keywords = true
-      vim.g.material_italic_variables = false
-      vim.g.material_style = 'deep ocean'
-
-      vim.api.nvim_set_keymap('n', '<leader>m',
-                              ":lua require('material.functions').toggle_style(true)<CR>",
-                              {noremap = true, silent = true})
+      vim.g.tokyonight_colors = {border = "#7aa2f7", bg = "#262C3A"}
+      vim.g.tokyonight_dark_float = true
+      vim.g.tokyonight_dark_sidebar = true
+      vim.g.tokyonight_day_brightness = 0.3
+      vim.g.tokyonight_hide_inactive_statusline = false
+      vim.g.tokyonight_italic_comments = true
+      vim.g.tokyonight_italic_functions = true
+      vim.g.tokyonight_italic_keywords = true
+      vim.g.tokyonight_italic_variables = false
+      vim.g.tokyonight_sidebars = {'packer'}
+      vim.g.tokyonight_style = "storm"
+      vim.g.tokyonight_transparent = false
     end
   }
-
+  use {"hoob3rt/lualine.nvim"}
   use "p00f/nvim-ts-rainbow"
-  -- use "projekt0n/github-nvim-theme"
+  use 'yashguptaz/calvera-dark.nvim'
 
-  -- use {
-  --   "shaunsingh/moonlight.nvim",
-  --   config = function()
-  --     vim.g.moonlight_borders = true
-  --     vim.g.moonlight_contrast = true
-  --     vim.g.moonlight_disable_background = false
-  --     vim.g.moonlight_italic_comments = true
-  --     vim.g.moonlight_italic_functions = true
-  --     vim.g.moonlight_italic_keywords = true
-  --     vim.g.moonlight_italic_variables = false
-  --   end
-  -- }
-
-  -- use 'yashguptaz/calvera-dark.nvim'
   -- ****************************************************************************
 end)

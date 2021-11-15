@@ -3,19 +3,19 @@ local nvim_lsp = require "lspconfig"
 local python_arguments = {}
 local isort = {formatCommand = "isort --quiet -", formatStdin = true}
 local yapf = {formatCommand = "yapf --quiet", formatStdin = true}
-local black = {formatCommand = "black --quiet -", formatStdin = true}
+-- local black = {formatCommand = "black --quiet -", formatStdin = true}
 local flake8 = { -- !TODO : replace with path argument
   LintCommand = "flake8 --ignore=W503,W504,W391 --exit-zero --stdin-display-name ${INPUT} -",
   lintStdin = true,
   lintFormats = {"%f:%l:%c: %m"}
 }
-local mypy = { -- !TODO : replace with path argument NOT WORKING
-  LintCommand = "mypy --show-column-numbers",
-  lintStdin = true,
-  lintFormats = {
-    "%f:%l:%c: %trror: %m", "%f:%l:%c: %tarning: %m", "%f:%l:%c: %tote: %m"
-  }
-}
+-- local mypy = { -- !TODO : replace with path argument NOT WORKING
+--   LintCommand = "mypy --show-column-numbers",
+--   lintStdin = true,
+--   lintFormats = {
+--     "%f:%l:%c: %trror: %m", "%f:%l:%c: %tarning: %m", "%f:%l:%c: %tote: %m"
+--   }
+-- }
 
 -- table.insert(python_arguments, mypy)
 table.insert(python_arguments, isort)
@@ -67,18 +67,15 @@ nvim_lsp.efm.setup {
   end,
   init_options = {documentFormatting = true},
   filetypes = {
-    "css", "fish", "html", "javascript", "javascriptreact", "json", "lua",
-    "python", "scss", "sh", "typescript", "typescriptreact", "vue", "yaml",
-    "zsh"
+    "css", "fish", "graphql", "html", "javascript", "javascriptreact", "json",
+    "lua", "python", "scss", "sh", "typescript", "typescriptreact", "vue",
+    "yaml", "zsh"
   },
-  -- filetypes = {
-  --   "fish", "javascript", "javascriptreact", "python", "sh", "typescript",
-  --   "typescriptreact", "vue", "zsh"
-  -- },
   settings = {
     rootMarkers = {".git/", ".gitignore"},
     languages = {
       css = {prettier},
+      graphql = {prettier},
       html = {prettier},
       javascript = tsserver_args,
       javascriptreact = tsserver_args,

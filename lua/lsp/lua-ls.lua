@@ -18,73 +18,36 @@ else
   print("Unsupported system for sumneko")
 end
 
---[[ nvim_lsp.sumneko_lua.setup {
-  on_attach = LSP.on_attach,
-  cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
-  settings = {
-    Lua = {
-      runtime = {version = 'LuaJIT', path = vim.split(package.path, ';')},
-      diagnostics = {globals = {'vim'}},
-      workspace = {
-        library = {
-          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true
-        }
-      }
-    }
-  }
-} ]] --
---
---
--- put this file somewhere in your nvim config, like: ~/.config/nvim/lua/config/lua-lsp.lua
--- usage: require'lspconfig'.sumneko_lua.setup(require("config.lua-lsp"))
-local library = {}
+local library = {
+  [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+  [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true
+}
 
 local path = vim.split(package.path, ";")
 
 -- this is the ONLY correct way to setup your path
 table.insert(path, "lua/?.lua")
-
-local function add(lib)
-  for _, p in pairs(vim.fn.expand(lib, false, true)) do
-    p = vim.loop.fs_realpath(p)
-    library[p] = true
-  end
-end
-
--- add runtime
---[[ add("$VIMRUNTIME")
-add("~/.config/nvim")
-add("~/.local/share/nvim/site/pack/packer/start/*") ]]
+table.insert(path, "lua/lsp/?.lua")
+table.insert(path, "lua/plugins/?.lua")
+table.insert(path, "lua/plugins/themes/?.lua")
 
 local config = {
-  -- delete root from workspace to make sure we don't trigger duplicate warnings
   on_new_config = function(config, root)
     local libs = vim.tbl_deep_extend("force", {}, library)
     libs[root] = nil
     config.settings.Lua.workspace.library = libs
     return config
   end,
-  root_dir = require'lspconfig'.util.root_pattern(".git", ".gitignore",
-                                                  vim.fn.getcwd()),
+  root_dir = nvim_lsp.util.root_pattern(".git", ".gitignore", vim.fn.getcwd()),
   capabilities = LSP.capabilities,
   on_attach = LSP.common_on_attach,
   cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
   settings = {
     Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = "LuaJIT",
-        -- Setup your lua path
-        path = path
-      },
+      runtime = {version = "LuaJIT", path = path},
       completion = {callSnippet = "Both"},
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = {"vim"}
-      },
+      diagnostics = {globals = {"vim"}},
       workspace = {
-        -- Make the server aware of Neovim runtime files
         library = library,
         maxPreload = 2000,
         preloadFileSize = 50000
@@ -95,5 +58,4 @@ local config = {
   }
 }
 
-local luadev = require"lua-dev".setup({lspconfig = config})
-nvim_lsp.sumneko_lua.setup(luadev)
+nvim_lsp.sumneko_lua.setup(config)
