@@ -1,188 +1,35 @@
+-- use "Dave-Elec/gruvbox"
 -- use "dstein64/vim-startuptime"
--- use {
---   "f-person/git-blame.nvim",
---   config = function()
---     vim.g.gitblame_enabled = false
---   end
--- }
--- use "jbyuki/instant.nvim"
--- use {"iamcco/markdown-preview.nvim", run = "cd app && yarn install"}
--- use {
---   'glacambre/firenvim',
---   run = function()
---     vim.fn['firenvim#install'](0)
---   end
--- }
--- use {"nicwest/vim-workman"}
--- use {"nvim-treesitter/nvim-treesitter-refactor"}
--- use {"folke/lua-dev.nvim"}
--- use {"pianocomposer321/yabs.nvim"}
--- use {
---   "ayu-theme/ayu-vim",
---   config = function()
---     vim.g.ayucolor = "mirage"
---     _G.toggle_ayucolor = function()
---       if vim.g.ayucolor_num == nil then
---         vim.g.ayucolor_num = 0
---       end
---       local colors = {'mirage', 'dark', 'light'}
---       ---@diagnostic disable-next-line: undefined-field
---       vim.g.colo_num = ((vim.g.colo_num % table.getn(colors)) + 1)
---       vim.g.ayucolor = colors[vim.g.colo_num]
---       vim.api.nvim_exec("colorscheme ayu", false)
---       print(vim.g.ayucolor)
---     end
---   end
--- }
--- use {"mfussenegger/nvim-dap"}
--- use {
---   "shaunsingh/moonlight.nvim",
---   config = function()
---     vim.g.moonlight_borders = true
---     vim.g.moonlight_contrast = true
---     vim.g.moonlight_disable_background = false
---     vim.g.moonlight_italic_comments = true
---     vim.g.moonlight_italic_functions = true
---     vim.g.moonlight_italic_keywords = true
---     vim.g.moonlight_italic_variables = false
---   end
--- }
--- use {
---   "marko-cerovac/material.nvim",
---   config = function()
---     vim.g.material_borders = true
---     vim.g.material_contrast = true
---     vim.g.material_disable_background = false
---     vim.g.material_italic_comments = true
---     vim.g.material_italic_functions = true
---     vim.g.material_italic_keywords = true
---     vim.g.material_italic_variables = false
---     vim.g.material_style = 'deep ocean'
---     vim.api.nvim_set_keymap('n', '<leader>m',
---                             ":lua require('material.functions').toggle_style(true)<CR>",
---                             {noremap = true, silent = true})
---   end
--- }
--- use {"michaelb/sniprun", run = "bash ./install.sh"}
--- use {"rcarriga/nvim-dap-ui"}
--- use {"nvim-telescope/telescope-dap.nvim"}
--- use {
---   "SmiteshP/nvim-gps",
---   requires = "nvim-treesitter/nvim-treesitter",
---   config = function()
---     require("nvim-gps").setup({
---       icons = {
---         ["class-name"] = ' ', -- Classes and class-like objects
---         ["function-name"] = ' ', -- Functions
---         ["method-name"] = ' ' -- Methods (functions inside class-like objects)
---       },
---       languages = {},
---       separator = ' -> '
---     })
---   end
--- }
--- use {
---   "NTBBloodbath/rest.nvim",
---   config = function()
---     require('rest-nvim').setup()
---     vim.api.nvim_set_keymap("n", "<leader>rn",
---                             "<cmd>lua require('rest-nvim').run()<CR>",
---                             {noremap = true, silent = true})
---   end
--- }
--- use {
---   "nacro90/numb.nvim",
---   config = function()
---     require('numb').setup {
---       show_numbers = true, -- Enable 'number' for the window while peeking
---       show_cursorline = true, -- Enable 'cursorline' for the window while peeking
---       number_only = false -- Peek only when the command is only a number instead of when it starts with a number
---     }
---   end
--- }
 -- use "haringsrob/nvim_context_vt"
+-- use "jbyuki/instant.nvim"
 -- use "jubnzv/virtual-types.nvim"
 -- use "kevinhwang91/nvim-bqf"
--- use "jose-elias-alvarez/null-ls.nvim"
--- use {
---   "kevinhwang91/rnvimr",
---   config = function()
---     vim.cmd [[
---     tnoremap <silent> <M-i> <C-\><C-n>:RnvimrResize<CR>
---     nnoremap <silent> <M-o> :RnvimrToggle<CR>
---     tnoremap <silent> <M-o> <C-\><C-n>:RnvimrToggle<CR>
---   ]] --   end,
---   cmd = {'RnvimrToggle'}
--- }
 -- use "lilyinstarlight/vim-sonic-pi"
 -- use "mattn/emmet-vim"
 -- use "metakirby5/codi.vim"
--- use "natebosch/dartlang-snippets"
+-- use "ntk148v/vim-horizon"
 -- use "nvim-telescope/telescope-media-files.nvim"
--- use {
---   "rmagatti/goto-preview",
---   config = function()
---     require('goto-preview').setup {
---       width = 120, -- Width of the floating window
---       height = 15, -- Height of the floating window
---       default_mappings = true, -- Bind default mappings
---       debug = false, -- Print debug information
---       opacity = nil -- 0-100 opacity level of the floating window where 100 is fully transparent.
---     }
---   end
--- }
 -- use "sbdchd/neoformat"
--- use {
---   "simrat39/symbols-outline.nvim",
---   config = function()
---     vim.g.symbols_outline = {
---       highlight_hovered_item = true,
---       show_guides = true,
---       auto_preview = false, -- experimental
---       position = 'right',
---       keymaps = {
---         close = "q",
---         goto_location = "<Cr>",
---         focus_location = "o",
---         hover_symbol = "<C-space>",
---         rename_symbol = "r",
---         code_actions = "a"
---       },
---       lsp_blacklist = {}
---     }
---     vim.api.nvim_set_keymap("n", "<M-s>", ":SymbolsOutline<CR>",
---                             {noremap = true, silent = true})
---   end,
---   cmd = {'SymbolsOutline'}
--- }
--- use "tpope/vim-repeat"
 -- use "vimwiki/vimwiki"
 -- use "voldikss/vim-floaterm"
+-- use { "NTBBloodbath/rest.nvim", config = function() require('rest-nvim').setup() vim.api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua require('rest-nvim').run()<CR>", {noremap = true, silent = true}) end } use { "nacro90/numb.nvim", config = function() require('numb').setup { show_numbers = true, -- Enable 'number' for the window while peeking show_cursorline = true, -- Enable 'cursorline' for the window while peeking number_only = false -- Peek only when the command is only a number instead of when it starts with a number } end }
+-- use { "SmiteshP/nvim-gps", requires = "nvim-treesitter/nvim-treesitter", config = function() require("nvim-gps").setup({ icons = { ["class-name"] = ' ', -- Classes and class-like objects ["function-name"] = ' ', -- Functions ["method-name"] = ' ' -- Methods (functions inside class-like objects) }, languages = {}, separator = ' -> ' }) end }
+-- use { "ayu-theme/ayu-vim", config = function() vim.g.ayucolor = "mirage" _G.toggle_ayucolor = function() if vim.g.ayucolor_num == nil then vim.g.ayucolor_num = 0 end local colors = {'mirage', 'dark', 'light'} ---@diagnostic disable-next-line: undefined-field vim.g.colo_num = ((vim.g.colo_num % table.getn(colors)) + 1) vim.g.ayucolor = colors[vim.g.colo_num] vim.api.nvim_exec("colorscheme ayu", false) print(vim.g.ayucolor) end end }
 -- use { "dsznajder/vscode-es7-javascript-react-snippets", run = "yarn install --frozen-lockfile && yarn compile" }
---[[ use {
-    "phaazon/hop.nvim",
-    as = "hop",
-    config = function()
-      require"hop".setup {keys = "etovxqpdygfblzhckisuran"}
-      vim.api.nvim_set_keymap('n', 'gw',
-                              "<cmd>lua require'hop'.hint_words()<cr>", {})
-      vim.api.nvim_set_keymap('n', 'gp',
-                              "<cmd>lua require'hop'.hint_patterns()<cr>", {})
-      vim.api.nvim_set_keymap('n', 'gl',
-                              "<cmd>lua require'hop'.hint_lines()<cr>", {})
-      vim.api.nvim_set_keymap('n', 'g1',
-                              "<cmd>lua require'hop'.hint_char1()<cr>", {})
-      vim.api.nvim_set_keymap('n', 'g2',
-                              "<cmd>lua require'hop'.hint_char2()<cr>", {})
-    end
-  } ]] -- use {"rcarriga/vim-ultest", requires = {"janko/vim-test"}, run = ":UpdateRemotePlugins" }
--- use "Dave-Elec/gruvbox"
--- use "christianchiarulli/nvcode-color-schemes.vim"
--- use "ntk148v/vim-horizon"
+-- use { "f-person/git-blame.nvim", config = function() vim.g.gitblame_enabled = false end }
+-- use { "kevinhwang91/rnvimr", config = function() vim.cmd [[ tnoremap <silent> <M-i> <C-\><C-n>:RnvimrResize<CR> nnoremap <silent> <M-o> :RnvimrToggle<CR> tnoremap <silent> <M-o> <C-\><C-n>:RnvimrToggle<CR> ]] --   end, cmd = {'RnvimrToggle'} }
+-- use { "marko-cerovac/material.nvim", config = function() vim.g.material_borders = true vim.g.material_contrast = true vim.g.material_disable_background = false vim.g.material_italic_comments = true vim.g.material_italic_functions = true vim.g.material_italic_keywords = true vim.g.material_italic_variables = false vim.g.material_style = 'deep ocean' vim.api.nvim_set_keymap('n', '<leader>m', ":lua require('material.functions').toggle_style(true)<CR>", {noremap = true, silent = true}) end }
+-- use { "onsails/lspkind-nvim", config = function() require"lspkind".init({}) end }
+-- use { "rmagatti/goto-preview", config = function() require('goto-preview').setup { width = 120, -- Width of the floating window height = 15, -- Height of the floating window default_mappings = true, -- Bind default mappings debug = false, -- Print debug information opacity = nil -- 0-100 opacity level of the floating window where 100 is fully transparent. } end }
+-- use { "romgrk/nvim-treesitter-context", config = function() require'treesitter-context'.setup {enable = true, throttle = true} end }
+-- use { "shaunsingh/moonlight.nvim", config = function() vim.g.moonlight_borders = true vim.g.moonlight_contrast = true vim.g.moonlight_disable_background = false vim.g.moonlight_italic_comments = true vim.g.moonlight_italic_functions = true vim.g.moonlight_italic_keywords = true vim.g.moonlight_italic_variables = false end }
+-- use { "simrat39/symbols-outline.nvim", config = function() vim.g.symbols_outline = { highlight_hovered_item = true, show_guides = true, auto_preview = false, -- experimental position = 'right', keymaps = { close = "q", goto_location = "<Cr>", focus_location = "o", hover_symbol = "<C-space>", rename_symbol = "r", code_actions = "a" }, lsp_blacklist = {} } vim.api.nvim_set_keymap("n", "<M-s>", ":SymbolsOutline<CR>", {noremap = true, silent = true}) end, cmd = {'SymbolsOutline'} }
+-- use { 'glacambre/firenvim', run = function() vim.fn['firenvim#install'](0) end }
+-- use { 'tzachar/compe-tabnine', run = './install.sh', requires = 'hrsh7th/nvim-compe' }
 -- use {"dracula/vim", as = "dracula"}
--- use {
---   'tzachar/compe-tabnine',
---   run = './install.sh',
---   requires = 'hrsh7th/nvim-compe'
--- }
 -- use {"glepnir/galaxyline.nvim", branch = "main"}
+-- use {"michaelb/sniprun", run = "bash ./install.sh"}
+-- use {"nvim-treesitter/nvim-treesitter-refactor"}
+-- use {"pianocomposer321/yabs.nvim"}
+-- use {'rcarriga/nvim-notify'}
+-- use { 'nvim-neorg/neorg', config = "require 'plugins.editing.neorg'", requires = { 'nvim-lua/plenary.nvim' }, },

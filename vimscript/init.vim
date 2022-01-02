@@ -1,5 +1,4 @@
 source ~/.config/nvim/vimscript/autocommands.vim
-source ~/.config/nvim/vimscript/plugins/vim-ultest.vim
 
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175
 
@@ -25,6 +24,7 @@ function! CreateCenteredFloatingWindow()
     call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
     au BufWipeout <buffer> exe 'bw '.s:buf
 endfunction
+
 
 " function! WorkmanLayoutBinds()
 "     "(O)pen line -> (L)ine

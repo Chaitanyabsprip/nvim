@@ -1,5 +1,2 @@
 lang-servers
-plugin
-Session.vim
-Session.vim
-init.lua
+plugin/

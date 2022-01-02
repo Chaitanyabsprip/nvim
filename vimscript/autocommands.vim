@@ -10,11 +10,11 @@ augroup END
 " Display a message when the current file is not in utf-8 format.
 " Note that we need to use `unsilent` command here because of this issue:
 " https://github.com/vim/vim/issues/4379
-augroup non_utf8_file_warn
-    autocmd!
-    autocmd BufRead * if &fileencoding != 'utf-8'
-                \ | unsilent echomsg 'File not in UTF-8 format!' | endif
-augroup END
+" augroup non_utf8_file_warn
+"     autocmd!
+"     autocmd BufRead * if &fileencoding != 'utf-8'
+"                 \ | unsilent echomsg 'File not in UTF-8 format!' | endif
+" augroup END
 
 " Automatically reload the file if it is changed outside of Nvim, see
 " https://unix.stackexchange.com/a/383044/221410. It seems that `checktime`
@@ -22,7 +22,7 @@ augroup END
 " line before executing this command. See also http://tinyurl.com/y6av4sy9.
 augroup auto_read
     autocmd!
-    autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
+    autocmd FocusGained,BufEnter,CursorHoldI *
                 \ if mode() == 'n' && getcmdwintype() == '' | checktime | endif
     autocmd FileChangedShellPost * echohl WarningMsg
                 \ | echo "File changed on disk. Buffer reloaded!" | echohl None
@@ -30,18 +30,14 @@ augroup END
 
 augroup auto_format
   autocmd!
-  autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)
+  autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1500)
 augroup end
 
-" augroup nvim-lightbulb
-  " autocmd! CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
-" augroup end
-"
-" augroup ranger
-"   au!
-"   autocmd Filetype rnvimr tnoremap <buffer><nowait> j j
-"   autocmd Filetype rnvimr tnoremap <buffer><nowait> k k
-" augroup end
+augroup ranger
+  au!
+  autocmd Filetype rnvimr tnoremap <buffer><nowait> j j
+  autocmd Filetype rnvimr tnoremap <buffer><nowait> k k
+augroup end
 
 augroup pythonindent
   autocmd!
@@ -63,4 +59,25 @@ augroup rust_inlay_hints
         \       only_current_line = false,
         \       enabled = {"TypeHint", "ChainingHint", "ParameterHint"}
         \     }
+augroup end
+
+augroup source_plugins_and_install
+  autocmd!
+  autocmd BufWritePost ~/.config/nvim/lua/plugins/init.lua source ~/.config/nvim/lua/plugins/init.lua
+augroup end
+
+augroup highlihgt_current_line_number
+  autocmd!
+  autocmd ColorScheme * hi clear CursorLine
+  autocmd ColorScheme * hi CursorLineNr guifg=#515980 gui=bold
+augroup end
+
+augroup quit_vim_help
+  autocmd!
+  autocmd FileType help,lspinfo,startuptime,qf nnoremap <buffer> <silent> q <cmd>close<CR>
+augroup end
+
+augroup markdown_ft
+  autocmd!
+  autocmd FileType markdown setlocal foldlevel=1 conceallevel=2 spell
 augroup end

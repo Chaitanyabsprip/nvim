@@ -1,46 +1,7 @@
-require("settings")
-require("mappings")
-require("plugins")
-vim.cmd [[source ~/.config/nvim/vimscript/ginit.vim]]
+vim.cmd [[ source ~/.config/nvim/vimscript/init.vim ]]
+vim.cmd [[ source ~/.config/nvim/vimscript/ginit.vim ]]
 
-require("plugins.auto-session")
-require("plugins.lsp-fastaction")
-require("plugins.notify")
-require("plugins.nvim-bufferline")
-require("plugins.nvim-autopairs")
-require("plugins.nvim-tree")
-require("plugins.nvim-treesitter")
-require("plugins.telescope")
-require("plugins.themes")
-require("plugins.themes.lualine")
-require("plugins.toggleterm")
-require("plugins.trouble")
-require("plugins.twilight")
-require("plugins.workman")
-require("plugins.zenmode")
-
--- LSP
-require("lsp.lsp-settings")
-
-require("lsp.bash-ls")
-require("lsp.clangd-ls")
-require("lsp.css-ls")
-require("lsp.dart-ls")
-require("lsp.efm-general-ls")
-require("lsp.html-ls")
-require("lsp.java-ls")
-require("lsp.js-ts-ls")
--- require("lsp.json-ls")
-require("lsp.lua-ls")
-require("lsp.null-ls")
-require("lsp.nvim-lsp")
-require("lsp.pyright-ls")
-require("lsp.rust-ls")
-
-vim.cmd [[ source ~/.config/nvim/vimscript/init.vim]]
-vim.schedule(function()
-  require("plugins.gitsigns")
-  require("plugins.snap")
-  vim.cmd [[source ~/.config/nvim/vimscript/highlights.vim]]
-  require("plugins.nvim-cmp")
-end)
+require 'settings'
+require 'mappings'
+require 'plugins'
+require('theme').setup()

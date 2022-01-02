@@ -1,4 +1,7 @@
-let g:ultest_use_pty = 1
+let test#strategy = "asyncrun_background"
+
+" ULTEST
+" let g:ultest_use_pty = 1
 
 let g:ultest_output_on_line = 0
 let g:ultest_max_threads = 4
