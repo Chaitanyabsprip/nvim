@@ -163,15 +163,19 @@ end
 M.material = function()
   vim.g.material_style = 'deep ocean'
   prequire('material').setup {
-    borders = true,
-    popup_menu = 'dark', -- Popup menu style ( can be: 'dark', 'light', 'colorful' or 'stealth' )
+    contrast = {
+      popup_menu = true,
+      sidebars = true,
+      floating_windows = true,
+      cursor_line = true,
+    },
     italics = {
       comments = true,
       keywords = true,
       functions = true,
       variables = true,
     },
-    contrast_windows = {
+    contrast_filetypes = {
       'terminal',
       'packer',
       'qf',

@@ -1,4 +1,5 @@
-local lsp = {}
+local server = {}
+local lsp = require 'lsp.setup'
 local prequire = require('utils').preq
 local nvim_lsp = require 'lspconfig'
 local servers = {
@@ -10,7 +11,7 @@ local servers = {
   'vimls',
 }
 
-lsp.dart = function()
+server.dart = function()
   prequire('flutter-tools').setup {
     closing_tags = { enabled = false },
     dev_tools = { autostart = true, auto_open_browser = true },
@@ -24,8 +25,8 @@ lsp.dart = function()
     },
     flutter_path = os.getenv 'HOME' .. '/Downloads/flutter/bin/flutter',
     lsp = {
-      on_attach = LSP.common_on_attach,
-      capabilities = LSP.capabilities,
+      on_attach = lsp.common_on_attach,
+      capabilities = lsp.capabilities(),
       init_options = {
         onlyAnalyzeProjectsWithOpenFiles = true,
         suggestFromUnimportedLibraries = true,
@@ -55,7 +56,7 @@ lsp.dart = function()
   )
 end
 
-lsp.go = function()
+server.go = function()
   nvim_lsp.gopls.setup {
     cmd = { '/home/chaitanya/.config/nvim/lang-servers/gopls/gopls' },
     settings = {
@@ -63,12 +64,12 @@ lsp.go = function()
     },
     root_dir = nvim_lsp.util.root_pattern('.git', '.gitignore', 'go.mod', '.'),
     init_options = { usePlaceholders = true, completeUnimported = true },
-    on_attach = LSP.common_on_attach,
-    capabilities = LSP.capabilities,
+    on_attach = lsp.common_on_attach,
+    capabilities = lsp.capabilities(),
   }
 end
 
-lsp.html = function()
+server.html = function()
   nvim_lsp.html.setup {
     root_dir = require('lspconfig').util.root_pattern(
       '.git',
@@ -76,21 +77,12 @@ lsp.html = function()
       vim.fn.getcwd()
     ),
     init_options = { provideFormatter = false },
-    capabilities = LSP.capabilities,
-    on_attach = LSP.nf_on_attach,
+    capabilities = lsp.capabilities(),
+    on_attach = lsp.nf_on_attach,
   }
 end
 
-lsp.java = function()
-  vim.cmd [[
-		augroup lsp
-			au!
-			au FileType java lua require('jdtls').start_or_attach({cmd = {'java-lsp.sh'}})
-		augroup end
-  ]]
-end
-
-lsp.null = function()
+server.null = function()
   local null_ls = require 'null-ls'
   local formatting = null_ls.builtins.formatting
   local diagnostics = null_ls.builtins.diagnostics
@@ -157,8 +149,8 @@ lsp.null = function()
 
   null_ls.setup {
     save_after_formatting = true,
-    on_attach = LSP.common_on_attach,
-    capabilities = LSP.capabilities,
+    on_attach = lsp.common_on_attach,
+    capabilities = lsp.capabilities(),
     sources = {
       code_actions.eslint_d,
       code_actions.gitsigns,
@@ -179,10 +171,10 @@ lsp.null = function()
   }
 end
 
-lsp.tsserver = function()
+server.tsserver = function()
   nvim_lsp.tsserver.setup {
-    on_attach = LSP.nf_on_attach,
-    capabilities = LSP.capabilities,
+    on_attach = lsp.nf_on_attach,
+    capabilities = lsp.capabilities(),
     settings = { documentFormatting = false, documentRangeFormatting = false },
     root_dir = require('lspconfig/util').root_pattern(
       'package.json',
@@ -195,10 +187,10 @@ lsp.tsserver = function()
   }
 end
 
-lsp.json = function()
+server.json = function()
   nvim_lsp.jsonls.setup {
-    on_attach = LSP.common_on_attach,
-    capabilities = LSP.capabilities,
+    on_attach = lsp.common_on_attach,
+    capabilities = lsp.capabilities(),
     root_dir = require('lspconfig').util.root_pattern(
       '.git',
       '.gitignore',
@@ -219,10 +211,85 @@ lsp.json = function()
   }
 end
 
-lsp.pyright = function()
+server.lua = function()
+  local user = vim.fn.expand '$USER'
+
+  local sumneko_root_path = ''
+  local sumneko_binary = ''
+
+  if vim.fn.has 'mac' == 1 then
+    sumneko_root_path = '/Users/'
+      .. user
+      .. '/.config/nvim/lang-servers/lua-language-server'
+    sumneko_binary = '/Users/'
+      .. user
+      .. '/.config/nvim/lang-servers/lua-language-server/bin/lua-language-server'
+  elseif vim.fn.has 'unix' == 1 then
+    sumneko_root_path = vim.fn.expand '$HOME'
+      .. '/.config/nvim/lang-servers/lua-language-server'
+    sumneko_binary = vim.fn.expand '$HOME'
+      .. '/.config/nvim/lang-servers/lua-language-server/bin/lua-language-server'
+  else
+    print 'Unsupported system for sumneko'
+  end
+
+  local library = {
+    [vim.fn.expand '$VIMRUNTIME/lua'] = true,
+    [vim.fn.expand '$VIMRUNTIME/lua/vim/lsp'] = true,
+  }
+
+  local path = vim.split(package.path, ';')
+
+  table.insert(path, vim.fn.expand '$HOME' .. '/.config/nvim/lua/?.lua')
+  table.insert(path, vim.fn.expand '$HOME' .. '/.config/nvim/lua/lsp/?.lua')
+  table.insert(path, vim.fn.expand '$HOME' .. '/.config/nvim/lua/plugins/?.lua')
+
+  local config = {
+    on_new_config = function(config, root)
+      local libs = vim.tbl_deep_extend('force', {}, library)
+      libs[root] = nil
+      config.settings.Lua.workspace.library = libs
+      return config
+    end,
+    root_dir = nvim_lsp.util.root_pattern(
+      '.git',
+      '.gitignore',
+      vim.fn.getcwd()
+    ),
+    capabilities = lsp.capabilities(),
+    on_attach = lsp.common_on_attach,
+    cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
+    settings = {
+      Lua = {
+        runtime = { version = 'LuaJIT', path = path },
+        completion = { callSnippet = 'Both' },
+        diagnostics = { globals = { 'vim' } },
+        workspace = {
+          library = library,
+          maxPreload = 2000,
+          preloadFileSize = 50000,
+        },
+        telemetry = { enable = false },
+      },
+    },
+  }
+
+  local luadev = require('lua-dev').setup {
+    library = {
+      vimruntime = true,
+      types = true,
+      plugins = true,
+    },
+    runtime_path = true,
+    lspconfig = config,
+  }
+  nvim_lsp.sumneko_lua.setup(luadev)
+end
+
+server.pyright = function()
   nvim_lsp.pyright.setup {
-    on_attach = LSP.common_on_attach,
-    capabilities = LSP.capabilities,
+    on_attach = lsp.common_on_attach,
+    capabilities = lsp.capabilities(),
     root_dir = require('lspconfig/util').root_pattern(
       '.git/',
       '.gitignore',
@@ -240,11 +307,11 @@ lsp.pyright = function()
   }
 end
 
-lsp.rust = function()
+server.rust = function()
   nvim_lsp.rust_analyzer.setup {
     cmd = { 'rust-analyzer' },
-    on_attach = LSP.common_on_attach,
-    capabilities = LSP.capabilities,
+    on_attach = lsp.common_on_attach,
+    capabilities = lsp.capabilities(),
     settings = {
       ['rust_analyzer'] = {
         rustfmt = { enableRangeFormatting = true },
@@ -278,11 +345,11 @@ lsp.rust = function()
   }
 end
 
-lsp.setup = function()
+server.setup = function()
   for _, server in ipairs(servers) do
     nvim_lsp[server].setup {
-      on_attach = LSP.common_on_attach,
-      capabilities = LSP.capabilities,
+      on_attach = lsp.common_on_attach,
+      capabilities = lsp.capabilities(),
       root_dir = require('lspconfig').util.root_pattern(
         '.git',
         '.gitignore',
@@ -292,10 +359,10 @@ lsp.setup = function()
   end
 end
 
-lsp.yaml = function()
+server.yaml = function()
   nvim_lsp.yamlls.setup {
-    on_attach = LSP.common_on_attach,
-    capabilities = LSP.capabilities,
+    on_attach = lsp.common_on_attach,
+    capabilities = lsp.capabilities(),
     root_dir = require('lspconfig').util.root_pattern(
       '.git',
       '.gitignore',
@@ -318,4 +385,4 @@ lsp.yaml = function()
   }
 end
 
-return lsp
+return server

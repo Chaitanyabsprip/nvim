@@ -52,15 +52,7 @@ return packer.startup {
         'neovim/nvim-lspconfig',
         after = { 'cmp-nvim-lsp', 'null-ls.nvim', 'lsp_signature.nvim' },
         config = function()
-          require 'lsp.lsp-settings'
-          require('lsp.servers').null()
-          require('lsp.servers').setup()
-          require('lsp.servers').go()
-          require('lsp.servers').html()
-          require('lsp.servers').json()
-          require('lsp.servers').pyright()
-          require('lsp.servers').tsserver()
-          require('lsp.servers').yaml()
+          require 'lsp.init'()
         end,
       },
       { 'nvim-lua/lsp_extensions.nvim', event = 'BufRead' },
@@ -331,7 +323,7 @@ return packer.startup {
       { -- renamer
         'filipdutescu/renamer.nvim',
         branch = 'master',
-        config = "require 'lsp.lsp-rename'",
+        config = "require 'lsp.rename'",
         requires = { 'nvim-lua/plenary.nvim' },
         after = 'nvim-lspconfig',
       },
@@ -481,7 +473,9 @@ return packer.startup {
       { -- lua-dev
         'folke/lua-dev.nvim',
         after = 'nvim-lspconfig',
-        config = "require 'lsp.lua-ls'",
+        config = function()
+          require('lsp.servers').lua()
+        end,
       },
       { -- markdown-preview
         'iamcco/markdown-preview.nvim',
@@ -490,19 +484,19 @@ return packer.startup {
       },
       { 'jparise/vim-graphql', ft = 'graphql' },
       { 'natebosch/dartlang-snippets', ft = 'dart' },
-      -- use {
-      --   'rcarriga/vim-ultest',
-      --   requires = {
-      --     'vim-test/vim-test',
-      --     -- 'tpope/vim-dispatch',
-      --     -- 'radenling/vim-dispatch-neovim',
-      --     'skywind3000/asyncrun.vim',
-      --   },
-      --   run = ':UpdateRemotePlugins',
-      --   config = function()
-      --     -- require 'plugins.test'
-      --   end,
-      -- }
+      {
+        'rcarriga/vim-ultest',
+        requires = {
+          'vim-test/vim-test',
+          -- 'tpope/vim-dispatch',
+          -- 'radenling/vim-dispatch-neovim',
+          'skywind3000/asyncrun.vim',
+        },
+        run = ':UpdateRemotePlugins',
+        config = function()
+          require 'plugins.test'
+        end,
+      },
       { -- vim-markdown
         'plasticboy/vim-markdown',
         requires = {

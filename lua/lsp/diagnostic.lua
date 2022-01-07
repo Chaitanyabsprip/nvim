@@ -1,12 +1,9 @@
-local lsp_maps = {}
+local M = {}
 
-function lsp_maps.lsp_keymaps()
-  local nnoremap = require('utils').nnoremap
-
-  nnoremap(
-    '<leader>dp',
-    "<cmd>lua require('lsp.lsp-ext').peek_definition()<cr>"
-  )
+M.on_attach = function(_)
+  local nnoremap = function(key, cmd, silent)
+    require('utils').bmap(0, 'n', key, cmd, { noremap = true, silent = silent })
+  end
   nnoremap('<leader>dd', '<cmd>Trouble document_diagnostics<cr>', true)
   nnoremap('<leader>dw', '<cmd>Trouble workspace_diagnostics<cr>', true)
   nnoremap(
@@ -18,4 +15,4 @@ function lsp_maps.lsp_keymaps()
   nnoremap('[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', true)
 end
 
-return lsp_maps
+return M

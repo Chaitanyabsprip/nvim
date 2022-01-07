@@ -52,7 +52,7 @@ function! CustomFoldText()
   let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
   let foldStr = line.' ... '.trim(getline(v:foldend))
   let foldSize = 1 + v:foldend - v:foldstart
-  let foldSizeStr = " " . foldSize . " lines "
+  let foldSizeStr = " " . foldSize . " lines    "
   let foldLevelStr = repeat("+--", v:foldlevel)
   let expansionString = repeat(" ", w - strwidth(foldSizeStr.line.foldLevelStr))
   return foldStr . expansionString . foldSizeStr . foldLevelStr
