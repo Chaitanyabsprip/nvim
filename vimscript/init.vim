@@ -1,6 +1,8 @@
 source ~/.config/nvim/vimscript/autocommands.vim
+source ~/.config/nvim/vimscript/plugins/folds.vim
 
-set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175
+" set guicursor=n-v-c:hor20,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait900-blinkoff400-blinkon8750-Cursor/lCursor
+set guicursor=n-v-c:hor20,i-ci-ve:ver25,r-cr:hor20,o:hor50
 
 function! CreateCenteredFloatingWindow()
     let width = min([&columns - 4, max([80, &columns - 20])])
@@ -24,35 +26,6 @@ function! CreateCenteredFloatingWindow()
     call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
     au BufWipeout <buffer> exe 'bw '.s:buf
 endfunction
-
-
-" function! WorkmanLayoutBinds()
-"     "(O)pen line -> (L)ine
-"     nnoremap l o
-"     nnoremap o l
-"     nnoremap L O
-"     nnoremap O L
-"     "Search (N)ext -> (J)ump
-"     nnoremap j n
-"     nnoremap n j
-"     nnoremap J N
-"     nnoremap N J
-"     nnoremap gn gj
-"     nnoremap gj gn
-"     "(E)nd of word -> brea(K) of word
-"     nnoremap k e
-"     nnoremap e k
-"     nnoremap K E
-"     nnoremap E <nop>
-"     nnoremap gk ge
-"     nnoremap ge gk
-"     "(Y)ank -> (H)aul
-"     nnoremap h y
-"     onoremap h y
-"     nnoremap y h
-"     nnoremap H Y
-"     nnoremap Y H
-"   endfunction
 
 function! ApplyColorTweaks()
     let g:colorscheme = g:colors_name

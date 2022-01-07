@@ -1,13 +1,12 @@
 local execute = vim.api.nvim_cmmand
 local fn = vim.fn
-local install_path = fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
-local status_ok, packer = pcall(require, 'packer')
-if not status_ok then
-  return
-end
-local use = packer.use
+local install_path1 = fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
+local install_path2 = fn.stdpath 'data' .. '/site/pack/packer/opt/packer.nvim'
 
-if fn.empty(fn.glob(install_path)) > 0 then
+if
+  fn.empty(fn.glob(install_path1)) > 0
+  and fn.empty(fn.glob(install_path2)) > 0
+then
   print 'installing packer'
   Packer_bootstrap = fn.system {
     'git',
@@ -15,18 +14,27 @@ if fn.empty(fn.glob(install_path)) > 0 then
     '--depth',
     '1',
     'https://github.com/wbthomason/packer.nvim',
-    install_path,
+    install_path1,
   }
+  print 'packer installed'
   execute 'packadd packer.nvim'
 end
+
+local status_ok, packer = pcall(require, 'packer')
+if not status_ok then
+  return
+end
+local use = packer.use
 
 return packer.startup {
   function()
     use { -- LSP
       {
         'akinsho/flutter-tools.nvim',
-        config = "require 'lsp.dart-ls'",
-        after = 'nvim-lspconfig',
+        config = function()
+          require('lsp.servers').dart()
+        end,
+        after = { 'nvim-lspconfig', 'telescope.nvim' },
       },
       { 'arkav/lualine-lsp-progress', event = 'BufWinEnter' },
       {
@@ -42,24 +50,17 @@ return packer.startup {
       },
       {
         'neovim/nvim-lspconfig',
-        after = {
-          'cmp-nvim-lsp',
-          'null-ls.nvim',
-          'lsp_signature.nvim',
-        },
+        after = { 'cmp-nvim-lsp', 'null-ls.nvim', 'lsp_signature.nvim' },
         config = function()
           require 'lsp.lsp-settings'
-          require 'lsp.bash-ls'
-          require 'lsp.clangd-ls'
-          require 'lsp.css-ls'
-          require 'lsp.html-ls'
-          require 'lsp.java-ls'
-          require 'lsp.js-ts-ls'
-          require 'lsp.null-ls'
-          require 'lsp.nvim-lsp'
-          require 'lsp.pyright-ls'
-          -- require 'lsp.rust-ls'
-          require 'lsp.yaml-ls'
+          require('lsp.servers').null()
+          require('lsp.servers').setup()
+          require('lsp.servers').go()
+          require('lsp.servers').html()
+          require('lsp.servers').json()
+          require('lsp.servers').pyright()
+          require('lsp.servers').tsserver()
+          require('lsp.servers').yaml()
         end,
       },
       { 'nvim-lua/lsp_extensions.nvim', event = 'BufRead' },
@@ -68,10 +69,7 @@ return packer.startup {
         config = "require('telescope').load_extension 'dap'",
         after = 'nvim-dap',
       },
-      {
-        'ray-x/lsp_signature.nvim',
-        event = 'BufRead',
-      },
+      { 'ray-x/lsp_signature.nvim', event = 'BufRead' },
       {
         'rcarriga/nvim-dap-ui',
         after = { 'nvim-lspconfig', 'flutter-tools.nvim' },
@@ -79,7 +77,7 @@ return packer.startup {
       {
         'simrat39/rust-tools.nvim',
         config = function()
-          require 'lsp.rust-tools-ls'
+          require('rust-tools').setup {}
         end,
         after = 'nvim-lspconfig',
       },
@@ -123,6 +121,7 @@ return packer.startup {
         config = function()
           require('plugins.explorer').snap()
         end,
+        disable = true,
       },
       {
         'kyazdani42/nvim-tree.lua',
@@ -130,16 +129,11 @@ return packer.startup {
         config = function()
           require('plugins.explorer').nvim_tree()
         end,
-        cmd = 'NvimTreeToggle',
-        keys = {
-          { 'n', '<leader>e' },
-          { 'n', '<leader>n' },
-        },
       },
       {
         'nvim-telescope/telescope.nvim',
         requires = { 'nvim-lua/plenary.nvim' },
-        config = "require 'plugins.nvim.telescope'",
+        config = "require 'plugins.explorer'.telescope()",
         event = 'BufWinEnter',
       },
       {
@@ -152,15 +146,17 @@ return packer.startup {
       {
         'tamago324/lir.nvim',
         requires = {
-          'tamago324/lir-git-status.nvim',
-          config = function()
-            require('lir.git_status').setup {
-              show_ignored = true,
-            }
-          end,
-          keys = {
-            { 'n', '<M-e>' },
-            { 'n', '<M-n>' },
+          {
+            'tamago324/lir-git-status.nvim',
+            config = function()
+              require('lir.git_status').setup {
+                show_ignored = true,
+              }
+            end,
+            keys = {
+              { 'n', '<M-e>' },
+              { 'n', '<M-n>' },
+            },
           },
         },
         config = function()
@@ -196,7 +192,10 @@ return packer.startup {
       {
         'stevearc/gkeep.nvim',
         run = ':UpdateRemotePlugins',
-        disable = true,
+        cmd = {
+          'GkeepOpen',
+          'GkeepToggle',
+        },
       },
     }
 
@@ -250,6 +249,14 @@ return packer.startup {
       { -- highlight
         'Pocco81/HighStr.nvim',
         config = require('utilities').highlight,
+        event = 'BufWinEnter',
+      },
+      {
+        'rcarriga/nvim-notify',
+        config = function()
+          require 'plugins.nvim.notify'
+        end,
+        event = 'BufWinEnter',
       },
       { -- refactoring
         'ThePrimeagen/refactoring.nvim',
@@ -266,7 +273,10 @@ return packer.startup {
           'cpp',
         },
       },
-      -- use {"akinsho/nvim-bufferline.lua"}
+      {
+        'akinsho/nvim-bufferline.lua',
+        config = "require 'plugins.nvim.nvim-bufferline'",
+      },
       { -- toggleterm
         'akinsho/nvim-toggleterm.lua',
         config = "require 'plugins.nvim.toggleterm'",
@@ -282,6 +292,27 @@ return packer.startup {
         'dstein64/vim-startuptime',
         cmd = 'StartupTime',
         config = [[vim.g.startuptime_tries = 15]],
+      },
+      {
+        'jakewvincent/mkdnflow.nvim',
+        ft = { 'markdown', 'md', 'rmd' },
+        config = function()
+          require('mkdnflow').setup {
+            default_mappings = true,
+            create_dirs = true,
+            links_relative_to = 'current',
+            filetypes = { md = true, rmd = true, markdown = true },
+            evaluate_prefix = true,
+            -- new_file_prefix = [[os.date('%Y-%m-%d_')]],
+            new_file_prefix = 'n',
+            -- Type: boolean. When true and Mkdnflow is searching for the next/previous
+            --     link in the file, it will wrap to the beginning of the file (if it's
+            --     reached the end) or wrap to the end of the file (if it's reached the
+            --     beginning during a backwards search).
+            wrap_to_beginning = false,
+            wrap_to_end = false,
+          }
+        end,
       },
       {
         'jbyuki/venn.nvim',
@@ -312,6 +343,7 @@ return packer.startup {
       { -- which-key
         'folke/which-key.nvim',
         config = require('utilities').which_key,
+        event = 'BufWinEnter',
       },
       { -- zen-mode
         'folke/zen-mode.nvim',
@@ -390,6 +422,7 @@ return packer.startup {
     use { -- LANGUAGE SPECIFIC
       { -- REST
         'NTBBloodbath/rest.nvim',
+        ft = { 'http', 'https' },
         requires = { 'nvim-lua/plenary.nvim' },
         config = function()
           require('rest-nvim').setup {
@@ -473,9 +506,11 @@ return packer.startup {
       { -- vim-markdown
         'plasticboy/vim-markdown',
         requires = {
-          'godlygeek/tabular',
-          ft = 'markdown',
-          event = 'BufWinEnter',
+          {
+            'godlygeek/tabular',
+            ft = 'markdown',
+            event = 'BufWinEnter',
+          },
         },
         ft = 'markdown',
         config = require('languages').markdown,
@@ -484,21 +519,18 @@ return packer.startup {
     }
 
     use { -- THEME
-      { 'EdenEast/nightfox.nvim', event = 'BufEnter' },
-      { -- line-number-interval
-        'IMOKURI/line-number-interval.nvim',
-        event = 'BufWinEnter',
+      {
+        vim.fn.expand '~' .. '/Projects/Languages/Lua/dark-matter',
+        event = 'BufEnter',
       },
+      { 'EdenEast/nightfox.nvim', event = 'BufEnter' },
+      { 'IMOKURI/line-number-interval.nvim', event = 'BufWinEnter' },
       { 'Yagua/nebulous.nvim', event = 'BufEnter' },
       { 'bluz71/vim-moonfly-colors', event = 'BufEnter' },
       { 'bluz71/vim-nightfly-guicolors', event = 'BufEnter' },
       { 'catppuccin/nvim', as = 'catppuccin', event = 'BufEnter' },
       { 'folke/tokyonight.nvim', event = 'BufEnter' },
-      { -- lualine
-        'hoob3rt/lualine.nvim',
-        event = 'BufEnter',
-        config = require('plugins.statusline').lualine,
-      },
+      { 'hoob3rt/lualine.nvim', event = 'BufEnter' },
       { 'kyazdani42/blue-moon', event = 'BufEnter' },
       { 'marko-cerovac/material.nvim', event = 'BufEnter' },
       { 'numToStr/Sakura.nvim', event = 'BufEnter' },
@@ -513,6 +545,8 @@ return packer.startup {
     }
   end,
   config = {
+    max_jobs = 50,
+    auto_clean = true,
     display = {
       open_fn = function()
         return require('packer.util').float { border = 'rounded' }

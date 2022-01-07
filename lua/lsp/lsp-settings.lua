@@ -1,4 +1,5 @@
 local lsp_keymaps = require('lsp/lsp-mappings').lsp_keymaps
+local lsp_utils = require 'lsp.utils'
 
 local signs = {
   { name = 'DiagnosticSignError', text = '' },
@@ -29,31 +30,6 @@ local config = {
   },
 }
 
-local function lsp_document_highlight(client, _)
-  if client.resolved_capabilities.document_highlight then
-    vim.schedule(function()
-      vim.cmd [[
-        hi LspReferenceRead cterm=underline ctermbg=none gui=underline guibg=none
-        hi LspReferenceText cterm=underline ctermbg=none gui=underline guibg=none
-        hi LspReferenceWrite cterm=underline ctermbg=none gui=underline guibg=none
-        hi link LspReferenceRead Folded
-        hi link LspReferenceText Folded
-        hi link LspReferenceWrite Folded
-      ]]
-    end)
-    vim.api.nvim_exec(
-      [[
-        augroup lsp_document_highlight
-          autocmd! * <buffer>
-          autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-          autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-        augroup END
-      ]],
-      false
-    )
-  end
-end
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.documentationFormat = {
   'markdown',
@@ -61,8 +37,8 @@ capabilities.textDocument.completion.completionItem.documentationFormat = {
 }
 
 capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.workspaceWord = false
-capabilities.textDocument.completion.completionItem.word = false
+capabilities.textDocument.completion.completionItem.workspaceWord = true
+capabilities.textDocument.completion.completionItem.word = true
 capabilities.textDocument.completion.completionItem.preselectSupport = true
 capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
 capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
@@ -79,6 +55,7 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 LSP = {}
 LSP.capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 LSP.common_on_attach = function(client, bufnr)
+  lsp_utils.resolve_capabilities(client.resolved_capabilities)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
     vim.lsp.handlers.hover,
@@ -97,7 +74,6 @@ LSP.common_on_attach = function(client, bufnr)
     floating_window = true,
     transparency = 60,
   }, bufnr)
-  lsp_document_highlight(client, bufnr)
   lsp_keymaps()
 end
 

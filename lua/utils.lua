@@ -52,7 +52,15 @@ function utils.execr(cmd)
   return data
 end
 
--- write a function to convert a table to its string representation as a table
+function utils.preq(module)
+  local status_ok, pmodule = pcall(require, module)
+  if not status_ok then
+    print(module .. ' not found')
+    vim.notify(module .. ' not found', 'error', {})
+  end
+  return pmodule
+end
+
 function utils.table_to_string(tbl)
   local str = '{'
   for k, v in pairs(tbl) do
@@ -63,6 +71,10 @@ function utils.table_to_string(tbl)
   end
   str = str .. '}'
   return str
+end
+
+function utils.trim(s)
+  return s:match '^%s*(.-)%s*$'
 end
 
 return utils

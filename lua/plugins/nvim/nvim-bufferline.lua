@@ -1,5 +1,5 @@
 local u = require 'utils'
-local p = require 'rose-pine.palette'
+-- local p = require 'rose-pine.palette'
 local nnoremap = require('utils').nnoremap
 
 require('bufferline').setup {
@@ -22,7 +22,7 @@ require('bufferline').setup {
     persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
     right_mouse_command = 'bdelete! %d', -- can be a string | function, see "Mouse actions"
     right_trunc_marker = '',
-    separator_style = 'thin', -- "slant" | "thick" | "thin" | {'any', 'any'}, [focused and unfocused]. eg: { '|', '|' }
+    separator_style = { '', '' }, -- "slant" | "thick" | "thin" | {'any', 'any'}, [focused and unfocused]. eg: { '|', '|' }
     show_buffer_close_icons = true, -- true | false,
     show_buffer_icons = true, -- true | false, -- disable filetype icons for buffers
     show_close_icon = false, -- true | false,
@@ -30,64 +30,64 @@ require('bufferline').setup {
     sort_by = 'id', -- 'id' | 'extension' | 'relative_directory' | 'directory' | 'tabs' |
     tab_size = 18,
 
-    custom_areas = {
-      right = function()
-        local result = {}
-        local error = vim.lsp.diagnostic.get_count(0, [[Error]])
-        local warning = vim.lsp.diagnostic.get_count(0, [[Warning]])
-        local info = vim.lsp.diagnostic.get_count(0, [[Information]])
-        local hint = vim.lsp.diagnostic.get_count(0, [[Hint]])
-        local day = os.date():sub(0, 3)
-        local date = os.date():sub(8, 10)
-        local month = os.date():sub(4, 7)
-        local time = os.date():sub(11, 16)
-        if error ~= 0 then
-          table.insert(result, {
-            gui = 'NONE',
-            guibg = p.highlight_inactive,
-            guifg = p.love,
-            text = '  ' .. error .. ' ',
-          })
-        end
-        if warning ~= 0 then
-          table.insert(result, {
-            gui = 'NONE',
-            guibg = p.highlight_inactive,
-            guifg = p.gold,
-            text = '  ' .. warning .. ' ',
-          })
-        end
-        if hint ~= 0 then
-          table.insert(result, {
-            gui = 'NONE',
-            guibg = p.highlight_inactive,
-            guifg = p.iris,
-            text = '  ' .. hint .. ' ',
-          })
-        end
-        if info ~= 0 then
-          table.insert(result, {
-            gui = 'NONE',
-            guibg = p.highlight_inactive,
-            guifg = p.foam,
-            text = '  ' .. info .. ' ',
-          })
-        end
-        table.insert(result, {
-          gui = 'NONE',
-          guibg = p.highlight,
-          guifg = p.rose,
-          text = ' ' .. day .. ',' .. date .. month .. ' ',
-        })
-        table.insert(result, {
-          gui = 'NONE',
-          guibg = p.rose,
-          guifg = p.base,
-          text = time .. ' ',
-        })
-        return result
-      end,
-    },
+    -- custom_areas = {
+    --   right = function()
+    --     local result = {}
+    --     local error = vim.diagnostic.get_count(0, [[Error]])
+    --     local warning = vim.diagnostic.get_count(0, [[Warning]])
+    --     local info = vim.diagnostic.get_count(0, [[Information]])
+    --     local hint = vim.diagnostic.get_count(0, [[Hint]])
+    --     local day = os.date():sub(0, 3)
+    --     local date = os.date():sub(8, 10)
+    --     local month = os.date():sub(4, 7)
+    --     local time = os.date():sub(11, 16)
+    --     if error ~= 0 then
+    --       table.insert(result, {
+    --         gui = 'NONE',
+    --         -- guibg = p.highlight_inactive,
+    --         -- guifg = p.love,
+    --         text = '  ' .. error .. ' ',
+    --       })
+    --     end
+    --     if warning ~= 0 then
+    --       table.insert(result, {
+    --         gui = 'NONE',
+    --         -- guibg = p.highlight_inactive,
+    --         -- guifg = p.gold,
+    --         text = '  ' .. warning .. ' ',
+    --       })
+    --     end
+    --     if hint ~= 0 then
+    --       table.insert(result, {
+    --         gui = 'NONE',
+    --         -- guibg = p.highlight_inactive,
+    --         -- guifg = p.iris,
+    --         text = '  ' .. hint .. ' ',
+    --       })
+    --     end
+    --     if info ~= 0 then
+    --       table.insert(result, {
+    --         gui = 'NONE',
+    --         -- guibg = p.highlight_inactive,
+    --         -- guifg = p.foam,
+    --         text = '  ' .. info .. ' ',
+    --       })
+    --     end
+    --     table.insert(result, {
+    --       gui = 'NONE',
+    --       -- guibg = p.highlight,
+    --       -- guifg = p.rose,
+    --       text = ' ' .. day .. ',' .. date .. month .. ' ',
+    --     })
+    --     table.insert(result, {
+    --       gui = 'NONE',
+    --       -- guibg = p.rose,
+    --       -- guifg = p.base,
+    --       text = time .. ' ',
+    --     })
+    --     return result
+    --   end,
+    -- },
 
     ---@diagnostic disable-next-line: unused-local
     custom_filter = function(buf_number)
@@ -134,12 +134,11 @@ require('bufferline').setup {
   },
 }
 
-nnoremap('<A-S-b>', '<CMD>BufferLineCyclePrev<CR>', true)
-nnoremap('<A-b>', '<CMD>BufferLineCycleNext<CR>', true)
+nnoremap('<a-h>', '<CMD>BufferLineCyclePrev<CR>', true)
+nnoremap('<a-l>', '<CMD>BufferLineCycleNext<CR>', true)
 nnoremap('[b', '<CMD>BufferLineMovePrev<CR>', true)
 nnoremap(']b', '<CMD>BufferLineMoveNext<CR>', true)
-nnoremap('<leader>b', '<CMD>BufferLinePick<CR>', true)
-nnoremap('<leader>x', ':bd<CR>', true)
+nnoremap('<leader>B', '<CMD>BufferLinePick<CR>', true)
 
 for i = 1, 9 do
   nnoremap('<A-' .. i .. '>', '<CMD>BufferLineGoToBuffer' .. i .. '<CR>', true)

@@ -26,22 +26,6 @@ augroup auto_read
                 \ if mode() == 'n' && getcmdwintype() == '' | checktime | endif
     autocmd FileChangedShellPost * echohl WarningMsg
                 \ | echo "File changed on disk. Buffer reloaded!" | echohl None
-augroup END
-
-augroup auto_format
-  autocmd!
-  autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1500)
-augroup end
-
-augroup ranger
-  au!
-  autocmd Filetype rnvimr tnoremap <buffer><nowait> j j
-  autocmd Filetype rnvimr tnoremap <buffer><nowait> k k
-augroup end
-
-augroup pythonindent
-  autocmd!
-  autocmd FileType python,java setlocal shiftwidth=4 softtabstop=4 
 augroup end
 
 augroup highlight_yank
@@ -80,4 +64,14 @@ augroup end
 augroup markdown_ft
   autocmd!
   autocmd FileType markdown setlocal foldlevel=1 conceallevel=2 spell
+augroup end
+
+augroup tabbed_workspace
+  autocmd!
+  autocmd TabNewEntered * Telescope projects
+augroup end
+
+augroup flutter_log
+  autocmd!
+  autocmd FileType log setlocal colorcolumn=0
 augroup end

@@ -1,4 +1,5 @@
 local M = {}
+local prequire = require('utils').preq
 
 M.blue_moon = function()
   vim.cmd [[ colorscheme blue-moon ]]
@@ -12,15 +13,16 @@ M.calvera = function()
   vim.g.calvera_borders = true
   vim.g.calvera_contrast = true
   vim.g.calvera_hide_eob = true
-  vim.g.calvera_disable_background = false
+  vim.g.calvera_disable_background = true
   vim.g.transparent_bg = false
-  require('calvera').set()
+  prequire('calvera').set()
 end
 
 M.catppuccin = function()
-  local catppuccin = require 'catppuccin'
+  local catppuccin = prequire 'catppuccin'
   catppuccin.setup {
     term_colors = true,
+    transparent_background = true,
     integrations = {
       treesitter = true,
       lsp_trouble = true,
@@ -40,7 +42,7 @@ M.catppuccin = function()
 end
 
 M.github = function()
-  require('github-theme').setup {
+  prequire('github-theme').setup {
     theme_style = 'dark_default',
     function_style = 'italic',
     comment_style = 'italic',
@@ -73,14 +75,18 @@ M.gruvbox = function()
 end
 
 M.highlights = function()
-  vim.cmd [[
-    " hi! ColorColumn guibg=#1c1a30 ctermbg=235
-    hi! InlayHints guifg=#555169 ctermfg=235  
-    hi! FoldColumn guifg=#575279
-    hi! clear CursorLine
-    hi! LineNr guifg=#1f2335
-    hi! CursorLineNr guifg=#605180 gui=bold
-    ]]
+  vim.cmd [[ ]]
+  if vim.g.colors_name == 'rose-pine' then
+    vim.cmd [[ hi! ColorColumn guibg=#1c1a30 ctermbg=235 ]]
+  elseif vim.g.colors_name == 'nightfox' then
+    vim.cmd [[ hi! link TelescopeNormal NvimTreeNormal ]]
+  end
+  vim.cmd [[ hi! CursorLineNr guifg=#605180 gui=bold ]]
+  vim.cmd [[ hi! link FoldColumn Comment ]]
+  vim.cmd [[ hi! link Folded Comment ]]
+  -- vim.cmd [[ hi! InlayHints guifg=#555169 ctermfg=235 ]]
+  vim.cmd [[ hi! LineNr guifg=#1f2335 ]]
+  vim.cmd [[ hi! clear CursorLine ]]
 end
 
 M.horizon = function()
@@ -100,7 +106,7 @@ M.indentline = function()
   -- vim.g.indentLine_setColors = 1
   -- vim.cmd "let g:indent_blankline_char_highlight_list = [\" Indentline1 \", \" Indentline2 \", \" Indentline3 \", \" Indentline4 \"]"
   -- vim.cmd "let g:indent_blankline_filetype_exclude = ['startify']"
-  require('indent_blankline').setup {
+  prequire('indent_blankline').setup {
     buftype_exclude = { 'terminal' },
     filetype_exclude = { 'startify', 'packer' },
     char_highlight_list = {
@@ -118,6 +124,24 @@ M.indentline = function()
     show_first_indent_level = false,
     use_treesitter = true,
   }
+end
+
+M.kanagawa = function()
+  require('kanagawa').setup {
+    undercurl = true, -- enable undercurls
+    commentStyle = 'italic',
+    functionStyle = 'italic',
+    keywordStyle = 'italic',
+    statementStyle = 'bold',
+    typeStyle = 'NONE',
+    variablebuiltinStyle = 'italic',
+    specialReturn = true,
+    specialException = true,
+    transparent = true, -- do not set background color
+    colors = {},
+    overrides = {},
+  }
+  vim.cmd 'colorscheme kanagawa'
 end
 
 M.line_number_interval = function()
@@ -138,7 +162,7 @@ end
 
 M.material = function()
   vim.g.material_style = 'deep ocean'
-  require('material').setup {
+  prequire('material').setup {
     borders = true,
     popup_menu = 'dark', -- Popup menu style ( can be: 'dark', 'light', 'colorful' or 'stealth' )
     italics = {
@@ -157,6 +181,7 @@ M.material = function()
     },
     disable = {
       eob_lines = true,
+      background = true,
     },
   }
   vim.cmd [[ colorscheme material ]]
@@ -166,7 +191,7 @@ M.moonfly = function()
   vim.g.moonflyItalics = true
   vim.g.moonflyNormalFloat = true
   vim.g.moonflyTerminalColors = true
-  vim.g.moonflyTransparent = false
+  vim.g.moonflyTransparent = true
   vim.g.moonflyUndercurls = true
   vim.g.moonflyUnderlineMatchParen = true
   vim.g.moonflyVertSplits = true
@@ -180,16 +205,16 @@ M.moonlight = function()
   vim.g.moonlight_italic_variables = false
   vim.g.moonlight_contrast = true
   vim.g.moonlight_borders = true
-  vim.g.moonlight_disable_background = false
-  require('moonlight').set()
+  vim.g.moonlight_disable_background = true
+  prequire('moonlight').set()
 end
 
 M.nebulous = function()
-  require('nebulous').setup {
-    variant = 'twilight',
+  prequire('nebulous').setup {
+    variant = 'night',
     disable = {
       background = true,
-      endOfBuffer = false,
+      endOfBuffer = true,
       terminal_colors = false,
     },
     italic = {
@@ -203,12 +228,11 @@ M.nebulous = function()
 end
 
 M.neon = function()
-  vim.g.neon_transparent_bg = false
   vim.g.neon_style = 'dark'
   vim.g.neon_italic_keyword = true
   vim.g.neon_italic_function = true
   vim.g.neon_italic_variable = true
-  vim.g.neon_transparent = false
+  vim.g.neon_transparent = true
   vim.g.neon_bold = true
   vim.cmd [[ colorscheme neon ]]
 end
@@ -217,7 +241,7 @@ M.nightfly = function()
   vim.g.nightflyItalics = true
   vim.g.nightflyNormalFloat = true
   vim.g.nightflyTerminalColors = true
-  vim.g.nightflyTransparent = false
+  vim.g.nightflyTransparent = true
   vim.g.nightflyUndercurls = true
   vim.g.nightflyUnderlineMatchParen = true
   vim.g.nightflyVertSplits = true
@@ -225,9 +249,10 @@ M.nightfly = function()
 end
 
 M.nightfox = function()
-  local nightfox = require 'nightfox'
+  local nightfox = prequire 'nightfox'
   nightfox.setup {
     fox = 'nightfox',
+    transparent = true,
     styles = {
       comments = 'italic',
       functions = 'italic',
@@ -235,10 +260,23 @@ M.nightfox = function()
       strings = 'NONE',
       variables = 'NONE',
     },
-    inverse = {
-      match_paren = false,
-      visual = false,
-      search = false,
+    hlgroups = {
+      TelescopeBorder = {
+        fg = '${fg_gutter}',
+        bg = '${bg_sidebar}',
+      },
+      TelescopePreviewBorder = {
+        fg = '${fg_gutter}',
+        bg = '${bg_sidebar}',
+      },
+      TelescopeResultsBorder = {
+        fg = '${fg_gutter}',
+        bg = '${bg_sidebar}',
+      },
+      TelescopePromptBorder = {
+        fg = '${fg_gutter}',
+        bg = '${bg_sidebar}',
+      },
     },
   }
   nightfox.load()
@@ -251,11 +289,22 @@ M.rosepine = function()
   vim.cmd [[ colorscheme rose-pine ]]
 end
 
+M.sakura = function()
+  local sakura = prequire 'sakura'
+  sakura.setup {
+    variant = 'moon',
+    transparent = true,
+    italics = true,
+  }
+  sakura.load()
+end
+
 M.setup = function()
   vim.schedule(function()
-    M.material()
+    M.nightfox()
     M.highlights()
     M.line_number_interval()
+    prequire('statusline').lualine()
   end)
 end
 
@@ -268,7 +317,7 @@ M.toggle_colorscheme = function()
   vim.g.colo_num = ((vim.g.colo_num % table.getn(colors)) + 1)
   local colorscheme = colors[vim.g.colo_num]
   vim.api.nvim_exec('colorscheme ' .. colorscheme, false)
-  print(colorscheme)
+  vim.notify(colorscheme)
 end
 
 M.tokyonight = function()
@@ -283,12 +332,12 @@ M.tokyonight = function()
   vim.g.tokyonight_italic_variables = false
   vim.g.tokyonight_sidebars = { 'packer' }
   vim.g.tokyonight_style = 'night'
-  vim.g.tokyonight_transparent = false
+  vim.g.tokyonight_transparent = true
   vim.cmd [[ colorscheme tokyonight ]]
 end
 
 M.vn_night = function()
-  require('vn-night').setup {}
+  prequire('vn-night').setup {}
   vim.cmd [[ colorscheme vn-night ]]
 end
 

@@ -1,4 +1,6 @@
 local M = {}
+local diagnostics = require 'lsp.diagnostic'
+local dc = diagnostics.get_diagnostic_component
 
 local get_lsp_client = function(msg)
   msg = msg or 'No Active Lsp'
@@ -98,19 +100,28 @@ local checkwidth = function()
   return false
 end
 
+local theme = function()
+  if vim.g.colors_name == 'material' then
+    return 'material-nvim'
+  else
+    return 'auto'
+  end
+end
+
 M.lualine = function()
   require('lualine').setup {
     options = {
-      theme = 'material-nvim',
+      theme = theme(),
       section_separators = '',
       component_separators = { '', '' },
+      disabled_filetypes = {},
     },
     sections = {
       lualine_a = {
         {
           'mode',
           icon = '',
-          format = function(mode_name)
+          fmt = function(mode_name)
             return mode_name:sub(1, 1)
           end,
         },
@@ -152,7 +163,7 @@ M.lualine = function()
         get_lsp_client,
         'filetype',
       },
-      lualine_y = { 'progress' },
+      lualine_y = {},
       lualine_z = { 'location' },
     },
     inactive_sections = {
@@ -164,7 +175,7 @@ M.lualine = function()
       lualine_z = {},
     },
     tabline = {},
-    extensions = { 'nvim-tree' },
+    extensions = { 'nvim-tree', 'toggleterm' },
   }
 end
 

@@ -1,9 +1,9 @@
 set nofoldenable
 set foldlevel=99
-set fillchars=fold:\
+set fillchars=fold:\ ,eob:\ 
 set foldtext=CustomFoldText()
-setlocal foldmethod=expr
-setlocal foldexpr=GetPotionFold(v:lnum)
+set foldminlines=1
+set foldnestmax=3
 
 function! GetPotionFold(lnum)
   if getline(a:lnum) =~? '\v^\s*$'
@@ -42,22 +42,18 @@ function! NextNonBlankLine(lnum)
 endfunction
 
 function! CustomFoldText()
-  " get first non-blank line
   let fs = v:foldstart
-
-  while getline(fs) =~ '^\s*$' | let fs = nextnonblank(fs + 1)
-  endwhile
 
   if fs > v:foldend
       let line = getline(v:foldstart)
   else
       let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
   endif
-
   let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
+  let foldStr = line.' ... '.trim(getline(v:foldend))
   let foldSize = 1 + v:foldend - v:foldstart
   let foldSizeStr = " " . foldSize . " lines "
   let foldLevelStr = repeat("+--", v:foldlevel)
   let expansionString = repeat(" ", w - strwidth(foldSizeStr.line.foldLevelStr))
-  return line . expansionString . foldSizeStr . foldLevelStr
+  return foldStr . expansionString . foldSizeStr . foldLevelStr
 endfunction

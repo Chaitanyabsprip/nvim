@@ -1,3 +1,7 @@
+require('notify').setup {
+  background_colour = '#555689',
+}
+
 ---Send a notification
 -- @param msg of the notification to show to the user
 -- @param level Optional log level
@@ -19,6 +23,6 @@ vim.notify = function(msg, level, opts)
   }
   opts.title = opts.title or type(level) == 'string' and level or levels[level]
   opts.timeout = 300
-  local notify = require('notify')
+  local notify = require 'notify'
   notify(msg, level, opts)
 end

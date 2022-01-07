@@ -1,17 +1,17 @@
   augroup sourceinit
     autocmd!
-    autocmd! BufWritePost ~/.config/nvim/vimscripts/ginit.vim source ~/.config/nvim/vimscripts/ginit.vim
+    autocmd! BufWritePost vim.expand('~')./.config/nvim/vimscripts/ginit.vim source ~/.config/nvim/vimscripts/ginit.vim
   augroup end
 
 
-if exists('g:started_by_firenvim')
-  set guifont=Victor\ Mono\ Nerd\ Font:h8
-else
-  set guifont=Victor\ Mono\ Nerd\ Font:h18 
-endif
+" set guioptions+=T
+" set guioptions-=m
+" set guioptions+=d
+" set guioptions+=!
 
-let g:neovide_cursor_animation_length=0.08
-  " set guioptions+=T
-  " set guioptions-=m
-  " set guioptions+=d
-  " set guioptions+=!
+" neovide
+lua << EOF
+vim.g.neovide_cursor_animation_length = 0.007
+vim.opt.guifont = "VictorMono Nerd Font:h14:w8"
+EOF
+set linespace=10

@@ -1,6 +1,7 @@
 ---@diagnostic disable: undefined-global
 
 local M = {}
+local prequire = require('utils').preq
 local nnoremap = require('utils').nnoremap
 local notesdir = vim.fn.expand '$HOME' .. '/Projects/Notes'
 
@@ -128,14 +129,13 @@ M.nvim_tree = function()
   vim.g.nvim_tree_highlight_opened_files = 1
   vim.g.nvim_tree_indent_markers = 1
   require('nvim-tree').setup {
-    auto_close = true,
+    hijack_cursor = false,
+    auto_close = false,
+    auto_open = false,
     diagnostics = {
       enable = true,
       icons = { hint = '', info = '', warning = '', error = '' },
     },
-    disable_netrw = true,
-    hijack_cursor = false,
-    hijack_netrw = true,
     ignore_ft_on_setup = {},
     open_on_setup = false,
     open_on_tab = true,
@@ -145,7 +145,7 @@ M.nvim_tree = function()
       -- the command arguments as a list
       args = {},
     },
-    update_cwd = false,
+    update_cwd = true,
     update_focused_file = {
       enable = false,
       update_cwd = false,
@@ -153,7 +153,7 @@ M.nvim_tree = function()
     },
     view = {
       width = 30,
-      side = 'left',
+      side = 'right',
       auto_resize = true,
       mappings = {
         custom_only = false,
@@ -223,4 +223,122 @@ M.snap = function()
     }
   end)
 end
+
+M.telescope = function()
+  local nnoremap = require('utils').nnoremap
+  local actions = require 'telescope.actions'
+
+  local mappings = {
+    i = {
+      ['<c-j>'] = actions.move_selection_next,
+      ['<c-k>'] = actions.move_selection_previous,
+      ['<esc>'] = actions.close,
+    },
+    n = {
+      ['q'] = actions.close,
+      ['<c-c>'] = actions.close,
+    },
+  }
+
+  require('telescope').setup {
+    defaults = {
+      mappings = mappings,
+      initial_mode = 'insert',
+      selection_strategy = 'reset',
+      sorting_strategy = 'ascending',
+      layout_strategy = 'horizontal',
+      layout_config = {
+        horizontal = { mirror = false },
+        vertical = { mirror = false },
+        height = 0.8,
+        width = 0.9,
+      },
+      file_sorter = require('telescope.sorters').get_fuzzy_file,
+      file_ignore_patterns = {},
+      generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
+      winblend = 10,
+      border = {},
+      borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+      color_devicons = true,
+      path_display = {
+        shorten = { len = 1, exclude = { -1 } },
+      },
+      set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
+      extensions = {
+        file_browser = require('telescope.themes').get_dropdown {
+          initial_mode = 'normal',
+          -- layout_strategy = 'horizontal',
+          layout_config = {
+            height = 0.5,
+            width = 0.5,
+          },
+        },
+      },
+    },
+  }
+
+  local function builtin(picker, theme)
+    local builtin_cmd = "require('telescope.builtin')."
+    return builtin_cmd .. picker .. theme .. ')'
+  end
+
+  local function ivy(opts)
+    local ivy_cmd = "(require('telescope.themes').get_ivy("
+    return ivy_cmd .. opts .. ')'
+  end
+
+  local function dropdown(opts)
+    local ivy_cmd = "(require('telescope.themes').get_dropdown("
+    return ivy_cmd .. opts .. ')'
+  end
+
+  local function telescope_command(command)
+    local telescope_cmd = '<cmd>lua '
+    return telescope_cmd .. command .. '<CR>'
+  end
+
+  nnoremap('<A-p>', '<cmd>Telescope projects<CR>')
+  nnoremap(
+    '<c-t>dd',
+    telescope_command(
+      builtin(
+        'diagnostics',
+        ivy '{layout_config={height=12},bufnr=0, initial_mode="normal"}'
+      )
+    )
+  )
+  nnoremap(
+    '<c-t>dw',
+    telescope_command(
+      builtin(
+        'diagnostics',
+        ivy '{layout_config={height=12, preview_width = 80 }, initial_mode="normal" }'
+      )
+    )
+  )
+  nnoremap(
+    '<leader>tht',
+    telescope_command(builtin('help_tags', ivy '{layout_config={height=12}}'))
+  )
+  nnoremap(
+    '<leader>thk',
+    telescope_command(builtin('keymaps', ivy '{layout_config={height=12}}'))
+  )
+  nnoremap('<leader>thi', '<cmd>Telescope highlights<CR><ESC>')
+
+  local ok, snap = pcall(require, 'snap')
+
+  if not ok then
+    nnoremap('<leader><leader>', '<cmd>Telescope fd<CR>', true)
+    nnoremap('<leader>fb', '<cmd>Telescope buffers<CR>', true)
+    nnoremap('<leader>fo', '<cmd>Telescope oldfiles<CR>', true)
+    nnoremap('<leader>fg', '<cmd>Telescope live_grep<CR>', true)
+    nnoremap(
+      '<leader>fn',
+      "<cmd>lua require'telescope.builtin'.fd({cwd='/Users/chaitanyasharma/Projects/Notes',hidden=true})<CR>",
+      true
+    )
+  end
+end
+
 return M

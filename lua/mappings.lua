@@ -108,10 +108,6 @@ nnoremap(')', ':vertical resize +5<CR>', true)
 nnoremap('(', ':vertical resize -5<CR>', true)
 nnoremap('+', ':res +1<CR>', true)
 nnoremap('-', ':res -1<CR>', true)
-nnoremap('<C-Up>', ':resize +2<CR>', true)
-nnoremap('<C-Down>', ':resize -2<CR>', true)
-nnoremap('<C-Left>', ':vertical resize -2<CR>', true)
-nnoremap('<C-Right>', ':vertical resize +2<CR>', true)
 
 -- TAB in normal mode will move to text buffer
 nnoremap('<TAB>', ':bnext<CR>', true)

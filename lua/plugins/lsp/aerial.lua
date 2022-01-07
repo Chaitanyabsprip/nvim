@@ -23,8 +23,6 @@ require('aerial').setup {
   min_width = 30,
   nerd_font = true,
   open_automatic = false,
-  open_automatic_min_lines = 0,
-  open_automatic_min_symbols = 0,
   placement_editor_edge = true,
   post_jump_cmd = 'normal! zz',
   close_on_select = false,
