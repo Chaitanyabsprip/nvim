@@ -40,7 +40,9 @@ return packer.startup {
       {
         'folke/lsp-trouble.nvim',
         after = 'nvim-lspconfig',
-        config = "require 'plugins.lsp.trouble'",
+        config = function()
+          require('plugins.lsp').trouble()
+        end,
       },
       { 'jose-elias-alvarez/null-ls.nvim', event = 'BufRead' },
       {
@@ -80,7 +82,9 @@ return packer.startup {
       },
       {
         'windwp/lsp-fastaction.nvim',
-        config = "require 'plugins.lsp.lsp-fastaction'",
+        config = function()
+          require('plugins.lsp').fastaction()
+        end,
         after = 'nvim-lspconfig',
       },
     }
@@ -90,30 +94,6 @@ return packer.startup {
         'ahmedkhalf/project.nvim',
         config = require('plugins.explorer').project,
         after = 'telescope.nvim',
-      },
-      {
-        'TimUntersberger/neofs',
-        config = function()
-          require('plugins.explorer').neofs()
-        end,
-        keys = {
-          { 'n', '<leader>FF' },
-          { 'n', '<leader>FN' },
-        },
-      },
-      {
-        'camspiers/snap',
-        keys = {
-          { 'n', '<leader><leader>' },
-          { 'n', '<leader>fg' },
-          { 'n', '<leader>fb' },
-          { 'n', '<leader>fo' },
-          { 'n', '<leader>fn' },
-        },
-        config = function()
-          require('plugins.explorer').snap()
-        end,
-        disable = true,
       },
       {
         'kyazdani42/nvim-tree.lua',
@@ -134,30 +114,6 @@ return packer.startup {
           require('plugins.nvim.file_browser').setup()
         end,
         after = 'telescope.nvim',
-      },
-      {
-        'tamago324/lir.nvim',
-        requires = {
-          {
-            'tamago324/lir-git-status.nvim',
-            config = function()
-              require('lir.git_status').setup {
-                show_ignored = true,
-              }
-            end,
-            keys = {
-              { 'n', '<M-e>' },
-              { 'n', '<M-n>' },
-            },
-          },
-        },
-        config = function()
-          require('plugins.explorer').lir()
-        end,
-        keys = {
-          { 'n', '<M-e>' },
-          { 'n', '<M-n>' },
-        },
       },
     }
 
@@ -180,14 +136,6 @@ return packer.startup {
         'windwp/nvim-autopairs',
         config = "require 'plugins.editing.nvim-autopairs'",
         after = 'nvim-cmp',
-      },
-      {
-        'stevearc/gkeep.nvim',
-        run = ':UpdateRemotePlugins',
-        cmd = {
-          'GkeepOpen',
-          'GkeepToggle',
-        },
       },
     }
 
@@ -218,13 +166,17 @@ return packer.startup {
     }
 
     use { -- COMPLETION AND SNIPPETS
-      { 'hrsh7th/cmp-nvim-lsp', event = 'BufWinEnter' },
+      { -- flutter-snippets
+        'Alexisvt/flutter-snippets',
+        ft = { 'dart' },
+        after = 'flutter-tools.nvim',
+      },
       { 'Nash0x7E2/awesome-flutter-snippets', after = 'flutter-tools.nvim' },
       { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
       { 'github/copilot.vim', event = 'BufWinEnter' },
-      { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
       { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
       { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
+      { 'hrsh7th/cmp-nvim-lsp', event = 'BufWinEnter' },
       { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
       { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
       { 'hrsh7th/cmp-vsnip', after = 'nvim-cmp' },
@@ -250,28 +202,15 @@ return packer.startup {
         end,
         event = 'BufWinEnter',
       },
-      { -- refactoring
-        'ThePrimeagen/refactoring.nvim',
-        config = function()
-          require('refactoring').setup {}
-        end,
-        ft = {
-          'go',
-          'javascript',
-          'typescript',
-          'lua',
-          'python',
-          'c',
-          'cpp',
-        },
-      },
       {
         'akinsho/nvim-bufferline.lua',
         config = "require 'plugins.nvim.nvim-bufferline'",
       },
       { -- toggleterm
         'akinsho/nvim-toggleterm.lua',
-        config = "require 'plugins.nvim.toggleterm'",
+        config = function()
+          require('plugins.toggleterm').setup()
+        end,
         keys = {
           { 'n', '<leader>tf' },
           { 'n', '<leader>tg' },
@@ -314,12 +253,6 @@ return packer.startup {
         ft = { 'markdown' },
       },
       { 'kyazdani42/nvim-web-devicons', event = 'BufWinEnter' },
-      { -- Jabs
-        'matbme/JABS.nvim',
-        config = require('utilities').jabs,
-        cmd = { 'JABS', 'JABSOpen', 'J' },
-        keys = { { 'n', '<C-b>' } },
-      },
       { -- renamer
         'filipdutescu/renamer.nvim',
         branch = 'master',
@@ -351,11 +284,6 @@ return packer.startup {
           vim.g.did_load_filetypes = 1
         end,
       },
-      { -- vim-workman
-        'nicwest/vim-workman',
-        cmd = { 'Workman', 'Workman!', 'Qwerty', 'Qwerty!' },
-        config = "require 'plugins.editing.workman'",
-      },
       { -- colorizer
         'norcalli/nvim-colorizer.lua',
         config = function()
@@ -370,7 +298,6 @@ return packer.startup {
         config = "require 'plugins.nvim-treesitter'",
       },
       { 'nvim-lua/popup.nvim' },
-      { 'nvim-pack/nvim-spectre', disable = true },
       { -- auto-session
         'rmagatti/auto-session',
         config = "require 'plugins.nvim.auto-session'",
@@ -381,28 +308,14 @@ return packer.startup {
         after = { 'auto-session', 'telescope.nvim' },
         config = "require 'plugins.nvim.session-lens'",
       },
-      { -- presenting
-        'sotte/presenting.vim',
-        ft = { 'markdown' },
-        config = function()
-          vim.cmd [[
-          augroup presentation
-          autocmd!
-          autocmd Filetype markdown nnoremap <buffer> <C-p> :PresentingStart<CR>
-          autocmd Filetype markdown nnoremap <buffer> <C-c> :.!toilet -w 200 -f term -F border<CR>
-          augroup end 
-        ]]
-        end,
-      },
       { -- aerial
         'stevearc/aerial.nvim',
         event = 'BufWinEnter',
         config = function()
-          require 'plugins.lsp.aerial'
+          require('plugins.lsp').aerial()
           vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
         end,
       },
-      { 'tpope/vim-repeat', event = 'BufWinEnter' },
       { -- hop
         'phaazon/hop.nvim',
         as = 'hop',
@@ -439,11 +352,6 @@ return packer.startup {
           nnoremap('<A-l>', ':<Plug>RestNvimLast<cr>')
           nnoremap('<A-s-r>', ':<Plug>RestNvimPreview<cr>')
         end,
-      },
-      { -- flutter-snippets
-        'Alexisvt/flutter-snippets',
-        ft = { 'dart' },
-        after = 'flutter-tools.nvim',
       },
       { -- dart-code
         vim.fn.stdpath 'cache' .. '/dart-code',
@@ -539,7 +447,7 @@ return packer.startup {
     }
   end,
   config = {
-    max_jobs = 50,
+    max_jobs = 60,
     auto_clean = true,
     display = {
       open_fn = function()

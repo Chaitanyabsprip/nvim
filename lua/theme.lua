@@ -1,4 +1,5 @@
 local M = {}
+local config = require 'config'
 local prequire = require('utils').preq
 
 M.blue_moon = function()
@@ -6,15 +7,15 @@ M.blue_moon = function()
 end
 
 M.calvera = function()
-  vim.g.calvera_italic_comments = true
-  vim.g.calvera_italic_keywords = true
-  vim.g.calvera_italic_functions = true
-  vim.g.calvera_italic_variables = false
+  vim.g.calvera_italic_comments = config.theme.italics.comments
+  vim.g.calvera_italic_keywords = config.theme.italics.keywords
+  vim.g.calvera_italic_functions = config.theme.italics.functions
+  vim.g.calvera_italic_variables = config.theme.italics.variables
   vim.g.calvera_borders = true
   vim.g.calvera_contrast = true
   vim.g.calvera_hide_eob = true
-  vim.g.calvera_disable_background = true
-  vim.g.transparent_bg = false
+  vim.g.calvera_disable_background = config.theme.transparent
+  vim.g.transparent_bg = config.theme.transparent
   prequire('calvera').set()
 end
 
@@ -22,7 +23,7 @@ M.catppuccin = function()
   local catppuccin = prequire 'catppuccin'
   catppuccin.setup {
     term_colors = true,
-    transparent_background = true,
+    transparent_background = config.theme.transparent,
     integrations = {
       treesitter = true,
       lsp_trouble = true,
@@ -49,7 +50,7 @@ M.github = function()
     variable_style = 'italic',
     keyword_style = 'italic',
     hide_inactive_statusline = true,
-    hide_end_of_buffer = true,
+    hide_end_of_buffer = config.theme.hide_eob,
     dark_sidebar = true,
     dark_float = true,
     sidebars = { 'qf', 'terminal', 'packer', 'nvim-tree' },
@@ -70,7 +71,7 @@ M.github = function()
 end
 
 M.gruvbox = function()
-  vim.g.gruvbox_transparent_bg = true
+  vim.g.gruvbox_transparent_bg = config.theme.transparent
   vim.cmd [[ colorscheme gruvbox ]]
 end
 
@@ -90,7 +91,7 @@ M.highlights = function()
 end
 
 M.horizon = function()
-  vim.g.horizon_transparent_bg = false
+  vim.g.horizon_transparent_bg = config.theme.transparent
   vim.cmd [[ colorscheme horizon ]]
 end
 
@@ -137,7 +138,7 @@ M.kanagawa = function()
     variablebuiltinStyle = 'italic',
     specialReturn = true,
     specialException = true,
-    transparent = true, -- do not set background color
+    transparent = config.theme.transparent,
     colors = {},
     overrides = {},
   }
@@ -175,17 +176,10 @@ M.material = function()
       functions = true,
       variables = true,
     },
-    contrast_filetypes = {
-      'terminal',
-      'packer',
-      'qf',
-      'nvim-tree',
-      'lir',
-      'JABS',
-    },
+    contrast_filetypes = config.theme.sidebars,
     disable = {
-      eob_lines = true,
-      background = true,
+      eob_lines = config.theme.hide_eob,
+      background = config.theme.transparent,
     },
   }
   vim.cmd [[ colorscheme material ]]
@@ -195,7 +189,7 @@ M.moonfly = function()
   vim.g.moonflyItalics = true
   vim.g.moonflyNormalFloat = true
   vim.g.moonflyTerminalColors = true
-  vim.g.moonflyTransparent = true
+  vim.g.moonflyTransparent = config.theme.transparent
   vim.g.moonflyUndercurls = true
   vim.g.moonflyUnderlineMatchParen = true
   vim.g.moonflyVertSplits = true
@@ -203,13 +197,13 @@ M.moonfly = function()
 end
 
 M.moonlight = function()
-  vim.g.moonlight_italic_comments = true
-  vim.g.moonlight_italic_keywords = true
-  vim.g.moonlight_italic_functions = true
-  vim.g.moonlight_italic_variables = false
+  vim.g.moonlight_italic_comments = config.theme.italics.comments
+  vim.g.moonlight_italic_keywords = config.theme.italics.keywords
+  vim.g.moonlight_italic_functions = config.theme.italics.functions
+  vim.g.moonlight_italic_variables = config.theme.italics.variables
+  vim.g.moonlight_disable_background = config.theme.transparent
   vim.g.moonlight_contrast = true
   vim.g.moonlight_borders = true
-  vim.g.moonlight_disable_background = true
   prequire('moonlight').set()
 end
 
@@ -217,7 +211,7 @@ M.nebulous = function()
   prequire('nebulous').setup {
     variant = 'night',
     disable = {
-      background = true,
+      background = config.theme.transparent,
       endOfBuffer = true,
       terminal_colors = false,
     },
@@ -236,7 +230,7 @@ M.neon = function()
   vim.g.neon_italic_keyword = true
   vim.g.neon_italic_function = true
   vim.g.neon_italic_variable = true
-  vim.g.neon_transparent = true
+  vim.g.neon_transparent = config.theme.transparent
   vim.g.neon_bold = true
   vim.cmd [[ colorscheme neon ]]
 end
@@ -245,7 +239,7 @@ M.nightfly = function()
   vim.g.nightflyItalics = true
   vim.g.nightflyNormalFloat = true
   vim.g.nightflyTerminalColors = true
-  vim.g.nightflyTransparent = true
+  vim.g.nightflyTransparent = config.theme.transparent
   vim.g.nightflyUndercurls = true
   vim.g.nightflyUnderlineMatchParen = true
   vim.g.nightflyVertSplits = true
@@ -256,7 +250,7 @@ M.nightfox = function()
   local nightfox = prequire 'nightfox'
   nightfox.setup {
     fox = 'nightfox',
-    transparent = true,
+    transparent = config.theme.transparent,
     styles = {
       comments = 'italic',
       functions = 'italic',
@@ -289,7 +283,7 @@ end
 M.rosepine = function()
   vim.g.rose_pine_variant = 'base'
   vim.g.rose_pine_enable_italics = true
-  vim.g.rose_pine_disable_background = true
+  vim.g.rose_pine_disable_background = config.theme.transparent
   vim.cmd [[ colorscheme rose-pine ]]
 end
 
@@ -297,7 +291,7 @@ M.sakura = function()
   local sakura = prequire 'sakura'
   sakura.setup {
     variant = 'moon',
-    transparent = true,
+    transparent = config.theme.transparent,
     italics = true,
   }
   sakura.load()
@@ -330,13 +324,13 @@ M.tokyonight = function()
   vim.g.tokyonight_dark_sidebar = true
   vim.g.tokyonight_day_brightness = 0.3
   vim.g.tokyonight_hide_inactive_statusline = false
-  vim.g.tokyonight_italic_comments = true
-  vim.g.tokyonight_italic_functions = true
-  vim.g.tokyonight_italic_keywords = true
-  vim.g.tokyonight_italic_variables = false
+  vim.g.tokyonight_italic_comments = config.theme.italics.comments
+  vim.g.tokyonight_italic_functions = config.theme.italics.functions
+  vim.g.tokyonight_italic_keywords = config.theme.italics.keywords
+  vim.g.tokyonight_italic_variables = config.theme.italics.variables
   vim.g.tokyonight_sidebars = { 'packer' }
   vim.g.tokyonight_style = 'night'
-  vim.g.tokyonight_transparent = true
+  vim.g.tokyonight_transparent = config.theme.transparent
   vim.cmd [[ colorscheme tokyonight ]]
 end
 

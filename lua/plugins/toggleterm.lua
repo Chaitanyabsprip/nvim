@@ -1,24 +1,47 @@
+local toggleterm = {}
 local Terminal = require('toggleterm.terminal').Terminal
 local nnoremap = require('utils').nnoremap
 
-require('toggleterm').setup {
-  size = 15,
-  open_mapping = [[<c-t>]],
-  shade_terminals = false,
-  shading_factor = '3',
-  start_in_insert = true,
-  persist_size = true,
-  direction = 'horizontal',
-  hide_numbers = true,
-  shade_filetypes = {},
-  shell = vim.o.shell,
-  float_opts = {
-    winblend = 3,
-    highlights = { border = 'Normal', background = 'Normal' },
-  },
-}
+toggleterm.setup = function()
+  require('toggleterm').setup {
+    size = 15,
+    open_mapping = [[<c-t>]],
+    shade_terminals = false,
+    shading_factor = '3',
+    start_in_insert = true,
+    persist_size = true,
+    direction = 'horizontal',
+    hide_numbers = true,
+    shade_filetypes = {},
+    shell = vim.o.shell,
+    float_opts = {
+      winblend = 3,
+      highlights = { border = 'Normal', background = 'Normal' },
+    },
+  }
+  nnoremap(
+    '<leader>tf',
+    "<cmd>lua require('plugins.toggleterm').float:toggle()<CR>",
+    true
+  )
+  nnoremap(
+    '<leader>tt',
+    "<cmd>lua require('plugins.toggleterm').horizontal:toggle()<CR>",
+    true
+  )
+  nnoremap(
+    '<leader>tg',
+    "<cmd>lua require('plugins.toggleterm').gitui:toggle()<CR>",
+    true
+  )
+  nnoremap(
+    '<leader>tr',
+    "<cmd>lua require('plugins.toggleterm').ranger:toggle()<CR>",
+    true
+  )
+end
 
-local floaterm = Terminal:new {
+toggleterm.float = Terminal.new {
   dir = 'git_dir',
   direction = 'float',
   float_opts = { border = 'double' },
@@ -35,7 +58,7 @@ local floaterm = Terminal:new {
   end,
 }
 
-local general = Terminal:new {
+toggleterm.horizontal = Terminal:new {
   dir = 'git_dir',
   direction = 'horizontal',
   on_open = function(term)
@@ -54,7 +77,7 @@ local general = Terminal:new {
   end,
 }
 
-local gitui = Terminal:new {
+toggleterm.gitui = Terminal:new {
   cmd = 'gitui',
   close_on_exit = true,
   dir = 'git_dir',
@@ -76,7 +99,7 @@ local gitui = Terminal:new {
   end,
 }
 
-local ranger = Terminal:new {
+toggleterm.ranger = Terminal:new {
   cmd = 'ranger',
   close_on_exit = true,
   dir = 'git_dir',
@@ -92,23 +115,4 @@ local ranger = Terminal:new {
   end,
 }
 
-function RangerToggle()
-  ranger:toggle()
-end
-
-function GitUIToggle()
-  gitui:toggle()
-end
-
-function Floaterm_toggle()
-  floaterm:toggle()
-end
-
-function General_Toggle()
-  general:toggle()
-end
-
-nnoremap('<leader>tf', '<cmd>lua Floaterm_toggle()<CR>', true)
-nnoremap('<leader>tt', '<cmd>lua General_Toggle()<CR>', true)
-nnoremap('<leader>tg', '<cmd>lua GitUIToggle()<CR>', true)
-nnoremap('<leader>tr', '<cmd>lua RangerToggle()<CR>', true)
+return toggleterm

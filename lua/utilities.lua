@@ -24,8 +24,6 @@ M.highlight = function()
   }
 end
 
-M.toggleterm = function() end
-
 M.jabs = function()
   local ui = vim.api.nvim_list_uis()[1]
   require('jabs').setup {
