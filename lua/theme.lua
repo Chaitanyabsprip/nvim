@@ -2,6 +2,10 @@ local M = {}
 local config = require 'config'
 local prequire = require('utils').preq
 
+M.arch = function()
+  vim.cmd [[ colorscheme arch ]]
+end
+
 M.blue_moon = function()
   vim.cmd [[ colorscheme blue-moon ]]
 end
@@ -76,7 +80,6 @@ M.gruvbox = function()
 end
 
 M.highlights = function()
-  vim.cmd [[ ]]
   if vim.g.colors_name == 'rose-pine' then
     vim.cmd [[ hi! ColorColumn guibg=#1c1a30 ctermbg=235 ]]
   elseif vim.g.colors_name == 'nightfox' then

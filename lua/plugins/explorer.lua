@@ -326,11 +326,15 @@ M.telescope = function()
   )
   nnoremap('<leader>thi', '<cmd>Telescope highlights<CR><ESC>')
 
-  local ok, snap = pcall(require, 'snap')
+  local ok, _ = pcall(require, 'snap')
 
   if not ok then
     nnoremap('<leader><leader>', '<cmd>Telescope fd<CR>', true)
-    nnoremap('<leader>fb', '<cmd>Telescope buffers<CR>', true)
+    nnoremap(
+      '<leader>fb',
+      '<cmd>Telescope buffers previewer=false theme=dropdown initial_mode=normal<CR>',
+      true
+    )
     nnoremap('<leader>fo', '<cmd>Telescope oldfiles<CR>', true)
     nnoremap('<leader>fg', '<cmd>Telescope live_grep<CR>', true)
     nnoremap(

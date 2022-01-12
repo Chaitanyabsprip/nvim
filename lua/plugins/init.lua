@@ -134,7 +134,9 @@ return packer.startup {
       },
       {
         'windwp/nvim-autopairs',
-        config = "require 'plugins.editing.nvim-autopairs'",
+        config = function()
+          require('plugins.editing').autopairs()
+        end,
         after = 'nvim-cmp',
       },
     }
@@ -190,9 +192,17 @@ return packer.startup {
     }
 
     use { -- UTILITIES
+      {
+        '~/Projects/Languages/Lua/present.nvim',
+        -- ft = { 'markdown' },
+        cmd = { 'Present', 'PresentEnable', 'PresentDisable' },
+        config = function()
+          require('present').setup()
+        end,
+      },
       { -- highlight
         'Pocco81/HighStr.nvim',
-        config = require('utilities').highlight,
+        config = require('plugins.utilities').highlight,
         event = 'BufWinEnter',
       },
       {
@@ -248,7 +258,7 @@ return packer.startup {
       {
         'jbyuki/venn.nvim',
         config = function()
-          require('utilities').venn()
+          require('plugins.utilities').venn()
         end,
         ft = { 'markdown' },
       },
@@ -256,23 +266,23 @@ return packer.startup {
       { -- renamer
         'filipdutescu/renamer.nvim',
         branch = 'master',
-        config = "require 'lsp.rename'",
+        config = "require 'plugins.lsp'.renamer()",
         requires = { 'nvim-lua/plenary.nvim' },
         after = 'nvim-lspconfig',
       },
       { -- twilight
         'folke/twilight.nvim',
-        config = require('utilities').twilight,
+        config = require('plugins.utilities').twilight,
         cmd = { 'Twilight', 'TwilightEnable' },
       },
       { -- which-key
         'folke/which-key.nvim',
-        config = require('utilities').which_key,
+        config = require('plugins.utilities').which_key,
         event = 'BufWinEnter',
       },
       { -- zen-mode
         'folke/zen-mode.nvim',
-        config = require('utilities').zen_mode,
+        config = require('plugins.utilities').zen_mode,
         keys = '<leader>z',
         cmd = 'ZenMode',
       },
@@ -320,7 +330,9 @@ return packer.startup {
         'phaazon/hop.nvim',
         as = 'hop',
         event = 'BufRead',
-        config = "require 'plugins.editing.hop'",
+        config = function()
+          require('plugins.editing').hop()
+        end,
       },
     }
 
@@ -370,7 +382,6 @@ return packer.startup {
       { -- schemastore
         'b0o/SchemaStore.nvim',
         event = 'BufWinEnter',
-        ft = { 'yaml', 'json' },
       },
       { 'dag/vim-fish', ft = 'fish' },
       { -- dart-vim
@@ -422,7 +433,7 @@ return packer.startup {
 
     use { -- THEME
       {
-        vim.fn.expand '~' .. '/Projects/Languages/Lua/dark-matter',
+        vim.fn.expand '~' .. '/Projects/Languages/Lua/arch.nvim',
         event = 'BufEnter',
       },
       { 'EdenEast/nightfox.nvim', event = 'BufEnter' },

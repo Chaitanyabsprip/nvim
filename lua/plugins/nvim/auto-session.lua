@@ -15,7 +15,7 @@ require('auto-session').setup {
     project_path .. 'ApplicationDevelopment/flutter_clean_auth_architecture',
     project_path .. 'Languages/JavaScript/twitter-clone',
     project_path .. 'Languages/JavaScript/twitter-clone-backend',
-    project_path .. 'Languages/Lua/dark-matter',
+    project_path .. 'Languages/Lua/arch.nvim',
     project_path .. 'Forks/auto-session',
     home .. '/.config/nvim',
     home .. '/.local/share/nvim/site/pack/*',

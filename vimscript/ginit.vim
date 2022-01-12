@@ -12,6 +12,6 @@
 " neovide
 lua << EOF
 vim.g.neovide_cursor_animation_length = 0.007
-vim.opt.guifont = "VictorMono Nerd Font:h14:w8"
+vim.opt.guifont = "FiraCode Nerd Font:h14:w1"
 EOF
 set linespace=10

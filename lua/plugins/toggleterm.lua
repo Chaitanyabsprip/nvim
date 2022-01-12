@@ -48,13 +48,9 @@ toggleterm.float = Terminal.new {
   -- function to run on opening the terminal
   on_open = function(term)
     vim.cmd 'startinsert!'
-    vim.api.nvim_buf_set_keymap(
-      term.bufnr,
-      'n',
-      'q',
-      '<cmd>close<CR>',
-      { noremap = true, silent = true }
-    )
+    ---@diagnostic disable-next-line: redefined-local
+    local nnoremap = require('mappings').nnoremap
+    nnoremap 'q' '<cmd>close<cr>' { silent = true, bufnr = term.bufnr } 'Close Terminal Window'
   end,
 }
 
@@ -63,17 +59,14 @@ toggleterm.horizontal = Terminal:new {
   direction = 'horizontal',
   on_open = function(term)
     vim.cmd 'startinsert!'
-    vim.api.nvim_buf_set_keymap(
-      term.bufnr,
-      'n',
-      'q',
-      '<cmd>close<CR>',
-      { noremap = true, silent = true }
-    )
+    ---@diagnostic disable-next-line: redefined-local
+    local nnoremap = require('mappings').nnoremap
+    nnoremap 'q' '<cmd>close<cr>' { silent = true, bufnr = term.bufnr } 'Close Terminal Window'
   end,
   on_close = function()
-    vim.api.nvim_set_keymap('t', 'jk', '<C-\\><C-n>', { noremap = true })
-    vim.api.nvim_set_keymap('t', 'kj', '<C-\\><C-n>', { noremap = true })
+    local tnoremap = require('mappings').tnoremap
+    tnoremap 'jk' '<C-\\><C-N>' {} 'jk as escape'
+    tnoremap 'kj' '<C-\\><C-N>' {} 'kj as escape'
   end,
 }
 
@@ -83,19 +76,16 @@ toggleterm.gitui = Terminal:new {
   dir = 'git_dir',
   direction = 'float',
   on_open = function(term)
+    ---@diagnostic disable-next-line: redefined-local
+    local nnoremap = require('mappings').nnoremap
+    nnoremap 'q' '<cmd>close<cr>' { silent = true, bufnr = term.bufnr } 'Close Terminal Window'
     vim.api.nvim_del_keymap('t', 'jk')
     vim.api.nvim_del_keymap('t', 'kj')
-    vim.api.nvim_buf_set_keymap(
-      term.bufnr,
-      'n',
-      'q',
-      '<cmd>close<CR>',
-      { noremap = true, silent = true }
-    )
   end,
   on_close = function()
-    vim.api.nvim_set_keymap('t', 'jk', '<C-\\><C-n>', { noremap = true })
-    vim.api.nvim_set_keymap('t', 'kj', '<C-\\><C-n>', { noremap = true })
+    local tnoremap = require('mappings').tnoremap
+    tnoremap 'jk' '<C-\\><C-N>' {} 'jk as escape'
+    tnoremap 'kj' '<C-\\><C-N>' {} 'kj as escape'
   end,
 }
 
@@ -105,13 +95,9 @@ toggleterm.ranger = Terminal:new {
   dir = 'git_dir',
   direction = 'float',
   on_open = function(term)
-    vim.api.nvim_buf_set_keymap(
-      term.bufnr,
-      'n',
-      'q',
-      '<cmd>close<CR>',
-      { noremap = true, silent = true }
-    )
+    ---@diagnostic disable-next-line: redefined-local
+    local nnoremap = require('mappings').nnoremap
+    nnoremap 'q' '<cmd>close<cr>' { silent = true, bufnr = term.bufnr } 'Close Terminal Window'
   end,
 }
 

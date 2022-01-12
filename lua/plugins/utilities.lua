@@ -1,7 +1,7 @@
 local M = {}
-local nnoremap = require('utils').nnoremap
-local bmap = require('utils').bmap
-local ntst = require('utils').ntst
+local nnoremap = require('mappings').nnoremap
+local vnoremap = require('mappings').vnoremap
+local map = require('mappings').map
 
 M.highlight = function()
   local high_str = require 'high-str'
@@ -40,7 +40,7 @@ M.jabs = function()
     col = ui.width * 0.65, -- Window appears on the right
     row = ui.height * 0.73, -- Window appears in the vertical middle
   }
-  nnoremap('<c-b>', '<cmd>JABS<cr>', true)
+  nnoremap '<c-b>' '<cmd>JABS<cr>' { silent = true } 'Show open buffers'
 end
 
 M.twilight = function()
@@ -54,7 +54,10 @@ M.twilight = function()
 end
 
 M.venn = function()
-  bmap(0, '', '<a-v>', "<cmd>lua require('utilities').toggle_venn()<cr>", ntst)
+  map '<a-v>' "<cmd>lua require('plugins.utilities').toggle_venn()<cr>" {
+    bufnr = 0,
+    silent = true,
+  } 'Toggle venn plugin'
 end
 
 M.toggle_venn = function()
@@ -62,7 +65,7 @@ M.toggle_venn = function()
   if venn_enabled == 'nil' then
     vim.b.venn_enabled = true
     vim.cmd [[setlocal ve=all]]
-    vim.api.nvim_buf_set_keymap(0, 'v', 'b', ':VBox<CR>', { noremap = true })
+    vnoremap 'b' ':VBox<cr>' { bufnr = 0 } 'Surround with box'
   else
     vim.cmd [[setlocal ve=]]
     vim.cmd [[mapclear <buffer>]]

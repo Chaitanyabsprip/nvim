@@ -5,25 +5,18 @@ local cmp = require 'cmp_nvim_lsp'
 
 M.capabilities = function(_)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.documentationFormat = {
-    'markdown',
-    'plaintext',
-  }
-
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities.textDocument.completion.completionItem.workspaceWord = true
-  capabilities.textDocument.completion.completionItem.word = true
-  capabilities.textDocument.completion.completionItem.preselectSupport = true
-  capabilities.textDocument.completion.completionItem.insertReplaceSupport =
-    true
-  capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
-  capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-  capabilities.textDocument.completion.completionItem.commitCharactersSupport =
-    true
-  capabilities.textDocument.completion.completionItem.tagSupport = {
-    valueSet = { 1 },
-  }
-  capabilities.textDocument.completion.completionItem.resolveSupport = {
+  local completionItem = capabilities.textDocument.completion.completionItem
+  completionItem.documentationFormat = { 'markdown', 'plaintext' }
+  completionItem.snippetSupport = true
+  completionItem.workspaceWord = true
+  completionItem.word = true
+  completionItem.preselectSupport = true
+  completionItem.insertReplaceSupport = true
+  completionItem.labelDetailsSupport = true
+  completionItem.deprecatedSupport = true
+  completionItem.commitCharactersSupport = true
+  completionItem.tagSupport = { valueSet = { 1 } }
+  completionItem.resolveSupport = {
     properties = { 'documentation', 'detail', 'additionalTextEdits' },
   }
   capabilities = cmp.update_capabilities(capabilities)
@@ -39,7 +32,7 @@ M.common_on_attach = function(client, bufnr)
     bind = true,
     handler_opts = { border = 'single' },
     floating_window = true,
-    transparency = 60,
+    transparency = 20,
   }, bufnr)
 end
 

@@ -346,8 +346,8 @@ server.rust = function()
 end
 
 server.setup = function()
-  for _, server in ipairs(servers) do
-    nvim_lsp[server].setup {
+  for _, lsp_server in ipairs(servers) do
+    nvim_lsp[lsp_server].setup {
       on_attach = lsp.common_on_attach,
       capabilities = lsp.capabilities(),
       root_dir = require('lspconfig').util.root_pattern(
