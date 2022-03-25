@@ -1,6 +1,6 @@
 local config = {
   theme = {
-    transparent = true,
+    transparent = false,
     hide_eob = true,
     italics = {
       comments = true,
@@ -10,6 +10,7 @@ local config = {
       variables = true,
     },
     sidebars = {
+      'UltestSummary',
       'terminal',
       'packer',
       'qf',

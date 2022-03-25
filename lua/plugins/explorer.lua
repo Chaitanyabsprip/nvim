@@ -151,8 +151,11 @@ M.nvim_tree = function()
       update_cwd = false,
       ignore_list = {},
     },
+    update_to_buf_dir = {
+      enable = false,
+    },
     view = {
-      width = 30,
+      width = 40,
       side = 'right',
       auto_resize = true,
       mappings = {

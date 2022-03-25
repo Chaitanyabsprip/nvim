@@ -17,6 +17,8 @@ require('auto-session').setup {
     project_path .. 'Languages/JavaScript/twitter-clone-backend',
     project_path .. 'Languages/Lua/arch.nvim',
     project_path .. 'Forks/auto-session',
+    project_path .. 'CompetitiveProgramming/saving_the_universe',
+    project_path .. 'CompetitiveProgramming/saving_the_universe/python',
     home .. '/.config/nvim',
     home .. '/.local/share/nvim/site/pack/*',
   },

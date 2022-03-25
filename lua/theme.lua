@@ -132,7 +132,7 @@ end
 
 M.kanagawa = function()
   require('kanagawa').setup {
-    undercurl = true, -- enable undercurls
+    undercurl = true,
     commentStyle = 'italic',
     functionStyle = 'italic',
     keywordStyle = 'italic',
@@ -302,7 +302,7 @@ end
 
 M.setup = function()
   vim.schedule(function()
-    M.nightfox()
+    M.catppuccin()
     M.highlights()
     M.line_number_interval()
     prequire('statusline').lualine()

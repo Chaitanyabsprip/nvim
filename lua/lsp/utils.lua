@@ -1,6 +1,3 @@
-local scandir = require 'plenary.scandir'
-local utils = require 'utils'
-
 local M = {}
 
 -- calls function for each capability from a capabilities directory if it's resolved

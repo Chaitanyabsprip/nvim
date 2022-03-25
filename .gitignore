@@ -1,2 +1,3 @@
 lang-servers
 plugin/
+**/vscode

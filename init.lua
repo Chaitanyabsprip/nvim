@@ -8,3 +8,5 @@ require 'settings'
 require('mappings').setup_keymaps()
 require 'plugins'
 require('theme').setup()
+vim.cmd [[ imap <silent><script><expr> <C-L> copilot#Accept("") ]]
+vim.g.copilot_no_tab_map = true

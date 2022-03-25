@@ -58,7 +58,6 @@ end
 
 server.go = function()
   nvim_lsp.gopls.setup {
-    cmd = { '/home/chaitanya/.config/nvim/lang-servers/gopls/gopls' },
     settings = {
       gopls = { analyses = { unusedparams = true }, staticcheck = true },
     },
@@ -154,7 +153,7 @@ server.null = function()
     sources = {
       code_actions.eslint_d,
       code_actions.gitsigns,
-      code_actions.refactoring.with(refactoring_opts),
+      -- code_actions.refactoring.with(refactoring_opts),
       code_actions.proselint,
       diagnostics.eslint_d,
       diagnostics.flake8.with(flake8_opts),
@@ -333,6 +332,16 @@ server.rust = function()
           typeHints = true,
         },
         -- hoverActions = {}
+        assist = {
+          importGranularity = 'module',
+          importPrefix = 'by_self',
+        },
+        cargo = {
+          loadOutDirsFromCheck = true,
+        },
+        procMacro = {
+          enable = true,
+        },
       },
     },
     root_dir = require('lspconfig/util').root_pattern(

@@ -43,3 +43,5 @@
 -- { 'nvim-pack/nvim-spectre', disable = true },
 -- { -- presenting 'sotte/presenting.vim', ft = { 'markdown' }, config = function() vim.cmd [[ augroup presentation autocmd! autocmd Filetype markdown nnoremap <buffer> <C-p> :PresentingStart<CR> autocmd Filetype markdown nnoremap <buffer> <C-c> :.!toilet -w 200 -f term -F border<CR> augroup end ]] end, },
 -- { 'tpope/vim-repeat', event = 'BufWinEnter' },
+-- { -- auto-session 'rmagatti/auto-session', config = "require 'plugins.nvim.auto-session'", after = { 'telescope.nvim' }, disable = true, },
+-- { -- session-lens 'rmagatti/session-lens', after = { 'auto-session', 'telescope.nvim' }, config = "require 'plugins.nvim.session-lens'", disable = true, },

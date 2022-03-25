@@ -83,23 +83,23 @@ M.lualine = function()
         },
       },
       lualine_x = {
-        {
-          'lsp_progress',
-          display_components = {
-            'spinner',
-            { 'title', 'percentage', 'message' },
-          },
-          spinner_symbols = {
-            '🌑 ',
-            '🌘 ',
-            '🌗 ',
-            '🌖 ',
-            '🌕 ',
-            '🌔 ',
-            '🌓 ',
-            '🌒 ',
-          },
-        },
+        -- {
+        --   'lsp_progress',
+        --   display_components = {
+        --     'spinner',
+        --     { 'title', 'percentage', 'message' },
+        --   },
+        --   spinner_symbols = {
+        --     '🌑 ',
+        --     '🌘 ',
+        --     '🌗 ',
+        --     '🌖 ',
+        --     '🌕 ',
+        --     '🌔 ',
+        --     '🌓 ',
+        --     '🌒 ',
+        --   },
+        -- },
         get_lsp_client,
         'filetype',
       },

@@ -9,5 +9,3 @@ syntax region markdownLinkText matchgroup=markdownLinkTextDelimiter start="!\=\[
 syntax region markdownLink matchgroup=markdownLinkDelimiter start="(" end=")" contains=markdownUrl keepend contained conceal
 
 hi def link todoCheckbox Conceal
-
-echo "Hi hello how are you"

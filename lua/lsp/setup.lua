@@ -24,10 +24,11 @@ M.capabilities = function(_)
 end
 
 M.common_on_attach = function(client, bufnr)
-  lsp_utils.resolve_capabilities(client.resolved_capabilities)
+  vim.schedule(function()
+    lsp_utils.resolve_capabilities(client.resolved_capabilities)
+  end)
   diagnostic.on_attach(client)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  require('aerial').on_attach(client, bufnr)
   require('lsp_signature').on_attach({
     bind = true,
     handler_opts = { border = 'single' },

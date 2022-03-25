@@ -36,12 +36,18 @@ return packer.startup {
         end,
         after = { 'nvim-lspconfig', 'telescope.nvim' },
       },
-      { 'arkav/lualine-lsp-progress', event = 'BufWinEnter' },
       {
         'folke/lsp-trouble.nvim',
         after = 'nvim-lspconfig',
         config = function()
           require('plugins.lsp').trouble()
+        end,
+      },
+      {
+        'j-hui/fidget.nvim',
+        event = 'BufWinEnter',
+        config = function()
+          require('fidget').setup {}
         end,
       },
       { 'jose-elias-alvarez/null-ls.nvim', event = 'BufRead' },
@@ -74,6 +80,33 @@ return packer.startup {
           require('rust-tools').setup {}
         end,
         after = 'nvim-lspconfig',
+      },
+      {
+        'simrat39/symbols-outline.nvim',
+        config = function()
+          vim.g.symbols_outline = {
+            highlight_hovered_item = true,
+            show_guides = true,
+            auto_preview = false, -- experimental
+            position = 'right',
+            keymaps = {
+              close = 'q',
+              goto_location = '<Cr>',
+              focus_location = 'o',
+              hover_symbol = '<C-space>',
+              rename_symbol = 'r',
+              code_actions = 'a',
+            },
+            lsp_blacklist = {},
+          }
+          vim.api.nvim_set_keymap(
+            'n',
+            '<M-s>',
+            ':SymbolsOutline<CR>',
+            { noremap = true, silent = true }
+          )
+        end,
+        cmd = { 'SymbolsOutline' },
       },
       {
         'theHamsta/nvim-dap-virtual-text',
@@ -119,7 +152,7 @@ return packer.startup {
 
     use { -- EDITING
       {
-        'blackCauldron7/surround.nvim',
+        'Mephistophiles/surround.nvim',
         config = function()
           require('surround').setup {}
         end,
@@ -270,6 +303,11 @@ return packer.startup {
         requires = { 'nvim-lua/plenary.nvim' },
         after = 'nvim-lspconfig',
       },
+      {
+        'folke/todo-comments.nvim',
+        config = require('plugins.utilities').todo_comments,
+        event = 'BufWinEnter',
+      },
       { -- twilight
         'folke/twilight.nvim',
         config = require('plugins.utilities').twilight,
@@ -295,11 +333,14 @@ return packer.startup {
         end,
       },
       { -- colorizer
-        'norcalli/nvim-colorizer.lua',
+        'afonsocraposo/nvim-colorizer.lua',
         config = function()
-          require('colorizer').setup {}
+          require('colorizer').setup {
+            dart = { rgb_0x = true },
+          }
         end,
-        cmd = 'ColorizerToggle',
+        cmd = { 'ColorizerToggle', 'ColorizerAttachToBuffer' },
+        disable = false,
       },
       { -- treesitter
         'nvim-treesitter/nvim-treesitter',
@@ -308,23 +349,10 @@ return packer.startup {
         config = "require 'plugins.nvim-treesitter'",
       },
       { 'nvim-lua/popup.nvim' },
-      { -- auto-session
-        'rmagatti/auto-session',
-        config = "require 'plugins.nvim.auto-session'",
-        after = { 'telescope.nvim' },
-      },
-      { -- session-lens
-        'rmagatti/session-lens',
-        after = { 'auto-session', 'telescope.nvim' },
-        config = "require 'plugins.nvim.session-lens'",
-      },
-      { -- aerial
-        'stevearc/aerial.nvim',
-        event = 'BufWinEnter',
-        config = function()
-          require('plugins.lsp').aerial()
-          vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
-        end,
+      {
+        'olimorris/persisted.nvim',
+        config = "require 'plugins.nvim.persisted'",
+        disable = false,
       },
       { -- hop
         'phaazon/hop.nvim',
@@ -448,7 +476,7 @@ return packer.startup {
       { 'marko-cerovac/material.nvim', event = 'BufEnter' },
       { 'numToStr/Sakura.nvim', event = 'BufEnter' },
       { 'nxvu699134/vn-night.nvim', event = 'BufEnter' },
-      { 'p00f/nvim-ts-rainbow', after = 'nvim-treesitter' },
+      { 'p00f/nvim-ts-rainbow', after = 'nvim-treesitter', disable = true },
       { 'projekt0n/github-nvim-theme', event = 'BufEnter' },
       { 'rafamadriz/neon', event = 'BufEnter' },
       { 'rebelot/kanagawa.nvim', event = 'BufEnter' },

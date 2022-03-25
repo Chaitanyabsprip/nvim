@@ -19,6 +19,7 @@ toggleterm.setup = function()
       highlights = { border = 'Normal', background = 'Normal' },
     },
   }
+
   nnoremap(
     '<leader>tf',
     "<cmd>lua require('plugins.toggleterm').float:toggle()<CR>",
@@ -41,7 +42,7 @@ toggleterm.setup = function()
   )
 end
 
-toggleterm.float = Terminal.new {
+toggleterm.float = Terminal:new {
   dir = 'git_dir',
   direction = 'float',
   float_opts = { border = 'double' },
