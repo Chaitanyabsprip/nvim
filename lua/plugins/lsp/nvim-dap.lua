@@ -1,8 +1,9 @@
 local nnoremap = require('utils').nnoremap
-local dap = require 'dap'
 local api = vim.api
 local keymap_restore = {}
+local dap = require 'dap'
 
+dap.set_log_level 'DEBUG'
 dap.listeners.after['event_initialized']['me'] = function()
   for _, buf in pairs(api.nvim_list_bufs()) do
     local keymaps = api.nvim_buf_get_keymap(buf, 'n')
@@ -34,31 +35,13 @@ dap.listeners.after['event_terminated']['me'] = function()
   keymap_restore = {}
 end
 
-require('dapui').setup {
-  sidebar = {
-    elements = {
-      { id = 'scopes', size = 0.25 },
-      { id = 'breakpoints', size = 0.25 },
-      { id = 'stacks', size = 0.25 },
-      { id = 'watches', size = 00.25 },
-    },
-    size = 40,
-    position = 'right', -- Can be "left" or "right"
-  },
-  tray = {
-    elements = { 'repl' },
-    size = 10,
-    position = 'bottom', -- Can be "bottom" or "top"
-  },
-  floating = {
-    max_height = nil,
-    max_width = nil,
-    mappings = { close = { 'q', '<Esc>' } },
-  },
-  windows = { indent = 1 },
-}
+dap.listeners.after.event_initialized['dapui_config'] = function()
+  require('dapui').open()
+end
+dap.listeners.before.event_terminated['dapui_config'] = function()
+  require('dapui').close()
+end
 
-nnoremap('<a-d>', "<cmd>lua require('dapui').toggle().<CR>", true)
 nnoremap(
   '<leader>dcm',
   "<CMD>lua require'telescope'.extensions.dap.commands{}<CR>",
@@ -85,8 +68,13 @@ nnoremap(
   true
 )
 nnoremap('<leader>b', "<CMD>lua require'dap'.toggle_breakpoint()<CR>", true)
+nnoremap(
+  '<leader>B',
+  "<CMD>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint Condition: '))<CR>",
+  true
+)
 nnoremap('<leader>c', "<CMD>lua require'dap'.continue()<CR>", true)
-nnoremap('<leader>so', "<CMD>lua require'dap'.step_over()<CR>", true)
-nnoremap('<leader>sx', "<CMD>lua require'dap'.step_out()<CR>", true)
-nnoremap('<leader>si', "<CMD>lua require'dap'.step_into()<CR>", true)
-nnoremap('<leader>ro', "<CMD>lua require'dap'.repl_open()<CR>", true)
+nnoremap('<C-U>', "<CMD>lua require'dap'.step_over()<CR>", true)
+nnoremap('<C-O>', "<CMD>lua require'dap'.step_out()<CR>", true)
+nnoremap('<C-I>', "<CMD>lua require'dap'.step_into()<CR>", true)
+nnoremap('<leader>ro', "<CMD>lua require'dap'.repl.open()<CR>", true)

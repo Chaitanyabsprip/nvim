@@ -29,7 +29,8 @@ local kind_icons = {
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0
-    and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
+    and vim.api
+        .nvim_buf_get_lines(0, line - 1, line, true)[1]
         :sub(col, col)
         :match '%s'
       == nil
@@ -50,7 +51,7 @@ local select_item_opts = { behavior = types.cmp.SelectBehavior.Select }
 cmp.setup {
   snippet = {
     expand = function(args)
-      vim.fn['vsnip#anonymous'](args.body) -- For `vsnip` users.
+      vim.fn['vsnip#anonymous'](args.body)
     end,
   },
   mapping = {
@@ -91,42 +92,33 @@ cmp.setup {
     ['<CR>'] = cmp.mapping.confirm { select = true },
   },
   sources = {
+    { name = 'vsnip' },
+    { name = 'nvim_lsp_signature_help' },
     { name = 'nvim_lsp' },
     { name = 'nvim_lua' },
-    { name = 'vsnip' },
     { name = 'path' },
     { name = 'emoji' },
   },
   formatting = {
     fields = { 'kind', 'abbr', 'menu' },
-    format = function(entry, vim_item)
-      vim_item.kind = string.format(
-        '%s %s',
-        kind_icons[vim_item.kind],
-        vim_item.kind
-      )
-      vim_item.menu = ({
-        nvim_lsp = '[LSP]',
-        nvim_lua = '[LUA]',
-        vsnip = '[Snippet]',
-        path = '[Path]',
-      })[entry.source.name]
+    format = function(_, vim_item)
+      vim_item.menu = vim_item.kind
+      vim_item.kind = kind_icons[vim_item.kind]
       return vim_item
     end,
-  },
-  documentation = {
-    border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
   },
   experimental = {
     ghost_text = true,
   },
 }
 
--- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline('/', { sources = { { name = 'buffer' } } })
+cmp.setup.cmdline('/', {
+  mapping = cmp.config.mapping.preset.cmdline(),
+  sources = { { name = 'buffer' } },
+})
 
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
+  mapping = cmp.config.mapping.preset.cmdline(),
   sources = cmp.config.sources {
     { name = 'path' },
     { name = 'cmdline' },

@@ -153,4 +153,8 @@ M.renamer = function()
   }
 end
 
+M.diaglist = function()
+  require('diaglist').init()
+end
+
 return M
