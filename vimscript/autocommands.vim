@@ -50,7 +50,7 @@ augroup source_plugins_and_install
   autocmd BufWritePost ~/.config/nvim/lua/plugins/init.lua source ~/.config/nvim/lua/plugins/init.lua
 augroup end
 
-augroup highlihgt_current_line_number
+augroup highlight_current_line_number
   autocmd!
   autocmd ColorScheme * hi clear CursorLine
   autocmd ColorScheme * hi CursorLineNr guifg=#515980 gui=bold
@@ -64,6 +64,11 @@ augroup end
 augroup markdown_ft
   autocmd!
   autocmd FileType markdown setlocal foldlevel=1 conceallevel=2 spell
+augroup end
+
+augroup drift_filetype
+  autocmd!
+  autocmd FileType drift set ft=sql
 augroup end
 
 augroup tabbed_workspace
