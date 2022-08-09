@@ -30,7 +30,7 @@ M.catppuccin = function()
     transparent_background = config.theme.transparent,
     integrations = {
       treesitter = true,
-      lsp_trouble = true,
+      lsp_trouble = false,
       gitsigns = true,
       telescope = true,
       nvimtree = {
@@ -80,6 +80,7 @@ M.gruvbox = function()
 end
 
 M.highlights = function()
+  vim.cmd [[ hi! ColorColumn guibg=#1c1a30 ctermbg=235 ]]
   if vim.g.colors_name == 'rose-pine' then
     vim.cmd [[ hi! ColorColumn guibg=#1c1a30 ctermbg=235 ]]
   elseif vim.g.colors_name == 'nightfox' then
@@ -302,9 +303,9 @@ end
 
 M.setup = function()
   vim.schedule(function()
-    M.catppuccin()
+    M[config.theme.name]()
     M.highlights()
-    M.line_number_interval()
+    -- M.line_number_interval()
     prequire('statusline').lualine()
   end)
 end
