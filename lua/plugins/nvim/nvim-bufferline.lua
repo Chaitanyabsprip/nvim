@@ -1,5 +1,3 @@
-local u = require 'utils'
--- local p = require 'rose-pine.palette'
 local nnoremap = require('utils').nnoremap
 
 require('bufferline').setup {
