@@ -4,7 +4,7 @@ local nnoremap = require('mappings').nnoremap
 M.hop = function()
   require('hop').setup {
     jump_on_sole_occurrence = true,
-    keys = 'jdsaklghxcvbnmwertyuiof',
+    keys = 'nrsaeogpcldkbhvwmjzfuxt',
   }
   vim.cmd [[ hi! HopNextKey2 guifg=#449dab]]
   nnoremap '<c-f>' "<cmd>lua require'hop'.hint_char1()<cr>" { silent = true } 'Initiate hop with 1 character search'
