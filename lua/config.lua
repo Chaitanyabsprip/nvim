@@ -1,5 +1,6 @@
 local config = {
   theme = {
+    name = 'tokyonight',
     transparent = false,
     hide_eob = true,
     italics = {
