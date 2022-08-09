@@ -1,35 +1,92 @@
 ---@diagnostic disable: undefined-global
 
 local M = {}
-local prequire = require('utils').preq
 local nnoremap = require('utils').nnoremap
 local notesdir = vim.fn.expand '$HOME' .. '/Projects/Notes'
 
-M.project = function()
-  require('project_nvim').setup {
-    manual_mode = false,
-    detection_methods = { 'lsp', 'pattern' },
-    patterns = {
-      'pubspec.yaml',
-      'package.json',
-      'config.py',
-      'setup.py',
-      'cargo.toml',
-      'Makefile',
-      'makefile',
-      '.git',
-      '.gitignore',
-      '_darcs',
-      '.hg',
-      '.bzr',
-      '.svn',
+M.filetree = function()
+  local fileTree = require 'filetree'
+  local mapping = fileTree.Mapping
+  fileTree:setup {
+    view = {
+      line_width = 6,
+      show_dot_files = true,
     },
-    ignore_lsp = { 'null-ls' },
-    show_hidden = false,
-    silent_chdir = true,
-    datapath = vim.fn.stdpath 'data',
+    mapping = {
+      wrap_cursor = true,
+      close_children = true,
+      yank_file_names = 'path',
+      keymaps = {
+        ['j'] = mapping:cursor_down(),
+        ['k'] = mapping:cursor_up(),
+        ['l'] = mapping:open(),
+        ['h'] = mapping:close(),
+        ['<Enter>'] = mapping:enter(),
+        ['w'] = mapping:mark(false),
+        ['W'] = mapping:mark(true),
+        ['N'] = mapping:make_file(),
+        ['a'] = mapping:make_file(),
+        ['K'] = mapping:make_directory(),
+        ['A'] = mapping:make_directory(),
+        ['r'] = mapping:rename(),
+        ['R'] = mapping:rename 'name',
+        ['e'] = mapping:rename 'ext',
+        ['c'] = mapping:copy(),
+        ['m'] = mapping:move(),
+        ['x'] = mapping:move(),
+        ['d'] = mapping:remove(),
+        ['y'] = mapping:yank(),
+        ['p'] = mapping:paste(),
+        ['P'] = mapping:pack(false),
+        ['C'] = mapping:compress(false),
+        ['i'] = mapping:info(),
+        ['v'] = mapping:preview(),
+        ['H'] = mapping:toggle_hidden(),
+        [','] = mapping:redraw(),
+        [';'] = mapping:reload(),
+        ['<Esc>'] = mapping:clear(),
+      },
+    },
+    file_preview = {
+      quit_on_esc = true,
+      type = 'float',
+      relative = 'editor',
+      absolute = false,
+      width = 0.9,
+      height = 0.7,
+      row = 0.5,
+      col = 0.5,
+      border = 'single',
+      number = true,
+      relativenumber = true,
+    },
+    filters = {
+      exclude = {
+        dot_files = false,
+        pattern = '',
+      },
+    },
+    actions = {
+      sort_nodes = {
+        method = 'name',
+        directories = 'top',
+        reverse = false,
+      },
+      open_file = {
+        quit_tree = false,
+        window_picker = {
+          enable = true,
+          ids = 'aoeuhtns',
+          exclude = {
+            buftypes = { 'nofile', 'help' },
+            bufnames = {},
+          },
+        },
+      },
+    },
   }
-  require('telescope').load_extension 'projects'
+  -- _G.filetree:enable_extension('icons', { position = 'first' })
+  -- vim.cmd 'FTreeOpen'
 end
 
 M.lir = function()
@@ -123,56 +180,74 @@ end
 
 M.nvim_tree = function()
   local tree_cb = require('nvim-tree.config').nvim_tree_callback
-  vim.g.nvim_add_trailing = 1
-  vim.g.nvim_tree_git_hl = 1
-  vim.g.nvim_tree_group_empty = 1
-  vim.g.nvim_tree_highlight_opened_files = 1
-  vim.g.nvim_tree_indent_markers = 1
+  local mappings = {
+    custom_only = false,
+    list = {
+      { key = { '<CR>', '<2-LeftMouse>', 'l' }, cb = tree_cb 'edit' },
+      { key = { '<2-RightMouse>', '<C-]>', 'cd' }, cb = tree_cb 'cd' },
+      { key = { '<C-v>', 'v' }, cb = tree_cb 'vsplit' },
+      { key = { '<C-x>', 's' }, cb = tree_cb 'split' },
+      { key = { '<BS>', 'h', '<S-CR>' }, cb = tree_cb 'close_node' },
+      { key = { 'o' }, cb = tree_cb 'system_open' },
+    },
+  }
   require('nvim-tree').setup {
-    hijack_cursor = false,
-    auto_close = false,
-    auto_open = false,
+    actions = { change_dir = { restrict_above_cwd = true } },
+    auto_reload_on_write = true,
     diagnostics = {
       enable = true,
+      show_on_dirs = true,
       icons = { hint = '', info = '', warning = '', error = '' },
     },
-    ignore_ft_on_setup = {},
-    open_on_setup = false,
-    open_on_tab = true,
-    system_open = { -- configuration options for the system open command (`s` in the tree by default)
-      -- the command to run this, leaving nil should work in most cases
-      cmd = nil,
-      -- the command arguments as a list
-      args = {},
+    update_focused_file = { enable = true, update_cwd = false },
+    disable_netrw = true,
+    filters = { dotfiles = false, custom = {}, exclude = {} },
+    git = { enable = true, ignore = true, timeout = 400 },
+    hijack_directories = { enable = true, auto_open = true },
+    hijack_netrw = true,
+    hijack_unnamed_buffer_when_opening = true,
+    ignore_buffer_on_setup = false,
+    renderer = {
+      indent_markers = { enable = true },
+      highlight_git = true,
+      highlight_opened_files = '4',
+      group_empty = true,
     },
+    sort_by = 'name',
+    trash = { cmd = 'trash', require_confirm = true },
     update_cwd = true,
-    update_focused_file = {
-      enable = false,
-      update_cwd = false,
-      ignore_list = {},
-    },
-    update_to_buf_dir = {
-      enable = false,
-    },
     view = {
       width = 40,
       side = 'right',
-      auto_resize = true,
-      mappings = {
-        custom_only = false,
-        list = {
-          { key = { '<CR>', '<2-LeftMouse>', 'l' }, cb = tree_cb 'edit' },
-          { key = { '<2-RightMouse>', '<C-]>', 'cd' }, cb = tree_cb 'cd' },
-          { key = { '<C-v>', 'v' }, cb = tree_cb 'vsplit' },
-          { key = { '<C-x>', 's' }, cb = tree_cb 'split' },
-          { key = { '<BS>', 'h', '<S-CR>' }, cb = tree_cb 'close_node' },
-          { key = { 'o' }, cb = tree_cb 'system_open' },
-        },
-      },
+      preserve_window_proportions = false,
+      mappings = mappings,
     },
   }
   nnoremap('<leader>e', ':NvimTreeToggle<CR>', true)
   nnoremap('<leader>n', '<CMD>NvimTreeFindFile<CR>', true)
+end
+
+M.project = function()
+  require('project_nvim').setup {
+    manual_mode = false,
+    detection_methods = { 'lsp', 'pattern' },
+    patterns = {
+      '.git',
+      '.gitignore',
+      'pubspec.yaml',
+      'cargo.toml',
+      'config.py',
+      'go.mod',
+      'makefile',
+      'setup.py',
+      vim.fn.getcwd(),
+    },
+    ignore_lsp = { 'null-ls' },
+    show_hidden = true,
+    silent_chdir = false,
+    datapath = vim.fn.stdpath 'data',
+  }
+  require('telescope').load_extension 'projects'
 end
 
 M.snap = function()
@@ -225,127 +300,6 @@ M.snap = function()
       views = { snap.get 'preview.file' },
     }
   end)
-end
-
-M.telescope = function()
-  local nnoremap = require('utils').nnoremap
-  local actions = require 'telescope.actions'
-
-  local mappings = {
-    i = {
-      ['<c-j>'] = actions.move_selection_next,
-      ['<c-k>'] = actions.move_selection_previous,
-      ['<esc>'] = actions.close,
-    },
-    n = {
-      ['q'] = actions.close,
-      ['<c-c>'] = actions.close,
-    },
-  }
-
-  require('telescope').setup {
-    defaults = {
-      mappings = mappings,
-      initial_mode = 'insert',
-      selection_strategy = 'reset',
-      sorting_strategy = 'ascending',
-      layout_strategy = 'horizontal',
-      layout_config = {
-        horizontal = { mirror = false },
-        vertical = { mirror = false },
-        height = 0.8,
-        width = 0.9,
-      },
-      file_sorter = require('telescope.sorters').get_fuzzy_file,
-      file_ignore_patterns = {},
-      generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
-      winblend = 10,
-      border = {},
-      borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-      color_devicons = true,
-      path_display = {
-        shorten = { len = 1, exclude = { -1 } },
-      },
-      set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
-      extensions = {
-        file_browser = require('telescope.themes').get_dropdown {
-          initial_mode = 'normal',
-          -- layout_strategy = 'horizontal',
-          layout_config = {
-            height = 0.5,
-            width = 0.5,
-          },
-        },
-      },
-    },
-  }
-
-  local function builtin(picker, theme)
-    local builtin_cmd = "require('telescope.builtin')."
-    return builtin_cmd .. picker .. theme .. ')'
-  end
-
-  local function ivy(opts)
-    local ivy_cmd = "(require('telescope.themes').get_ivy("
-    return ivy_cmd .. opts .. ')'
-  end
-
-  local function dropdown(opts)
-    local ivy_cmd = "(require('telescope.themes').get_dropdown("
-    return ivy_cmd .. opts .. ')'
-  end
-
-  local function telescope_command(command)
-    local telescope_cmd = '<cmd>lua '
-    return telescope_cmd .. command .. '<CR>'
-  end
-
-  nnoremap('<A-p>', '<cmd>Telescope projects<CR>')
-  nnoremap(
-    '<c-t>dd',
-    telescope_command(
-      builtin(
-        'diagnostics',
-        ivy '{layout_config={height=12},bufnr=0, initial_mode="normal"}'
-      )
-    )
-  )
-  nnoremap(
-    '<c-t>dw',
-    telescope_command(
-      builtin(
-        'diagnostics',
-        ivy '{layout_config={height=12, preview_width = 80 }, initial_mode="normal" }'
-      )
-    )
-  )
-  nnoremap(
-    '<leader>tht',
-    telescope_command(builtin('help_tags', ivy '{layout_config={height=12}}'))
-  )
-  nnoremap(
-    '<leader>thk',
-    telescope_command(builtin('keymaps', ivy '{layout_config={height=12}}'))
-  )
-  nnoremap('<leader>thi', '<cmd>Telescope highlights<CR><ESC>')
-
-  local ok, _ = pcall(require, 'snap')
-
-  if not ok then
-    nnoremap('<leader><leader>', '<cmd>Telescope fd<CR>', true)
-    nnoremap(
-      '<leader>fb',
-      '<cmd>Telescope buffers previewer=false theme=dropdown initial_mode=normal<CR>',
-      true
-    )
-    nnoremap('<leader>fo', '<cmd>Telescope oldfiles<CR>', true)
-    nnoremap('<leader>fg', '<cmd>Telescope live_grep<CR>', true)
-    nnoremap(
-      '<leader>fn',
-      "<cmd>lua require'telescope.builtin'.fd({cwd='/Users/chaitanyasharma/Projects/Notes',hidden=true})<CR>",
-      true
-    )
-  end
 end
 
 return M
