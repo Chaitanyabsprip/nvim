@@ -18,19 +18,20 @@ handlers.diagnostic = function()
   return {
     handler_name = 'textDocument/publishDiagnostics',
     handler = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = true,
-      underline = true,
+      virtual_text = false,
+      underline = false,
       signs = { active = signs },
       update_in_insert = false,
+      source = true,
       severity_sort = true,
       float = {
         focusable = false,
         style = 'minimal',
         border = 'rounded',
-        source = 'always',
+        source = true,
         header = 'Diagnostics',
-        prefix = function(_, i, _)
-          return ' ' .. i .. '. '
+        prefix = function(diagnostic, i, _)
+          return ' ' .. i .. '. ' .. diagnostic.source .. ': '
         end,
       },
     }),

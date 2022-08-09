@@ -4,12 +4,11 @@ local M = {}
 -- module name: the same as appropriate capability
 -- module structure:
 --     function(capability_value) - function to call if capability were resolved
-M.resolve_capabilities = function(resolved_capabilities)
+M.resolve_capabilities = function(client)
   local capabilities = require 'lsp.capabilities'
-  for capability, value in pairs(resolved_capabilities) do
-    local module = capabilities[capability]
-    if module ~= nil and value then
-      module(value)
+  for capability, module in pairs(capabilities) do
+    if client.supports_method(capability) then
+      module()
     end
   end
   require('mappings').setup_keymaps()
@@ -26,6 +25,15 @@ M.apply_handlers = function()
     local handler = handler_fn()
     vim.lsp.handlers[handler.handler_name] = handler.handler
   end
+end
+
+M.preq = function(module)
+  local status, err = pcall(require, module)
+  if not status then
+    print(err)
+    return nil
+  end
+  return status
 end
 
 return M

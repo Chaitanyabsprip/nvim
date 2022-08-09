@@ -14,19 +14,46 @@ local servers = {
 server.dart = function()
   prequire('flutter-tools').setup {
     closing_tags = { enabled = false },
-    dev_tools = { autostart = true, auto_open_browser = true },
     debugger = {
       enabled = true,
       run_via_dap = true,
       register_configurations = function(_)
-        require('dap').configurations.dart = {}
+        require('dap').adapters.dart = {
+          type = 'executable',
+          command = 'node',
+          args = {
+            '/Users/chaitanyasharma/.cache/nvim/dart-code/out/dist/debug.js',
+            'flutter',
+          },
+        }
+        require('dap').configurations.dart = {
+          {
+            type = 'dart',
+            request = 'launch',
+            name = 'Launch flutter',
+            dartSdkPath = os.getenv 'HOME'
+              .. 'Downloads/flutter/bin/cache/dart-sdk/',
+            flutterSdkPath = os.getenv 'HOME' .. 'Downloads/flutter',
+            program = '${workspaceFolder}/lib/main.dart',
+            cwd = '${workspaceFolder}',
+          },
+        }
         require('dap.ext.vscode').load_launchjs()
       end,
     },
-    flutter_path = os.getenv 'HOME' .. '/Downloads/flutter/bin/flutter',
+    dev_tools = { autostart = true, auto_open_browser = true },
+    dev_log = { enabled = false },
+    fvm = true,
     lsp = {
-      on_attach = lsp.common_on_attach,
+      color = {
+        enabled = true,
+        background = true,
+        -- foreground = true,
+        virtual_text = true,
+        virtual_text_str = '■',
+      },
       capabilities = lsp.capabilities(),
+      on_attach = lsp.common_on_attach,
       init_options = {
         onlyAnalyzeProjectsWithOpenFiles = true,
         suggestFromUnimportedLibraries = true,
@@ -40,12 +67,12 @@ server.dart = function()
       ),
       settings = {
         showTodos = false,
-        completeFunctionCalls = true,
         renameFilesWithClasses = true,
+        enableSnippets = true,
       },
     },
-    ui = { border = 'rounded' },
-    widget_guides = { enabled = false },
+    ui = { border = 'rounded', notification_style = 'native' },
+    widget_guides = { enabled = true },
   }
   prequire('telescope').load_extension 'flutter'
   vim.api.nvim_set_keymap(
@@ -61,11 +88,24 @@ server.go = function()
     settings = {
       gopls = { analyses = { unusedparams = true }, staticcheck = true },
     },
-    root_dir = nvim_lsp.util.root_pattern('.git', '.gitignore', 'go.mod', '.'),
-    init_options = { usePlaceholders = true, completeUnimported = true },
-    on_attach = lsp.common_on_attach,
+    root_dir = nvim_lsp.util.root_pattern(
+      '.git',
+      '.gitignore',
+      'go.mod',
+      vim.fn.getcwd()
+    ),
+    init_options = {
+      usePlaceholders = true,
+      completeUnimported = true,
+      gofumpt = true,
+    },
+    on_attach = lsp.no_formatting_on_attach,
     capabilities = lsp.capabilities(),
   }
+end
+
+server.golang = function()
+  require('go').setup()
 end
 
 server.html = function()
@@ -97,43 +137,40 @@ server.null = function()
     },
   }
 
-  local isort_opts = {
-    extra_args = {
-      '--quiet',
+  local python = {
+    isort_opts = {
+      extra_args = { '--quiet' },
     },
-  }
-
-  local flake8_opts = {
-    extra_args = {
-      '--max-line-length=80',
-      '--ignore=W503, W504, W391',
-      '--exit-zero',
-      "--format='%f:%l:%c: %m'",
+    black_opts = {
+      extra_args = { '--quiet', '-l', '80' },
+    },
+    flake8_opts = {
+      extra_args = {
+        '--max-line-length=80',
+        '--ignore=W503, W504, W391',
+        '--exit-zero',
+        "--format='%f:%l:%c: %m'",
+      },
+    },
+    pylint_opts = {
+      extra_args = {
+        '-d',
+        'C0114,C0115,C0116',
+      },
     },
   }
 
   local shfmt_opts = {
-    extra_args = {
-      '-ci',
-      '-s',
-      '-bn',
-    },
-    filetypes = {
-      'sh',
-      'bash',
-    },
+    extra_args = { '-ci', '-s', '-bn' },
+    filetypes = { 'sh', 'bash' },
   }
 
   local shellcheck_opts = {
-    extra_args = {
-      '-x',
-    },
-    filetypes = {
-      'sh',
-      'bash',
-    },
+    extra_args = { '-x' },
+    filetypes = { 'sh', 'bash' },
   }
 
+  ---@diagnostic disable-next-line: unused-local
   local refactoring_opts = {
     filetypes = {
       'go',
@@ -146,6 +183,10 @@ server.null = function()
     },
   }
 
+  local golines_opts = {
+    extra_args = { '-m', '80', '-t', '2' },
+  }
+
   null_ls.setup {
     save_after_formatting = true,
     on_attach = lsp.common_on_attach,
@@ -153,27 +194,35 @@ server.null = function()
     sources = {
       code_actions.eslint_d,
       code_actions.gitsigns,
-      -- code_actions.refactoring.with(refactoring_opts),
       code_actions.proselint,
+      -- code_actions.refactoring.with(refactoring_opts),
       diagnostics.eslint_d,
-      diagnostics.flake8.with(flake8_opts),
+      -- diagnostics.flake8.with(python.flake8_opts),
+      diagnostics.golangci_lint,
+      diagnostics.proselint,
+      diagnostics.pylint.with(python.pylint_opts),
       diagnostics.shellcheck.with(shellcheck_opts),
       diagnostics.yamllint,
-      diagnostics.proselint,
+      formatting.black.with(python.black_opts),
       formatting.eslint_d,
-      formatting.isort.with(isort_opts),
+      formatting.fish_indent,
+      formatting.gofmt,
+      formatting.gofumpt,
+      formatting.golines.with(golines_opts),
+      formatting.isort.with(python.isort_opts),
       formatting.prettier.with(prettier_opts),
       formatting.shfmt.with(shfmt_opts),
       formatting.stylua,
-      formatting.yapf.with(isort_opts),
+      -- formatting.yapf.with(isort_opts),
     },
   }
 end
 
 server.tsserver = function()
   nvim_lsp.tsserver.setup {
-    on_attach = lsp.nf_on_attach,
+    on_attach = lsp.no_formatting_on_attach,
     capabilities = lsp.capabilities(),
+    init_options = { preferences = { disableSuggestions = true } },
     settings = { documentFormatting = false, documentRangeFormatting = false },
     root_dir = require('lspconfig/util').root_pattern(
       'package.json',
@@ -188,7 +237,7 @@ end
 
 server.json = function()
   nvim_lsp.jsonls.setup {
-    on_attach = lsp.common_on_attach,
+    on_attach = lsp.no_formatting_on_attach,
     capabilities = lsp.capabilities(),
     root_dir = require('lspconfig').util.root_pattern(
       '.git',
@@ -236,12 +285,39 @@ server.lua = function()
     [vim.fn.expand '$VIMRUNTIME/lua'] = true,
     [vim.fn.expand '$VIMRUNTIME/lua/vim/lsp'] = true,
   }
+  library[vim.fn.expand '$HOME' .. '/.local/share/nvim/site/pack/packer/start/lua/?.lua'] =
+    true
+  library[vim.fn.expand '$HOME' .. '/.local/share/nvim/site/pack/packer/opt/lua/?.lua'] =
+    true
+  library[vim.fn.expand '$HOME' .. '/.local/share/nvim/site/pack/packer/start/lua/?/?.lua'] =
+    true
+  library[vim.fn.expand '$HOME' .. '/.local/share/nvim/site/pack/packer/opt/lua/?/?.lua'] =
+    true
 
   local path = vim.split(package.path, ';')
 
   table.insert(path, vim.fn.expand '$HOME' .. '/.config/nvim/lua/?.lua')
   table.insert(path, vim.fn.expand '$HOME' .. '/.config/nvim/lua/lsp/?.lua')
   table.insert(path, vim.fn.expand '$HOME' .. '/.config/nvim/lua/plugins/?.lua')
+  table.insert(
+    path,
+    vim.fn.expand '$HOME'
+      .. '/.local/share/nvim/site/pack/packer/start/lua/?.lua'
+  )
+  table.insert(
+    path,
+    vim.fn.expand '$HOME'
+      .. '/.local/share/nvim/site/pack/packer/start/lua/?/?.lua'
+  )
+  table.insert(
+    path,
+    vim.fn.expand '$HOME' .. '/.local/share/nvim/site/pack/packer/opt/lua/?.lua'
+  )
+  table.insert(
+    path,
+    vim.fn.expand '$HOME'
+      .. '/.local/share/nvim/site/pack/packer/opt/lua/?/?.lua'
+  )
 
   local config = {
     on_new_config = function(config, root)
@@ -253,6 +329,7 @@ server.lua = function()
     root_dir = nvim_lsp.util.root_pattern(
       '.git',
       '.gitignore',
+      '.stylua',
       vim.fn.getcwd()
     ),
     capabilities = lsp.capabilities(),
@@ -272,7 +349,6 @@ server.lua = function()
       },
     },
   }
-
   local luadev = require('lua-dev').setup {
     library = {
       vimruntime = true,
@@ -292,15 +368,13 @@ server.pyright = function()
     root_dir = require('lspconfig/util').root_pattern(
       '.git/',
       '.gitignore',
-      'setup.py',
+      'pyproject.toml',
       vim.fn.getcwd()
     ),
-    setttings = {
+    settings = {
       python = {
-        analysis = {
-          diagnosticMode = 'workspace',
-          typeCheckingMode = 'strict',
-        },
+        venvPath = '.',
+        analysis = {},
       },
     },
   }

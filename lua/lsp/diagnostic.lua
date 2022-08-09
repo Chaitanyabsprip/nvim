@@ -1,14 +1,8 @@
+local telescope = require 'plugins.telescope'
 return {
   on_attach = function(_)
     local nnoremap = require('mappings').nnoremap
-    nnoremap '<leader>dd' '<cmd>Trouble document_diagnostics<cr>' {
-      silent = true,
-      bufnr = 0,
-    } 'Show diagnostics from the focused buffer'
-    nnoremap '<leader>dw' '<cmd>Trouble workspace_diagnostics<cr>' {
-      silent = true,
-      bufnr = 0,
-    } 'Show diagnostics from the workspace'
+    telescope.lsp_keymaps()
     nnoremap 'gl' '<cmd>lua vim.diagnostic.open_float()<cr>' {
       silent = true,
       bufnr = 0,

@@ -1,9 +1,9 @@
 local M = {}
 local lsp_utils = require 'lsp.utils'
 local diagnostic = require 'lsp.diagnostic'
-local cmp = require 'cmp_nvim_lsp'
 
 M.capabilities = function(_)
+  local cmp = require 'cmp_nvim_lsp'
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   local completionItem = capabilities.textDocument.completion.completionItem
   completionItem.documentationFormat = { 'markdown', 'plaintext' }
@@ -25,22 +25,16 @@ end
 
 M.common_on_attach = function(client, bufnr)
   vim.schedule(function()
-    lsp_utils.resolve_capabilities(client.resolved_capabilities)
+    lsp_utils.resolve_capabilities(client)
   end)
   diagnostic.on_attach(client)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  require('lsp_signature').on_attach({
-    bind = true,
-    handler_opts = { border = 'single' },
-    floating_window = true,
-    transparency = 20,
-  }, bufnr)
 end
 
-M.nf_on_attach = function(client, bufnr)
+M.no_formatting_on_attach = function(client, bufnr)
   M.common_on_attach(client, bufnr)
-  client.resolved_capabilities.document_formatting = false
-  client.resolved_capabilities.document_range_formatting = false
+  client.server_capabilities.documentFormattingProvider = true
+  client.server_capabilities.documentRangeFormattingProvider = true
 end
 
 return M

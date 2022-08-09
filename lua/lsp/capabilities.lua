@@ -3,7 +3,7 @@ local mappings = require 'mappings'
 local nnoremap = mappings.nnoremap
 local vnoremap = mappings.vnoremap
 
-M.code_action = function(_)
+M['textDocument/codeAction'] = function(_)
   nnoremap '<leader>a' '<cmd>lua require("lsp-fastaction").code_action()<cr>' {
     bufnr = 0,
     silent = true,
@@ -14,7 +14,7 @@ M.code_action = function(_)
   } 'Show code actions for the current selection range'
 end
 
-M.code_lens = function(_)
+M['textDocument/codeLens'] = function(_)
   vim.cmd [[
         augroup lsp_codelens_refresh
             autocmd! * <buffer>
@@ -24,23 +24,23 @@ M.code_lens = function(_)
     ]]
 end
 
-M.declaration = function(_)
+M['textDocument/declaration'] = function(_)
   nnoremap 'gD' '<cmd>lua vim.lsp.buf.declaration()<cr>' {
     bufnr = 0,
     silent = true,
   } 'Go to declaration of symbol under cursor'
 end
 
-M.document_formatting = function(_)
+M['textDocument/formatting'] = function(_)
   vim.cmd [[
       augroup auto_format
         autocmd! * <buffer>
-        autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1500)
+        autocmd BufWritePre <buffer> lua vim.lsp.buf.format(nil, 1500)
       augroup end
     ]]
 end
 
-M.document_highlight = function(_)
+M['textDocument/documentHighlight'] = function(_)
   vim.schedule(function()
     vim.cmd [[
         hi LspReferenceRead cterm=underline ctermbg=none gui=underline guibg=none
@@ -60,61 +60,62 @@ M.document_highlight = function(_)
     ]]
 end
 
-M.document_range_formatting = function(_) end
+M['textDocument/rangeFormatting'] = function(_) end
 
-M.document_symbol = function(_) end
+M['textDocument/documentSymbols'] = function(_) end
 
-M.find_references = function(_)
-  -- nnoremap 'gR' '<cmd>Trouble lsp_references<cr>' {bufnr = 0, silent = true}
-  -- 'Find references of symbol under cursor'
+M['textDocument/references'] = function(_)
   nnoremap 'gR' "<cmd>lua require('telescope.builtin').lsp_references(require('telescope.themes').get_cursor({layout_strategy='cursor', layout_config={width=100, height=10}, previewer = false}))<cr>" {
     bufnr = 0,
     silent = true,
   } 'Find references of symbol under cursor'
 end
 
-M.goto_definition = function(_)
-  nnoremap 'gd' '<cmd>Trouble lsp_definitions<cr>' {
+M['textDocument/definition'] = function(_)
+  nnoremap 'gd' '<cmd>Telescope lsp_definitions<cr>' {
     bufnr = 0,
     silent = true,
   } 'Go to definition of symbol under cursor'
 end
 
-M.hover = function(_)
+M['textDocument/hover'] = function(_)
   nnoremap 'K' '<cmd>lua vim.lsp.buf.hover()<cr>' {
     bufnr = 0,
     silent = true,
   } 'Show hover info of symbol under cursor'
 end
 
-M.implementation = function(_)
-  nnoremap 'gI' '<cmd>Trouble lsp_implementations<cr>' {
+M['textDocument/implementation'] = function(_)
+  nnoremap 'gI' '<cmd>Telescope lsp_implementations<cr>' {
     bufnr = 0,
     silent = true,
   } 'Show implementations of symbol under cursor'
 end
 
-M.rename = function(_)
-  nnoremap 'gr' "<cmd>lua require('renamer').rename()<cr>" {
+M['textDocument/rename'] = function(_)
+  nnoremap 'gr'(function()
+    -- require('renamer').rename()
+    vim.ui.input({ prompt = 'Rename: ' }, vim.lsp.buf.rename)
+  end) {
     bufnr = 0,
     silent = true,
   } 'Rename symbol under cursor'
 end
 
-M.signature_help = function(_)
+M['textDocument/signatureHelp'] = function(_)
   nnoremap 'gh' '<cmd>lua vim.lsp.buf.signature_help()<cr>' {
     bufnr = 0,
     silent = true,
   } 'Show signature help of symbol under cursor'
 end
 
-M.type_definition = function(_)
+M['textDocument/typeDefinition'] = function(_)
   nnoremap '<leader>gnd' '<cmd>lua vim.lsp.buf.type_definition()<cr>' {
     bufnr = 0,
     silent = true,
   } 'Show type definition of symbol under cursor'
 end
 
-M.workspace_symbol = function(_) end
+M['workspace/symbol'] = function(_) end
 
 return M
