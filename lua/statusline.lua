@@ -51,10 +51,11 @@ end
 M.lualine = function()
   require('lualine').setup {
     options = {
-      theme = theme(),
-      section_separators = '',
       component_separators = { '', '' },
       disabled_filetypes = {},
+      globalstatus = true,
+      section_separators = '',
+      theme = theme(),
     },
     sections = {
       lualine_a = {
