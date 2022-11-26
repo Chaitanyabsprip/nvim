@@ -1,8 +1,13 @@
 local config = {
   theme = {
-    name = 'tokyonight',
-    transparent = false,
+    name = 'catpuccin',
+    transparent = true,
     hide_eob = true,
+    comments = { 'italic' },
+    functions = { 'italic' },
+    keywords = { 'italic' },
+    strings = {},
+    variables = { 'italic' },
     italics = {
       comments = true,
       functions = true,
