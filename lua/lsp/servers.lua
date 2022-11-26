@@ -1,7 +1,7 @@
 local server = {}
-local lsp = require 'lsp.setup'
 local prequire = require('utils').preq
-local nvim_lsp = require 'lspconfig'
+local lsp = prequire 'lsp.setup'
+local nvim_lsp = prequire 'lspconfig'
 server.list = {
   'kotlin',
   'json',
@@ -14,13 +14,28 @@ server.list = {
 }
 local servers = {
   'bashls',
-  'clangd',
   'cssls',
   'emmet_ls',
   'clojure_lsp',
   'graphql',
   'vimls',
 }
+
+server.clangd = function()
+  nvim_lsp.clangd.setup {
+    root_dir = require('lspconfig').util.root_pattern(
+      '.git',
+      -- '.gitignore',
+      '.clangd',
+      '.clang-tidy',
+      '.clang-format',
+      'compile_commands.json',
+      'compile_flags.txt',
+      'configure.ac',
+      vim.fn.getcwd()
+    ),
+  }
+end
 
 server.dart = function()
   prequire('flutter-tools').setup {
