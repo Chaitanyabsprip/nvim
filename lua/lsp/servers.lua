@@ -57,9 +57,9 @@ server.dart = function()
             type = 'dart',
             request = 'launch',
             name = 'Launch flutter',
-            dartSdkPath = os.getenv 'HOME'
-              .. 'Downloads/flutter/bin/cache/dart-sdk/',
-            flutterSdkPath = os.getenv 'HOME' .. 'Downloads/flutter',
+            dartSdkPath = vim.fn.getcwd()
+                .. '/.fvm/flutter_sdk/bin/cache/dart-sdk/',
+            flutterSdkPath = vim.fn.getcwd() .. '/.fvm/flutter_sdk',
             program = '${workspaceFolder}/lib/main.dart',
             cwd = '${workspaceFolder}',
           },
@@ -103,7 +103,7 @@ server.dart = function()
   prequire('telescope').load_extension 'flutter'
   vim.api.nvim_set_keymap(
     'n',
-    '<leader>fc',
+    '<leader>F',
     ":lua require('telescope').extensions.flutter.commands()<CR>",
     { noremap = true, silent = true }
   )

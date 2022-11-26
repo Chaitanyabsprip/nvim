@@ -38,7 +38,8 @@ return packer.startup {
       {
         'akinsho/flutter-tools.nvim',
         config = "require('lsp.servers').dart()",
-        after = { 'nvim-lspconfig', 'telescope.nvim' },
+        ft = { 'dart' },
+        after = { 'cmp-nvim-lsp', 'telescope.nvim' },
       },
       {
         'j-hui/fidget.nvim',
