@@ -147,6 +147,22 @@ server.html = function()
   }
 end
 
+server.kotlin = function()
+  nvim_lsp.kotlin_language_server.setup {
+    cmd = {
+      '/Users/chaitanyasharma/Programs/kotlin-language-server/server/build/install/server/bin/kotlin-language-server',
+    },
+    root_dir = require('lspconfig').util.root_pattern(
+      '.git',
+      '.gitignore',
+      'settings.gradle',
+      vim.fn.getcwd()
+    ),
+    on_attach = lsp.common_on_attach,
+    capabilities = lsp.capabilities(),
+  }
+end
+
 server.null = function()
   local null_ls = require 'null-ls'
   local formatting = null_ls.builtins.formatting
