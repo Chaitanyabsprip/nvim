@@ -4,7 +4,7 @@ local function time()
   local clock = ' ' .. os.date '%H:%M'
   local date = ' ' .. os.date '%d-%m-%y'
   local git_branch = require('plugins.nvim.git_branch').get_git_branch()
-    or 'Not in a git repository'
+      or 'Not in a git repository'
   return { date .. '  ' .. clock, ' ' .. git_branch }
 end
 
@@ -44,9 +44,10 @@ M.setup = function()
       margin = 5,
       content = {
         { ' Find File', 'Telescope find_files', 'f' },
-        { ' Find Sessions', 'SearchSession', 'p' },
+        { ' Open Project', 'Telescope projects', 'h' },
         { ' Recent Files', 'Telescope oldfiles', 'm' },
         { ' Restore Session', 'RestoreSession', 'r' },
+        { ' Find Sessions', 'SearchSession', 'p' },
         { ' New Note', new_note(), 'n' },
         { ' Quit ', 'quit', 'q' },
       },
@@ -74,7 +75,7 @@ M.setup = function()
         end
       end,
       cursor_column = 0.6,
-      paddings = { 3, 4, 2, 0 },
+      paddings = { 3, 4, 2 },
     },
     parts = { 'header', 'body', 'footer' },
   }

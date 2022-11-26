@@ -31,7 +31,6 @@
 -- { "michaelb/sniprun", run = "bash ./install.sh" }
 -- { "nvim-treesitter/nvim-treesitter-refactor" }
 -- { "pianocomposer321/yabs.nvim" }
--- { 'rcarriga/nvim-notify' }
 -- { 'nvim-neorg/neorg', config = "require 'plugins.editing.neorg'", requires = { 'nvim-lua/plenary.nvim' }, },
 -- { 'TimUntersberger/neofs', config = function() require('plugins.explorer').neofs() end, keys = { { 'n', '<leader>FF' }, { 'n', '<leader>FN' }, }, },
 -- { 'camspiers/snap', keys = { { 'n', '<leader><leader>' }, { 'n', '<leader>fg' }, { 'n', '<leader>fb' }, { 'n', '<leader>fo' }, { 'n', '<leader>fn' }, }, config = function() require('plugins.explorer').snap() end, disable = true, },
