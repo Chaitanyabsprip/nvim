@@ -231,6 +231,9 @@ server.null = function()
 
   null_ls.setup {
     save_after_formatting = true,
+    on_init = function(_, _)
+      -- new_client.offset_encoding = 'utf-8'
+    end,
     on_attach = lsp.common_on_attach,
     capabilities = lsp.capabilities(),
     sources = {
