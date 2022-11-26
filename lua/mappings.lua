@@ -3,31 +3,31 @@ local M = {}
 M.keymaps = {}
 
 M.nmap = function(key)
-  return M.map 'n'(key)
+  return M.map 'n' (key)
 end
 
 M.vmap = function(key)
-  return M.map 'v'(key)
+  return M.map 'v' (key)
 end
 
 M.nnoremap = function(key)
-  return M.noremap 'n'(key)
+  return M.noremap 'n' (key)
 end
 
 M.vnoremap = function(key)
-  return M.noremap 'v'(key)
+  return M.noremap 'v' (key)
 end
 
 M.tnoremap = function(key)
-  return M.noremap 't'(key)
+  return M.noremap 't' (key)
 end
 
 M.xnoremap = function(key)
-  return M.noremap 'x'(key)
+  return M.noremap 'x' (key)
 end
 
 M.inoremap = function(key)
-  return M.noremap 'i'(key)
+  return M.noremap 'i' (key)
 end
 
 M.noremap = function(mode)
@@ -49,7 +49,8 @@ M.map = function(mode)
           options = vim.tbl_extend('force', options, { desc = description })
           options.buffer = options.bufnr
           options.bufnr = nil
-          return M.register_keymap(mode, key, command, options, description)
+          return vim.keymap.set(mode, key, command, options)
+          -- return M.register_keymap(mode, key, command, options, description)
         end
       end
     end
@@ -144,6 +145,7 @@ M.call = function()
   -- better indent
   vnoremap '<' '<gv' {} 'Maintain visual selection while decreasing indent'
   vnoremap '>' '>gv' {} 'Maintain visual selection while increasing indent'
+  vnoremap '=' '=gv' {} 'Maintain visual selection while auto fixing indent'
 
   -- Leader bindings
   nnoremap '<Space>' '<NOP>' { silent = true } 'Leader key'
