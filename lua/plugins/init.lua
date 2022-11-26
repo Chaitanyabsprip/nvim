@@ -56,16 +56,10 @@ return packer.startup {
         ft = 'python',
         config = "require('plugins.lsp.dap').python()",
       },
-
       {
         'mfussenegger/nvim-dap',
-        config = "require 'plugins.lsp.nvim-dap'",
-        keys = {
-          { 'n', '<leader>c' },
-          { 'n', '<leader>b' },
-          { 'n', '<leader>B' },
-          { 'n', '<leader>gt' },
-        },
+        config = "require ('plugins.lsp.dap').setup()",
+        after = { 'nvim-lspconfig' },
       },
       {
         'neovim/nvim-lspconfig',
@@ -87,7 +81,7 @@ return packer.startup {
       {
         'rcarriga/nvim-dap-ui',
         config = "require('plugins.lsp.dap').ui()",
-        event = 'BufWinEnter',
+        after = { 'nvim-dap' },
       },
       {
         'simrat39/rust-tools.nvim',
