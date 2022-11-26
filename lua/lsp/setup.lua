@@ -19,7 +19,7 @@ M.capabilities = function(_)
   completionItem.resolveSupport = {
     properties = { 'documentation', 'detail', 'additionalTextEdits' },
   }
-  capabilities = cmp.update_capabilities(capabilities)
+  capabilities = cmp.default_capabilities(capabilities)
   return capabilities
 end
 
