@@ -176,6 +176,12 @@ return packer.startup {
         config = "require 'plugins.git.gitsigns'",
         event = 'BufRead',
       },
+      {
+        'akinsho/git-conflict.nvim',
+        config = "require('plugins.git').conflict()",
+        tag = '*',
+        event = 'BufReadPre',
+      },
     }
 
     use { -- COMPLETION AND SNIPPETS
@@ -193,6 +199,7 @@ return packer.startup {
         'RobertBrunhage/flutter-riverpod-snippets',
         ft = { 'dart' },
         after = 'flutter-tools.nvim',
+        disable = true,
       },
       { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
       { 'dmitmel/cmp-digraphs', after = 'nvim-cmp', ft = 'markdown' },
