@@ -179,10 +179,25 @@ M.neofs = function()
 end
 
 M.nvim_tree = function()
+  function M.grep_at_current_tree_node()
+    local node = require('nvim-tree.lib').get_node_at_cursor()
+    if not node then
+      return
+    end
+    require('telescope.builtin').live_grep {
+      search_dirs = { node.absolute_path },
+    }
+  end
+
   local tree_cb = require('nvim-tree.config').nvim_tree_callback
   local mappings = {
     custom_only = false,
     list = {
+      {
+        key = { '<Leader>gr', 'gr' },
+        cb = ":lua require'plugins.explorer'.grep_at_current_tree_node()<CR>",
+        mode = 'n',
+      },
       { key = { '<CR>', '<2-LeftMouse>', 'l' }, cb = tree_cb 'edit' },
       { key = { '<2-RightMouse>', '<C-]>', 'cd' }, cb = tree_cb 'cd' },
       { key = { '<C-v>', 'v' }, cb = tree_cb 'vsplit' },
@@ -192,7 +207,7 @@ M.nvim_tree = function()
     },
   }
   require('nvim-tree').setup {
-    actions = { change_dir = { restrict_above_cwd = true } },
+    actions = { change_dir = { restrict_above_cwd = false } },
     auto_reload_on_write = true,
     diagnostics = {
       enable = true,
@@ -290,10 +305,9 @@ M.snap = function()
   snap.register.map({ 'n' }, { '<leader>fn' }, function()
     snap.run {
       producer = snap.get 'consumer.fzf'(
-        snap.get('producer.ripgrep.file').args(
-          {},
-          vim.fn.expand '$HOME' .. '/Projects/Notes'
-        )
+        snap
+          .get('producer.ripgrep.file')
+          .args({}, vim.fn.expand '$HOME' .. '/Projects/Notes')
       ),
       select = snap.get('select.file').select,
       multiselect = snap.get('select.file').multiselect,

@@ -2,8 +2,6 @@ local M = {}
 local nnoremap = require('mappings').nnoremap
 
 local highlight_override = function()
-  print 'I ran'
-  -- vim.highlight.link('TelescopePromptNormal', 'Normal')
   vim.api.nvim_set_hl(0, 'TelescopePromptNormal', { link = 'NeogitHunkHeader' })
   vim.api.nvim_set_hl(0, 'TelescopePromptBorder', { link = 'NeogitHunkHeader' })
   vim.api.nvim_set_hl(0, 'TelescopePromptPrefix', { link = 'diffRemoved' })

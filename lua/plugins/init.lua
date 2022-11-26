@@ -126,7 +126,13 @@ return packer.startup {
         },
         config = "require('plugins.telescope').setup()",
         cmd = 'Telescope',
-        event = 'WinEnter',
+        keys = {
+          { 'n', '<leader><leader>' },
+          { 'n', '<leader>fg' },
+          { 'n', '<leader>fb' },
+          { 'n', '<leader>F' },
+        },
+        -- event = 'BufWinEnter',
       },
     }
 
