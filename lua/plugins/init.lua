@@ -3,9 +3,8 @@ local fn = vim.fn
 local install_path1 = fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 local install_path2 = fn.stdpath 'data' .. '/site/pack/packer/opt/packer.nvim'
 
-if
-  fn.empty(fn.glob(install_path1)) > 0
-  and fn.empty(fn.glob(install_path2)) > 0
+if fn.empty(fn.glob(install_path1)) > 0
+    and fn.empty(fn.glob(install_path2)) > 0
 then
   print 'installing packer'
   Packer_bootstrap = fn.system {
@@ -31,9 +30,8 @@ return packer.startup {
     use { -- LSP
       {
         'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-        config = function()
-          require('lsp_lines').setup()
-        end,
+        config = "require('lsp_lines').setup()",
+        after = { 'nvim-lspconfig' },
       },
       {
         'akinsho/flutter-tools.nvim',
@@ -42,11 +40,11 @@ return packer.startup {
         after = { 'cmp-nvim-lsp', 'telescope.nvim' },
       },
       {
-        'j-hui/fidget.nvim',
-        event = 'BufWinEnter',
-        config = "require('fidget').setup{}",
+        'jose-elias-alvarez/null-ls.nvim',
+        after = { 'nvim-lspconfig' },
+        event = 'BufReadPost',
+        config = "require('lsp.servers').null()",
       },
-      { 'jose-elias-alvarez/null-ls.nvim', event = 'BufRead' },
       {
         'leoluz/nvim-dap-go',
         after = { 'nvim-dap' },
@@ -206,17 +204,28 @@ return packer.startup {
       { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
       { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
       { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
-      { 'hrsh7th/cmp-nvim-lsp', event = 'BufWinEnter' },
+      { 'hrsh7th/cmp-nvim-lsp', event = 'BufReadPost' },
       { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
       { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
-      { 'hrsh7th/cmp-vsnip', after = 'nvim-cmp' },
       { 'hrsh7th/cmp-nvim-lsp-signature-help', after = 'nvim-cmp' },
       {
         'hrsh7th/nvim-cmp',
         config = "require 'plugins.lsp.nvim-cmp'",
-        event = { 'InsertEnter', 'CmdlineEnter' },
+        after = 'LuaSnip',
       },
-      { 'hrsh7th/vim-vsnip', after = 'nvim-cmp' },
+      {
+        'L3MON4D3/LuaSnip',
+        tag = 'v1.*',
+        event = { 'VimEnter' },
+        config = "require('plugins.lsp.luasnip').setup()",
+        requires = { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
+      },
+      {
+        'hrsh7th/vim-vsnip',
+        after = 'nvim-cmp',
+        disable = true,
+        requires = { 'hrsh7th/cmp-vsnip', after = 'nvim-cmp', disable = true },
+      },
       { 'natebosch/dartlang-snippets', ft = 'dart' },
       { 'rafamadriz/friendly-snippets', after = 'nvim-cmp' },
     }
