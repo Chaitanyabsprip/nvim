@@ -1,16 +1,16 @@
-local M = {}
+local theme = {}
 local config = require 'config'
 local prequire = require('utils').preq
 
-M.arch = function()
+theme.arch = function()
   vim.cmd [[ colorscheme arch ]]
 end
 
-M.blue_moon = function()
+theme.blue_moon = function()
   vim.cmd [[ colorscheme blue-moon ]]
 end
 
-M.calvera = function()
+theme.calvera = function()
   vim.g.calvera_italic_comments = config.theme.italics.comments
   vim.g.calvera_italic_keywords = config.theme.italics.keywords
   vim.g.calvera_italic_functions = config.theme.italics.functions
@@ -23,9 +23,10 @@ M.calvera = function()
   prequire('calvera').set()
 end
 
-M.catppuccin = function()
-  local catppuccin = prequire 'catppuccin'
-  catppuccin.setup {
+theme.catpuccin = function()
+  vim.g.catppuccin_flavour = 'mocha'
+  local catpuccin = prequire 'catppuccin'
+  catpuccin.setup {
     term_colors = true,
     transparent_background = config.theme.transparent,
     integrations = {
@@ -33,10 +34,7 @@ M.catppuccin = function()
       lsp_trouble = false,
       gitsigns = true,
       telescope = true,
-      nvimtree = {
-        enabled = true,
-        show_root = false,
-      },
+      nvimtree = { enabled = true, show_root = false },
       which_key = true,
       markdown = true,
       ts_rainbow = true,
@@ -46,9 +44,10 @@ M.catppuccin = function()
   vim.cmd [[ colorscheme catppuccin ]]
 end
 
-M.github = function()
-  prequire('github-theme').setup {
-    theme_style = 'dark_default',
+theme.github = function()
+  require('github-theme').setup {
+    theme_style = 'dark',
+    transparent = config.theme.transparent,
     function_style = 'italic',
     comment_style = 'italic',
     variable_style = 'italic',
@@ -57,7 +56,7 @@ M.github = function()
     hide_end_of_buffer = config.theme.hide_eob,
     dark_sidebar = true,
     dark_float = true,
-    sidebars = { 'qf', 'terminal', 'packer', 'nvim-tree' },
+    sidebars = config.theme.sidebars,
     overrides = function(colors)
       return {
         htmlTag = {
@@ -71,15 +70,15 @@ M.github = function()
       }
     end,
   }
-  vim.cmd [[ colorscheme 'github' ]]
+  -- vim.cmd [[ colorscheme 'github' ]]
 end
 
-M.gruvbox = function()
+theme.gruvbox = function()
   vim.g.gruvbox_transparent_bg = config.theme.transparent
   vim.cmd [[ colorscheme gruvbox ]]
 end
 
-M.highlights = function()
+theme.highlights = function()
   vim.cmd [[ hi! ColorColumn guibg=#1c1a30 ctermbg=235 ]]
   if vim.g.colors_name == 'rose-pine' then
     vim.cmd [[ hi! ColorColumn guibg=#1c1a30 ctermbg=235 ]]
@@ -94,12 +93,12 @@ M.highlights = function()
   vim.cmd [[ hi! clear CursorLine ]]
 end
 
-M.horizon = function()
-  vim.g.horizon_transparent_bg = config.theme.transparent
+theme.horizon = function()
+  -- vim.g.horizon_transparent_bg = config.theme.transparent
   vim.cmd [[ colorscheme horizon ]]
 end
 
-M.indentline = function()
+theme.indentline = function()
   vim.cmd [[ hi! Indentline1 guifg=#eb6f92 ]]
   vim.cmd [[ hi! Indentline2 guifg=#f6c177 ]]
   vim.cmd [[ hi! Indentline3 guifg=#ebbcba ]]
@@ -131,7 +130,7 @@ M.indentline = function()
   }
 end
 
-M.kanagawa = function()
+theme.kanagawa = function()
   require('kanagawa').setup {
     undercurl = true,
     commentStyle = 'italic',
@@ -149,7 +148,7 @@ M.kanagawa = function()
   vim.cmd 'colorscheme kanagawa'
 end
 
-M.line_number_interval = function()
+theme.line_number_interval = function()
   vim.g.line_number_interval = 15
   vim.cmd 'let g:line_number_interval#custom_interval = [1,2,3,4,5,15,25,35,45,55,65]'
   vim.cmd [[
@@ -165,7 +164,7 @@ M.line_number_interval = function()
   ]]
 end
 
-M.material = function()
+theme.material = function()
   vim.g.material_style = 'deep ocean'
   prequire('material').setup {
     contrast = {
@@ -189,7 +188,7 @@ M.material = function()
   vim.cmd [[ colorscheme material ]]
 end
 
-M.moonfly = function()
+theme.moonfly = function()
   vim.g.moonflyItalics = true
   vim.g.moonflyNormalFloat = true
   vim.g.moonflyTerminalColors = true
@@ -200,7 +199,7 @@ M.moonfly = function()
   vim.cmd [[ colorscheme moonfly ]]
 end
 
-M.moonlight = function()
+theme.moonlight = function()
   vim.g.moonlight_italic_comments = config.theme.italics.comments
   vim.g.moonlight_italic_keywords = config.theme.italics.keywords
   vim.g.moonlight_italic_functions = config.theme.italics.functions
@@ -211,7 +210,7 @@ M.moonlight = function()
   prequire('moonlight').set()
 end
 
-M.nebulous = function()
+theme.nebulous = function()
   prequire('nebulous').setup {
     variant = 'night',
     disable = {
@@ -229,7 +228,7 @@ M.nebulous = function()
   vim.cmd [[ colorscheme nebulous ]]
 end
 
-M.neon = function()
+theme.neon = function()
   vim.g.neon_style = 'dark'
   vim.g.neon_italic_keyword = true
   vim.g.neon_italic_function = true
@@ -239,7 +238,7 @@ M.neon = function()
   vim.cmd [[ colorscheme neon ]]
 end
 
-M.nightfly = function()
+theme.nightfly = function()
   vim.g.nightflyItalics = true
   vim.g.nightflyNormalFloat = true
   vim.g.nightflyTerminalColors = true
@@ -250,7 +249,7 @@ M.nightfly = function()
   vim.cmd [[ colorscheme nightfly ]]
 end
 
-M.nightfox = function()
+theme.nightfox = function()
   local nightfox = prequire 'nightfox'
   nightfox.setup {
     fox = 'nightfox',
@@ -284,14 +283,14 @@ M.nightfox = function()
   nightfox.load()
 end
 
-M.rosepine = function()
+theme.rosepine = function()
   vim.g.rose_pine_variant = 'base'
   vim.g.rose_pine_enable_italics = true
   vim.g.rose_pine_disable_background = config.theme.transparent
   vim.cmd [[ colorscheme rose-pine ]]
 end
 
-M.sakura = function()
+theme.sakura = function()
   local sakura = prequire 'sakura'
   sakura.setup {
     variant = 'moon',
@@ -301,16 +300,16 @@ M.sakura = function()
   sakura.load()
 end
 
-M.setup = function()
+theme.setup = function()
   vim.schedule(function()
-    M[config.theme.name]()
-    M.highlights()
+    theme[config.theme.name]()
+    theme.highlights()
     -- M.line_number_interval()
     prequire('statusline').lualine()
   end)
 end
 
-M.toggle_colorscheme = function()
+theme.toggle_colorscheme = function()
   if vim.g.colo_num == nil then
     vim.g.colo_num = 0
   end
@@ -322,25 +321,34 @@ M.toggle_colorscheme = function()
   vim.notify(colorscheme)
 end
 
-M.tokyonight = function()
-  vim.g.tokyonight_colors = { border = '#7aa2f7' }
-  vim.g.tokyonight_dark_float = true
-  vim.g.tokyonight_dark_sidebar = true
-  vim.g.tokyonight_day_brightness = 0.3
-  vim.g.tokyonight_hide_inactive_statusline = false
-  vim.g.tokyonight_italic_comments = config.theme.italics.comments
-  vim.g.tokyonight_italic_functions = config.theme.italics.functions
-  vim.g.tokyonight_italic_keywords = config.theme.italics.keywords
-  vim.g.tokyonight_italic_variables = config.theme.italics.variables
-  vim.g.tokyonight_sidebars = { 'packer' }
-  vim.g.tokyonight_style = 'night'
-  vim.g.tokyonight_transparent = config.theme.transparent
+theme.tokyonight = function()
+  require('tokyonight').setup {
+    style = 'night',
+    transparent = config.theme.transparent,
+    terminal_colors = true,
+    styles = {
+      comments = 'italic',
+      keywords = 'italic',
+      functions = 'italic',
+      variables = 'italic',
+      sidebars = 'dark',
+      floats = 'dark',
+    },
+    sidebars = config.theme.sidebars,
+    day_brightness = 0.3,
+    hide_inactive_statusline = false,
+    dim_inactive = false,
+    lualine_bold = false,
+    on_colors = function(colors)
+      colors.border = '#7aa2f7'
+    end,
+  }
   vim.cmd [[ colorscheme tokyonight ]]
 end
 
-M.vn_night = function()
+theme.vn_night = function()
   prequire('vn-night').setup {}
   vim.cmd [[ colorscheme vn-night ]]
 end
 
-return M
+return theme
