@@ -1,5 +1,9 @@
 return {
   call = function()
+    vim.cmd [[
+      set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+      set grepformat=%f:%l:%c:%m
+    ]]
     vim.api.nvim_set_option('termguicolors', true)
     vim.cmd [[ filetype plugin indent on ]]
 
@@ -16,17 +20,18 @@ return {
 
     vim.g.filetype = 'plugin on'
     vim.g.instant_username = 'Chaitanya Sharma'
-    vim.g.syntax = true
+    vim.g.loaded_perl_provider = 0
     vim.g.python3_host_prog = '/opt/homebrew/bin/python3'
-    vim.g.timoutlen = 500
     vim.g.showmode = false
+    vim.g.syntax = true
+    vim.g.timoutlen = 500
 
     vim.o.background = 'dark'
     vim.o.backspace = 'eol,start,indent'
     vim.o.backup = false
     vim.o.belloff = 'all'
     vim.o.clipboard = 'unnamedplus'
-    vim.o.cmdheight = 1
+    vim.o.cmdheight = 0
     vim.o.encoding = 'UTF-8'
     vim.o.errorbells = false
     vim.o.expandtab = true
@@ -73,8 +78,5 @@ return {
     vim.wo.relativenumber = false
     vim.wo.signcolumn = 'yes'
     vim.wo.wrap = false
-
-    -- vim.cmd [[ set langmap=qq,dw,re,wr,bt,jy,fu,ui,po,\\;p,aa,ss,hd,tf,gg,yh,nj,ek,ol,i\\;,zz,xx,mc,cv,vb,kn,lm,QQ,DW,RE,WR,BT,JY,FU,UI,PO,:P,AA,SS,HD,TF,GG,YH,NJ,EK,OL,I:,ZZ,XX,MC,CV,VB,KN,LM ]]
-    -- vim.g.langremap = false
   end,
 }
