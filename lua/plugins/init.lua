@@ -379,16 +379,16 @@ return packer.startup {
           nnoremap('<A-s-r>', 'RestNvimPreview')
         end,
       },
-      -- {
-      --  'akinsho/dependency-assist.nvim',
-      --   config = "require('dependency_assist').setup()",
-      --   ft = 'yaml',
-      --   after = 'flutter-tools.nvim',
-      -- },
       {
-        'b0o/SchemaStore.nvim',
-        event = 'BufWinEnter',
+        'olical/conjure',
+        ft = { 'clojure' },
+        requires = {
+          { 'tpope/vim-dispatch', ft = { 'clojure' } },
+          { 'radenling/vim-dispatch-neovim', ft = { 'clojure' } },
+          { 'clojure-vim/vim-jack-in', ft = { 'clojure' } },
+        },
       },
+      { 'b0o/SchemaStore.nvim' },
       { 'dag/vim-fish', ft = 'fish' },
       {
         'dart-lang/dart-vim-plugin',
@@ -419,57 +419,36 @@ return packer.startup {
       },
       { 'jparise/vim-graphql', ft = 'graphql' },
       { 'mfussenegger/nvim-jdtls' },
-      -- {
-      -- 'nvim-neotest/neotest',
-      -- requires = {
-      -- {
-      -- 'vim-test/vim-test',
-      -- event = 'BufWinEnter',
-      -- commit = '9bd4cd2d772018087d016fa4d35c45c09f13effd',
-      -- },
-      -- { 'nvim-neotest/neotest-vim-test', event = 'BufWinEnter' },
-      -- { 'nvim-neotest/neotest-python', event = 'BufWinEnter' },
-      -- { 'nvim-neotest/neotest-go', event = 'BufWinEnter' },
-      -- { 'haydenmeade/neotest-jest', event = 'BufWinEnter' },
-      -- { 'antoinemadec/FixCursorHold.nvim', event = 'BufWinEnter' },
-      -- { 'skywind3000/asyncrun.vim', event = 'BufWinEnter' },
-      -- },
-      -- config = function()
-      -- require('neotest').setup {
-      -- adapters = {
-      -- require 'neotest-vim-test' {
-      --   ignore_filetypes = {
-      --     'python',
-      --     'lua',
-      --     'javascript',
-      --   },
-      -- },
-      -- require 'neotest-python' {
-      -- runner = 'pytest',
-      -- },
-      -- require 'neotest-go'(),
-      -- require 'neotest-jest' {},
-      -- },
-      -- }
-      -- end,
-      -- after = {
-      -- 'neotest-vim-test',
-      -- 'neotest-python',
-      -- 'neotest-go',
-      -- 'neotest-jest',
-      -- 'FixCursorHold.nvim',
-      -- 'asyncrun.vim',
-      -- },
-      -- },
-      { -- vim-markdown
-        'plasticboy/vim-markdown',
+      {
+        'nvim-neotest/neotest',
         requires = {
           {
-            'godlygeek/tabular',
-            ft = 'markdown',
+            'vim-test/vim-test',
             event = 'BufWinEnter',
+            commit = '9bd4cd2d772018087d016fa4d35c45c09f13effd',
           },
+          { 'sidlatau/neotest-dart', event = 'BufWinEnter' },
+          { 'nvim-neotest/neotest-vim-test', event = 'BufWinEnter' },
+          { 'nvim-neotest/neotest-python', event = 'BufWinEnter' },
+          { 'nvim-neotest/neotest-go', event = 'BufWinEnter' },
+          { 'haydenmeade/neotest-jest', event = 'BufWinEnter' },
+          { 'antoinemadec/FixCursorHold.nvim', event = 'BufWinEnter' },
+          { 'skywind3000/asyncrun.vim', event = 'BufWinEnter' },
         },
+        after = {
+          'neotest-dart',
+          'neotest-vim-test',
+          'neotest-python',
+          'neotest-go',
+          'neotest-jest',
+          'FixCursorHold.nvim',
+          'asyncrun.vim',
+        },
+        config = "require('plugins.test').neotest()",
+      },
+      { -- vim-markdown
+        'plasticboy/vim-markdown',
+        requires = { { 'godlygeek/tabular', ft = 'markdown' } },
         ft = { 'markdown' },
         config = "require('languages').markdown()",
       },
