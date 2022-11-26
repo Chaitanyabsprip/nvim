@@ -2,11 +2,22 @@ local server = {}
 local lsp = require 'lsp.setup'
 local prequire = require('utils').preq
 local nvim_lsp = require 'lspconfig'
+server.list = {
+  'kotlin',
+  'json',
+  'go',
+  'html',
+  'clangd',
+  'pyright',
+  'tsserver',
+  'yaml',
+}
 local servers = {
   'bashls',
   'clangd',
   'cssls',
   'emmet_ls',
+  'clojure_lsp',
   'graphql',
   'vimls',
 }
