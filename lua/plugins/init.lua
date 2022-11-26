@@ -257,7 +257,8 @@ return packer.startup {
       },
       {
         'akinsho/bufferline.nvim',
-        config = "require 'plugins.nvim.nvim-bufferline'",
+        tag = 'v2.*',
+        config = "require ('plugins.ui').bufferline()",
         event = 'BufWinEnter',
       },
       {
@@ -347,6 +348,12 @@ return packer.startup {
         'rmagatti/session-lens',
         config = "require 'plugins.nvim.session-lens'",
         after = { 'auto-session', 'telescope.nvim' },
+      },
+      {
+        'vigoux/notifier.nvim',
+        config = "require('plugins.ui').notify()",
+        event = { 'BufWinEnter' },
+        disable = true,
       },
     }
 
