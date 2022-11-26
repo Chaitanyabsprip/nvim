@@ -284,15 +284,13 @@ server.json = function()
   nvim_lsp.jsonls.setup {
     on_attach = lsp.no_formatting_on_attach,
     capabilities = lsp.capabilities(),
-    root_dir = require('lspconfig').util.root_pattern(
+    root_dir = nvim_lsp.util.root_pattern(
       '.git',
       '.gitignore',
       vim.fn.getcwd()
     ),
     settings = {
-      json = {
-        schemas = require('schemastore').json.schemas(),
-      },
+      json = { schemas = prequire('schemastore').json.schemas() },
     },
     commands = {
       Format = {
@@ -312,65 +310,21 @@ server.lua = function()
 
   if vim.fn.has 'mac' == 1 then
     sumneko_root_path = '/Users/'
-      .. user
-      .. '/.config/nvim/lang-servers/lua-language-server'
+        .. user
+        .. '/.config/nvim/lang-servers/lua-language-server'
     sumneko_binary = '/Users/'
-      .. user
-      .. '/.config/nvim/lang-servers/lua-language-server/bin/lua-language-server'
+        .. user
+        .. '/.config/nvim/lang-servers/lua-language-server/bin/lua-language-server'
   elseif vim.fn.has 'unix' == 1 then
     sumneko_root_path = vim.fn.expand '$HOME'
-      .. '/.config/nvim/lang-servers/lua-language-server'
+        .. '/.config/nvim/lang-servers/lua-language-server'
     sumneko_binary = vim.fn.expand '$HOME'
-      .. '/.config/nvim/lang-servers/lua-language-server/bin/lua-language-server'
+        .. '/.config/nvim/lang-servers/lua-language-server/bin/lua-language-server'
   else
     print 'Unsupported system for sumneko'
   end
 
-  local library = {
-    [vim.fn.expand '$VIMRUNTIME/lua'] = true,
-    [vim.fn.expand '$VIMRUNTIME/lua/vim/lsp'] = true,
-  }
-  library[vim.fn.expand '$HOME' .. '/.local/share/nvim/site/pack/packer/start/lua/?.lua'] =
-    true
-  library[vim.fn.expand '$HOME' .. '/.local/share/nvim/site/pack/packer/opt/lua/?.lua'] =
-    true
-  library[vim.fn.expand '$HOME' .. '/.local/share/nvim/site/pack/packer/start/lua/?/?.lua'] =
-    true
-  library[vim.fn.expand '$HOME' .. '/.local/share/nvim/site/pack/packer/opt/lua/?/?.lua'] =
-    true
-
-  local path = vim.split(package.path, ';')
-
-  table.insert(path, vim.fn.expand '$HOME' .. '/.config/nvim/lua/?.lua')
-  table.insert(path, vim.fn.expand '$HOME' .. '/.config/nvim/lua/lsp/?.lua')
-  table.insert(path, vim.fn.expand '$HOME' .. '/.config/nvim/lua/plugins/?.lua')
-  table.insert(
-    path,
-    vim.fn.expand '$HOME'
-      .. '/.local/share/nvim/site/pack/packer/start/lua/?.lua'
-  )
-  table.insert(
-    path,
-    vim.fn.expand '$HOME'
-      .. '/.local/share/nvim/site/pack/packer/start/lua/?/?.lua'
-  )
-  table.insert(
-    path,
-    vim.fn.expand '$HOME' .. '/.local/share/nvim/site/pack/packer/opt/lua/?.lua'
-  )
-  table.insert(
-    path,
-    vim.fn.expand '$HOME'
-      .. '/.local/share/nvim/site/pack/packer/opt/lua/?/?.lua'
-  )
-
   local config = {
-    on_new_config = function(config, root)
-      local libs = vim.tbl_deep_extend('force', {}, library)
-      libs[root] = nil
-      config.settings.Lua.workspace.library = libs
-      return config
-    end,
     root_dir = nvim_lsp.util.root_pattern(
       '.git',
       '.gitignore',
@@ -382,28 +336,26 @@ server.lua = function()
     cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
     settings = {
       Lua = {
-        runtime = { version = 'LuaJIT', path = path },
         completion = { callSnippet = 'Both' },
         diagnostics = { globals = { 'vim' } },
-        workspace = {
-          library = library,
-          maxPreload = 2000,
-          preloadFileSize = 50000,
-        },
         telemetry = { enable = false },
       },
     },
   }
-  local luadev = require('lua-dev').setup {
+
+  require('neodev').setup {
     library = {
-      vimruntime = true,
+      enabled = true,
+      runtime = true,
       types = true,
       plugins = true,
     },
+    setup_jsonls = true,
     runtime_path = true,
     lspconfig = config,
   }
-  nvim_lsp.sumneko_lua.setup(luadev)
+
+  nvim_lsp.sumneko_lua.setup(config)
 end
 
 server.pyright = function()
@@ -450,7 +402,6 @@ server.rust = function()
           smallerHints = true,
           typeHints = true,
         },
-        -- hoverActions = {}
         assist = {
           importGranularity = 'module',
           importPrefix = 'by_self',
@@ -497,17 +448,13 @@ server.yaml = function()
       vim.fn.getcwd()
     ),
     settings = {
-      redhat = {
-        telemetry = false,
-      },
+      redhat = { telemetry = false },
       yaml = {
         schemaStore = {
           enable = true,
           url = 'https://www.schemastore.org/api/json/catalog.json',
         },
-        format = {
-          singleQuote = true,
-        },
+        format = { singleQuote = true },
       },
     },
   }
