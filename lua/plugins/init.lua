@@ -173,8 +173,8 @@ return packer.startup {
       {
         'lewis6991/gitsigns.nvim',
         requires = { 'nvim-lua/plenary.nvim' },
-        config = "require 'plugins.git.gitsigns'",
-        event = 'BufRead',
+        config = "require ('plugins.git').gitsigns()",
+        event = 'BufReadPre',
       },
       {
         'akinsho/git-conflict.nvim',
