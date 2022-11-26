@@ -141,7 +141,7 @@ return packer.startup {
         'ThePrimeagen/refactoring.nvim',
         requires = {
           { 'nvim-lua/plenary.nvim' },
-          { 'RobertBrunhage/nvim-treesitter' },
+          { 'nvim-treesitter/nvim-treesitter' },
         },
         config = "require('refactoring').setup({})",
         event = 'BufWinEnter',
@@ -318,10 +318,12 @@ return packer.startup {
         cmd = { 'ColorizerToggle', 'ColorizerAttachToBuffer' },
       },
       {
-        'RobertBrunhage/nvim-treesitter',
+        'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
-        event = 'BufReadPost',
-        config = "require 'plugins.nvim-treesitter'",
+        event = 'BufReadPre',
+        config = function()
+          require('plugins.nvim-treesitter').setup()
+        end,
       },
       {
         'phaazon/hop.nvim',
@@ -387,7 +389,19 @@ return packer.startup {
         ft = { 'dart' },
       },
       {
-        'folke/lua-dev.nvim',
+        'akinsho/pubspec-assist.nvim',
+        requires = 'plenary.nvim',
+        rocks = {
+          {
+            'lyaml',
+            server = 'http://rocks.moonscript.org',
+            env = { YAML_DIR = '/opt/homebrew/Cellar/libyaml/0.2.5/' },
+          },
+        },
+        config = "require('pubspec-assist').setup()",
+      },
+      {
+        'folke/neodev.nvim',
         after = 'nvim-lspconfig',
         config = "require('lsp.servers').lua()",
       },
