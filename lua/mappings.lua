@@ -3,31 +3,31 @@ local M = {}
 M.keymaps = {}
 
 M.nmap = function(key)
-  return M.map 'n' (key)
+  return M.map 'n'(key)
 end
 
 M.vmap = function(key)
-  return M.map 'v' (key)
+  return M.map 'v'(key)
 end
 
 M.nnoremap = function(key)
-  return M.noremap 'n' (key)
+  return M.noremap 'n'(key)
 end
 
 M.vnoremap = function(key)
-  return M.noremap 'v' (key)
+  return M.noremap 'v'(key)
 end
 
 M.tnoremap = function(key)
-  return M.noremap 't' (key)
+  return M.noremap 't'(key)
 end
 
 M.xnoremap = function(key)
-  return M.noremap 'x' (key)
+  return M.noremap 'x'(key)
 end
 
 M.inoremap = function(key)
-  return M.noremap 'i' (key)
+  return M.noremap 'i'(key)
 end
 
 M.noremap = function(mode)
@@ -180,9 +180,10 @@ M.call = function()
   -- nnoremap '<leader>k' ':abo new<cr>' { silent = true } 'Create new window above'
 
   -- close current window
-  nnoremap '<leader>q' ':qa<cr>' { silent = true } 'Quit all'
+  nnoremap '<leader>Q' ':qa<cr>' { silent = true } 'Quit all windows'
+  nnoremap '<leader>q' ':q<cr>' { silent = true } 'Quit window'
   nnoremap '<leader>x' ':bd<cr>' { silent = true } 'Close current buffer'
-  nnoremap '<leader>Q' ':bufdo bdelete<cr>' { silent = true } 'Close all buffers'
+  -- nnoremap '<leader>Q' ':bufdo bdelete<cr>' { silent = true } 'Close all buffers'
 
   -- window resize
   nnoremap ')' ':vertical resize +5<cr>' { silent = true } 'Increase current window height'

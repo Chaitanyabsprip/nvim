@@ -5,18 +5,18 @@ return {
       set grepformat=%f:%l:%c:%m
     ]]
     vim.api.nvim_set_option('termguicolors', true)
-    vim.cmd [[ filetype plugin indent on ]]
+    -- vim.cmd [[ filetype plugin indent on ]]
 
     vim.bo.autoindent = true
     vim.bo.cindent = true
     vim.bo.expandtab = true
-    vim.bo.fileformat = 'unix'
     vim.bo.shiftwidth = 2
     vim.bo.smartindent = true
     vim.bo.softtabstop = 2
-    vim.bo.swapfile = false
     vim.bo.tabstop = 2
+    vim.bo.swapfile = false
     vim.bo.undofile = true
+    vim.bo.fileformat = 'unix'
 
     vim.g.filetype = 'plugin on'
     vim.g.instant_username = 'Chaitanya Sharma'
