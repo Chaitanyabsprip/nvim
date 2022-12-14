@@ -11,23 +11,22 @@ M.resolve_capabilities = function(client)
       module()
     end
   end
-  require('mappings').setup_keymaps()
 end
 
--- applies each handler from a handlers directory
+-- applies each handler from a handlers files
 -- module name: any
 -- module structure:
---     handler_name - string, a handler name in `vim.lsp.handlers` object
+--     name - string, a handler name in `vim.lsp.handlers` object
 --     hander - object, a handler object
 M.apply_handlers = function()
   local handlers = require 'lsp.handlers'
   for _, handler_fn in pairs(handlers) do
     local handler = handler_fn()
-    vim.lsp.handlers[handler.handler_name] = handler.handler
+    vim.lsp.handlers[handler.name] = handler.handler
   end
 end
 
-M.preq = function(module)
+M.prequire = function(module)
   local status, err = pcall(require, module)
   if not status then
     print(err)

@@ -13,41 +13,6 @@ local function parent_pathname(path)
   return path:sub(1, i - 1)
 end
 
-local function get_dir_contains(path, dirname)
-  -- Navigates up one level
-  local function up_one_level(path)
-    if not path == nil or path == '.' then
-      path = vim.fn.getcwd()
-    end
-    return parent_pathname(path)
-  end
-
-  -- Checks if provided directory contains git directory
-  local function has_specified_dir(path, specified_dir)
-    if path == nil then
-      path = '.'
-    end
-    return vim.fn.isdirectory(path .. '/' .. specified_dir) == 1
-  end
-
-  -- Set default path to current directory
-  if path == nil then
-    path = '.'
-  end
-
-  -- If we're already have .git directory here, then return current path
-  if has_specified_dir(path, dirname) then
-    return path .. '/' .. dirname
-  else
-    -- Otherwise go up one level and make a recursive call
-    path = up_one_level(path)
-    if not path then
-      return nil
-    end
-    return get_dir_contains(path, dirname)
-  end
-end
-
 -- Adapted from from clink-completions' git.lua
 function M.get_git_dir(path)
   -- Checks if provided directory contains git directory
@@ -112,10 +77,8 @@ function M.get_git_dir(path)
 end
 
 local function get_git_detached_head()
-  local git_branches_file = io.popen(
-    'git branch -a --no-abbrev --contains',
-    'r'
-  )
+  local git_branches_file =
+    io.popen('git branch -a --no-abbrev --contains', 'r')
   if not git_branches_file then
     return
   end

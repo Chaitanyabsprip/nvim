@@ -1,5 +1,5 @@
 local M = {}
-local mappings = require 'mappings'
+local mappings = require 'mappings.hashish'
 local nnoremap = mappings.nnoremap
 local vnoremap = mappings.vnoremap
 
@@ -35,7 +35,7 @@ M['textDocument/formatting'] = function(_)
   vim.cmd [[
       augroup auto_format
         autocmd! * <buffer>
-        autocmd BufWritePre <buffer> lua vim.lsp.buf.format(nil, 1500)
+        autocmd BufWritePre <buffer> lua vim.lsp.buf.format(nil, 1000)
       augroup end
     ]]
 end
@@ -58,14 +58,14 @@ M['textDocument/rangeFormatting'] = function(_) end
 M['textDocument/documentSymbols'] = function(_) end
 
 M['textDocument/references'] = function(_)
-  nnoremap 'gR' "<cmd>lua require('telescope.builtin').lsp_references(require('telescope.themes').get_cursor({layout_strategy='cursor', layout_config={width=100, height=10}, previewer = false}))<cr>" {
+  nnoremap '<c-g>r' "<cmd>lua require('telescope.builtin').lsp_references(require('telescope.themes').get_cursor({layout_strategy='cursor', layout_config={width=100, height=10}, previewer = false}))<cr>" {
     bufnr = 0,
     silent = true,
   } 'Find references of symbol under cursor'
 end
 
 M['textDocument/definition'] = function(_)
-  nnoremap 'gd' '<cmd>Telescope lsp_definitions<cr>' {
+  nnoremap '<c-g>d' '<cmd>Telescope lsp_definitions<cr>' {
     bufnr = 0,
     silent = true,
   } 'Go to definition of symbol under cursor'
@@ -79,7 +79,7 @@ M['textDocument/hover'] = function(_)
 end
 
 M['textDocument/implementation'] = function(_)
-  nnoremap 'gI' '<cmd>Telescope lsp_implementations<cr>' {
+  nnoremap '<c-g>i' '<cmd>Telescope lsp_implementations<cr>' {
     bufnr = 0,
     silent = true,
   } 'Show implementations of symbol under cursor'
@@ -87,12 +87,8 @@ end
 
 M['textDocument/rename'] = function(_)
   nnoremap 'gr'(function()
-    -- require('renamer').rename()
     vim.ui.input({ prompt = 'Rename: ' }, vim.lsp.buf.rename)
-  end) {
-    bufnr = 0,
-    silent = true,
-  } 'Rename symbol under cursor'
+  end) { bufnr = 0, silent = true } 'Rename symbol under cursor'
 end
 
 M['textDocument/signatureHelp'] = function(_)
