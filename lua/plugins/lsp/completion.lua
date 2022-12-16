@@ -42,7 +42,7 @@ function completion.cmp.setup()
   local cmp = require 'cmp'
   local types = require 'cmp.types'
   local select_item_opts = { behavior = types.cmp.SelectBehavior.Select }
-  -- local luasnip = require 'luasnip'
+  local luasnip = require 'luasnip'
   local kind_icons = {
     Text = '',
     Method = 'm',
@@ -81,30 +81,30 @@ function completion.cmp.setup()
   cmp.setup {
     snippet = {
       expand = function(args)
-        -- require('luasnip').lsp_expand(args.body)
+        require('luasnip').lsp_expand(args.body)
       end,
     },
     mapping = {
-      -- ['<Tab>'] = cmp.mapping(function(fallback)
-      --   if cmp.visible() then
-      --     cmp.select_next_item()
-      --   elseif luasnip.expand_or_jumpable() then
-      --     luasnip.expand_or_jump()
-      --   elseif has_words_before() then
-      --     cmp.complete()
-      --   else
-      --     fallback()
-      --   end
-      -- end, { 'i', 's' }),
-      -- ['<S-Tab>'] = cmp.mapping(function(fallback)
-      --   if cmp.visible() then
-      --     cmp.select_prev_item()
-      --   elseif luasnip.jumpable(-1) then
-      --     luasnip.jump(-1)
-      --   else
-      --     fallback()
-      --   end
-      -- end, { 'i', 's' }),
+      ['<Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        elseif has_words_before() then
+          cmp.complete()
+        else
+          fallback()
+        end
+      end, { 'i', 's' }),
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { 'i', 's' }),
       ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
       ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
       ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item(select_item_opts), { 'i', 'c' }),
@@ -118,22 +118,29 @@ function completion.cmp.setup()
       ['<CR>'] = cmp.mapping.confirm { select = true },
     },
     sources = {
-      -- { name = 'luasnip' },
-      -- { name = 'nvim_lsp_signature_help' },
+      { name = 'luasnip' },
+      { name = 'nvim_lsp_signature_help' },
       { name = 'nvim_lsp' },
-      -- { name = 'nvim_lua' },
-      -- { name = 'path' },
-      -- { name = 'buffer' },
-      -- { name = 'emoji' },
+      { name = 'nvim_lua' },
+      { name = 'path' },
+      { name = 'buffer' },
+      { name = 'emoji' },
     },
-    formatting = {
-      fields = { 'kind', 'abbr', 'menu' },
-      format = function(_, vim_item)
-        vim_item.menu = vim_item.kind
-        vim_item.kind = kind_icons[vim_item.kind]
-        return vim_item
-      end,
-    },
+    -- formatting = {
+    --   fields = { 'kind', 'abbr', 'menu' },
+    --   format = function(entry, vim_item)
+    --     vim_item.menu = vim_item.kind
+    --     vim_item.kind = kind_icons[vim_item.kind]
+    --     vim_item.menu = ({
+    --       buffer = "[Buffer]",
+    --       nvim_lsp = "[LSP]",
+    --       luasnip = "[LuaSnip]",
+    --       nvim_lua = "[Lua]",
+    --       path = "[Path]",
+    --     })[entry.source.name]
+    --     return vim_item
+    --   end,
+    -- },
     experimental = {
       ghost_text = true,
     },
@@ -141,42 +148,40 @@ function completion.cmp.setup()
 
   cmp.setup.cmdline('/', {
     mapping = cmp.config.mapping.preset.cmdline(),
-    sources = {
-      -- { name = 'buffer' }
-    },
+    sources = { { name = 'buffer' } },
   })
 
   cmp.setup.cmdline(':', {
     mapping = cmp.config.mapping.preset.cmdline(),
     sources = cmp.config.sources {
-      -- { name = 'path' },
+      { name = 'path' },
       { name = 'cmdline' },
-      -- { name = 'nvim_lua' },
+      { name = 'nvim_lua' },
     },
   })
 end
 
 completion.cmp.plug = {
-  -- completion.luasnip.plug,
-  -- { 'Alexisvt/flutter-snippets', ft = { 'dart' } },
-  -- { 'Nash0x7E2/awesome-flutter-snippets', ft = { 'dart' } },
-  -- { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
-  -- { 'dmitmel/cmp-digraphs', after = 'nvim-cmp', ft = 'markdown' },
-  -- { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
+  completion.luasnip.plug,
+  { 'Alexisvt/flutter-snippets', ft = { 'dart' } },
+  { 'Nash0x7E2/awesome-flutter-snippets', ft = { 'dart' } },
+  { 'dmitmel/cmp-cmdline-history', after = 'nvim-cmp' },
+  { 'dmitmel/cmp-digraphs', after = 'nvim-cmp', ft = 'markdown' },
+  { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
   { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
-  -- { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
+  { 'hrsh7th/cmp-emoji', after = 'nvim-cmp' },
   { 'hrsh7th/cmp-nvim-lsp' },
-  -- { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
-  -- { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
-  -- { 'hrsh7th/cmp-nvim-lsp-signature-help', after = 'nvim-cmp' },
+  { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },
+  { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
+  { 'hrsh7th/cmp-nvim-lsp-signature-help', after = 'nvim-cmp' },
   {
     'hrsh7th/nvim-cmp',
     config = function() require('plugins.lsp.completion').cmp.setup() end,
-    -- after = 'LuaSnip',
+    after = 'LuaSnip',
     module = { 'cmp' },
   },
-  -- { 'natebosch/dartlang-snippets', ft = 'dart' },
-  -- { 'rafamadriz/friendly-snippets', after = 'nvim-cmp' },
+  { 'natebosch/dartlang-snippets', ft = 'dart' },
+  { 'rafamadriz/friendly-snippets', after = 'nvim-cmp' },
 }
 
 completion.plug = completion.cmp.plug
