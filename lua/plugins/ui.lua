@@ -93,49 +93,22 @@ ui.startup = {
 ui.treesitter = {
   setup = function()
     require('nvim-treesitter.configs').setup {
-      -- ensure_installed = {
-      --   "c",
-      --   "cpp",
-      --   "css",
-      --   "dart",
-      --   "go",
-      --   "graphql",
-      --   "html",
-      --   "java",
-      --   "javascript",
-      --   "json",
-      --   "kotlin",
-      --   "lua",
-      --   "python",
-      --   "ruby",
-      --   "rust",
-      --   "swift",
-      --   "typescript",
-      --   "yaml",
-      -- },
+      ensure_installed = {
+        "dart",
+        "go",
+        "graphql",
+        "java",
+        "javascript",
+        "json",
+        "kotlin",
+        "lua",
+        "python",
+        "ruby",
+        "typescript",
+        "yaml",
+      },
       highlight = { enable = true },
       indent = { enable = true },
-      rainbow = { enable = false },
-      autopairs = { enable = true },
-      autotag = { enable = true },
-      matchup = { enable = true },
-      refactor = {
-        smart_rename = { enable = true, keymaps = { smart_rename = 'grr' } },
-        highlight_definitions = { enable = true },
-        navigation = {
-          enable = true,
-          keymaps = {
-            goto_definition_lsp_fallback = 'gnd',
-            -- use telescope for these lists
-            -- list_definitions = "gnD",
-            -- list_definitions_toc = "gO",
-            -- @TODOUA: figure out if I need both below
-            goto_next_usage = '<a-*>', -- is this redundant?
-            goto_previous_usage = '<a-#>', -- also this one?
-          },
-        },
-        highlight_current_scope = { enable = true },
-      },
     }
   end,
   plug = {
@@ -319,7 +292,6 @@ ui.themes.catppuccin = {
     catpuccin.setup {
       flavor = 'mocha',
       term_colors = true,
-      -- transparent_background = config.theme.transparent,
       integrations = {
         treesitter = true,
         lsp_trouble = false,
