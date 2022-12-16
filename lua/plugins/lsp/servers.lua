@@ -4,22 +4,30 @@ local lsp = require 'lsp'
 servers.null = {
   plug = {
     'jose-elias-alvarez/null-ls.nvim',
-    opt = true,
+    ft = { 'lua', 'fish', 'yaml' },
+    after = { 'cmp-nvim-lsp' },
     config = function()
       require('plugins.lsp.servers').null.setup()
     end,
   },
 
   setup = function()
-    local get_capabilities = require('plugins.lsp.completion').get_capabilities
     local null_ls = require 'null-ls'
+    local code_actions = null_ls.builtins.code_actions
     local formatting = null_ls.builtins.formatting
+    local get_capabilities = require('plugins.lsp.completion').get_capabilities
+    local diagnostics = null_ls.builtins.diagnostics
 
     null_ls.setup {
       save_after_formatting = true,
       on_attach = lsp.common_on_attach,
       capabilities = get_capabilities(),
-      sources = { formatting.stylua },
+      sources = {
+        code_actions.gitsigns,
+        diagnostics.yamllint,
+        formatting.fish_indent,
+        formatting.stylua,
+      },
     }
   end,
 }
@@ -136,12 +144,12 @@ function servers.lsp.configs.lua()
   if vim.fn.has 'mac' == 1 then
     sumneko_root_path = '/Users/' .. user .. '/Programs/lang-servers/lua-language-server'
     sumneko_binary = '/Users/'
-      .. user
-      .. '/Programs/lang-servers/lua-language-server/bin/lua-language-server'
+        .. user
+        .. '/Programs/lang-servers/lua-language-server/bin/lua-language-server'
   elseif vim.fn.has 'unix' == 1 then
     sumneko_root_path = vim.fn.expand '$HOME' .. '/Programs/lang-servers/lua-language-server'
     sumneko_binary = vim.fn.expand '$HOME'
-      .. '/Programs/lang-servers/lua-language-server/bin/lua-language-server'
+        .. '/Programs/lang-servers/lua-language-server/bin/lua-language-server'
   else
     print 'Unsupported system for sumneko'
   end

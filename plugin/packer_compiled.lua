@@ -74,14 +74,30 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  LuaSnip = {
+    after = { "nvim-cmp" },
+    config = { "\27LJ\2\nP\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0B\0\1\1K\0\1\0\nsetup\fluasnip\27plugins.lsp.completion\frequire\0" },
+    loaded = false,
+    needs_bufread = true,
+    only_cond = false,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/LuaSnip",
+    url = "https://github.com/L3MON4D3/LuaSnip"
+  },
   ["auto-session"] = {
     commands = { "RestoreSession" },
-    config = { "\27LJ\2\nÖ\2\0\0\a\0\14\0\0226\0\0\0009\0\1\0'\2\2\0B\0\2\0026\1\3\0'\3\4\0B\1\2\0029\1\5\0015\3\6\0006\4\a\0009\4\b\0049\4\t\4'\6\n\0B\4\2\2'\5\v\0&\4\5\4=\4\f\0034\4\3\0>\0\1\4=\4\r\3B\1\2\1K\0\1\0\31auto_session_suppress_dirs\26auto_session_root_dir\15/sessions/\tdata\fstdpath\afn\bvim\1\0\5\25auto_restore_enabled\1\25auto_session_enabled\2 auto_session_use_git_branch\2%auto_session_enable_last_session\1\14log_level\tinfo\nsetup\17auto-session\frequire\tHOME\vgetenv\aos\0" },
+    config = { "\27LJ\2\nÖ\2\0\0\a\0\14\0\0226\0\0\0009\0\1\0'\2\2\0B\0\2\0026\1\3\0'\3\4\0B\1\2\0029\1\5\0015\3\6\0006\4\a\0009\4\b\0049\4\t\4'\6\n\0B\4\2\2'\5\v\0&\4\5\4=\4\f\0034\4\3\0>\0\1\4=\4\r\3B\1\2\1K\0\1\0\31auto_session_suppress_dirs\26auto_session_root_dir\15/sessions/\tdata\fstdpath\afn\bvim\1\0\5\25auto_session_enabled\2 auto_session_use_git_branch\2%auto_session_enable_last_session\1\14log_level\tinfo\25auto_restore_enabled\1\nsetup\17auto-session\frequire\tHOME\vgetenv\aos\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/auto-session",
     url = "https://github.com/rmagatti/auto-session"
+  },
+  ["awesome-flutter-snippets"] = {
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/awesome-flutter-snippets",
+    url = "https://github.com/Nash0x7E2/awesome-flutter-snippets"
   },
   ["bufferline.nvim"] = {
     config = { "require ('plugins.ui').bufferline.setup()" },
@@ -100,6 +116,16 @@ _G.packer_plugins = {
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/catppuccin",
     url = "https://github.com/catppuccin/nvim"
   },
+  ["cmp-buffer"] = {
+    after_files = { "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua" },
+    load_after = {
+      ["nvim-cmp"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp-buffer",
+    url = "https://github.com/hrsh7th/cmp-buffer"
+  },
   ["cmp-cmdline"] = {
     after_files = { "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp-cmdline/after/plugin/cmp_cmdline.lua" },
     load_after = {
@@ -110,10 +136,92 @@ _G.packer_plugins = {
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp-cmdline",
     url = "https://github.com/hrsh7th/cmp-cmdline"
   },
+  ["cmp-cmdline-history"] = {
+    after_files = { "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp-cmdline-history/after/plugin/cmp_cmdline_history.lua" },
+    load_after = {
+      ["nvim-cmp"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp-cmdline-history",
+    url = "https://github.com/dmitmel/cmp-cmdline-history"
+  },
+  ["cmp-digraphs"] = {
+    after_files = { "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp-digraphs/after/plugin/cmp_digraphs.lua" },
+    load_after = {
+      ["nvim-cmp"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp-digraphs",
+    url = "https://github.com/dmitmel/cmp-digraphs"
+  },
+  ["cmp-emoji"] = {
+    after_files = { "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp-emoji/after/plugin/cmp_emoji.lua" },
+    load_after = {
+      ["nvim-cmp"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp-emoji",
+    url = "https://github.com/hrsh7th/cmp-emoji"
+  },
   ["cmp-nvim-lsp"] = {
     loaded = true,
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
+  },
+  ["cmp-nvim-lsp-signature-help"] = {
+    after_files = { "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help/after/plugin/cmp_nvim_lsp_signature_help.lua" },
+    load_after = {
+      ["nvim-cmp"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp-signature-help",
+    url = "https://github.com/hrsh7th/cmp-nvim-lsp-signature-help"
+  },
+  ["cmp-nvim-lua"] = {
+    after_files = { "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lua/after/plugin/cmp_nvim_lua.lua" },
+    load_after = {
+      ["nvim-cmp"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lua",
+    url = "https://github.com/hrsh7th/cmp-nvim-lua"
+  },
+  ["cmp-path"] = {
+    after_files = { "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua" },
+    load_after = {
+      ["nvim-cmp"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp-path",
+    url = "https://github.com/hrsh7th/cmp-path"
+  },
+  cmp_luasnip = {
+    after_files = { "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/cmp_luasnip",
+    url = "https://github.com/saadparwaiz1/cmp_luasnip"
+  },
+  ["dartlang-snippets"] = {
+    loaded = false,
+    needs_bufread = true,
+    only_cond = false,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/dartlang-snippets",
+    url = "https://github.com/natebosch/dartlang-snippets"
+  },
+  ["flutter-snippets"] = {
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/flutter-snippets",
+    url = "https://github.com/Alexisvt/flutter-snippets"
   },
   ["flutter-tools.nvim"] = {
     config = { "\27LJ\2\nM\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0B\0\1\1K\0\1\0\nsetup\fflutter\24plugins.lsp.servers\frequire\0" },
@@ -125,6 +233,15 @@ _G.packer_plugins = {
     only_cond = false,
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/flutter-tools.nvim",
     url = "https://github.com/akinsho/flutter-tools.nvim"
+  },
+  ["friendly-snippets"] = {
+    load_after = {
+      ["nvim-cmp"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/friendly-snippets",
+    url = "https://github.com/rafamadriz/friendly-snippets"
   },
   ["git-conflict.nvim"] = {
     config = { "require('plugins.git').git_conflict.setup()" },
@@ -178,14 +295,19 @@ _G.packer_plugins = {
   },
   ["null-ls.nvim"] = {
     config = { "\27LJ\2\nJ\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0B\0\1\1K\0\1\0\nsetup\tnull\24plugins.lsp.servers\frequire\0" },
+    load_after = {},
     loaded = false,
     needs_bufread = false,
+    only_cond = false,
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/null-ls.nvim",
     url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
   },
   ["nvim-cmp"] = {
-    after = { "cmp-cmdline" },
+    after = { "cmp-cmdline-history", "cmp-digraphs", "cmp-emoji", "cmp-nvim-lsp-signature-help", "cmp-nvim-lua", "cmp-path", "friendly-snippets", "cmp-buffer", "cmp-cmdline" },
     config = { "\27LJ\2\nL\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0B\0\1\1K\0\1\0\nsetup\bcmp\27plugins.lsp.completion\frequire\0" },
+    load_after = {
+      LuaSnip = true
+    },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -280,6 +402,7 @@ _G.packer_plugins = {
 time([[Defining packer_plugins]], false)
 local module_lazy_loads = {
   ["^cmp"] = "nvim-cmp",
+  ["^luasnip"] = "LuaSnip",
   ["^telescope"] = "telescope.nvim",
   ["^telescope%.builtin"] = "telescope.nvim"
 }
@@ -318,26 +441,34 @@ try_loadstring("\27LJ\2\nD\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0B
 time([[Config for startup.nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
-vim.cmd [[ packadd lsp-fastaction.nvim ]]
-
--- Config for: lsp-fastaction.nvim
-try_loadstring("\27LJ\2\nJ\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0B\0\1\1K\0\1\0\nsetup\17code_actions\16plugins.lsp\frequire\0", "config", "lsp-fastaction.nvim")
-
+vim.cmd [[ packadd cmp-nvim-lsp ]]
 vim.cmd [[ packadd lsp_lines.nvim ]]
 
 -- Config for: lsp_lines.nvim
 require('lsp_lines').setup()
 
+vim.cmd [[ packadd lsp-fastaction.nvim ]]
+
+-- Config for: lsp-fastaction.nvim
+try_loadstring("\27LJ\2\nJ\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0B\0\1\1K\0\1\0\nsetup\17code_actions\16plugins.lsp\frequire\0", "config", "lsp-fastaction.nvim")
+
 time([[Sequenced loading]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
-pcall(vim.api.nvim_create_user_command, 'Telescope', function(cmdargs)
-          require('packer.load')({'telescope.nvim'}, { cmd = 'Telescope', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
+pcall(vim.api.nvim_create_user_command, 'ToggleTerm', function(cmdargs)
+          require('packer.load')({'toggleterm.nvim'}, { cmd = 'ToggleTerm', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
         end,
         {nargs = '*', range = true, bang = true, complete = function()
-          require('packer.load')({'telescope.nvim'}, { cmd = 'Telescope' }, _G.packer_plugins)
-          return vim.fn.getcompletion('Telescope ', 'cmdline')
+          require('packer.load')({'toggleterm.nvim'}, { cmd = 'ToggleTerm' }, _G.packer_plugins)
+          return vim.fn.getcompletion('ToggleTerm ', 'cmdline')
+      end})
+pcall(vim.api.nvim_create_user_command, 'Explorer', function(cmdargs)
+          require('packer.load')({'nvim-tree.lua'}, { cmd = 'Explorer', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
+        end,
+        {nargs = '*', range = true, bang = true, complete = function()
+          require('packer.load')({'nvim-tree.lua'}, { cmd = 'Explorer' }, _G.packer_plugins)
+          return vim.fn.getcompletion('Explorer ', 'cmdline')
       end})
 pcall(vim.api.nvim_create_user_command, 'StartupTime', function(cmdargs)
           require('packer.load')({'vim-startuptime'}, { cmd = 'StartupTime', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
@@ -353,19 +484,12 @@ pcall(vim.api.nvim_create_user_command, 'RestoreSession', function(cmdargs)
           require('packer.load')({'auto-session'}, { cmd = 'RestoreSession' }, _G.packer_plugins)
           return vim.fn.getcompletion('RestoreSession ', 'cmdline')
       end})
-pcall(vim.api.nvim_create_user_command, 'Explorer', function(cmdargs)
-          require('packer.load')({'nvim-tree.lua'}, { cmd = 'Explorer', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
+pcall(vim.api.nvim_create_user_command, 'Telescope', function(cmdargs)
+          require('packer.load')({'telescope.nvim'}, { cmd = 'Telescope', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
         end,
         {nargs = '*', range = true, bang = true, complete = function()
-          require('packer.load')({'nvim-tree.lua'}, { cmd = 'Explorer' }, _G.packer_plugins)
-          return vim.fn.getcompletion('Explorer ', 'cmdline')
-      end})
-pcall(vim.api.nvim_create_user_command, 'ToggleTerm', function(cmdargs)
-          require('packer.load')({'toggleterm.nvim'}, { cmd = 'ToggleTerm', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
-        end,
-        {nargs = '*', range = true, bang = true, complete = function()
-          require('packer.load')({'toggleterm.nvim'}, { cmd = 'ToggleTerm' }, _G.packer_plugins)
-          return vim.fn.getcompletion('ToggleTerm ', 'cmdline')
+          require('packer.load')({'telescope.nvim'}, { cmd = 'Telescope' }, _G.packer_plugins)
+          return vim.fn.getcompletion('Telescope ', 'cmdline')
       end})
 time([[Defining lazy-load commands]], false)
 
@@ -381,18 +505,24 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType fish ++once lua require("packer.load")({'vim-fish'}, { ft = "fish" }, _G.packer_plugins)]]
-vim.cmd [[au FileType dart ++once lua require("packer.load")({'flutter-tools.nvim'}, { ft = "dart" }, _G.packer_plugins)]]
+vim.cmd [[au FileType yaml ++once lua require("packer.load")({'null-ls.nvim'}, { ft = "yaml" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'cmp-digraphs'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType fish ++once lua require("packer.load")({'null-ls.nvim', 'vim-fish'}, { ft = "fish" }, _G.packer_plugins)]]
+vim.cmd [[au FileType dart ++once lua require("packer.load")({'flutter-snippets', 'flutter-tools.nvim', 'awesome-flutter-snippets', 'dartlang-snippets'}, { ft = "dart" }, _G.packer_plugins)]]
+vim.cmd [[au FileType lua ++once lua require("packer.load")({'null-ls.nvim'}, { ft = "lua" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au BufReadPre * ++once lua require("packer.load")({'git-conflict.nvim', 'gitsigns.nvim', 'nvim-treesitter'}, { event = "BufReadPre *" }, _G.packer_plugins)]]
 vim.cmd [[au BufWinEnter * ++once lua require("packer.load")({'auto-session', 'bufferline.nvim'}, { event = "BufWinEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au BufEnter * ++once lua require("packer.load")({'catppuccin'}, { event = "BufEnter *" }, _G.packer_plugins)]]
 vim.cmd [[au BufReadPost * ++once lua require("packer.load")({'mini.comment'}, { event = "BufReadPost *" }, _G.packer_plugins)]]
+vim.cmd [[au BufReadPre * ++once lua require("packer.load")({'git-conflict.nvim', 'gitsigns.nvim', 'nvim-treesitter'}, { event = "BufReadPre *" }, _G.packer_plugins)]]
+vim.cmd [[au BufEnter * ++once lua require("packer.load")({'catppuccin'}, { event = "BufEnter *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
+time([[Sourcing ftdetect script at: /Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/dartlang-snippets/ftdetect/gitignore.vim]], true)
+vim.cmd [[source /Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/dartlang-snippets/ftdetect/gitignore.vim]]
+time([[Sourcing ftdetect script at: /Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/dartlang-snippets/ftdetect/gitignore.vim]], false)
 time([[Sourcing ftdetect script at: /Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]], true)
 vim.cmd [[source /Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]]
 time([[Sourcing ftdetect script at: /Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]], false)
