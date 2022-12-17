@@ -7,9 +7,7 @@ local M = {}
 M.resolve_capabilities = function(client)
   local capabilities = require 'lsp.capabilities'
   for capability, module in pairs(capabilities) do
-    if client.supports_method(capability) then
-      module()
-    end
+    if client.supports_method(capability) then module() end
   end
 end
 

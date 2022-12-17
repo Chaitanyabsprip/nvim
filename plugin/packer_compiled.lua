@@ -85,7 +85,7 @@ _G.packer_plugins = {
   },
   ["auto-session"] = {
     commands = { "RestoreSession" },
-    config = { "\27LJ\2\nÖ\2\0\0\a\0\14\0\0226\0\0\0009\0\1\0'\2\2\0B\0\2\0026\1\3\0'\3\4\0B\1\2\0029\1\5\0015\3\6\0006\4\a\0009\4\b\0049\4\t\4'\6\n\0B\4\2\2'\5\v\0&\4\5\4=\4\f\0034\4\3\0>\0\1\4=\4\r\3B\1\2\1K\0\1\0\31auto_session_suppress_dirs\26auto_session_root_dir\15/sessions/\tdata\fstdpath\afn\bvim\1\0\5\25auto_session_enabled\2 auto_session_use_git_branch\2%auto_session_enable_last_session\1\14log_level\tinfo\25auto_restore_enabled\1\nsetup\17auto-session\frequire\tHOME\vgetenv\aos\0" },
+    config = { "\27LJ\2\nÖ\2\0\0\a\0\14\0\0226\0\0\0009\0\1\0'\2\2\0B\0\2\0026\1\3\0'\3\4\0B\1\2\0029\1\5\0015\3\6\0006\4\a\0009\4\b\0049\4\t\4'\6\n\0B\4\2\2'\5\v\0&\4\5\4=\4\f\0034\4\3\0>\0\1\4=\4\r\3B\1\2\1K\0\1\0\31auto_session_suppress_dirs\26auto_session_root_dir\15/sessions/\tdata\fstdpath\afn\bvim\1\0\5\14log_level\tinfo\25auto_restore_enabled\1\25auto_session_enabled\2 auto_session_use_git_branch\2%auto_session_enable_last_session\1\nsetup\17auto-session\frequire\tHOME\vgetenv\aos\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -98,14 +98,6 @@ _G.packer_plugins = {
     only_cond = false,
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/awesome-flutter-snippets",
     url = "https://github.com/Nash0x7E2/awesome-flutter-snippets"
-  },
-  ["bufferline.nvim"] = {
-    config = { "require ('plugins.ui').bufferline.setup()" },
-    loaded = false,
-    needs_bufread = false,
-    only_cond = false,
-    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/bufferline.nvim",
-    url = "https://github.com/akinsho/bufferline.nvim"
   },
   catppuccin = {
     after = { "lualine.nvim" },
@@ -259,6 +251,22 @@ _G.packer_plugins = {
     path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
+  harpoon = {
+    config = { "\27LJ\2\nJ\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0B\0\1\1K\0\1\0\nsetup\fharpoon\21plugins.explorer\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/harpoon",
+    url = "https://github.com/ThePrimeagen/harpoon"
+  },
+  ["incline.nvim"] = {
+    config = { "\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fincline\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/incline.nvim",
+    url = "https://github.com/b0o/incline.nvim"
+  },
   ["lsp-fastaction.nvim"] = {
     config = { "\27LJ\2\nJ\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0B\0\1\1K\0\1\0\nsetup\17code_actions\16plugins.lsp\frequire\0" },
     load_after = {},
@@ -303,7 +311,7 @@ _G.packer_plugins = {
     url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
   },
   ["nvim-cmp"] = {
-    after = { "cmp-cmdline-history", "cmp-digraphs", "cmp-emoji", "cmp-nvim-lsp-signature-help", "cmp-nvim-lua", "cmp-path", "friendly-snippets", "cmp-buffer", "cmp-cmdline" },
+    after = { "friendly-snippets", "cmp-buffer", "cmp-emoji", "cmp-nvim-lsp-signature-help", "cmp-nvim-lua", "cmp-path", "cmp-cmdline", "cmp-digraphs", "cmp-cmdline-history" },
     config = { "\27LJ\2\nL\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0B\0\1\1K\0\1\0\nsetup\bcmp\27plugins.lsp.completion\frequire\0" },
     load_after = {
       LuaSnip = true
@@ -442,26 +450,26 @@ time([[Config for startup.nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
 vim.cmd [[ packadd cmp-nvim-lsp ]]
-vim.cmd [[ packadd lsp_lines.nvim ]]
-
--- Config for: lsp_lines.nvim
-require('lsp_lines').setup()
-
 vim.cmd [[ packadd lsp-fastaction.nvim ]]
 
 -- Config for: lsp-fastaction.nvim
 try_loadstring("\27LJ\2\nJ\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0B\0\1\1K\0\1\0\nsetup\17code_actions\16plugins.lsp\frequire\0", "config", "lsp-fastaction.nvim")
 
+vim.cmd [[ packadd lsp_lines.nvim ]]
+
+-- Config for: lsp_lines.nvim
+require('lsp_lines').setup()
+
 time([[Sequenced loading]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
-pcall(vim.api.nvim_create_user_command, 'ToggleTerm', function(cmdargs)
-          require('packer.load')({'toggleterm.nvim'}, { cmd = 'ToggleTerm', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
+pcall(vim.api.nvim_create_user_command, 'Telescope', function(cmdargs)
+          require('packer.load')({'telescope.nvim'}, { cmd = 'Telescope', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
         end,
         {nargs = '*', range = true, bang = true, complete = function()
-          require('packer.load')({'toggleterm.nvim'}, { cmd = 'ToggleTerm' }, _G.packer_plugins)
-          return vim.fn.getcompletion('ToggleTerm ', 'cmdline')
+          require('packer.load')({'telescope.nvim'}, { cmd = 'Telescope' }, _G.packer_plugins)
+          return vim.fn.getcompletion('Telescope ', 'cmdline')
       end})
 pcall(vim.api.nvim_create_user_command, 'Explorer', function(cmdargs)
           require('packer.load')({'nvim-tree.lua'}, { cmd = 'Explorer', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
@@ -469,6 +477,13 @@ pcall(vim.api.nvim_create_user_command, 'Explorer', function(cmdargs)
         {nargs = '*', range = true, bang = true, complete = function()
           require('packer.load')({'nvim-tree.lua'}, { cmd = 'Explorer' }, _G.packer_plugins)
           return vim.fn.getcompletion('Explorer ', 'cmdline')
+      end})
+pcall(vim.api.nvim_create_user_command, 'ToggleTerm', function(cmdargs)
+          require('packer.load')({'toggleterm.nvim'}, { cmd = 'ToggleTerm', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
+        end,
+        {nargs = '*', range = true, bang = true, complete = function()
+          require('packer.load')({'toggleterm.nvim'}, { cmd = 'ToggleTerm' }, _G.packer_plugins)
+          return vim.fn.getcompletion('ToggleTerm ', 'cmdline')
       end})
 pcall(vim.api.nvim_create_user_command, 'StartupTime', function(cmdargs)
           require('packer.load')({'vim-startuptime'}, { cmd = 'StartupTime', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
@@ -484,48 +499,41 @@ pcall(vim.api.nvim_create_user_command, 'RestoreSession', function(cmdargs)
           require('packer.load')({'auto-session'}, { cmd = 'RestoreSession' }, _G.packer_plugins)
           return vim.fn.getcompletion('RestoreSession ', 'cmdline')
       end})
-pcall(vim.api.nvim_create_user_command, 'Telescope', function(cmdargs)
-          require('packer.load')({'telescope.nvim'}, { cmd = 'Telescope', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
-        end,
-        {nargs = '*', range = true, bang = true, complete = function()
-          require('packer.load')({'telescope.nvim'}, { cmd = 'Telescope' }, _G.packer_plugins)
-          return vim.fn.getcompletion('Telescope ', 'cmdline')
-      end})
 time([[Defining lazy-load commands]], false)
 
 -- Keymap lazy-loads
 time([[Defining lazy-load keymaps]], true)
-vim.cmd [[nnoremap <silent> <leader>tf <cmd>lua require("packer.load")({'toggleterm.nvim'}, { keys = "<lt>leader>tf", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[nnoremap <silent> <leader>tr <cmd>lua require("packer.load")({'toggleterm.nvim'}, { keys = "<lt>leader>tr", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[nnoremap <silent> <leader>tt <cmd>lua require("packer.load")({'toggleterm.nvim'}, { keys = "<lt>leader>tt", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[nnoremap <silent> <leader>tg <cmd>lua require("packer.load")({'toggleterm.nvim'}, { keys = "<lt>leader>tg", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> <leader>tt <cmd>lua require("packer.load")({'toggleterm.nvim'}, { keys = "<lt>leader>tt", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> <leader>tf <cmd>lua require("packer.load")({'toggleterm.nvim'}, { keys = "<lt>leader>tf", prefix = "" }, _G.packer_plugins)<cr>]]
 time([[Defining lazy-load keymaps]], false)
 
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType yaml ++once lua require("packer.load")({'null-ls.nvim'}, { ft = "yaml" }, _G.packer_plugins)]]
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'cmp-digraphs'}, { ft = "markdown" }, _G.packer_plugins)]]
-vim.cmd [[au FileType fish ++once lua require("packer.load")({'null-ls.nvim', 'vim-fish'}, { ft = "fish" }, _G.packer_plugins)]]
-vim.cmd [[au FileType dart ++once lua require("packer.load")({'flutter-snippets', 'flutter-tools.nvim', 'awesome-flutter-snippets', 'dartlang-snippets'}, { ft = "dart" }, _G.packer_plugins)]]
+vim.cmd [[au FileType fish ++once lua require("packer.load")({'vim-fish', 'null-ls.nvim'}, { ft = "fish" }, _G.packer_plugins)]]
 vim.cmd [[au FileType lua ++once lua require("packer.load")({'null-ls.nvim'}, { ft = "lua" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'cmp-digraphs'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType dart ++once lua require("packer.load")({'awesome-flutter-snippets', 'dartlang-snippets', 'flutter-snippets', 'flutter-tools.nvim'}, { ft = "dart" }, _G.packer_plugins)]]
+vim.cmd [[au FileType yaml ++once lua require("packer.load")({'null-ls.nvim'}, { ft = "yaml" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au BufWinEnter * ++once lua require("packer.load")({'auto-session', 'bufferline.nvim'}, { event = "BufWinEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au BufReadPost * ++once lua require("packer.load")({'mini.comment'}, { event = "BufReadPost *" }, _G.packer_plugins)]]
-vim.cmd [[au BufReadPre * ++once lua require("packer.load")({'git-conflict.nvim', 'gitsigns.nvim', 'nvim-treesitter'}, { event = "BufReadPre *" }, _G.packer_plugins)]]
 vim.cmd [[au BufEnter * ++once lua require("packer.load")({'catppuccin'}, { event = "BufEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au BufReadPre * ++once lua require("packer.load")({'git-conflict.nvim', 'gitsigns.nvim', 'nvim-treesitter'}, { event = "BufReadPre *" }, _G.packer_plugins)]]
+vim.cmd [[au BufReadPost * ++once lua require("packer.load")({'mini.comment'}, { event = "BufReadPost *" }, _G.packer_plugins)]]
+vim.cmd [[au BufWinEnter * ++once lua require("packer.load")({'incline.nvim', 'auto-session', 'harpoon'}, { event = "BufWinEnter *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
-time([[Sourcing ftdetect script at: /Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/dartlang-snippets/ftdetect/gitignore.vim]], true)
-vim.cmd [[source /Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/dartlang-snippets/ftdetect/gitignore.vim]]
-time([[Sourcing ftdetect script at: /Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/dartlang-snippets/ftdetect/gitignore.vim]], false)
 time([[Sourcing ftdetect script at: /Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]], true)
 vim.cmd [[source /Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]]
 time([[Sourcing ftdetect script at: /Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]], false)
+time([[Sourcing ftdetect script at: /Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/dartlang-snippets/ftdetect/gitignore.vim]], true)
+vim.cmd [[source /Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/dartlang-snippets/ftdetect/gitignore.vim]]
+time([[Sourcing ftdetect script at: /Users/chaitanyasharma/.local/share/nvim/site/pack/packer/opt/dartlang-snippets/ftdetect/gitignore.vim]], false)
 vim.cmd("augroup END")
 
 _G._packer.inside_compile = false

@@ -11,9 +11,7 @@ lsp.lsp_lines = {
 lsp.code_actions = {
   plug = {
     'windwp/lsp-fastaction.nvim',
-    config = function()
-      require('plugins.lsp').code_actions.setup()
-    end,
+    config = function() require('plugins.lsp').code_actions.setup() end,
     after = 'nvim-lspconfig',
   },
   setup = function()

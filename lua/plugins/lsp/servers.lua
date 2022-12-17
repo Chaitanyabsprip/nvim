@@ -6,9 +6,7 @@ servers.null = {
     'jose-elias-alvarez/null-ls.nvim',
     ft = { 'lua', 'fish', 'yaml' },
     after = { 'cmp-nvim-lsp' },
-    config = function()
-      require('plugins.lsp.servers').null.setup()
-    end,
+    config = function() require('plugins.lsp.servers').null.setup() end,
   },
 
   setup = function()
@@ -37,9 +35,7 @@ servers.flutter = {
     'akinsho/flutter-tools.nvim',
     ft = { 'dart' },
     after = { 'telescope.nvim' },
-    config = function()
-      require('plugins.lsp.servers').flutter.setup()
-    end,
+    config = function() require('plugins.lsp.servers').flutter.setup() end,
   },
 
   setup = function()
@@ -125,9 +121,7 @@ servers.lsp = {
 
   plug = {
     'neovim/nvim-lspconfig',
-    config = function()
-      require('plugins.lsp.servers').lsp.setup()
-    end,
+    config = function() require('plugins.lsp.servers').lsp.setup() end,
   },
 
   configs = {},
@@ -144,12 +138,12 @@ function servers.lsp.configs.lua()
   if vim.fn.has 'mac' == 1 then
     sumneko_root_path = '/Users/' .. user .. '/Programs/lang-servers/lua-language-server'
     sumneko_binary = '/Users/'
-        .. user
-        .. '/Programs/lang-servers/lua-language-server/bin/lua-language-server'
+      .. user
+      .. '/Programs/lang-servers/lua-language-server/bin/lua-language-server'
   elseif vim.fn.has 'unix' == 1 then
     sumneko_root_path = vim.fn.expand '$HOME' .. '/Programs/lang-servers/lua-language-server'
     sumneko_binary = vim.fn.expand '$HOME'
-        .. '/Programs/lang-servers/lua-language-server/bin/lua-language-server'
+      .. '/Programs/lang-servers/lua-language-server/bin/lua-language-server'
   else
     print 'Unsupported system for sumneko'
   end

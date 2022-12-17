@@ -9,10 +9,7 @@ handlers.diagnostic = function()
   }
 
   for _, sign in ipairs(signs) do
-    vim.fn.sign_define(
-      sign.name,
-      { texthl = sign.name, text = sign.text, numhl = '' }
-    )
+    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
   end
 
   return {
@@ -30,9 +27,7 @@ handlers.diagnostic = function()
         border = 'rounded',
         source = true,
         header = 'Diagnostics',
-        prefix = function(diagnostic, i, _)
-          return ' ' .. i .. '. ' .. diagnostic.source .. ': '
-        end,
+        prefix = function(diagnostic, i, _) return ' ' .. i .. '. ' .. diagnostic.source .. ': ' end,
       },
     }),
   }
@@ -41,10 +36,7 @@ end
 handlers.hover = function()
   return {
     name = 'textDocument/hover',
-    handler = vim.lsp.with(
-      vim.lsp.handlers.hover,
-      { border = 'rounded', focusable = true }
-    ),
+    handler = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded', focusable = true }),
   }
 end
 

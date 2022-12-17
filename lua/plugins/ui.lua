@@ -2,13 +2,170 @@ local ui = {}
 local nnoremap = require('mappings.hashish').nnoremap
 ui.themes = {}
 
+ui.bufferline = {
+  plug = {
+    'akinsho/bufferline.nvim',
+    tag = 'v2.*',
+    config = "require ('plugins.ui').bufferline.setup()",
+    event = 'BufWinEnter',
+  },
+
+  setup = function()
+    require('bufferline').setup {
+      options = {
+        always_show_bufferline = true,
+        color_icons = true,
+        diagnostics = 'nvim_lsp',
+        enforce_regular_tabs = false,
+        indicator = { icon = '▎', style = 'icon' },
+        left_mouse_command = 'buffer %d',
+        modified_icon = '●',
+        numbers = 'none',
+        separator_style = { '', '' },
+        show_close_icon = false,
+        show_tab_indicators = true,
+        sort_by = 'id',
+        tab_size = 18,
+        function(buffer_a, buffer_b) return buffer_a.modified > buffer_b.modified end,
+      },
+    }
+
+    nnoremap '<S-TAB>' '<CMD>BufferLineCyclePrev<CR>' {} 'Previous buffer'
+    nnoremap '<TAB>' '<CMD>BufferLineCycleNext<CR>' {} 'Next buffer'
+    nnoremap '[b' '<CMD>BufferLineMovePrev<CR>' {} 'Swap buffer position with previous buffer'
+    nnoremap ']b' '<CMD>BufferLineMoveNext<CR>' {} 'Swap buffer position with next buffer'
+
+    for i = 1, 9 do
+      nnoremap('<A-' .. i .. '>')('<CMD>BufferLineGoToBuffer' .. i .. '<CR>') {}(
+        'Jump to buffer' .. i
+      )
+    end
+  end,
+}
+
+ui.incline = {
+  plug = {
+    'b0o/incline.nvim',
+    event = 'BufWinEnter',
+    config = function() require('incline').setup() end,
+  },
+}
+
+ui.lualine = {
+  plug = {
+    'hoob3rt/lualine.nvim',
+    after = 'catppuccin',
+    config = function() require('plugins.ui').statusline.setup() end,
+  },
+  setup = function()
+    local get_lsp_client = function(msg)
+      msg = msg or 'No Active Lsp'
+      local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+      local clients = vim.lsp.get_active_clients()
+      if next(clients) == nil then return msg end
+      for _, client in ipairs(clients) do
+        local filetypes = client.config.filetypes
+        local client_name = client.name
+        if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 and client_name ~= 'null-ls' then
+          return '  ' .. client.name
+        end
+      end
+      return msg
+    end
+
+    local function trailing_whitespace()
+      local trail = vim.fn.search('\\s$', 'nw')
+      if trail ~= 0 then
+        return ''
+      else
+        return ''
+      end
+    end
+
+    local theme = function()
+      if vim.g.colors_name == 'material' then
+        return 'material-nvim'
+      else
+        return 'auto'
+      end
+    end
+    require('lualine').setup {
+      options = {
+        component_separators = { '', '' },
+        disabled_filetypes = {},
+        globalstatus = true,
+        section_separators = '',
+        theme = theme(),
+      },
+      sections = {
+        lualine_a = {
+          {
+            'mode',
+            icon = '',
+            fmt = function(mode_name) return mode_name:sub(1, 1) end,
+          },
+        },
+        lualine_b = {
+          'branch',
+          {
+            'diff',
+            symbols = { added = ' ', modified = ' ', removed = '  ' },
+          },
+        },
+        lualine_c = {
+          'filename',
+          trailing_whitespace,
+          {
+            'diagnostics',
+            sources = { 'nvim_diagnostic' },
+            symbols = { error = '   ', warn = '   ' },
+          },
+        },
+        lualine_x = {
+          -- {
+          --   'lsp_progress',
+          --   display_components = {
+          --     'spinner',
+          --     { 'title', 'percentage', 'message' },
+          --   },
+          --   spinner_symbols = {
+          --     '🌑 ',
+          --     '🌘 ',
+          --     '🌗 ',
+          --     '🌖 ',
+          --     '🌕 ',
+          --     '🌔 ',
+          --     '🌓 ',
+          --     '🌒 ',
+          --   },
+          -- },
+          get_lsp_client,
+          'filetype',
+        },
+        lualine_y = {},
+        lualine_z = { 'location' },
+      },
+      inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = { 'filename' },
+        lualine_x = { 'location' },
+        lualine_y = {},
+        lualine_z = {},
+      },
+      tabline = {},
+      extensions = { 'nvim-tree', 'toggleterm' },
+    }
+  end,
+}
+
 ui.startup = {
   setup = function()
     local function time()
       local clock = ' ' .. os.date '%H:%M'
       local date = ' ' .. os.date '%d-%m-%y'
       local git_branch = require('plugins.git.git_branch').get_git_branch()
-          or 'Not in a git repository'
+        or 'Not in a git repository'
       return { date .. '  ' .. clock, ' ' .. git_branch }
     end
 
@@ -19,9 +176,7 @@ ui.startup = {
       return date .. '.md'
     end
 
-    local new_note = function()
-      return 'e ' .. notes_path .. get_note_name()
-    end
+    local new_note = function() return 'e ' .. notes_path .. get_note_name() end
 
     local startup = require 'startup'
     local headers = require 'startup.headers'
@@ -84,198 +239,8 @@ ui.startup = {
       require('plugins.explorer').telescope.plug,
       'nvim-lua/plenary.nvim',
     },
-    config = function()
-      require('plugins.ui').startup.setup()
-    end,
+    config = function() require('plugins.ui').startup.setup() end,
   },
-}
-
-ui.treesitter = {
-  setup = function()
-    require('nvim-treesitter.configs').setup {
-      ensure_installed = {
-        "dart",
-        "go",
-        "graphql",
-        "java",
-        "javascript",
-        "json",
-        "kotlin",
-        "lua",
-        "python",
-        "ruby",
-        "typescript",
-        "yaml",
-      },
-      highlight = { enable = true },
-      indent = { enable = true },
-    }
-  end,
-  plug = {
-    'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate',
-    event = 'BufReadPre',
-    config = function()
-      require('plugins.ui').treesitter.setup()
-    end,
-  },
-}
-
-ui.lualine = {
-  plug = {
-    'hoob3rt/lualine.nvim',
-    after = 'catppuccin',
-    config = function()
-      require('plugins.ui').statusline.setup()
-    end,
-  },
-  setup = function()
-    local get_lsp_client = function(msg)
-      msg = msg or 'No Active Lsp'
-      local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
-      local clients = vim.lsp.get_active_clients()
-      if next(clients) == nil then
-        return msg
-      end
-      for _, client in ipairs(clients) do
-        local filetypes = client.config.filetypes
-        local client_name = client.name
-        if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 and client_name ~= 'null-ls' then
-          return '  ' .. client.name
-        end
-      end
-      return msg
-    end
-
-    local function trailing_whitespace()
-      local trail = vim.fn.search('\\s$', 'nw')
-      if trail ~= 0 then
-        return ''
-      else
-        return ''
-      end
-    end
-
-    local theme = function()
-      if vim.g.colors_name == 'material' then
-        return 'material-nvim'
-      else
-        return 'auto'
-      end
-    end
-    require('lualine').setup {
-      options = {
-        component_separators = { '', '' },
-        disabled_filetypes = {},
-        globalstatus = true,
-        section_separators = '',
-        theme = theme(),
-      },
-      sections = {
-        lualine_a = {
-          {
-            'mode',
-            icon = '',
-            fmt = function(mode_name)
-              return mode_name:sub(1, 1)
-            end,
-          },
-        },
-        lualine_b = {
-          'branch',
-          {
-            'diff',
-            symbols = { added = ' ', modified = ' ', removed = '  ' },
-          },
-        },
-        lualine_c = {
-          'filename',
-          trailing_whitespace,
-          {
-            'diagnostics',
-            sources = { 'nvim_diagnostic' },
-            symbols = { error = '   ', warn = '   ' },
-          },
-        },
-        lualine_x = {
-          -- {
-          --   'lsp_progress',
-          --   display_components = {
-          --     'spinner',
-          --     { 'title', 'percentage', 'message' },
-          --   },
-          --   spinner_symbols = {
-          --     '🌑 ',
-          --     '🌘 ',
-          --     '🌗 ',
-          --     '🌖 ',
-          --     '🌕 ',
-          --     '🌔 ',
-          --     '🌓 ',
-          --     '🌒 ',
-          --   },
-          -- },
-          get_lsp_client,
-          'filetype',
-        },
-        lualine_y = {},
-        lualine_z = { 'location' },
-      },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = { 'filename' },
-        lualine_x = { 'location' },
-        lualine_y = {},
-        lualine_z = {},
-      },
-      tabline = {},
-      extensions = { 'nvim-tree', 'toggleterm' },
-    }
-  end,
-}
-
-ui.bufferline = {
-  plug = {
-    'akinsho/bufferline.nvim',
-    tag = 'v2.*',
-    config = "require ('plugins.ui').bufferline.setup()",
-    event = 'BufWinEnter',
-  },
-
-  setup = function()
-    require('bufferline').setup {
-      options = {
-        always_show_bufferline = true, -- true | false,
-        color_icons = true,
-        diagnostics = 'nvim_lsp', -- false | "nvim_lsp",
-        enforce_regular_tabs = false, -- false | true,
-        indicator = { icon = '▎', style = 'icon' },
-        left_mouse_command = 'buffer %d', -- can be a string | function, see "Mouse actions"
-        modified_icon = '●',
-        numbers = 'none',
-        separator_style = { '', '' }, -- "slant" | "thick" | "thin" | {'any', 'any'}, [focused and unfocused]. eg: { '|', '|' }
-        show_close_icon = false, -- true | false,
-        show_tab_indicators = true, -- true | false,
-        sort_by = 'id', -- 'id' | 'extension' | 'relative_directory' | 'directory' | 'tabs' |
-        tab_size = 18,
-        function(buffer_a, buffer_b)
-          return buffer_a.modified > buffer_b.modified
-        end,
-      },
-    }
-
-    nnoremap '<S-TAB>' '<CMD>BufferLineCyclePrev<CR>' {} 'Previous buffer'
-    nnoremap '<TAB>' '<CMD>BufferLineCycleNext<CR>' {} 'Next buffer'
-    nnoremap '[b' '<CMD>BufferLineMovePrev<CR>' {} 'Swap buffer position with previous buffer'
-    nnoremap ']b' '<CMD>BufferLineMoveNext<CR>' {} 'Swap buffer position with next buffer'
-
-    for i = 1, 9 do
-      nnoremap('<A-' .. i .. '>')('<CMD>BufferLineGoToBuffer' .. i .. '<CR>') {} (
-        'Jump to buffer' .. i
-      )
-    end
-  end,
 }
 
 ui.themes.catppuccin = {
@@ -283,9 +248,7 @@ ui.themes.catppuccin = {
     'catppuccin/nvim',
     as = 'catppuccin',
     event = 'BufEnter',
-    config = function()
-      require('plugins.ui').colorscheme.setup()
-    end,
+    config = function() require('plugins.ui').colorscheme.setup() end,
   },
   setup = function()
     local catpuccin = require 'catppuccin'
@@ -306,6 +269,37 @@ ui.themes.catppuccin = {
     }
     vim.cmd [[ colorscheme catppuccin ]]
   end,
+}
+
+ui.treesitter = {
+  setup = function()
+    require('nvim-treesitter.configs').setup {
+      ensure_installed = {
+        'dart',
+        'go',
+        'graphql',
+        'help',
+        'java',
+        'javascript',
+        'json',
+        'kotlin',
+        'lua',
+        'python',
+        'ruby',
+        'typescript',
+        'vim',
+        'yaml',
+      },
+      highlight = { enable = true },
+      indent = { enable = true },
+    }
+  end,
+  plug = {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate',
+    event = 'BufReadPre',
+    config = function() require('plugins.ui').treesitter.setup() end,
+  },
 }
 
 function ui.highlight_override()
@@ -330,12 +324,13 @@ end
 
 ui.colorscheme = ui.themes.catppuccin
 ui.statusline = ui.lualine
+
 ui.plug = {
   ui.colorscheme.plug,
-  ui.treesitter.plug,
+  ui.incline.plug,
   ui.startup.plug,
   ui.statusline.plug,
-  ui.bufferline.plug,
+  ui.treesitter.plug,
 }
 
 return ui

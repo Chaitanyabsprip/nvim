@@ -30,10 +30,11 @@ settings.setup = function()
     set grepformat=%f:%l:%c:%m
   ]]
 
-  vim.api.nvim_set_option('termguicolors', true)
+  vim.opt.termguicolors = true
   vim.g.filetype = 'plugin indent on'
   vim.g.syntax = true
   vim.o.clipboard = 'unnamedplus'
+  vim.wo.signcolumn = 'yes'
 
   -- indent
   vim.o.autoindent = true
@@ -43,8 +44,6 @@ settings.setup = function()
   vim.o.smartindent = true
   vim.o.softtabstop = 2
   vim.o.tabstop = 2
-
-  vim.o.smartcase = true
 
   -- use undofile over swapfile
   vim.o.undodir = vim.fn.expand '~/.tmp/undodir'
@@ -71,6 +70,11 @@ settings.setup = function()
   vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
   vim.o.foldlevel = 99
   vim.o.foldlevelstart = 99
+
+  -- search
+  vim.o.hlsearch = false
+  vim.o.incsearch = true
+  vim.o.smartcase = true
 end
 
 return settings

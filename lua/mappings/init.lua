@@ -38,6 +38,7 @@ keymaps.setup = function()
   vnoremap '=' '=gv' {} 'Maintain visual selection while auto fixing indent'
   nnoremap '<leader>y' 'gg"+yG' { silent = true } 'Yank whole buffer'
   nnoremap '<leader>v' 'ggVG' { silent = true } 'Select whole buffer'
+  vnoremap 'p' '"_dP' {} 'Paste inplace without yanking selected text'
   nnoremap '<TAB>' ':bnext<cr>' { silent = true } 'Focus next buffer'
   nnoremap '<S-TAB>' ':bprevious<cr>' { silent = true } 'Focus previous buffer'
   nnoremap 'gF' ':tabe <cfile><cr>' { silent = true } 'Open path to file under cursor in new tab'
@@ -45,7 +46,8 @@ keymaps.setup = function()
   nnoremap 'N' 'Nzzzv' {} 'Jump to previous match and center line'
   nnoremap 'J' 'mzJ`z' {} 'Join lines without moving cursor'
   nnoremap '}' '}zzzv' {} 'like text object motion } but centers line'
-  nnoremap '{' '{zzzv' {} 'like text object motion { but centers linene'
+  nnoremap '{' '{zzzv' {} 'like text object motion { but centers line'
+  nnoremap '<leader>sr' ':%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>' {} 'search and replace word under cursor'
 end
 
 return keymaps

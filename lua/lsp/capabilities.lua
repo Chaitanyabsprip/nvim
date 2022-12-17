@@ -41,8 +41,9 @@ M['textDocument/formatting'] = function(_)
 end
 
 M['textDocument/documentHighlight'] = function(_)
-  vim.schedule(function()
-    vim.cmd [[
+  vim.schedule(
+    function()
+      vim.cmd [[
         hi LspReferenceRead cterm=underline ctermbg=none gui=underline guibg=none
         hi LspReferenceText cterm=underline ctermbg=none gui=underline guibg=none
         hi LspReferenceWrite cterm=underline ctermbg=none gui=underline guibg=none
@@ -50,7 +51,8 @@ M['textDocument/documentHighlight'] = function(_)
         hi link LspReferenceText Folded
         hi link LspReferenceWrite Folded
       ]]
-  end)
+    end
+  )
 end
 
 M['textDocument/rangeFormatting'] = function(_) end
@@ -86,9 +88,10 @@ M['textDocument/implementation'] = function(_)
 end
 
 M['textDocument/rename'] = function(_)
-  nnoremap 'gr'(function()
-    vim.ui.input({ prompt = 'Rename: ' }, vim.lsp.buf.rename)
-  end) { bufnr = 0, silent = true } 'Rename symbol under cursor'
+  nnoremap 'gr'(function() vim.ui.input({ prompt = 'Rename: ' }, vim.lsp.buf.rename) end) {
+    bufnr = 0,
+    silent = true,
+  } 'Rename symbol under cursor'
 end
 
 M['textDocument/signatureHelp'] = function(_)

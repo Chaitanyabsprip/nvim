@@ -1,32 +1,18 @@
 local hashish = {}
 
-hashish.nmap = function(key)
-  return hashish.map 'n'(key)
-end
+hashish.nmap = function(key) return hashish.map 'n'(key) end
 
-hashish.vmap = function(key)
-  return hashish.map 'v'(key)
-end
+hashish.vmap = function(key) return hashish.map 'v'(key) end
 
-hashish.nnoremap = function(key)
-  return hashish.noremap 'n'(key)
-end
+hashish.nnoremap = function(key) return hashish.noremap 'n'(key) end
 
-hashish.vnoremap = function(key)
-  return hashish.noremap 'v'(key)
-end
+hashish.vnoremap = function(key) return hashish.noremap 'v'(key) end
 
-hashish.tnoremap = function(key)
-  return hashish.noremap 't'(key)
-end
+hashish.tnoremap = function(key) return hashish.noremap 't'(key) end
 
-hashish.xnoremap = function(key)
-  return hashish.noremap 'x'(key)
-end
+hashish.xnoremap = function(key) return hashish.noremap 'x'(key) end
 
-hashish.inoremap = function(key)
-  return hashish.noremap 'i'(key)
-end
+hashish.inoremap = function(key) return hashish.noremap 'i'(key) end
 
 hashish.noremap = function(mode)
   return function(key)

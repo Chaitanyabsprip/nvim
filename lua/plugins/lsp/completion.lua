@@ -13,9 +13,7 @@ completion.luasnip = {
     tag = 'v1.*',
     module = { 'luasnip' },
     -- event = { "BufWinEnter" },
-    config = function()
-      require('plugins.lsp.completion').luasnip.setup()
-    end,
+    config = function() require('plugins.lsp.completion').luasnip.setup() end,
     requires = { 'saadparwaiz1/cmp_luasnip', opt = true },
   },
   setup = function()
@@ -75,14 +73,12 @@ function completion.cmp.setup()
     ---@diagnostic disable-next-line: deprecated
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0
-        and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
+      and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
   end
 
   cmp.setup {
     snippet = {
-      expand = function(args)
-        require('luasnip').lsp_expand(args.body)
-      end,
+      expand = function(args) require('luasnip').lsp_expand(args.body) end,
     },
     mapping = {
       ['<Tab>'] = cmp.mapping(function(fallback)

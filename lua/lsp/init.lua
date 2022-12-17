@@ -22,9 +22,7 @@ lsp.capabilities = function(_)
 end
 
 lsp.common_on_attach = function(client, _)
-  vim.schedule(function()
-    lsp_utils.resolve_capabilities(client)
-  end)
+  vim.schedule(function() lsp_utils.resolve_capabilities(client) end)
   diagnostic.on_attach(client)
   require('lsp.utils').apply_handlers()
 end
