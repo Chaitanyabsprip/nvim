@@ -56,7 +56,6 @@ git.git_conflict = {
     'akinsho/git-conflict.nvim',
     version = '*',
     config = function() require('plugins.git').git_conflict.setup() end,
-    event = 'BufReadPre',
     cmd = { 'GitConflictListQf' },
   },
   setup = function()
