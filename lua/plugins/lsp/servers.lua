@@ -5,7 +5,6 @@ servers.null = {
   plug = {
     'jose-elias-alvarez/null-ls.nvim',
     ft = { 'lua', 'fish', 'yaml' },
-    after = { 'cmp-nvim-lsp' },
     config = function() require('plugins.lsp.servers').null.setup() end,
   },
 
@@ -34,7 +33,6 @@ servers.flutter = {
   plug = {
     'akinsho/flutter-tools.nvim',
     ft = { 'dart' },
-    after = { 'telescope.nvim' },
     config = function() require('plugins.lsp.servers').flutter.setup() end,
   },
 
@@ -112,6 +110,14 @@ servers.flutter = {
   end,
 }
 
+servers.neodev = {
+  plug = {
+    'folke/neodev.nvim',
+    config = function() require('plugins.lsp.servers').neodev.setup() end,
+  },
+  setup = function() require('neodev').setup {} end,
+}
+
 servers.lsp = {
   setup = function()
     for _, server in pairs(servers.lsp.configs) do
@@ -122,12 +128,14 @@ servers.lsp = {
   plug = {
     'neovim/nvim-lspconfig',
     config = function() require('plugins.lsp.servers').lsp.setup() end,
+    dependencies = { servers.neodev.plug },
   },
 
   configs = {},
 }
 
 function servers.lsp.configs.lua()
+  local neodev = require('plugins.lsp.servers').neodev
   local get_capabilities = require('plugins.lsp.completion').get_capabilities
   local lspconfig = require 'lspconfig'
   local user = vim.fn.expand '$USER'

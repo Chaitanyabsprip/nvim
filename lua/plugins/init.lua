@@ -1,12 +1,10 @@
-local packer_bootstrap, _ = require('plugins.utils').bootstrap_packer()
+return function()
+  require('plugins.utils').bootstrap_packer()
 
-local status_ok, packer = pcall(require, 'packer')
+  local status_ok, lazy = pcall(require, 'lazy')
 
-if not status_ok then return end
+  if not status_ok then return end
 
-local use = packer.use
-
-return packer.startup(function()
   local completion = require 'plugins.lsp.completion'
   local editing = require 'plugins.editing'
   local explorer = require 'plugins.explorer'
@@ -17,21 +15,35 @@ return packer.startup(function()
   local ui = require 'plugins.ui'
   local externals = require 'plugins.externals'
 
-  use 'wbthomason/packer.nvim' -- packer manages itself
-
-  use(completion.plug)
-  use(editing.plug)
-  use(explorer.plug)
-  use(externals.plug)
-  use(git.plug)
-  use { lsp.plug, servers.plug }
-  use(session.plug)
-  use(ui.plug)
-  use { 'dag/vim-fish', ft = 'fish' }
-  use {
-    'dstein64/vim-startuptime',
-    cmd = 'StartupTime',
-    config = [[vim.g.startuptime_tries = 50]],
+  local a = {
+    completion.plug,
+    editing.plug,
+    explorer.plug,
+    externals.plug,
+    git.plug,
+    { lsp.plug, servers.plug },
+    session.plug,
+    ui.plug,
+    { 'dag/vim-fish', ft = 'fish' },
+    {
+      'dstein64/vim-startuptime',
+      cmd = 'StartupTime',
+      config = function() vim.g.startuptime_tries = 50 end,
+    },
   }
-  if packer_bootstrap then packer.sync() end
-end)
+  lazy.setup(a, {
+    defaults = { lazy = true },
+    rtp = {
+      disabled_plugins = {
+        'gzip',
+        'matchit',
+        'matchparen',
+        'netrwPlugin',
+        'tarPlugin',
+        'tohtml',
+        'tutor',
+        'zipPlugin',
+      },
+    },
+  })
+end

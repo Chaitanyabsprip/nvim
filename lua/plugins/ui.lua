@@ -6,7 +6,7 @@ ui.bufferline = {
   plug = {
     'akinsho/bufferline.nvim',
     tag = 'v2.*',
-    config = "require ('plugins.ui').bufferline.setup()",
+    config = function() require('plugins.ui').bufferline.setup() end,
     event = 'BufWinEnter',
   },
 
@@ -54,7 +54,6 @@ ui.incline = {
 ui.lualine = {
   plug = {
     'hoob3rt/lualine.nvim',
-    after = 'catppuccin',
     config = function() require('plugins.ui').statusline.setup() end,
   },
   setup = function()
@@ -235,18 +234,14 @@ ui.startup = {
   end,
   plug = {
     'startup-nvim/startup.nvim',
-    requires = {
-      require('plugins.explorer').telescope.plug,
-      'nvim-lua/plenary.nvim',
-    },
-    config = function() require('plugins.ui').startup.setup() end,
+    init = function() require('plugins.ui').startup.setup() end,
   },
 }
 
 ui.themes.catppuccin = {
   plug = {
     'catppuccin/nvim',
-    as = 'catppuccin',
+    name = 'catppuccin',
     event = 'BufEnter',
     config = function() require('plugins.ui').colorscheme.setup() end,
   },
@@ -296,7 +291,7 @@ ui.treesitter = {
   end,
   plug = {
     'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate',
+    build = ':TSUpdate',
     event = 'BufReadPre',
     config = function() require('plugins.ui').treesitter.setup() end,
   },

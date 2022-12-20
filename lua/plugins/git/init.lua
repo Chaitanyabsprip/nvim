@@ -3,8 +3,7 @@ local git = {}
 git.gitsigns = {
   plug = {
     'lewis6991/gitsigns.nvim',
-    requires = { 'nvim-lua/plenary.nvim' },
-    config = "require ('plugins.git').gitsigns.setup()",
+    config = function() require('plugins.git').gitsigns.setup() end,
     event = 'BufReadPre',
   },
   setup = function()
@@ -51,12 +50,14 @@ git.gitsigns = {
     }
   end,
 }
+
 git.git_conflict = {
   plug = {
     'akinsho/git-conflict.nvim',
-    config = "require('plugins.git').git_conflict.setup()",
-    tag = '*',
+    version = '*',
+    config = function() require('plugins.git').git_conflict.setup() end,
     event = 'BufReadPre',
+    cmd = { 'GitConflictListQf' },
   },
   setup = function()
     require('git-conflict').setup {

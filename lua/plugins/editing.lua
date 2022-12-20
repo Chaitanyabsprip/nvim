@@ -7,7 +7,7 @@ editing.mini_comment = {
     event = { 'BufReadPost' },
     config = function() require('plugins.editing').mini_comment.setup() end,
   },
-  setup = function() require('mini.comment').setup() end,
+  setup = function() require('mini.comment').setup {} end,
 }
 
 editing.commaround = {

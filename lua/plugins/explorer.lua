@@ -60,10 +60,8 @@ explorer.telescope = {
   plug = {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
-    requires = { 'nvim-lua/plenary.nvim' },
-    module = { 'telescope.builtin', 'telescope' },
+    dependencies = { 'nvim-lua/plenary.nvim' },
     cmd = { 'Telescope' },
-    -- event = { "BufWinEnter" },
     config = function() require('plugins.explorer').telescope.setup() end,
   },
 
@@ -135,13 +133,13 @@ explorer.telescope = {
 explorer.nvim_tree = {
   plug = {
     'kyazdani42/nvim-tree.lua',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    dependencies = { 'kyazdani42/nvim-web-devicons' },
     cmd = { 'Explorer' },
     config = function() require('plugins.explorer').nvim_tree.setup() end,
   },
   setup = function()
     vim.api.nvim_create_user_command('Explorer', 'NvimTreeToggle', { nargs = 0 })
-    function explorer.nvim_tree.grep_at_current_tree_node()
+    local function grep_at_current_tree_node()
       local node = require('nvim-tree.lib').get_node_at_cursor()
       if not node then return end
       require('telescope.builtin').live_grep {
@@ -155,7 +153,7 @@ explorer.nvim_tree = {
       list = {
         {
           key = { '<Leader>gr', 'gr' },
-          cb = ":lua require'plugins.explorer'.nvim_tree.grep_at_current_tree_node()<CR>",
+          cb = grep_at_current_tree_node,
           mode = 'n',
         },
         { key = { '<CR>', '<2-LeftMouse>', 'l' }, cb = tree_cb 'edit' },

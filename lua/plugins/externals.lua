@@ -4,12 +4,7 @@ externals.toggleterm = {
   plug = {
     'akinsho/toggleterm.nvim',
     config = function() require('plugins.externals').toggleterm.setup() end,
-    keys = {
-      { 'n', '<leader>tf' },
-      { 'n', '<leader>tg' },
-      { 'n', '<leader>tt' },
-      { 'n', '<leader>tr' },
-    },
+    keys = { '<leader>tf', '<leader>tg', '<leader>tt' },
     cmd = 'ToggleTerm',
   },
   setup = function()

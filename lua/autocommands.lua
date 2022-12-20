@@ -19,11 +19,6 @@ autocommands.setup = function()
     end,
   })
 
-  autocmd('BufWritePost', {
-    group = augroup 'source_plugins_and_install',
-    pattern = '/Users/chaitanyasharma/.config/nvim/lua/plugins/init.lua',
-    command = 'source ~/.config/nvim/lua/plugins/init.lua',
-  })
 
   autocmd({ 'BufWinLeave' }, {
     group = augroup 'restore fold state',

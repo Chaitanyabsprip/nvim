@@ -2,17 +2,15 @@ local lsp = {}
 
 lsp.lsp_lines = {
   plug = {
-    'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-    config = "require('lsp_lines').setup()",
-    after = { 'nvim-lspconfig' },
+    url = 'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+    config = function() require('lsp_lines').setup() end,
   },
 }
 
 lsp.code_actions = {
   plug = {
-    'windwp/lsp-fastaction.nvim',
+    'Chaitanyabsprip/lsp-fastaction.nvim',
     config = function() require('plugins.lsp').code_actions.setup() end,
-    after = 'nvim-lspconfig',
   },
   setup = function()
     local fastaction = require 'lsp-fastaction'
