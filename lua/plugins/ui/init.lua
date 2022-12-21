@@ -15,7 +15,7 @@ function ui.highlight_override()
   vim.cmd [[ hi! link FoldColumn Comment ]]
   vim.cmd [[ hi! link Folded Comment ]]
   -- vim.cmd [[ hi! InlayHints guifg=#555169 ctermfg=235 ]]
-  vim.cmd [[ hi! LineNr guifg=#1f2335 ]]
+  -- vim.cmd [[ hi! LineNr guifg=#1f2335 ]]
   vim.cmd [[ hi! clear CursorLine ]]
 end
 
@@ -122,10 +122,8 @@ ui.startup = {
         margin = 5,
         content = {
           { ' Find File', 'Telescope find_files', 'f' },
-          { ' Open Project', 'Telescope projects', 'h' },
           { ' Recent Files', 'Telescope oldfiles', 'm' },
           { ' Restore Session', 'RestoreSession', 'r' },
-          { ' Find Sessions', 'SearchSession', 'p' },
           { ' New Note', new_note(), 'n' },
           { ' Quit ', 'quit', 'q' },
         },
@@ -133,7 +131,7 @@ ui.startup = {
         default_color = '',
         oldfiles_amount = 0,
       },
-      options = { cursor_column = 0.6, paddings = { 3, 4 } },
+      options = { cursor_column = 0.6, paddings = { 5, 10 } },
       parts = { 'header', 'body' },
     }
   end,
