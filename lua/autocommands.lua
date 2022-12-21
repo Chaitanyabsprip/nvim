@@ -8,7 +8,7 @@ autocommands.setup = function()
 
   autocmd('FileType', {
     group = augroup 'quit_mapping',
-    pattern = { 'help', 'lspinfo', 'startuptime', 'qf' },
+    pattern = { 'help', 'lspinfo', 'man', 'notify', 'qf', 'startuptime' },
     command = 'nnoremap <buffer> <silent> q <cmd>close<CR>',
   })
 
