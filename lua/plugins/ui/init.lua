@@ -88,14 +88,6 @@ ui.noice = {
 
 ui.startup = {
   setup = function()
-    local function time()
-      local clock = ' ' .. os.date '%H:%M'
-      local date = ' ' .. os.date '%d-%m-%y'
-      local git_branch = require('plugins.git.git_branch').get_git_branch()
-        or 'Not in a git repository'
-      return { date .. '  ' .. clock, ' ' .. git_branch }
-    end
-
     local notes_path = '/Users/chaitanyasharma/Projects/Notes/Transient/'
 
     local get_note_name = function()
@@ -141,23 +133,8 @@ ui.startup = {
         default_color = '',
         oldfiles_amount = 0,
       },
-      footer = {
-        type = 'text',
-        oldfiles_directory = false,
-        align = 'center',
-        fold_section = false,
-        title = 'Footer',
-        margin = 5,
-        content = time(),
-        highlight = 'Number',
-        default_color = '',
-        oldfiles_amount = 0,
-      },
-      options = {
-        cursor_column = 0.6,
-        paddings = { 3, 4, 2 },
-      },
-      parts = { 'header', 'body', 'footer' },
+      options = { cursor_column = 0.6, paddings = { 3, 4 } },
+      parts = { 'header', 'body' },
     }
   end,
   plug = {
