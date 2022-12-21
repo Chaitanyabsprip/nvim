@@ -33,6 +33,7 @@ return function()
   }
   lazy.setup(a, {
     defaults = { lazy = true },
+    dev = { path = '~/Projects/Languages/Lua' },
     rtp = {
       disabled_plugins = {
         'gzip',

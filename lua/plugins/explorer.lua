@@ -26,9 +26,9 @@ local setkeymaps = function()
   nnoremap '<leader><space>'(builtins.fd) { silent = true } 'Telescope File Finder'
   nnoremap 'gb' '<cmd>Telescope buffers previewer=false theme=dropdown initial_mode=normal<CR>' {} 'Telescope Buffers'
   nnoremap 'go'(builtins.oldfiles) { silent = true } 'Telescope oldfiles'
-  nnoremap 'gw'(builtins.live_grep) { silent = true } 'Telescope live grep'
+  -- nnoremap 'gw'(builtins.live_grep) { silent = true } 'Telescope live grep'
   nnoremap 'gW'(builtins.grep_string) { silent = true } 'Telescope grep word under cursor'
-  nnoremap '<leader>gw'(
+  nnoremap 'gw'(
     function() builtins.grep_string { search = vim.fn.input { prompt = 'Grep > ' } } end
   ) {
     silent = true,
@@ -114,16 +114,17 @@ explorer.telescope = {
   diagnostic_keymaps = function()
     local builtins = require 'telescope.builtin'
     local themes = require 'telescope.themes'
-    local document_diagnostics_config = {
-      layout_config = { height = 12 },
-      bufnr = 0,
-      initial_mode = 'normal',
-    }
+    local document_diagnostics_config =
+      { layout_config = { height = 12 }, bufnr = 0, initial_mode = 'normal' }
     local workspace_diagnostics_config =
       { layout_config = { height = 12, preview_width = 80 }, initial_mode = 'normal' }
-    local ivy = themes.get_ivy(document_diagnostics_config)
-    nnoremap '<leader>dd'(function() builtins.diagnostics(ivy) end) {} 'Document diagnostics'
-    nnoremap '<leader>dw'(function() builtins.diagnostics(ivy) end) {} 'Workspace diagnostics'
+
+    nnoremap '<leader>dd'(
+      function() builtins.diagnostics(themes.get_ivy(document_diagnostics_config)) end
+    ) {} 'Document diagnostics'
+    nnoremap '<leader>dw'(
+      function() builtins.diagnostics(themes.get_ivy(workspace_diagnostics_config)) end
+    ) {} 'Workspace diagnostics'
   end,
 }
 

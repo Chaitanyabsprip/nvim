@@ -12,6 +12,7 @@ lsp.code_actions = {
   plug = {
     'Chaitanyabsprip/lsp-fastaction.nvim',
     config = function() require('plugins.lsp').code_actions.setup() end,
+    dev = true,
   },
   setup = function()
     local fastaction = require 'lsp-fastaction'
