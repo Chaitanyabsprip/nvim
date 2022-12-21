@@ -87,8 +87,6 @@ function completion.cmp.setup()
     sources = {
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
-      { name = 'nvim_lsp_signature_help' },
-      { name = 'nvim_lua' },
       { name = 'buffer' },
       { name = 'path' },
     },
@@ -121,9 +119,7 @@ completion.cmp.plug = {
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-cmdline',
     'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-nvim-lua',
     'hrsh7th/cmp-path',
-    'hrsh7th/cmp-nvim-lsp-signature-help',
     'onsails/lspkind.nvim',
     'rafamadriz/friendly-snippets',
   },
