@@ -41,6 +41,21 @@ lsp.code_actions = {
   end,
 }
 
-lsp.plug = { lsp.code_actions.plug, lsp.lsp_lines.plug }
+lsp.refactoring = {
+  plug = {
+    'ThePrimeagen/refactoring.nvim',
+    init = function()
+      vim.keymap.set(
+        'v',
+        '<leader>r',
+        function() require('refactoring').select_refactor() end,
+        { noremap = true, silent = true, expr = false }
+      )
+    end,
+    config = function() require('refactoring').setup {} end,
+  },
+}
+
+lsp.plug = { lsp.code_actions.plug, lsp.lsp_lines.plug, lsp.refactoring.plug }
 
 return lsp

@@ -14,12 +14,16 @@ servers.null = {
     local formatting = null_ls.builtins.formatting
     local get_capabilities = require('plugins.lsp.completion').get_capabilities
     local diagnostics = null_ls.builtins.diagnostics
+    local refactoring_opts = {
+      filetypes = { 'go', 'javascript', 'typescript', 'lua', 'python', 'c', 'cpp' },
+    }
 
     null_ls.setup {
       save_after_formatting = true,
       on_attach = lsp.common_on_attach,
       capabilities = get_capabilities(),
       sources = {
+        code_actions.refactoring.with(refactoring_opts),
         code_actions.gitsigns,
         diagnostics.yamllint,
         formatting.fish_indent,
@@ -136,7 +140,6 @@ servers.lsp = {
 }
 
 function servers.lsp.configs.lua()
-  local neodev = require('plugins.lsp.servers').neodev
   local get_capabilities = require('plugins.lsp.completion').get_capabilities
   local lspconfig = require 'lspconfig'
   local user = vim.fn.expand '$USER'

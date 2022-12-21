@@ -22,7 +22,7 @@ end
 ui.incline = {
   plug = {
     'b0o/incline.nvim',
-    event = 'BufWinEnter',
+    event = 'BufReadPre',
     config = function()
       require('incline').setup {
         window = { margin = { horizontal = 2, vertical = 1 } },
