@@ -2,46 +2,44 @@ local explorer = {}
 local nnoremap = require('mappings.hashish').nnoremap
 
 local highlight_override = function()
-  vim.api.nvim_set_hl(0, 'TelescopePromptNormal', { link = 'NeogitHunkHeader' })
-  vim.api.nvim_set_hl(0, 'TelescopePromptBorder', { link = 'NeogitHunkHeader' })
-  vim.api.nvim_set_hl(0, 'TelescopePromptPrefix', { link = 'diffRemoved' })
-  vim.api.nvim_set_hl(0, 'TelescopePromptTitle', { link = 'Substitute' })
-  vim.api.nvim_set_hl(0, 'TelescopePreviewTitle', { link = 'Search' })
-  vim.api.nvim_set_hl(0, 'TelescopeResultsTitle', { link = 'EndOfBuffer' })
+  local hl = vim.api.nvim_set_hl
+  hl(0, 'TelescopePromptNormal', { link = 'NeogitHunkHeader' })
+  hl(0, 'TelescopePromptBorder', { link = 'NeogitHunkHeader' })
+  hl(0, 'TelescopePromptPrefix', { link = 'diffRemoved' })
+  hl(0, 'TelescopePromptTitle', { link = 'Substitute' })
+  hl(0, 'TelescopePreviewTitle', { link = 'Search' })
+  hl(0, 'TelescopeResultsTitle', { link = 'EndOfBuffer' })
 end
 
 local setkeymaps = function()
   local builtins = require 'telescope.builtin'
   local themes = require 'telescope.themes'
+  local ivy = themes.get_ivy { layout_config = { height = 12 } }
   local find_notes =
     function() builtins.fd { cwd = '/Users/chaitanyasharma/Projects/Notes', hidden = true } end
   nnoremap '<A-p>' '<cmd>Telescope projects<CR>' {} 'Telescope Projects'
-  nnoremap '<leader>tht'(
-    function() builtins.help_tags(themes.get_ivy { layout_config = { height = 12 } }) end
-  ) {} 'Telescope Help tags'
-  nnoremap '<leader>thk'(
-    function() builtins.keymaps(themes.get_ivy { layout_config = { height = 12 } }) end
-  ) {} 'Telescope Keymaps'
-  nnoremap '<leader>thi'(function() builtins.higlights() end) {} 'Telescope Higlights'
-  nnoremap '<leader>gb' '<cmd> Telescope git_branches<CR>' {} 'Telescope Git Branches'
-  nnoremap '<leader>gc' '<cmd> Telescope git_status<cr>' { silent = true } 'Telescope git changes'
-  nnoremap '<leader><space>'(function() builtins.fd() end) { silent = true } 'Telescope File Finder'
-  nnoremap '<leader>fb' '<cmd>Telescope buffers previewer=false theme=dropdown initial_mode=normal<CR>' {} 'Telescope Buffers'
-  nnoremap '<leader>fo' '<cmd> Telescope oldfiles<cr>' { silent = true } 'Telescope oldfiles'
-  nnoremap '<leader>fg' '<cmd> Telescope live_grep<cr>' { silent = true } 'Telescope live grep'
-  nnoremap '<leader>fw' '<cmd> Telescope grep_string<cr>' { silent = true } 'Telescope grep word under cursor'
-  nnoremap '<leader>rg'(
+  nnoremap '<leader>tht'(function() builtins.help_tags(ivy) end) {} 'Telescope Help tags'
+  nnoremap '<leader>thk'(function() builtins.keymaps(ivy) end) {} 'Telescope Keymaps'
+  nnoremap '<leader>thi'(builtins.highlights) {} 'Telescope Higlights'
+  nnoremap '<leader>gb'(builtins.git_branches) {} 'Telescope Git Branches'
+  nnoremap '<leader>gc'(builtins.git_status) { silent = true } 'Telescope git changes'
+  nnoremap '<leader><space>'(builtins.fd) { silent = true } 'Telescope File Finder'
+  nnoremap 'gb' '<cmd>Telescope buffers previewer=false theme=dropdown initial_mode=normal<CR>' {} 'Telescope Buffers'
+  nnoremap 'go'(builtins.oldfiles) { silent = true } 'Telescope oldfiles'
+  nnoremap 'gw'(builtins.live_grep) { silent = true } 'Telescope live grep'
+  nnoremap 'gW'(builtins.grep_string) { silent = true } 'Telescope grep word under cursor'
+  nnoremap '<leader>gw'(
     function() builtins.grep_string { search = vim.fn.input { prompt = 'Grep > ' } } end
   ) {
     silent = true,
-  } 'Telescope live grep'
-  nnoremap '<leader>fn'(find_notes) { silent = true } 'Word Search'
+  } 'Telescope grep and filter'
+  nnoremap '<leader>fn'(find_notes) { silent = true } 'Find notes'
 end
 
 explorer.harpoon = {
   plug = {
     'ThePrimeagen/harpoon',
-    event = 'BufWinEnter',
+    keys = { '<c-b>', '<c-e>', '<c-n>', '<c-l>', '<c-h>', '<c-;>' },
     config = function() require('plugins.explorer').harpoon.setup() end,
   },
   setup = function()
@@ -123,12 +121,9 @@ explorer.telescope = {
     }
     local workspace_diagnostics_config =
       { layout_config = { height = 12, preview_width = 80 }, initial_mode = 'normal' }
-    nnoremap '<leader>dd'(
-      function() builtins.diagnostics(themes.get_ivy(document_diagnostics_config)) end
-    ) {} 'Document diagnostics'
-    nnoremap '<leader>dw'(
-      function() builtins.diagnostics(themes.get_ivy(workspace_diagnostics_config)) end
-    ) {} 'Workspace diagnostics'
+    local ivy = themes.get_ivy(document_diagnostics_config)
+    nnoremap '<leader>dd'(function() builtins.diagnostics(ivy) end) {} 'Document diagnostics'
+    nnoremap '<leader>dw'(function() builtins.diagnostics(ivy) end) {} 'Workspace diagnostics'
   end,
 }
 
@@ -144,9 +139,7 @@ explorer.nvim_tree = {
     local function grep_at_current_tree_node()
       local node = require('nvim-tree.lib').get_node_at_cursor()
       if not node then return end
-      require('telescope.builtin').live_grep {
-        search_dirs = { node.absolute_path },
-      }
+      require('telescope.builtin').live_grep { search_dirs = { node.absolute_path } }
     end
 
     local tree_cb = require('nvim-tree.config').nvim_tree_callback
