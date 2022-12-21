@@ -60,8 +60,8 @@ settings.setup = function()
   vim.o.shell = '/usr/bin/env zsh'
 
   -- split options
-  vim.g.splitbelow = true
-  vim.g.splitright = true
+  vim.o.splitbelow = true
+  vim.o.splitright = true
   vim.o.laststatus = 3
 
   -- folding

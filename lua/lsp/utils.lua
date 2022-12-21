@@ -12,15 +12,15 @@ M.resolve_capabilities = function(client)
 end
 
 -- applies each handler from a handlers files
--- module name: any
--- module structure:
+-- object name: any
+-- object structure:
 --     name - string, a handler name in `vim.lsp.handlers` object
---     hander - object, a handler object
+--     callback - function, a handler callback
 M.apply_handlers = function()
   local handlers = require 'lsp.handlers'
   for _, handler_fn in pairs(handlers) do
     local handler = handler_fn()
-    vim.lsp.handlers[handler.name] = handler.handler
+    if handler.enabled then vim.lsp.handlers[handler.name] = handler.callback end
   end
 end
 

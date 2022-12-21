@@ -25,7 +25,7 @@ ui.incline = {
     event = 'BufWinEnter',
     config = function()
       require('incline').setup {
-        window = { margin = { vertical = 0 } },
+        window = { margin = { horizontal = 2, vertical = 1 } },
         render = function(props)
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
           local icon, color = require('nvim-web-devicons').get_icon_color(filename)
@@ -49,32 +49,38 @@ ui.noice = {
   setup = function()
     require('noice').setup {
       cmdline = {
-        view = 'cmdline_popup', -- mini | cmdline_popup
-        opts = {
-          -- border = {},
-        }, -- global options for the cmdline. See section on views
-        ---type table<string, CmdlineFormat>
+        -- opts = { border = 'none' },
         format = {
-          -- conceal: (default=true) This will hide the text in the cmdline that matches the pattern.
-          -- view: (default is cmdline view)
-          -- opts: any options passed to the view
-          -- icon_hl_group: optional hl_group for the icon
-          -- title: set to anything or empty string to hide
+          substitute = {
+            pattern = '^:%%?s/',
+            icon = ' ',
+            ft = 'regex',
+            opts = { border = { text = { top = ' sub (old/new/) ' } } },
+          },
         },
       },
+      messages = { view_search = 'mini' },
       lsp = {
         override = {
           ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
           ['vim.lsp.util.stylize_markdown'] = true,
           ['cmp.entry.get_documentation'] = true,
         },
+        message = { view = 'mini' },
+        documentation = { opts = { render = 'plain' } },
       },
       presets = {
-        bottom_search = true, -- use a classic bottom cmdline for search
-        command_palette = true, -- position the cmdline and popupmenu together
-        long_message_to_split = true, -- long messages will be sent to a split
+        bottom_search = true,
+        command_palette = true,
+        long_message_to_split = true,
         inc_rename = false, -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = false, -- add a border to hover docs and signature help
+        lsp_doc_border = true, -- add a border to hover docs and signature help
+      },
+      views = {
+        cmdline_popup = {
+          border = { style = 'none', padding = { 1, 1 } },
+          win_options = { winhighlight = { Normal = 'NormalFloat' } },
+        },
       },
     }
   end,
@@ -190,7 +196,7 @@ ui.treesitter = {
   plug = {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    event = 'BufReadPre',
+    event = 'BufReadPost',
     config = function() require('plugins.ui').treesitter.setup() end,
   },
 }
