@@ -127,6 +127,7 @@ servers.lsp = {
 
   plug = {
     'neovim/nvim-lspconfig',
+    event = 'BufReadPre',
     config = function() require('plugins.lsp.servers').lsp.setup() end,
     dependencies = { servers.neodev.plug },
   },

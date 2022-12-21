@@ -1,10 +1,12 @@
 local tabline = {}
+local nnoremap = require('mappings.hashish').nnoremap
+
 tabline.bufferline = {
   plug = {
     'akinsho/bufferline.nvim',
     version = 'v2.*',
     config = function() require('plugins.ui.tabline').setup() end,
-    event = 'BufWinEnter',
+    event = 'BufReadPre',
   },
 
   setup = function()

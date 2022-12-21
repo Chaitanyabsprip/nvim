@@ -21,7 +21,6 @@ session.auto_session.plug = {
   'rmagatti/auto-session',
   config = session.auto_session.setup,
   cmd = { 'RestoreSession' },
-  event = 'BufWinEnter',
 }
 
 session.plug = session.auto_session.plug

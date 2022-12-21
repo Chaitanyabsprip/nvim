@@ -85,18 +85,14 @@ function completion.cmp.setup()
       ['<CR>'] = cmp.mapping.confirm { select = true },
     },
     sources = {
+      { name = 'nvim_lsp' },
       { name = 'luasnip' },
       { name = 'nvim_lsp_signature_help' },
       { name = 'nvim_lua' },
-      { name = 'nvim_lsp' },
-      { name = 'path' },
       { name = 'buffer' },
+      { name = 'path' },
     },
-    formatting = {
-      format = lspkind.cmp_format {
-        mode = 'symbol_text',
-      },
-    },
+    formatting = { format = lspkind.cmp_format { mode = 'symbol_text' } },
     experimental = { ghost_text = true },
   }
 
@@ -119,6 +115,7 @@ end
 completion.cmp.plug = {
   'hrsh7th/nvim-cmp',
   config = function() require('plugins.lsp.completion').cmp.setup() end,
+  event = 'InsertEnter',
   dependencies = {
     completion.luasnip.plug,
     'hrsh7th/cmp-buffer',
@@ -128,6 +125,7 @@ completion.cmp.plug = {
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-nvim-lsp-signature-help',
     'onsails/lspkind.nvim',
+    'rafamadriz/friendly-snippets',
   },
 }
 
@@ -136,7 +134,6 @@ completion.plug = {
   { 'Alexisvt/flutter-snippets', ft = { 'dart' } },
   { 'Nash0x7E2/awesome-flutter-snippets', ft = { 'dart' } },
   { 'natebosch/dartlang-snippets', ft = 'dart' },
-  { 'rafamadriz/friendly-snippets' },
 }
 
 return completion

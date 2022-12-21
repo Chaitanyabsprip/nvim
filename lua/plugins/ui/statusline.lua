@@ -32,6 +32,8 @@ local function theme()
   end
 end
 
+local function clock() return ' ' .. os.date '%H:%M' end
+
 statusline.lualine = {
   plug = {
     'hoob3rt/lualine.nvim',
@@ -71,28 +73,11 @@ statusline.lualine = {
           },
         },
         lualine_x = {
-          -- {
-          --   'lsp_progress',
-          --   display_components = {
-          --     'spinner',
-          --     { 'title', 'percentage', 'message' },
-          --   },
-          --   spinner_symbols = {
-          --     '🌑 ',
-          --     '🌘 ',
-          --     '🌗 ',
-          --     '🌖 ',
-          --     '🌕 ',
-          --     '🌔 ',
-          --     '🌓 ',
-          --     '🌒 ',
-          --   },
-          -- },
           get_lsp_client,
           'filetype',
         },
-        lualine_y = {},
-        lualine_z = { 'location' },
+        lualine_y = { 'location' },
+        lualine_z = { clock },
       },
       inactive_sections = {
         lualine_a = {},

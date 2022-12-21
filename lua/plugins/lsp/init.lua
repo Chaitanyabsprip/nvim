@@ -3,6 +3,7 @@ local lsp = {}
 lsp.lsp_lines = {
   plug = {
     url = 'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+    event = 'BufWinEnter',
     config = function() require('lsp_lines').setup() end,
   },
 }

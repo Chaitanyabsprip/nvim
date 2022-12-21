@@ -19,7 +19,6 @@ autocommands.setup = function()
     end,
   })
 
-
   autocmd({ 'BufWinLeave' }, {
     group = augroup 'restore fold state',
     pattern = '*.*',

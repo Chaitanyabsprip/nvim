@@ -33,21 +33,21 @@ handlers.diagnostic = function()
   }
 end
 
-handlers.hover = function()
-  return {
-    name = 'textDocument/hover',
-    handler = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded', focusable = true }),
-  }
-end
-
-handlers.signature_help = function()
-  return {
-    name = 'textDocument/signatureHelp',
-    handler = vim.lsp.with(
-      vim.lsp.handlers.signature_help,
-      { border = 'rounded', focusable = false }
-    ),
-  }
-end
+-- handlers.hover = function()
+--   return {
+--     name = 'textDocument/hover',
+--     handler = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded', focusable = true }),
+--   }
+-- end
+--
+-- handlers.signature_help = function()
+--   return {
+--     name = 'textDocument/signatureHelp',
+--     handler = vim.lsp.with(
+--       vim.lsp.handlers.signature_help,
+--       { border = 'rounded', focusable = false }
+--     ),
+--   }
+-- end
 
 return handlers

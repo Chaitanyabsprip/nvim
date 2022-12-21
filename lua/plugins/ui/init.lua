@@ -1,5 +1,4 @@
 local ui = {}
-local nnoremap = require('mappings.hashish').nnoremap
 
 ui.colorscheme = require 'plugins.ui.themes'
 ui.statusline = require 'plugins.ui.statusline'
@@ -24,14 +23,27 @@ ui.incline = {
   plug = {
     'b0o/incline.nvim',
     event = 'BufWinEnter',
-    config = function() require('incline').setup() end,
+    config = function()
+      require('incline').setup {
+        window = { margin = { vertical = 0 } },
+        render = function(props)
+          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
+          local icon, color = require('nvim-web-devicons').get_icon_color(filename)
+          return {
+            { icon, guifg = color },
+            { ' ' },
+            { filename },
+          }
+        end,
+      }
+    end,
   },
 }
 
 ui.noice = {
   plug = {
     'folke/noice.nvim',
-    config = function() require('plugins.ui').noice.setup() end,
+    init = function() require('plugins.ui').noice.setup() end,
     dependencies = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
   },
   setup = function()
@@ -41,20 +53,13 @@ ui.noice = {
         opts = {
           -- border = {},
         }, -- global options for the cmdline. See section on views
-        ---@type table<string, CmdlineFormat>
+        ---type table<string, CmdlineFormat>
         format = {
           -- conceal: (default=true) This will hide the text in the cmdline that matches the pattern.
           -- view: (default is cmdline view)
           -- opts: any options passed to the view
           -- icon_hl_group: optional hl_group for the icon
           -- title: set to anything or empty string to hide
-          cmdline = { pattern = '^:', icon = '', lang = 'vim' },
-          search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex' },
-          search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' },
-          filter = { pattern = '^:%s*!', icon = '$', lang = 'bash' },
-          lua = { pattern = '^:%s*lua%s+', icon = '', lang = 'lua' },
-          help = { pattern = '^:%s*he?l?p?%s+', icon = '' },
-          input = {}, -- Used by input()
         },
       },
       lsp = {
@@ -195,7 +200,7 @@ function ui.setup() ui.highlight_override() end
 ui.plug = {
   ui.colorscheme.plug,
   ui.incline.plug,
-  -- ui.noice.plug,
+  ui.noice.plug,
   ui.startup.plug,
   ui.statusline.plug,
   ui.treesitter.plug,
