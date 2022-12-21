@@ -17,7 +17,7 @@ handlers.diagnostic = function()
     enabled = true,
     callback = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
       virtual_text = false,
-      underline = false,
+      underline = true,
       signs = { active = signs },
       update_in_insert = false,
       source = true,
@@ -31,6 +31,17 @@ handlers.diagnostic = function()
         prefix = function(diagnostic, i, _) return ' ' .. i .. '. ' .. diagnostic.source .. ': ' end,
       },
     }),
+  }
+end
+
+handlers.diagnostic_refresh = function()
+  return {
+    name = 'workspace/diagnostic/refresh',
+    callback = function(_, _, ctx)
+      local ns = vim.lsp.diagnostic.get_namespace(ctx.client_id)
+      pcall(vim.diagnostic.reset, ns)
+      return true
+    end,
   }
 end
 
