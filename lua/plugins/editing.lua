@@ -10,21 +10,19 @@ editing.mini_comment = {
   setup = function() require('mini.comment').setup {} end,
 }
 
-editing.commaround = {
+editing.mini_autopairs = {
   plug = {
-    'gennaro-tedesco/nvim-commaround',
-    event = { 'BufReadPost' },
-    config = function() require('plugins.editing').commaround.setup() end,
+    'echasnovski/mini.pairs',
+    branch = 'stable',
+    event = { 'InsertEnter' },
+    config = function() require('plugins.editing').mini_autopairs.setup() end,
   },
-  setup = function()
-    local nmap = require('mappings.hashish').nmap
-    local vmap = require('mappings.hashish').vmap
-    nmap 'gcc' '<Plug>ToggleCommaround' {} 'Toggle Comment'
-    vmap 'gcc' '<Plug>ToggleCommaround' {} 'Toggle Comment'
-    vim.g.toggle_commaround = 'gcc'
-  end,
+  setup = function() require('mini.pairs').setup { modes = { command = true, terminal = true } } end,
 }
 
-editing.plug = editing.mini_comment.plug
+editing.comment = editing.mini_comment
+editing.autopairs = editing.mini_autopairs
+
+editing.plug = { editing.comment.plug, editing.autopairs.plug }
 
 return editing
