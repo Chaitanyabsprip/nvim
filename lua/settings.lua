@@ -2,17 +2,27 @@ local settings = {}
 
 settings.setup = function()
   local disabled_built_ins = {
+    '2html_plugin',
+    'fzf',
+    'getscript',
+    'getscriptPlugin',
     'gzip',
+    'logiPat',
     'man',
     'matchit',
     'matchparen',
-    'shada_plugin',
-    'tarPlugin',
-    'tar',
-    'zipPlugin',
-    'zip',
-    'netrwPlugin',
     'netrw',
+    'netrwFileHandlers',
+    'netrwPlugin',
+    'netrwSettings',
+    'rrhelper',
+    'shada_plugin',
+    'tar',
+    'tarPlugin',
+    'vimball',
+    'vimballPlugin',
+    'zip',
+    'zipPlugin',
   }
 
   for i = 1, #disabled_built_ins do
@@ -75,6 +85,12 @@ settings.setup = function()
   vim.o.hlsearch = false
   vim.o.incsearch = true
   vim.o.smartcase = true
+
+  -- popup
+  vim.opt.pumblend = 10
+  vim.opt.pumheight = 10
+
+  vim.o.shortmess = 'filnxtToOFWIcC'
 end
 
 return settings
