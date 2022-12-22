@@ -5,7 +5,6 @@ ui.statusline = require 'plugins.ui.statusline'
 ui.tabline = require 'plugins.ui.tabline'
 
 function ui.highlight_override()
-  vim.cmd [[ hi! ColorColumn guibg=#1c1a30 ctermbg=235 ]]
   if vim.g.colors_name == 'rose-pine' then
     vim.cmd [[ hi! ColorColumn guibg=#1c1a30 ctermbg=235 ]]
   elseif vim.g.colors_name == 'nightfox' then
@@ -131,7 +130,7 @@ ui.startup = {
         default_color = '',
         oldfiles_amount = 0,
       },
-      options = { cursor_column = 0.6, paddings = { 5, 10 } },
+      options = { cursor_column = 0.6, paddings = { 5, 10 }, disable_statuslines = true },
       parts = { 'header', 'body' },
     }
   end,
