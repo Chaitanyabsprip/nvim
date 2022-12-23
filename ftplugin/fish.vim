@@ -6,3 +6,5 @@ setlocal textwidth=80
 
 " Enable folding of block structures in fish.
 setlocal foldmethod=expr
+
+setlocal commentstring=#\ %s
