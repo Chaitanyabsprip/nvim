@@ -33,7 +33,8 @@ local setkeymaps = function()
   ) {
     silent = true,
   } 'Telescope grep and filter'
-  nnoremap '<leader>fn'(find_notes) { silent = true } 'Find notes'
+  nnoremap 'gn'(find_notes) { silent = true } 'Find notes'
+  vim.notify('telescope keymaps setup', vim.log.levels.INFO)
 end
 
 explorer.harpoon = {
