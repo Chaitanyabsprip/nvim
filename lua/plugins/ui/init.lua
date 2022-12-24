@@ -93,12 +93,7 @@ ui.startup = {
   },
   setup = function()
     local notes_path = '/Users/chaitanyasharma/Projects/Notes/Transient/'
-
-    local get_note_name = function()
-      local date = os.date '%Y-%m-%d'
-      return date .. '.md'
-    end
-
+    local get_note_name = function() return os.date '%Y-%m-%d' .. '.md' end
     local new_note = function() return 'e ' .. notes_path .. get_note_name() end
 
     local startup = require 'startup'
@@ -135,7 +130,18 @@ ui.startup = {
         default_color = '',
         oldfiles_amount = 0,
       },
-      options = { cursor_column = 0.6, paddings = { 5, 10 }, disable_statuslines = true },
+      options = {
+        cursor_column = 0.6,
+        paddings = { 5, 10 },
+        disable_statuslines = true,
+        after = function()
+          vim.api.nvim_create_autocmd('User', {
+            pattern = 'VeryLazy',
+            group = vim.api.nvim_create_augroup('startup', { clear = true }),
+            command = 'setlocal colorcolumn=0',
+          })
+        end,
+      },
       parts = { 'header', 'body' },
     }
   end,

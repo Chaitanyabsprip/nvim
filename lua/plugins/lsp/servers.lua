@@ -182,7 +182,6 @@ function servers.lsp.configs.json()
       Format = { function() vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line '$', 0 }) end },
     },
   }
-  vim.pretty_print(config)
   lspconfig.jsonls.setup(config)
 end
 

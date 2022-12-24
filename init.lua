@@ -13,4 +13,6 @@ vim.api.nvim_create_autocmd('User', {
   end,
 })
 
+vim.defer_fn(function() vim.api.nvim_exec_autocmds('User', { pattern = 'VeryLazy' }) end, 500)
+
 -- vim.lsp.set_log_level 'TRACE'
