@@ -19,7 +19,7 @@ function ui.highlight_override()
 end
 
 ui.incline = {
-  plug = {
+  spec = {
     'b0o/incline.nvim',
     event = 'BufReadPre',
     config = function()
@@ -40,7 +40,7 @@ ui.incline = {
 }
 
 ui.noice = {
-  plug = {
+  spec = {
     'folke/noice.nvim',
     init = function() require('plugins.ui').noice.setup() end,
     dependencies = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
@@ -86,6 +86,11 @@ ui.noice = {
 }
 
 ui.startup = {
+  spec = {
+    'startup-nvim/startup.nvim',
+    config = function() require('plugins.ui').startup.setup() end,
+    event = 'VimEnter',
+  },
   setup = function()
     local notes_path = '/Users/chaitanyasharma/Projects/Notes/Transient/'
 
@@ -134,10 +139,6 @@ ui.startup = {
       parts = { 'header', 'body' },
     }
   end,
-  plug = {
-    'startup-nvim/startup.nvim',
-    init = function() require('plugins.ui').startup.setup() end,
-  },
 }
 
 ui.treesitter = {
@@ -167,7 +168,7 @@ ui.treesitter = {
       indent = { enable = true },
     }
   end,
-  plug = {
+  spec = {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     event = 'BufReadPost',
@@ -177,13 +178,13 @@ ui.treesitter = {
 
 function ui.setup() ui.highlight_override() end
 
-ui.plug = {
-  ui.colorscheme.plug,
-  ui.incline.plug,
-  ui.noice.plug,
-  ui.startup.plug,
-  ui.statusline.plug,
-  ui.treesitter.plug,
+ui.spec = {
+  ui.colorscheme.spec,
+  ui.incline.spec,
+  ui.noice.spec,
+  ui.startup.spec,
+  ui.statusline.spec,
+  ui.treesitter.spec,
 }
 
 return ui

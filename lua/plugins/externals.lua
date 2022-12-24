@@ -1,7 +1,7 @@
 local externals = {}
 
 externals.toggleterm = {
-  plug = {
+  spec = {
     'akinsho/toggleterm.nvim',
     config = function() require('plugins.externals').toggleterm.setup() end,
     keys = { '<leader>tf', '<leader>tg', '<leader>tt' },
@@ -71,7 +71,7 @@ function externals.gitui()
     close_on_exit = true,
     dir = 'git_dir',
     direction = 'float',
-    on_open = function(term)
+    on_open = function(_)
       -- local nnoremap = require("mappings.hashish").nnoremap
       -- nnoremap("q")("<cmd>close<cr>")({ silent = true, bufnr = term.bufnr })("Close Terminal Window")
       -- vim.api.nvim_del_keymap("t", "jk")
@@ -85,5 +85,5 @@ function externals.gitui()
   }
 end
 
-externals.plug = externals.toggleterm.plug
+externals.spec = externals.toggleterm.spec
 return externals

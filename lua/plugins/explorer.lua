@@ -37,7 +37,7 @@ local setkeymaps = function()
 end
 
 explorer.harpoon = {
-  plug = {
+  spec = {
     'ThePrimeagen/harpoon',
     keys = { '<c-b>', '<c-e>', '<c-n>', '<c-l>', '<c-h>', '<c-;>' },
     config = function() require('plugins.explorer').harpoon.setup() end,
@@ -57,7 +57,7 @@ explorer.harpoon = {
 }
 
 explorer.telescope = {
-  plug = {
+  spec = {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
     dependencies = { 'nvim-lua/plenary.nvim' },
@@ -129,7 +129,7 @@ explorer.telescope = {
 }
 
 explorer.nvim_tree = {
-  plug = {
+  spec = {
     'kyazdani42/nvim-tree.lua',
     dependencies = { 'kyazdani42/nvim-web-devicons' },
     cmd = { 'Explorer' },
@@ -189,9 +189,10 @@ explorer.nvim_tree = {
   end,
 }
 
-explorer.plug = {
-  explorer.telescope.plug,
-  explorer.nvim_tree.plug,
-  explorer.harpoon.plug,
+explorer.spec = {
+  explorer.telescope.spec,
+  explorer.nvim_tree.spec,
+  explorer.harpoon.spec,
 }
+
 return explorer

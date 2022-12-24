@@ -7,7 +7,7 @@ function completion.get_capabilities()
 end
 
 completion.luasnip = {
-  plug = {
+  spec = {
     'L3MON4D3/LuaSnip',
     version = '1.*',
     config = function() require('plugins.lsp.completion').luasnip.setup() end,
@@ -109,12 +109,12 @@ function completion.cmp.setup()
   })
 end
 
-completion.cmp.plug = {
+completion.cmp.spec = {
   'hrsh7th/nvim-cmp',
   config = function() require('plugins.lsp.completion').cmp.setup() end,
   event = 'InsertEnter',
   dependencies = {
-    completion.luasnip.plug,
+    completion.luasnip.spec,
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-cmdline',
     'hrsh7th/cmp-nvim-lsp',
@@ -124,8 +124,8 @@ completion.cmp.plug = {
   },
 }
 
-completion.plug = {
-  completion.cmp.plug,
+completion.spec = {
+  completion.cmp.spec,
   { 'Alexisvt/flutter-snippets', ft = { 'dart' } },
   { 'Nash0x7E2/awesome-flutter-snippets', ft = { 'dart' } },
   { 'natebosch/dartlang-snippets', ft = 'dart' },

@@ -2,7 +2,7 @@ local tabline = {}
 local nnoremap = require('mappings.hashish').nnoremap
 
 tabline.bufferline = {
-  plug = {
+  spec = {
     'akinsho/bufferline.nvim',
     version = 'v2.*',
     config = function() require('plugins.ui.tabline').setup() end,
@@ -42,7 +42,7 @@ tabline.bufferline = {
   end,
 }
 
-tabline.plug = tabline.bufferline.plug
+tabline.spec = tabline.bufferline.spec
 tabline.setup = tabline.bufferline.setup
 
 return tabline

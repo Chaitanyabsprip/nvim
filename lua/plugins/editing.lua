@@ -1,7 +1,7 @@
 local editing = {}
 
 editing.mini_comment = {
-  plug = {
+  spec = {
     'echasnovski/mini.comment',
     branch = 'stable',
     event = { 'BufReadPost' },
@@ -11,7 +11,7 @@ editing.mini_comment = {
 }
 
 editing.mini_autopairs = {
-  plug = {
+  spec = {
     'echasnovski/mini.pairs',
     branch = 'stable',
     event = { 'InsertEnter' },
@@ -23,6 +23,6 @@ editing.mini_autopairs = {
 editing.comment = editing.mini_comment
 editing.autopairs = editing.mini_autopairs
 
-editing.plug = { editing.comment.plug, editing.autopairs.plug }
+editing.spec = { editing.comment.spec, editing.autopairs.spec }
 
 return editing

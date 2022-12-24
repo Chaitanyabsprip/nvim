@@ -1,7 +1,7 @@
 local git = {}
 
 git.gitsigns = {
-  plug = {
+  spec = {
     'lewis6991/gitsigns.nvim',
     config = function() require('plugins.git').gitsigns.setup() end,
     event = 'BufReadPre',
@@ -52,7 +52,7 @@ git.gitsigns = {
 }
 
 git.git_conflict = {
-  plug = {
+  spec = {
     'akinsho/git-conflict.nvim',
     tag = 'v1.0.0',
     config = function() require('plugins.git').git_conflict.setup() end,
@@ -70,6 +70,6 @@ git.git_conflict = {
   end,
 }
 
-git.plug = { git.git_conflict.plug, git.gitsigns.plug }
+git.spec = { git.git_conflict.spec, git.gitsigns.spec }
 
 return git

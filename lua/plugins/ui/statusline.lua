@@ -35,7 +35,7 @@ end
 local function clock() return ' ' .. os.date '%H:%M' end
 
 statusline.lualine = {
-  plug = {
+  spec = {
     'hoob3rt/lualine.nvim',
     init = function() require('plugins.ui.statusline').setup() end,
   },
@@ -94,6 +94,6 @@ statusline.lualine = {
 }
 
 statusline.setup = statusline.lualine.setup
-statusline.plug = statusline.lualine.plug
+statusline.spec = statusline.lualine.spec
 
 return statusline

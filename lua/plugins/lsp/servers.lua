@@ -2,7 +2,7 @@ local servers = {}
 local lsp = require 'lsp'
 
 servers.null = {
-  plug = {
+  spec = {
     'jose-elias-alvarez/null-ls.nvim',
     ft = { 'lua', 'fish', 'yaml' },
     config = function() require('plugins.lsp.servers').null.setup() end,
@@ -34,7 +34,7 @@ servers.null = {
 }
 
 servers.flutter = {
-  plug = {
+  spec = {
     'akinsho/flutter-tools.nvim',
     ft = { 'dart' },
     config = function() require('plugins.lsp.servers').flutter.setup() end,
@@ -114,12 +114,8 @@ servers.flutter = {
   end,
 }
 
-servers.neodev = {
-  plug = {
-    'folke/neodev.nvim',
-    config = function() require('plugins.lsp.servers').neodev.setup() end,
-  },
-  setup = function() require('neodev').setup {} end,
+servers.__neodev = {
+  spec = { 'folke/neodev.nvim', config = function() require('neodev').setup {} end },
 }
 
 servers.lsp = {
@@ -129,11 +125,11 @@ servers.lsp = {
     end
   end,
 
-  plug = {
+  spec = {
     'neovim/nvim-lspconfig',
     event = 'BufReadPre',
     config = function() require('plugins.lsp.servers').lsp.setup() end,
-    dependencies = { servers.neodev.plug },
+    dependencies = { servers.__neodev.spec },
   },
 
   configs = {},
@@ -176,6 +172,11 @@ function servers.lsp.configs.lua()
   lspconfig.sumneko_lua.setup(config)
 end
 
-servers.plug = { servers.null.plug, servers.lsp.plug, servers.flutter.plug }
+servers.spec = {
+  servers.null.spec,
+  servers.lsp.spec,
+  servers.flutter.spec,
+  servers.__neodev.spec,
+}
 
 return servers

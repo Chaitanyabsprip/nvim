@@ -1,22 +1,21 @@
 local lsp = {}
 
 lsp.lsp_lines = {
-  plug = {
+  spec = {
     url = 'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-    event = 'BufWinEnter',
+    event = 'BufReadPost',
     config = function() require('lsp_lines').setup() end,
   },
 }
 
 lsp.code_actions = {
-  plug = {
+  spec = {
     'Chaitanyabsprip/lsp-fastaction.nvim',
     config = function() require('plugins.lsp').code_actions.setup() end,
     dev = true,
   },
   setup = function()
     local fastaction = require 'lsp-fastaction'
-
     local opts = {
       hide_cursor = true,
       action_data = {
@@ -43,7 +42,7 @@ lsp.code_actions = {
 }
 
 lsp.refactoring = {
-  plug = {
+  spec = {
     'ThePrimeagen/refactoring.nvim',
     init = function()
       vim.keymap.set(
@@ -57,6 +56,10 @@ lsp.refactoring = {
   },
 }
 
-lsp.plug = { lsp.code_actions.plug, lsp.lsp_lines.plug, lsp.refactoring.plug }
+lsp.spec = {
+  lsp.code_actions.spec,
+  lsp.lsp_lines.spec,
+  lsp.refactoring.spec,
+}
 
 return lsp

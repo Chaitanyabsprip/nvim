@@ -2,7 +2,7 @@ local themes = {}
 local config = require 'plugins.ui.config'
 
 themes.blue_moon = {
-  plug = {
+  spec = {
     'kyazdani42/blue-moon',
     config = function() require('plugins.ui.themes').blue_moon.setup() end,
     lazy = false,
@@ -11,7 +11,7 @@ themes.blue_moon = {
 }
 
 themes.calvera = {
-  plug = {
+  spec = {
     'yashguptaz/calvera-dark.nvim',
     config = function() require('plugins.ui.themes').calvera.setup() end,
     lazy = false,
@@ -31,7 +31,7 @@ themes.calvera = {
 }
 
 themes.catppuccin = {
-  plug = {
+  spec = {
     'catppuccin/nvim',
     name = 'catppuccin',
     config = function() require('plugins.ui.themes').setup() end,
@@ -54,7 +54,7 @@ themes.catppuccin = {
 }
 
 themes.material = {
-  plug = {
+  spec = {
     'marko-cerovac/material.nvim',
     config = function() require('plugins.ui.themes').material.setup() end,
     lazy = false,
@@ -85,7 +85,7 @@ themes.material = {
 }
 
 themes.rosepine = {
-  plug = {
+  spec = {
     'rose-pine/neovim',
     name = 'rose-pine',
     config = function() require('plugins.ui.themes').rosepine.setup() end,
@@ -100,7 +100,7 @@ themes.rosepine = {
 }
 
 themes.sakura = {
-  plug = {
+  spec = {
     'numToStr/Sakura.nvim',
     config = function() require('plugins.ui.themes').sakura.setup() end,
     lazy = false,
@@ -117,7 +117,7 @@ themes.sakura = {
 }
 
 themes.tokyonight = {
-  plug = {
+  spec = {
     'folke/tokyonight.nvim',
     config = function() require('plugins.ui.themes').tokyonight.setup() end,
     lazy = false,
@@ -147,7 +147,7 @@ themes.tokyonight = {
 }
 
 themes.theme = themes.tokyonight
-themes.plug = themes.theme.plug
+themes.spec = themes.theme.spec
 themes.setup = themes.theme.setup
 
 return themes
