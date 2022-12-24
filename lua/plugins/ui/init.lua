@@ -42,13 +42,13 @@ ui.incline = {
 ui.noice = {
   spec = {
     'folke/noice.nvim',
-    init = function() require('plugins.ui').noice.setup() end,
+    config = function() require('plugins.ui').noice.setup() end,
     dependencies = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
+    event = 'VeryLazy',
   },
   setup = function()
     require('noice').setup {
       cmdline = {
-        -- opts = { border = 'none' },
         format = {
           substitute = {
             pattern = '^:%%?s/',
