@@ -3,7 +3,7 @@ local settings = {}
 settings.setup = function()
   local disabled_built_ins = {
     '2html_plugin',
-    'fzf',
+    -- 'fzf',
     'getscript',
     'getscriptPlugin',
     'gzip',
