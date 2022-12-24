@@ -1,6 +1,18 @@
 local servers = {}
 local lsp = require 'lsp'
 
+local function extend(config)
+  local get_capabilities = require('plugins.lsp.completion').get_capabilities
+  local lspconfig = require 'lspconfig'
+  local defaults = {
+    on_attach = lsp.common_on_attach,
+    capabilities = get_capabilities(),
+    root_dir = lspconfig.util.root_pattern('.git', '.gitignore', vim.fn.getcwd()),
+  }
+  local updated_config = vim.tbl_deep_extend('keep', config, defaults)
+  return updated_config
+end
+
 servers.null = {
   spec = {
     'jose-elias-alvarez/null-ls.nvim',
@@ -139,6 +151,8 @@ servers.lsp = {
   configs = {},
 }
 
+servers.__schemastore = { spec = { 'b0o/schemastore.nvim', ft = 'json' } }
+
 function servers.lsp.configs.lua()
   local get_capabilities = require('plugins.lsp.completion').get_capabilities
   local lspconfig = require 'lspconfig'
@@ -158,10 +172,23 @@ function servers.lsp.configs.lua()
   lspconfig.sumneko_lua.setup(config)
 end
 
+function servers.lsp.configs.json()
+  local lspconfig = require 'lspconfig'
+  local config = extend {
+    settings = { json = { schemas = require('schemastore').json.schemas() } },
+    commands = {
+      Format = { function() vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line '$', 0 }) end },
+    },
+  }
+  vim.pretty_print(config)
+  lspconfig.jsonls.setup(config)
+end
+
 servers.spec = {
   servers.null.spec,
   servers.lsp.spec,
   servers.flutter.spec,
+  servers.__schemastore.spec,
   servers.__neodev.spec,
 }
 
