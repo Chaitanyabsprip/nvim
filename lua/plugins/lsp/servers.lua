@@ -163,9 +163,11 @@ function servers.lsp.configs.lua()
     capabilities = get_capabilities(),
     settings = {
       Lua = {
-        completion = { callSnippet = 'Both' },
+        workspace = { checkThirdParty = false },
+        completion = { showWord = 'Disable', callSnippet = 'Both', displayContext = true },
         diagnostics = { globals = { 'vim' } },
         telemetry = { enable = false },
+        format = { enable = false },
       },
     },
   }
