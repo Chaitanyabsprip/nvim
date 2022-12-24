@@ -41,6 +41,43 @@ lsp.code_actions = {
   end,
 }
 
+lsp.mason = {
+  spec = {
+    'williamboman/mason.nvim',
+    config = function() require('mason').setup() end,
+    dependencies = { 'RubixDev/mason-update-all' },
+  },
+}
+
+lsp.mason_update = {
+  spec = {
+    'RubixDev/mason-update-all',
+    config = function() require('mason-update-all').setup() end,
+  },
+}
+
+lsp.mason_nullls = {
+  spec = {
+    'jay-babu/mason-null-ls.nvim',
+    config = function()
+      require 'mason'
+      require('mason-null-ls').setup { automatic_installation = true }
+    end,
+  },
+}
+
+lsp.mason_lspconfig = {
+  spec = {
+    'williamboman/mason-lspconfig.nvim',
+    config = function()
+      require 'mason'
+      require('mason-lspconfig').setup {
+        automatic_installation = true,
+      }
+    end,
+  },
+}
+
 lsp.refactoring = {
   spec = {
     'ThePrimeagen/refactoring.nvim',
@@ -59,6 +96,10 @@ lsp.refactoring = {
 lsp.spec = {
   lsp.code_actions.spec,
   lsp.lsp_lines.spec,
+  lsp.mason.spec,
+  lsp.mason_lspconfig.spec,
+  lsp.mason_nullls.spec,
+  lsp.mason_update.spec,
   lsp.refactoring.spec,
 }
 

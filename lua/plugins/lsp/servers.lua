@@ -30,6 +30,7 @@ servers.null = {
         formatting.stylua,
       },
     }
+    require 'mason-null-ls'
   end,
 }
 
@@ -128,7 +129,10 @@ servers.lsp = {
   spec = {
     'neovim/nvim-lspconfig',
     event = 'BufReadPre',
-    config = function() require('plugins.lsp.servers').lsp.setup() end,
+    config = function()
+      require 'mason-lspconfig'
+      require('plugins.lsp.servers').lsp.setup()
+    end,
     dependencies = { servers.__neodev.spec },
   },
 
@@ -138,29 +142,11 @@ servers.lsp = {
 function servers.lsp.configs.lua()
   local get_capabilities = require('plugins.lsp.completion').get_capabilities
   local lspconfig = require 'lspconfig'
-  local user = vim.fn.expand '$USER'
-
-  local sumneko_root_path = ''
-  local sumneko_binary = ''
-
-  if vim.fn.has 'mac' == 1 then
-    sumneko_root_path = '/Users/' .. user .. '/Programs/lang-servers/lua-language-server'
-    sumneko_binary = '/Users/'
-      .. user
-      .. '/Programs/lang-servers/lua-language-server/bin/lua-language-server'
-  elseif vim.fn.has 'unix' == 1 then
-    sumneko_root_path = vim.fn.expand '$HOME' .. '/Programs/lang-servers/lua-language-server'
-    sumneko_binary = vim.fn.expand '$HOME'
-      .. '/Programs/lang-servers/lua-language-server/bin/lua-language-server'
-  else
-    print 'Unsupported system for sumneko'
-  end
 
   local config = {
     root_dir = lspconfig.util.root_pattern('.git', '.gitignore', '.stylua', vim.fn.getcwd()),
-    capabilities = get_capabilities(),
     on_attach = lsp.common_on_attach,
-    cmd = { sumneko_binary, '-E', sumneko_root_path .. '/main.lua' },
+    capabilities = get_capabilities(),
     settings = {
       Lua = {
         completion = { callSnippet = 'Both' },
