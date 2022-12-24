@@ -186,6 +186,37 @@ function servers.lsp.configs.json()
   lspconfig.jsonls.setup(config)
 end
 
+function servers.lsp.configs.yaml()
+  local get_capabilities = require('plugins.lsp.completion').get_capabilities
+  local lspconfig = require 'lspconfig'
+  lspconfig.yamlls.setup {
+    on_attach = lsp.common_on_attach,
+    capabilities = get_capabilities(),
+    root_dir = lspconfig.util.root_pattern('.git', '.gitignore', vim.fn.getcwd()),
+    settings = {
+      redhat = { telemetry = false },
+      yaml = {
+        schemaStore = {
+          enable = true,
+          url = 'https://www.schemastore.org/api/json/catalog.json',
+        },
+        format = { singleQuote = true },
+      },
+    },
+  }
+end
+
+function servers.lsp.configs.python()
+  local get_capabilities = require('plugins.lsp.completion').get_capabilities
+  local lspconfig = require 'lspconfig'
+  lspconfig.pyright.setup {
+    on_attach = lsp.common_on_attach,
+    capabilities = get_capabilities(),
+    root_dir = lspconfig.util.root_pattern('.git', 'pyproject.toml', '.gitignore', vim.fn.getcwd()),
+    settings = { python = { venvPath = '.', analysis = {} } },
+  }
+end
+
 servers.spec = {
   servers.null.spec,
   servers.lsp.spec,
