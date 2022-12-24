@@ -123,7 +123,8 @@ themes.tokyonight = {
     lazy = false,
   },
   setup = function()
-    require('tokyonight').setup {
+    local tokyonight = require 'tokyonight'
+    tokyonight.setup {
       style = 'night',
       transparent = config.theme.transparent,
       terminal_colors = true,
@@ -142,7 +143,7 @@ themes.tokyonight = {
       lualine_bold = false,
       on_colors = function(colors) colors.border = '#7aa2f7' end,
     }
-    vim.cmd.colorscheme 'tokyonight'
+    tokyonight.load()
   end,
 }
 
