@@ -8,7 +8,10 @@ misc.startuptime = {
   spec = {
     'dstein64/vim-startuptime',
     cmd = 'StartupTime',
-    config = function() vim.g.startuptime_tries = 50 end,
+    config = function()
+      vim.g.startuptime_tries = 50
+      vim.g.startuptime_exe_args = { '-i', 'NONE' }
+    end,
   },
 }
 
