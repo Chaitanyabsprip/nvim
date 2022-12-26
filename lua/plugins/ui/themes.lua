@@ -53,6 +53,14 @@ themes.catppuccin = {
   end,
 }
 
+themes.horizon = {
+  spec = {
+    'LunarVim/horizon.nvim',
+    config = function() require('plugins.ui.themes').horizon.setup() end,
+  },
+  setup = function() vim.cmd [[ colorscheme horizon ]] end,
+}
+
 themes.material = {
   spec = {
     'marko-cerovac/material.nvim',
@@ -82,6 +90,16 @@ themes.material = {
     }
     vim.cmd [[ colorscheme material ]]
   end,
+}
+
+themes.nordoir = {
+  spec = {
+    'jesseleite/nvim-noirbuddy',
+    dependencies = { 'tjdevries/colorbuddy.nvim', branch = 'dev' },
+    config = function() require('plugins.ui.themes').nordoir.setup() end,
+    lazy = false,
+  },
+  setup = function() require('noirbuddy').setup { preset = 'miami-nights' } end,
 }
 
 themes.rosepine = {
@@ -147,8 +165,6 @@ themes.tokyonight = {
   end,
 }
 
-themes.theme = themes.tokyonight
-themes.spec = themes.theme.spec
-themes.setup = themes.theme.setup
+themes.spec = themes.tokyonight.spec
 
 return themes

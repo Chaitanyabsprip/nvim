@@ -25,11 +25,9 @@ local function trailing_whitespace()
 end
 
 local function theme()
-  if vim.g.colors_name == 'material' then
-    return 'material-nvim'
-  else
-    return 'auto'
-  end
+  if vim.g.colors_name == 'noirbuddy' then return require('noirbuddy.plugins.lualine').theme end
+  if vim.g.colors_name == 'material' then return 'material-nvim' end
+  return 'auto'
 end
 
 local function clock() return ' ' .. os.date '%H:%M' end
