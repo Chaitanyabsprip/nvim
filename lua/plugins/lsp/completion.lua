@@ -48,9 +48,7 @@ function completion.cmp.setup()
   end
 
   cmp.setup {
-    snippet = {
-      expand = function(args) require('luasnip').lsp_expand(args.body) end,
-    },
+    snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end },
     mapping = {
       ['<Tab>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
@@ -78,10 +76,7 @@ function completion.cmp.setup()
       ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item(select_item_opts), { 'i', 'c' }),
       ['<C-Space>'] = cmp.mapping(cmp.mapping.complete {}, { 'i', 'c' }),
       ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-      ['<C-e>'] = cmp.mapping {
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      },
+      ['<C-e>'] = cmp.mapping { i = cmp.mapping.abort(), c = cmp.mapping.close() },
       ['<CR>'] = cmp.mapping.confirm { select = true },
     },
     sources = {
@@ -102,6 +97,7 @@ function completion.cmp.setup()
         },
       },
     },
+    window = { completion = { border = 'rounded' }, documentation = { border = 'rounded' } },
     experimental = { ghost_text = true },
   }
 

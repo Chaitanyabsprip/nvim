@@ -1,6 +1,10 @@
 local settings = {}
 
 settings.setup = function()
+  vim.cmd [[
+    syntax off
+    filetype off
+  ]]
   local disabled_built_ins = {
     '2html_plugin',
     -- 'fzf',
