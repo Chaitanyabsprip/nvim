@@ -3,8 +3,9 @@ local session = {}
 session.auto_session = {
   spec = {
     'rmagatti/auto-session',
+    init = function() vim.api.nvim_create_user_command('Continue', 'RestoreSession', { nargs = 0 }) end,
     config = function() require('plugins.session').auto_session.setup() end,
-    cmd = { 'RestoreSession' },
+    cmd = { 'Continue' },
   },
   setup = function()
     local home = os.getenv 'HOME'
@@ -22,6 +23,27 @@ session.auto_session = {
   end,
 }
 
-session.spec = session.auto_session.spec
+session.persistence = {
+  spec = {
+    'folke/persistence.nvim',
+    init = function()
+      vim.api.nvim_create_user_command(
+        'Continue',
+        function() require('persistence').load() end,
+        { nargs = 0 }
+      )
+    end,
+    config = function() require('plugins.session').persistence.setup() end,
+    cmd = { 'Continue' },
+  },
+  setup = function()
+    require('persistence').setup {
+dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"),
+      options = { 'buffers', 'curdir', 'winsize', 'resize', 'winpos', 'folds', 'tabpages', 'help' },
+    }
+  end,
+}
+
+session.spec = session.persistence.spec
 
 return session
