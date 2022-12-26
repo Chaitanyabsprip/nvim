@@ -20,8 +20,16 @@ editing.mini_autopairs = {
   setup = function() require('mini.pairs').setup { modes = { command = true, terminal = true } } end,
 }
 
+editing.autoclose = {
+  spec = {
+    'm4xshen/autoclose.nvim',
+    config = function() require('autoclose').setup {} end,
+    event = { 'InsertEnter' },
+  },
+}
+
 editing.comment = editing.mini_comment
-editing.autopairs = editing.mini_autopairs
+editing.autopairs = editing.autoclose
 
 editing.spec = { editing.comment.spec, editing.autopairs.spec }
 
