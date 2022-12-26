@@ -54,7 +54,7 @@ plugin.setup = function()
   require('lazy').setup(plugin.spec, {
     defaults = { lazy = true },
     dev = { path = '~/Projects/Languages/Lua' },
-    performance = { rtp = { disabled_plugins = plugin.disabled_builtins }, debug = true },
+    performance = { rtp = { disabled_plugins = plugin.disabled_builtins } },
     install = { colorscheme = { 'tokyonight', 'habamax' } },
     checker = { enabled = true },
     readme = { files = { 'README.md', 'readme.md', 'README.rst', 'readme.rst' } },

@@ -15,6 +15,13 @@ misc.startuptime = {
   },
 }
 
+misc.obsidian = {
+  spec = {
+    dir = '/Users/chaitanyasharma/Projects/Languages/Lua/obsidian.nvim',
+    ft = 'markdown',
+  },
+}
+
 misc.spec = { misc.fish.spec, misc.startuptime.spec }
 
 return misc
