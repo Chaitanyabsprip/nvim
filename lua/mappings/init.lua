@@ -26,11 +26,11 @@ keymaps.setup = function()
   xnoremap 'H' '^' {} 'Jump to the start of the line'
   nnoremap 'L' 'g_' {} 'Jump to the end of the line'
   xnoremap 'L' 'g_' {} 'Jump to the end of the line'
-  nnoremap '<leader>h' ':wincmd h<cr>' { silent = true } 'Create new window to the left'
-  nnoremap '<leader>l' ':wincmd l<cr>' { silent = true } 'Create new window to the right'
-  nnoremap '<leader>j' ':wincmd j<cr>' { silent = true } 'Create new window below'
-  nnoremap '<leader>k' ':wincmd k<cr>' { silent = true } 'Create new window above'
-  nnoremap '<leader>x' ':bd<cr>' { silent = true } 'Close current buffer'
+  nnoremap 'gh' ':wincmd h<cr>' { silent = true } 'Create new window to the left'
+  nnoremap 'gl' ':wincmd l<cr>' { silent = true } 'Create new window to the right'
+  nnoremap 'gj' ':wincmd j<cr>' { silent = true } 'Create new window below'
+  nnoremap 'gk' ':wincmd k<cr>' { silent = true } 'Create new window above'
+  nnoremap 'X' ':bd<cr>' { silent = true } 'Close current buffer'
   nnoremap ')' ':vertical resize +5<cr>' { silent = true } 'Increase current window height'
   nnoremap '(' ':vertical resize -5<cr>' { silent = true } 'Decrease current window height'
   nnoremap '+' ':res +1<cr>' { silent = true } 'Increase current window width'
@@ -49,7 +49,6 @@ keymaps.setup = function()
   nnoremap 'J' 'mzJ`z' {} 'Join lines without moving cursor'
   nnoremap '}' '}zzzv' {} 'like text object motion } but centers line'
   nnoremap '{' '{zzzv' {} 'like text object motion { but centers line'
-  nnoremap '<leader>sr' ':%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>' {} 'search and replace word under cursor'
 end
 
 return keymaps
