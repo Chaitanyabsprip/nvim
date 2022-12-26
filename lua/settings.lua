@@ -45,6 +45,7 @@ settings.setup = function()
   -- indent
   vim.o.autoindent = true
   vim.o.cindent = true
+  vim.o.smarttab = true
   vim.o.expandtab = true
   vim.o.shiftwidth = 2
   vim.o.smartindent = true
@@ -55,6 +56,7 @@ settings.setup = function()
   vim.o.undodir = vim.fn.expand '~/.tmp/undodir'
   vim.o.undofile = true
   vim.o.swapfile = false
+  vim.o.backup = false
   vim.o.writebackup = false
 
   -- disable wrap
@@ -82,6 +84,7 @@ settings.setup = function()
   vim.o.hlsearch = false
   vim.o.incsearch = true
   vim.o.smartcase = true
+  vim.o.ignorecase = true
 
   -- popup
   vim.opt.pumblend = 10

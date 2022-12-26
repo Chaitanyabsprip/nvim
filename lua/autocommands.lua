@@ -19,13 +19,13 @@ autocommands.setup = function()
     end,
   })
 
-  autocmd({ 'BufWinLeave' }, {
+  autocmd('BufWinLeave', {
     group = augroup 'restore fold state',
     pattern = '*.*',
     command = 'mkview 1',
   })
 
-  autocmd({ 'BufWinEnter' }, {
+  autocmd('BufWinEnter', {
     group = augroup 'restore fold state',
     pattern = '*.*',
     command = 'silent! loadview 1',
