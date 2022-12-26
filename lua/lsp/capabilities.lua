@@ -78,7 +78,7 @@ M['textDocument/rename'] = function(_)
 end
 
 M['textDocument/signatureHelp'] = function(_)
-  nnoremap 'gh'(vim.lsp.buf.signature_help)(opts) 'Show signature help of symbol under cursor'
+  nnoremap 'sh'(vim.lsp.buf.signature_help)(opts) 'Show signature help of symbol under cursor'
 end
 
 M['textDocument/typeDefinition'] = function(_)

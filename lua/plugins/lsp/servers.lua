@@ -165,7 +165,7 @@ function servers.lsp.configs.lua()
       Lua = {
         workspace = { checkThirdParty = false },
         completion = { showWord = 'Disable', callSnippet = 'Both', displayContext = true },
-        diagnostics = { globals = { 'vim' } },
+        -- diagnostics = { globals = { 'vim', 'require' } },
         telemetry = { enable = false },
         format = { enable = false },
       },
