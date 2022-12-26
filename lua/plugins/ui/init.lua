@@ -3,6 +3,7 @@ local ui = {}
 ui.colorscheme = require 'plugins.ui.themes'
 ui.statusline = require 'plugins.ui.statusline'
 ui.tabline = require 'plugins.ui.tabline'
+-- ui.greeter = require 'plugins.ui.greeter'
 
 function ui.highlight_override()
   if vim.g.colors_name == 'rose-pine' then
@@ -85,68 +86,6 @@ ui.noice = {
   end,
 }
 
-ui.startup = {
-  spec = {
-    'startup-nvim/startup.nvim',
-    config = function() require('plugins.ui').startup.setup() end,
-    event = 'VimEnter',
-  },
-  setup = function()
-    local notes_path = '/Users/chaitanyasharma/Projects/Notes/Transient/'
-    local get_note_name = function() return os.date '%Y-%m-%d' .. '.md' end
-    local new_note = function() return 'e ' .. notes_path .. get_note_name() end
-
-    local startup = require 'startup'
-    local headers = require 'startup.headers'
-
-    startup.setup {
-      header = {
-        type = 'text',
-        oldfiles_directory = false,
-        align = 'center',
-        fold_section = false,
-        title = 'Header',
-        margin = 5,
-        content = headers.hydra_header,
-        highlight = 'Statement',
-        default_color = '',
-        oldfiles_amount = 0,
-      },
-      body = {
-        type = 'mapping',
-        oldfiles_directory = false,
-        align = 'center',
-        fold_section = false,
-        title = 'Basic Commands',
-        margin = 5,
-        content = {
-          { ' Find File', 'Telescope find_files', 'f' },
-          { ' Recent Files', 'Telescope oldfiles', 'm' },
-          { ' Restore Session', 'RestoreSession', 'r' },
-          { ' New Note', new_note(), 'n' },
-          { ' Quit ', 'quit', 'q' },
-        },
-        highlight = 'String',
-        default_color = '',
-        oldfiles_amount = 0,
-      },
-      options = {
-        cursor_column = 0.6,
-        paddings = { 5, 10 },
-        disable_statuslines = true,
-        after = function()
-          vim.api.nvim_create_autocmd('User', {
-            pattern = 'VeryLazy',
-            group = vim.api.nvim_create_augroup('startup', { clear = true }),
-            command = 'setlocal colorcolumn=0',
-          })
-        end,
-      },
-      parts = { 'header', 'body' },
-    }
-  end,
-}
-
 ui.treesitter = {
   setup = function()
     require('nvim-treesitter.configs').setup {
@@ -185,10 +124,10 @@ ui.treesitter = {
 function ui.setup() ui.highlight_override() end
 
 ui.spec = {
+  -- ui.greeter.spec,
   ui.colorscheme.spec,
   ui.incline.spec,
   ui.noice.spec,
-  ui.startup.spec,
   ui.statusline.spec,
   ui.treesitter.spec,
 }

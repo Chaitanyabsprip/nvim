@@ -1,12 +1,14 @@
-local start = vim.loop.hrtime()
-require('plugins').setup()
-local delta = vim.loop.hrtime() - start
+local settings = require 'settings'
+settings.setup()
+local plugin = require 'plugins'
+plugin.setup()
+require('plugins.ui.greeter').setup()
 
 vim.api.nvim_create_autocmd('User', {
   pattern = 'VeryLazy',
   callback = function()
-    vim.notify('Lazy took ' .. (delta / 1e6) .. 'ms')
-    require('settings').setup()
+    plugin.startup()
+    settings.lazy()
     require('mappings').setup()
     require('autocommands').setup()
     require('plugins.ui').setup()

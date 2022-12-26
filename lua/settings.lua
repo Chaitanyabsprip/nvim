@@ -35,14 +35,10 @@ settings.setup = function()
   vim.g.loaded_perl_provider = 0
   vim.g.loaded_ruby_provider = 0
 
-  vim.cmd [[
-    set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
-    set grepformat=%f:%l:%c:%m
-  ]]
+  vim.go.grepprg = 'rg --vimgrep --no-heading --smart-case'
+  vim.go.grepformat = '%f:%l:%c:%m'
 
   vim.opt.termguicolors = true
-  vim.g.filetype = 'plugin indent on'
-  vim.g.syntax = true
   vim.o.clipboard = 'unnamedplus'
   vim.wo.signcolumn = 'yes'
 
@@ -92,6 +88,11 @@ settings.setup = function()
   vim.opt.pumheight = 10
 
   vim.o.shortmess = 'filnxtToOFWIcC'
+end
+
+settings.lazy = function()
+  vim.g.filetype = 'plugin indent on'
+  vim.g.syntax = true
 end
 
 return settings
