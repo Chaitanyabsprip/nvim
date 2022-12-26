@@ -15,15 +15,6 @@ local function get_lsp_client(msg)
   return msg
 end
 
-local function trailing_whitespace()
-  local trail = vim.fn.search('\\s$', 'nw')
-  if trail ~= 0 then
-    return ''
-  else
-    return ''
-  end
-end
-
 local function theme()
   if vim.g.colors_name == 'noirbuddy' then return require('noirbuddy.plugins.lualine').theme end
   if vim.g.colors_name == 'material' then return 'material-nvim' end
@@ -42,51 +33,22 @@ statusline.lualine = {
     require('lualine').setup {
       options = {
         component_separators = { '', '' },
-        disabled_filetypes = {},
         globalstatus = true,
         section_separators = '',
         theme = theme(),
       },
       sections = {
-        lualine_a = {
-          {
-            'mode',
-            icon = '',
-            fmt = function(mode_name) return mode_name:sub(1, 1) end,
-          },
-        },
-        lualine_b = {
-          'branch',
-          {
-            'diff',
-            symbols = { added = ' ', modified = ' ', removed = '  ' },
-          },
-        },
+        lualine_a = { { 'mode', icon = '', fmt = function(mode) return mode:sub(1, 1) end } },
+        lualine_b = { 'branch' },
         lualine_c = {
+          { 'diff', symbols = { added = ' ', modified = ' ', removed = '  ' } },
           'filename',
-          trailing_whitespace,
-          {
-            'diagnostics',
-            sources = { 'nvim_diagnostic' },
-            symbols = { error = '   ', warn = '   ' },
-          },
+          { 'diagnostics', sources = { 'nvim_diagnostic', 'nvim_lsp' } },
         },
-        lualine_x = {
-          get_lsp_client,
-          'filetype',
-        },
+        lualine_x = { get_lsp_client, 'filetype' },
         lualine_y = { 'location' },
-        lualine_z = { clock },
+        lualine_z = { { clock, color = { gui = 'bold' } } },
       },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = { 'filename' },
-        lualine_x = { 'location' },
-        lualine_y = {},
-        lualine_z = {},
-      },
-      tabline = {},
       extensions = { 'nvim-tree', 'toggleterm' },
     }
   end,
