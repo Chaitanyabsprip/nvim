@@ -129,70 +129,78 @@ explorer.telescope = {
   end,
 }
 
-explorer.nvim_tree = {
+explorer.neotree = {
   spec = {
-    'kyazdani42/nvim-tree.lua',
+    'nvim-neo-tree/neo-tree.nvim',
+    version = 'v2.x',
     dependencies = { 'kyazdani42/nvim-web-devicons' },
     cmd = { 'Explorer' },
-    config = function() require('plugins.explorer').nvim_tree.setup() end,
+    config = function() require('plugins.explorer').neotree.setup() end,
   },
   setup = function()
-    vim.api.nvim_create_user_command('Explorer', 'NvimTreeToggle', { nargs = 0 })
-    local function grep_at_current_tree_node()
-      local node = require('nvim-tree.lib').get_node_at_cursor()
-      if not node then return end
-      require('telescope.builtin').live_grep { search_dirs = { node.absolute_path } }
-    end
-
-    local tree_cb = require('nvim-tree.config').nvim_tree_callback
-    local mappings = {
-      custom_only = false,
-      list = {
-        {
-          key = { '<Leader>gr', 'gr' },
-          cb = grep_at_current_tree_node,
-          mode = 'n',
-        },
-        { key = { '<CR>', '<2-LeftMouse>', 'l' }, cb = tree_cb 'edit' },
-        { key = { '<2-RightMouse>', '<C-]>', 'cd' }, cb = tree_cb 'cd' },
-        { key = { '<C-v>', 'v' }, cb = tree_cb 'vsplit' },
-        { key = { '<C-x>', 's' }, cb = tree_cb 'split' },
-        { key = { '<BS>', 'h', '<S-CR>' }, cb = tree_cb 'close_node' },
-        { key = { 'o' }, cb = tree_cb 'system_open' },
+    vim.api.nvim_create_user_command('Explorer', 'NeoTreeFocusToggle', { nargs = 0 })
+    require('neo-tree').setup {
+      close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
+      default_component_configs = {
+        container = { enable_character_fade = true },
+        indent = { padding = 0 },
+        name = { trailing_slash = true },
+        git_status = { symbols = { added = '✚', modified = '' } },
       },
-    }
-    require('nvim-tree').setup {
-      diagnostics = {
-        debounce_delay = 400,
-        enable = true,
-        show_on_dirs = true,
-        show_on_open_dirs = false,
-      },
-      filters = { dotfiles = false },
-      git = { enable = true, ignore = true, show_on_open_dirs = false, timeout = 400 },
-      renderer = {
-        add_trailing = true,
-        full_name = true,
-        highlight_git = true,
-        indent_markers = { enable = true },
-      },
-      trash = { cmd = 'trash', require_confirm = true },
-      sync_root_with_cwd = true,
-      update_focused_file = { enable = true },
-      view = {
-        centralize_selection = true,
-        mappings = mappings,
-        preserve_window_proportions = true,
-        side = 'right',
+      window = {
+        position = 'right',
         width = 40,
+        mappings = {
+          ['l'] = 'open',
+          ['s'] = 'split_with_window_picker',
+          ['v'] = 'vsplit_with_window_picker',
+          ['t'] = 'open_tabnew',
+          ['<cr>'] = 'open_with_window_picker',
+          ['h'] = 'close_node',
+          ['z'] = 'close_all_nodes',
+          ['Z'] = 'expand_all_nodes',
+          ['a'] = { 'add', config = { show_path = 'absolute' } },
+          ['A'] = 'add_directory', -- also accepts the optional config.show_path option like "add".
+          ['d'] = 'delete',
+          ['r'] = 'rename',
+          ['y'] = 'copy_to_clipboard',
+          ['x'] = 'cut_to_clipboard',
+          ['p'] = 'paste_from_clipboard',
+          ['c'] = 'copy', -- takes text input for destination, also accepts the optional config.show_path option like "add":
+          -- ["c"] = {
+          --  "copy",
+          --  config = {
+          --    show_path = "none" -- "none", "relative", "absolute"
+          --  }
+          --}
+          ['m'] = 'move', -- takes text input for destination, also accepts the optional config.show_path option like "add".
+        },
+      },
+      filesystem = {
+        filtered_items = {
+          visible = false,
+          hide_dotfiles = false,
+          hide_gitignored = false,
+          hide_hidden = false,
+        },
+        follow_current_file = true,
+        hijack_netrw_behavior = 'open_current', -- netrw disabled, opening a directory opens neo-tree
+        window = {
+          mappings = {
+            ['gp'] = 'prev_git_modified',
+            ['gn'] = 'next_git_modified',
+          },
+        },
       },
     }
   end,
 }
 
+explorer.filetree = explorer.neotree
+
 explorer.spec = {
   explorer.telescope.spec,
-  explorer.nvim_tree.spec,
+  explorer.filetree.spec,
   explorer.harpoon.spec,
 }
 
