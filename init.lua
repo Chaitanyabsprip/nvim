@@ -2,13 +2,13 @@ local settings = require 'settings'
 settings.setup()
 vim.defer_fn(function()
   local plugin = require 'plugins'
+  require('mappings').setup()
   plugin.setup()
   vim.api.nvim_create_autocmd('User', {
     pattern = 'VeryLazy',
     callback = function()
       plugin.startup()
       settings.lazy()
-      require('mappings').setup()
       require('autocommands').setup()
       require('plugins.ui').setup()
       vim.o.shadafile = ''
