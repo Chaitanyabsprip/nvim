@@ -54,18 +54,16 @@ git.gitsigns = {
 git.git_conflict = {
   spec = {
     'akinsho/git-conflict.nvim',
-    tag = 'v1.0.0',
+    version = '1.*',
     config = function() require('plugins.git').git_conflict.setup() end,
     cmd = { 'GitConflictListQf' },
+    keys = { ']x', '[x' },
   },
   setup = function()
     require('git-conflict').setup {
-      default_mappings = true, -- disable buffer local mapping created by this plugin
-      disable_diagnostics = true, -- This will disable the diagnostics in a buffer whilst it is conflicted
-      highlights = { -- They must have background color, otherwise the default color will be used
-        incoming = 'DiffText',
-        current = 'DiffAdd',
-      },
+      default_mappings = true,
+      disable_diagnostics = true,
+      highlights = { incoming = 'DiffText', current = 'DiffAdd' },
     }
   end,
 }

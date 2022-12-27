@@ -23,6 +23,20 @@ plugin.spec = {
   { lsp.spec, servers.spec },
 }
 
+plugin.setup = function()
+  require('plugins.utils').bootstrap_packer()
+  local start = vim.loop.hrtime()
+  require('lazy').setup(plugin.spec, {
+    defaults = { lazy = true },
+    dev = { path = '~/Projects/Languages/Lua' },
+    performance = { rtp = { disabled_plugins = plugin.disabled_builtins } },
+    install = { colorscheme = { 'tokyonight', 'habamax' } },
+    checker = { enabled = true },
+    readme = { files = { 'README.md', 'readme.md', 'README.rst', 'readme.rst' } },
+  })
+  plugin.load_time = vim.loop.hrtime() - start
+end
+
 plugin.disabled_builtins = {
   '2html_plugin',
   'getscript',
@@ -47,20 +61,6 @@ plugin.disabled_builtins = {
   'zip',
   'zipPlugin',
 }
-
-plugin.setup = function()
-  require('plugins.utils').bootstrap_packer()
-  local start = vim.loop.hrtime()
-  require('lazy').setup(plugin.spec, {
-    defaults = { lazy = true },
-    dev = { path = '~/Projects/Languages/Lua' },
-    performance = { rtp = { disabled_plugins = plugin.disabled_builtins } },
-    install = { colorscheme = { 'tokyonight', 'habamax' } },
-    checker = { enabled = true },
-    readme = { files = { 'README.md', 'readme.md', 'README.rst', 'readme.rst' } },
-  })
-  plugin.load_time = vim.loop.hrtime() - start
-end
 
 plugin.startup = function() vim.notify('Lazy took ' .. (plugin.load_time / 1e6) .. 'ms') end
 return plugin
