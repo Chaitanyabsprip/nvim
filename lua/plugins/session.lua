@@ -38,7 +38,7 @@ session.persistence = {
   },
   setup = function()
     require('persistence').setup {
-dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"),
+      dir = vim.fn.expand(vim.fn.stdpath 'data' .. '/sessions/'),
       options = { 'buffers', 'curdir', 'winsize', 'resize', 'winpos', 'folds', 'tabpages', 'help' },
     }
   end,
