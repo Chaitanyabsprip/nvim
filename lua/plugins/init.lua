@@ -29,7 +29,13 @@ plugin.setup = function()
   require('lazy').setup(plugin.spec, {
     defaults = { lazy = true },
     dev = { path = '~/Projects/Languages/Lua' },
-    performance = { rtp = { disabled_plugins = plugin.disabled_builtins } },
+    cache = { disable_events = {} },
+    performance = {
+      rtp = {
+        disabled_plugins = plugin.disabled_builtins,
+        paths = { '/usr/local/share/nvim/runtime/pack/dist/opt/cfilter' },
+      },
+    },
     install = { colorscheme = { 'tokyonight', 'habamax' } },
     checker = { enabled = true },
     readme = { files = { 'README.md', 'readme.md', 'README.rst', 'readme.rst' } },
