@@ -22,10 +22,6 @@ autocommands.setup = function()
   local restore_fold = augroup 'restore fold state'
   autocmd('BufWinLeave', { group = restore_fold, pattern = '*.*', command = 'mkview 1' })
   autocmd('BufWinEnter', { group = restore_fold, pattern = '*.*', command = 'silent! loadview 1' })
-
-  local diagnostics = augroup 'diagnostics'
-  autocmd('InsertEnter', { group = diagnostics, callback = function() vim.diagnostic.hide() end })
-  autocmd('InsertLeave', { group = diagnostics, callback = function() vim.diagnostic.show() end })
 end
 
 return autocommands
