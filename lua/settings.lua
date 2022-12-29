@@ -98,9 +98,6 @@ settings.setup = function()
   vim.o.shortmess = 'filnxtToOFWIcC'
 end
 
-settings.lazy = function()
-  -- vim.g.filetype = 'plugin indent on'
-  vim.api.nvim_set_option('syntax', 'on')
-end
+settings.lazy = function() vim.cmd 'syntax on' end
 
 return settings
