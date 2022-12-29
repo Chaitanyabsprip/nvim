@@ -22,6 +22,16 @@ misc.obsidian = {
   },
 }
 
-misc.spec = { misc.fish.spec, misc.startuptime.spec }
+misc.whichkey = {
+  spec = {
+    'folke/which-key.nvim',
+    config = function()
+      vim.o.timeoutlen = 500
+      require('which-key').setup {}
+    end,
+  },
+}
+
+misc.spec = { misc.fish.spec, misc.startuptime.spec, misc.whichkey.spec }
 
 return misc

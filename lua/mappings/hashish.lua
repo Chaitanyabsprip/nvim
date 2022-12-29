@@ -33,6 +33,10 @@ hashish.map = function(mode)
           options = vim.tbl_extend('force', options, { desc = description })
           options.buffer = options.bufnr
           options.bufnr = nil
+          vim.schedule(function()
+            local ok, wk = pcall(require, 'which-key')
+            if ok then wk.register({ [key] = { description } }, options) end
+          end)
           return vim.keymap.set(mode, key, command, options)
         end
       end
