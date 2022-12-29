@@ -1,10 +1,10 @@
-local settings = require 'settings'
 vim.g.loaded_matchparen = 1
+local settings = require 'settings'
 settings.setup()
+require('mappings').setup()
+local plugin = require 'plugins'
+plugin.setup()
 vim.defer_fn(function()
-  local plugin = require 'plugins'
-  plugin.setup()
-  require('mappings').setup()
   vim.api.nvim_create_autocmd('User', {
     pattern = 'VeryLazy',
     callback = function()

@@ -44,8 +44,9 @@ editing.ufo = {
     config = function() require('plugins.editing').ufo.setup() end,
   },
   setup = function()
-    vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-    vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+    local nnoremap = require('mappings.hashish').nnoremap
+    nnoremap 'zR'(require('ufo').openAllFolds) {} 'Open all folds'
+    nnoremap 'zM'(require('ufo').closeAllFolds) {} 'Close all folds'
     require('ufo').setup()
   end,
 }
