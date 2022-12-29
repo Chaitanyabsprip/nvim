@@ -41,6 +41,22 @@ lsp.code_actions = {
   end,
 }
 
+lsp.rename = {
+  spec = {
+    'smjonas/inc-rename.nvim',
+    cmd = 'IncRename',
+    config = function()
+      require('inc_rename').setup { preview_empty_name = true }
+      local c = require 'lsp.capabilities'
+      local nnoremap = require('mappings.hashish').nnoremap
+      c.rename.callback = function()
+        local opts = { bufnr = 0, silent = true, expr = true }
+        nnoremap 'gr'(function() return ':IncRename ' .. vim.fn.expand '<cword> ' end)(opts) 'Rename symbol under cursor'
+      end
+    end,
+  },
+}
+
 lsp.mason = {
   spec = {
     'williamboman/mason.nvim',
@@ -95,6 +111,7 @@ lsp.refactoring = {
 
 lsp.spec = {
   lsp.code_actions.spec,
+  lsp.rename.spec,
   lsp.lsp_lines.spec,
   lsp.mason.spec,
   lsp.mason_lspconfig.spec,
