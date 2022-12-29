@@ -1,0 +1,126 @@
+local telescope = {}
+
+local nnoremap = require('mappings.hashish').nnoremap
+
+local highlight_overrides = function()
+  local hl = vim.api.nvim_set_hl
+  hl(0, 'TelescopePromptPrefix', { link = 'diffRemoved' })
+  hl(0, 'TelescopePromptTitle', { link = 'Substitute' })
+  hl(0, 'TelescopePreviewTitle', { link = 'Search' })
+  hl(0, 'TelescopeResultsTitle', { link = 'EndOfBuffer' })
+end
+
+local setup_keymaps = function()
+  local builtin = require 'telescope.builtin'
+  local themes = require 'telescope.themes'
+  local ivy = themes.get_ivy { layout_config = { height = 12 } }
+  local opts = { silent = true }
+  local find_notes =
+    function() builtin.fd { cwd = '/Users/chaitanyasharma/Projects/Notes', hidden = true } end
+  nnoremap '<leader>tht'(function() builtin.help_tags(ivy) end) {} 'Telescope Help tags'
+  nnoremap '<leader>thk'(function() builtin.keymaps(ivy) end) {} 'Telescope Keymaps'
+  nnoremap '<leader>thi'(builtin.highlights) {} 'Telescope Higlights'
+  nnoremap '<leader>gb'(builtin.git_branches) {} 'Telescope Git Branches'
+  nnoremap '<leader>gc'(builtin.git_status)(opts) 'Telescope git changes'
+  nnoremap '<leader><space>'(builtin.fd)(opts) 'Telescope File Finder'
+  nnoremap 'gb' '<cmd>Telescope buffers previewer=false theme=dropdown initial_mode=normal<CR>' {} 'Telescope Buffers'
+  nnoremap 'go'(builtin.oldfiles)(opts) 'Telescope oldfiles'
+  nnoremap 'gW'(builtin.grep_string)(opts) 'Telescope grep word under cursor'
+  nnoremap 'gw'(function() builtin.grep_string { search = vim.fn.input { prompt = 'Grep > ' } } end)(
+    opts
+  ) 'Telescope grep and filter'
+  nnoremap 'gn'(find_notes)(opts) 'Find notes'
+end
+
+local override_lsp_handler = function()
+  local capabilities = require 'lsp.capabilities'
+  local opts = { bufnr = 0, silent = true }
+  capabilities.references.callback = function()
+    local theme = require('telescope.themes').get_cursor {
+      layout_strategy = 'cursor',
+      layout_config = { width = 100, height = 10 },
+      previewer = false,
+    }
+    local lsp_references = function() require('telescope.builtin').lsp_references(theme) end
+    nnoremap 'gR'(lsp_references)(opts) 'Find references of symbol under cursor'
+  end
+  capabilities.definition.callback = function()
+    nnoremap 'gd'(require('telescope.builtin').lsp_definitions)(opts) 'Go to definition of symbol under cursor'
+  end
+  capabilities.implementation.callback = function()
+    nnoremap 'gi'(require('telescope.builtin').lsp_implementations)(opts) 'Show implementations of symbol under cursor'
+  end
+end
+
+telescope = {
+  spec = {
+    'nvim-telescope/telescope.nvim',
+    branch = '0.1.x',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    cmd = { 'Telescope' },
+    event = 'VeryLazy',
+    config = function() require('plugins.fuzzy.telescope').setup() end,
+  },
+
+  setup = function()
+    local actions = require 'telescope.actions'
+
+    local mappings = {
+      i = {
+        ['<c-j>'] = actions.move_selection_next,
+        ['<c-k>'] = actions.move_selection_previous,
+        ['<esc>'] = actions.close,
+      },
+      n = { ['q'] = actions.close, ['<c-c>'] = actions.close },
+    }
+
+    require('telescope').setup {
+      defaults = {
+        border = nil,
+        borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
+        color_devicons = true,
+        extensions = { file_browser = {} },
+        file_ignore_patterns = {},
+        file_sorter = require('telescope.sorters').get_fuzzy_file,
+        generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
+        initial_mode = 'insert',
+        layout_config = {
+          horizontal = { mirror = false },
+          vertical = { mirror = false },
+          prompt_position = 'top',
+          height = 0.8,
+          width = 0.9,
+        },
+        layout_strategy = 'horizontal',
+        mappings = mappings,
+        path_display = { shorten = { len = 1, exclude = { -1 } } },
+        prompt_prefix = '   ',
+        selection_strategy = 'reset',
+        set_env = { ['COLORTERM'] = 'truecolor' },
+        sorting_strategy = 'ascending',
+        winblend = 0,
+      },
+    }
+    -- override_lsp_handler()
+    setup_keymaps()
+    highlight_overrides()
+  end,
+
+  diagnostic_keymaps = function()
+    local builtins = require 'telescope.builtin'
+    local themes = require 'telescope.themes'
+    local document_diagnostics_config =
+      { layout_config = { height = 12 }, bufnr = 0, initial_mode = 'normal' }
+    local workspace_diagnostics_config =
+      { layout_config = { height = 12, preview_width = 80 }, initial_mode = 'normal' }
+
+    nnoremap '<leader>dd'(
+      function() builtins.diagnostics(themes.get_ivy(document_diagnostics_config)) end
+    ) {} 'Document diagnostics'
+    nnoremap '<leader>dw'(
+      function() builtins.diagnostics(themes.get_ivy(workspace_diagnostics_config)) end
+    ) {} 'Workspace diagnostics'
+  end,
+}
+
+return telescope

@@ -54,7 +54,7 @@ git.gitsigns = {
 git.git_conflict = {
   spec = {
     'akinsho/git-conflict.nvim',
-    version = '1.*',
+    version = '*',
     config = function() require('plugins.git').git_conflict.setup() end,
     cmd = { 'GitConflictListQf' },
     keys = { ']x', '[x' },

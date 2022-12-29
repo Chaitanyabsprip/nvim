@@ -67,7 +67,8 @@ settings.setup = function()
   vim.wo.wrap = false
   vim.o.cmdheight = 0
   vim.o.scrolloff = 8
-  vim.wo.colorcolumn = '81'
+  vim.wo.colorcolumn = 81
+  vim.o.conceallevel = 3
 
   vim.o.sessionoptions = 'buffers,curdir,winsize,resize,winpos,folds,tabpages'
   vim.o.shell = '/usr/bin/env zsh'
@@ -80,7 +81,7 @@ settings.setup = function()
   -- folding
   vim.wo.foldcolumn = '0'
   vim.wo.foldmethod = 'expr'
-  vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+  -- vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
   vim.o.foldlevel = 99
   vim.o.foldlevelstart = 99
 
@@ -98,8 +99,8 @@ settings.setup = function()
 end
 
 settings.lazy = function()
-  vim.g.filetype = 'plugin indent on'
-  vim.g.syntax = true
+  -- vim.g.filetype = 'plugin indent on'
+  vim.api.nvim_set_option('syntax', 'on')
 end
 
 return settings

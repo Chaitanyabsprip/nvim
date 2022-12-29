@@ -3,7 +3,6 @@ local ui = {}
 ui.colorscheme = require 'plugins.ui.themes'
 ui.statusline = require 'plugins.ui.statusline'
 ui.tabline = require 'plugins.ui.tabline'
--- ui.greeter = require 'plugins.ui.greeter'
 
 function ui.highlight_override()
   if vim.g.colors_name == 'rose-pine' then
@@ -29,11 +28,7 @@ ui.incline = {
         render = function(props)
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
           local icon, color = require('nvim-web-devicons').get_icon_color(filename)
-          return {
-            { icon, guifg = color },
-            { ' ' },
-            { filename },
-          }
+          return { { icon, guifg = color }, { ' ' }, { filename } }
         end,
       }
     end,
@@ -73,8 +68,8 @@ ui.noice = {
         bottom_search = true,
         command_palette = true,
         long_message_to_split = true,
-        inc_rename = false, -- enables an input dialog for inc-rename.nvim
-        lsp_doc_border = true, -- add a border to hover docs and signature help
+        inc_rename = true,
+        lsp_doc_border = true,
       },
       views = {
         cmdline_popup = {
@@ -87,6 +82,13 @@ ui.noice = {
 }
 
 ui.treesitter = {
+  spec = {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    event = 'BufReadPost',
+    dependencies = { 'p00f/nvim-ts-rainbow' },
+    config = function() require('plugins.ui').treesitter.setup() end,
+  },
   setup = function()
     require('nvim-treesitter.configs').setup {
       ensure_installed = {
@@ -111,20 +113,25 @@ ui.treesitter = {
       },
       highlight = { enable = true },
       indent = { enable = true },
+      rainbow = { enable = true, max_file_lines = 3000 },
     }
   end,
+}
+
+ui.zen_mode = {
   spec = {
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
-    event = 'BufReadPost',
-    config = function() require('plugins.ui').treesitter.setup() end,
+    'folke/zen-mode.nvim',
+    cmd = 'ZenMode',
+    config = function()
+      require('zen-mode').setup { options = { number = true, relativenumber = true } }
+    end,
   },
 }
 
 function ui.setup() ui.highlight_override() end
 
 ui.spec = {
-  -- ui.greeter.spec,
+  ui.zen_mode.spec,
   ui.colorscheme.spec,
   ui.incline.spec,
   ui.noice.spec,

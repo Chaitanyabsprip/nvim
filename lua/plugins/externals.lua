@@ -5,7 +5,6 @@ externals.toggleterm = {
     'akinsho/toggleterm.nvim',
     config = function() require('plugins.externals').toggleterm.setup() end,
     init = function()
-      vim.notify('Terminal binds ready', vim.log.levels.INFO)
       local nnoremap = require('mappings.hashish').nnoremap
       nnoremap '<leader>tf'(function() require('plugins.externals').terminal(true):toggle() end) {
         silent = true,
@@ -16,7 +15,6 @@ externals.toggleterm = {
       nnoremap '<leader>tg'(function() require('plugins.externals').gitui():toggle() end) {
         silent = true,
       } 'Toggle gitui in floating window'
-      vim.notify('Terminal binds ready', vim.log.levels.INFO)
     end,
   },
   setup = function()

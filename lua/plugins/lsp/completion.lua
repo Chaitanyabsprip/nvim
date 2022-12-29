@@ -108,11 +108,7 @@ function completion.cmp.setup()
 
   cmp.setup.cmdline(':', {
     mapping = cmp.config.mapping.preset.cmdline(),
-    sources = cmp.config.sources {
-      { name = 'path' },
-      { name = 'cmdline' },
-      { name = 'nvim_lsp' },
-    },
+    sources = cmp.config.sources { { name = 'path' }, { name = 'cmdline' }, { name = 'nvim_lsp' } },
   })
 end
 
