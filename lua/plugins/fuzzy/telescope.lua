@@ -1,6 +1,8 @@
 local telescope = {}
 
-local nnoremap = require('mappings.hashish').nnoremap
+local hashish = require 'mappings.hashish'
+local nnoremap = hashish.nnoremap
+local vnoremap = hashish.vnoremap
 
 local highlight_overrides = function()
   local hl = vim.api.nvim_set_hl
@@ -26,12 +28,16 @@ local setup_keymaps = function()
   nnoremap 'gb' '<cmd>Telescope buffers previewer=false theme=dropdown initial_mode=normal<CR>' {} 'Telescope Buffers'
   nnoremap 'go'(builtin.oldfiles)(opts) 'Telescope oldfiles'
   nnoremap 'gW'(builtin.grep_string)(opts) 'Telescope grep word under cursor'
+  vnoremap 'gw' '<esc><cmd>lua require("plugins.fuzzy.telescope").search_visual_selection()<cr>'(
+    opts
+  ) 'Telescope grep visual selection'
   nnoremap 'gw'(function() builtin.grep_string { search = vim.fn.input { prompt = 'Grep > ' } } end)(
     opts
   ) 'Telescope grep and filter'
   nnoremap 'gn'(find_notes)(opts) 'Find notes'
 end
 
+---@diagnostic disable-next-line: unused-function, unused-local
 local override_lsp_handler = function()
   local capabilities = require 'lsp.capabilities'
   local opts = { bufnr = 0, silent = true }
@@ -122,5 +128,27 @@ telescope = {
     ) {} 'Workspace diagnostics'
   end,
 }
+
+telescope.get_visual_selection = function()
+  -- vim.api.nvim_input '<esc>'
+  local s_start = vim.fn.getpos "'<"
+  vim.pretty_print(s_start)
+  local s_end = vim.fn.getpos "'>"
+  local n_lines = math.abs(s_end[2] - s_start[2]) + 1
+  local lines = vim.api.nvim_buf_get_lines(0, s_start[2] - 1, s_end[2], false)
+  lines[1] = string.sub(lines[1], s_start[3], -1)
+  if n_lines == 1 then
+    lines[n_lines] = string.sub(lines[n_lines], 1, s_end[3] - s_start[3] + 1)
+  else
+    lines[n_lines] = string.sub(lines[n_lines], 1, s_end[3])
+  end
+  return table.concat(lines, '\n')
+end
+
+telescope.search_visual_selection = function()
+  require('telescope.builtin').grep_string {
+    search = require('plugins.fuzzy.telescope').get_visual_selection(),
+  }
+end
 
 return telescope
