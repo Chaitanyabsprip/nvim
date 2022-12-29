@@ -1,5 +1,21 @@
 local editing = {}
 
+editing.autoclose = {
+  spec = {
+    'm4xshen/autoclose.nvim',
+    config = function() require('autoclose').setup {} end,
+    event = { 'InsertEnter' },
+  },
+}
+
+editing.matchparen = {
+  spec = {
+    'monkoose/matchparen.nvim',
+    event = 'BufReadPost',
+    config = function() require('matchparen').setup {} end,
+  },
+}
+
 editing.mini_comment = {
   spec = {
     'echasnovski/mini.comment',
@@ -20,17 +36,28 @@ editing.mini_autopairs = {
   setup = function() require('mini.pairs').setup { modes = { command = true, terminal = true } } end,
 }
 
-editing.autoclose = {
+editing.ufo = {
   spec = {
-    'm4xshen/autoclose.nvim',
-    config = function() require('autoclose').setup {} end,
-    event = { 'InsertEnter' },
+    'kevinhwang91/nvim-ufo',
+    event = 'BufReadPost',
+    dependencies = { 'kevinhwang91/promise-async' },
+    config = function() require('plugins.editing').ufo.setup() end,
   },
+  setup = function()
+    vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+    vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+    require('ufo').setup()
+  end,
 }
 
 editing.comment = editing.mini_comment
 editing.autopairs = editing.autoclose
 
-editing.spec = { editing.comment.spec, editing.autopairs.spec }
+editing.spec = {
+  editing.comment.spec,
+  editing.autopairs.spec,
+  editing.matchparen.spec,
+  editing.ufo.spec,
+}
 
 return editing
