@@ -68,8 +68,8 @@ function externals.terminal(floating)
     end,
     on_close = function()
       local tnoremap = require('mappings.hashish').tnoremap
-      tnoremap 'jk' '<C-\\><C-N>' {} 'jk as escape'
-      tnoremap 'kj' '<C-\\><C-N>' {} 'kj as escape'
+      tnoremap 'jk' '<C-\\><C-N>' 'jk as escape'
+      tnoremap 'kj' '<C-\\><C-N>' 'kj as escape'
     end,
   }
 end
@@ -89,8 +89,8 @@ function externals.gitui()
     end,
     on_close = function()
       local tnoremap = require('mappings.hashish').tnoremap
-      tnoremap 'jk' '<C-\\><C-N>' {} 'jk as escape'
-      tnoremap 'kj' '<C-\\><C-N>' {} 'kj as escape'
+      tnoremap 'jk' '<C-\\><C-N>' 'jk as escape'
+      tnoremap 'kj' '<C-\\><C-N>' 'kj as escape'
     end,
   }
 end

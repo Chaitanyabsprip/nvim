@@ -21,12 +21,12 @@ explorer.harpoon = {
     local mark = require 'harpoon.mark'
     local harpoon = require 'harpoon.ui'
 
-    nnoremap '<c-b>'(mark.add_file) {} 'Add file to harpoon'
-    nnoremap '<c-e>'(harpoon.toggle_quick_menu) {} 'Toggle harpoon menu'
-    nnoremap '<c-n>'(function() harpoon.nav_file(1) end) {} 'Jump to file 1 in harpoon'
-    nnoremap '<c-l>'(function() harpoon.nav_file(2) end) {} 'Jump to file 2 in harpoon'
-    nnoremap '<c-h>'(function() harpoon.nav_file(3) end) {} 'Jump to file 3 in harpoon'
-    nnoremap '<c-;>'(function() harpoon.nav_file(4) end) {} 'Jump to file 4 in harpoon'
+    nnoremap '<c-b>'(mark.add_file) 'Add file to harpoon'
+    nnoremap '<c-e>'(harpoon.toggle_quick_menu) 'Toggle harpoon menu'
+    nnoremap '<c-n>'(function() harpoon.nav_file(1) end) 'Jump to file 1 in harpoon'
+    nnoremap '<c-l>'(function() harpoon.nav_file(2) end) 'Jump to file 2 in harpoon'
+    nnoremap '<c-h>'(function() harpoon.nav_file(3) end) 'Jump to file 3 in harpoon'
+    nnoremap '<c-;>'(function() harpoon.nav_file(4) end) 'Jump to file 4 in harpoon'
   end,
 }
 

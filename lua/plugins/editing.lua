@@ -45,8 +45,8 @@ editing.ufo = {
   },
   setup = function()
     local nnoremap = require('mappings.hashish').nnoremap
-    nnoremap 'zR'(require('ufo').openAllFolds) {} 'Open all folds'
-    nnoremap 'zM'(require('ufo').closeAllFolds) {} 'Close all folds'
+    nnoremap 'zR'(require('ufo').openAllFolds) 'Open all folds'
+    nnoremap 'zM'(require('ufo').closeAllFolds) 'Close all folds'
     require('ufo').setup()
   end,
 }

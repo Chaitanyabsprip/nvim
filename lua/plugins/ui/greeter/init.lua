@@ -5,7 +5,13 @@ local get_note_name = function() return os.date '%Y-%m-%d' .. '.md' end
 local new_note = function() return 'e ' .. notes_path .. get_note_name() end
 
 function M.setup()
-  if not M.dont_show() then M.show() end
+  if not M.dont_show() then
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'LazyVimStarted',
+      callback = function() M.show() end,
+    })
+    M.show()
+  end
 end
 
 function M.button(keymap_opts)

@@ -5,7 +5,13 @@ misc.drop = {
     'folke/drop.nvim',
     lazy = false,
     config = function()
-      require('drop').setup { theme = 'snow', interval = 150, max = 90, screensaver = 1000 * 10 }
+      require('drop').setup {
+        theme = 'snow',
+        interval = 150,
+        max = 90,
+        screensaver = 1000 * 30,
+        filetypes = { 'greeter' },
+      }
     end,
   },
 }

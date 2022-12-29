@@ -16,25 +16,20 @@ local setup_keymaps = function()
   local builtin = require 'telescope.builtin'
   local themes = require 'telescope.themes'
   local ivy = themes.get_ivy { layout_config = { height = 12 } }
-  local opts = { silent = true }
   local find_notes =
     function() builtin.fd { cwd = '/Users/chaitanyasharma/Projects/Notes', hidden = true } end
-  nnoremap '<leader>tht'(function() builtin.help_tags(ivy) end) {} 'Telescope Help tags'
-  nnoremap '<leader>thk'(function() builtin.keymaps(ivy) end) {} 'Telescope Keymaps'
-  nnoremap '<leader>thi'(builtin.highlights) {} 'Telescope Higlights'
-  nnoremap '<leader>gb'(builtin.git_branches) {} 'Telescope Git Branches'
-  nnoremap '<leader>gc'(builtin.git_status)(opts) 'Telescope git changes'
-  nnoremap '<leader><space>'(builtin.fd)(opts) 'Telescope File Finder'
-  nnoremap 'gb' '<cmd>Telescope buffers previewer=false theme=dropdown initial_mode=normal<CR>' {} 'Telescope Buffers'
-  nnoremap 'go'(builtin.oldfiles)(opts) 'Telescope oldfiles'
-  nnoremap 'gW'(builtin.grep_string)(opts) 'Telescope grep word under cursor'
-  vnoremap 'gw' '<esc><cmd>lua require("plugins.fuzzy.telescope").search_visual_selection()<cr>'(
-    opts
-  ) 'Telescope grep visual selection'
-  nnoremap 'gw'(function() builtin.grep_string { search = vim.fn.input { prompt = 'Grep > ' } } end)(
-    opts
-  ) 'Telescope grep and filter'
-  nnoremap 'gn'(find_notes)(opts) 'Find notes'
+  nnoremap '<leader>tht'(function() builtin.help_tags(ivy) end) 'Telescope Help tags'
+  nnoremap '<leader>thk'(function() builtin.keymaps(ivy) end) 'Telescope Keymaps'
+  nnoremap '<leader>thi'(builtin.highlights) 'Telescope Higlights'
+  nnoremap '<leader>gb'(builtin.git_branches) 'Telescope Git Branches'
+  nnoremap '<leader>gc'(builtin.git_status) 'Telescope git changes'
+  nnoremap '<leader><space>'(builtin.fd) 'Telescope File Finder'
+  nnoremap 'gb' '<cmd>Telescope buffers previewer=false theme=dropdown initial_mode=normal<CR>' 'Telescope Buffers'
+  nnoremap 'go'(builtin.oldfiles) 'Telescope oldfiles'
+  nnoremap 'gW'(builtin.grep_string) 'Telescope grep word under cursor'
+  vnoremap 'gw' '<esc><cmd>lua require("plugins.fuzzy.telescope").search_visual_selection()<cr>' 'Telescope grep visual selection'
+  nnoremap 'gw'(function() builtin.grep_string { search = vim.fn.input { prompt = 'Grep > ' } } end) 'Telescope grep and filter'
+  nnoremap 'gn'(find_notes) 'Find notes'
 end
 
 ---@diagnostic disable-next-line: unused-function, unused-local
@@ -122,10 +117,10 @@ telescope = {
 
     nnoremap '<leader>dd'(
       function() builtins.diagnostics(themes.get_ivy(document_diagnostics_config)) end
-    ) {} 'Document diagnostics'
+    ) 'Document diagnostics'
     nnoremap '<leader>dw'(
       function() builtins.diagnostics(themes.get_ivy(workspace_diagnostics_config)) end
-    ) {} 'Workspace diagnostics'
+    ) 'Workspace diagnostics'
   end,
 }
 

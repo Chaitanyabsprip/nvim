@@ -70,7 +70,6 @@ git.git_conflict = {
     'akinsho/git-conflict.nvim',
     version = '*',
     config = function() require('plugins.git').git_conflict.setup() end,
-    cond = function() return vim.loop.fs_stat '.git' end,
     cmd = { 'GitConflictListQf' },
     keys = { ']x', '[x' },
   },

@@ -29,10 +29,10 @@ tabline.bufferline = {
       },
     }
 
-    nnoremap '<S-TAB>' '<CMD>BufferLineCyclePrev<CR>' {} 'Previous buffer'
-    nnoremap '<TAB>' '<CMD>BufferLineCycleNext<CR>' {} 'Next buffer'
-    nnoremap '[b' '<CMD>BufferLineMovePrev<CR>' {} 'Swap buffer position with previous buffer'
-    nnoremap ']b' '<CMD>BufferLineMoveNext<CR>' {} 'Swap buffer position with next buffer'
+    nnoremap '<S-TAB>' '<CMD>BufferLineCyclePrev<CR>' 'Previous buffer'
+    nnoremap '<TAB>' '<CMD>BufferLineCycleNext<CR>' 'Next buffer'
+    nnoremap '[b' '<CMD>BufferLineMovePrev<CR>' 'Swap buffer position with previous buffer'
+    nnoremap ']b' '<CMD>BufferLineMoveNext<CR>' 'Swap buffer position with next buffer'
 
     for i = 1, 9 do
       nnoremap('<A-' .. i .. '>')('<CMD>BufferLineGoToBuffer' .. i .. '<CR>') {}(
