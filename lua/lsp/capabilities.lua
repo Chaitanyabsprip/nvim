@@ -31,7 +31,7 @@ M.code_lens = {
 M.declaration = {
   name = 'textDocument/declaration',
   callback = function()
-    nnoremap 'gD'(lsp.declaration())(opts) 'Go to declaration of symbol under cursor'
+    nnoremap 'gD'(lsp.declaration)(opts) 'Go to declaration of symbol under cursor'
   end,
 }
 

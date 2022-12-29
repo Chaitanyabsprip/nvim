@@ -14,8 +14,6 @@ keymaps.setup = function()
   nnoremap '<leader>w' '<cmd>up<cr>'(silent) 'Save file (only if modified)'
   inoremap 'jk' '<Esc>' {} 'Escape insert mode'
   inoremap 'kj' '<Esc>' {} 'Escape insert mode'
-  inoremap 'jj' '<Esc>' {} 'Escape insert mode'
-  inoremap 'kk' '<Esc>' {} 'Escape insert mode'
   nnoremap '<leader>q' '<cmd>q<cr>'(silent) 'Close window (:q)'
   nnoremap '<leader>Q' '<cmd>qa<cr>'(silent) 'Quit all (:qa)'
   nnoremap '<leader>e' '<cmd>Explorer<cr>' {} 'Toggle file explorer'
@@ -53,6 +51,8 @@ keymaps.setup = function()
   nnoremap '{' '{zzzv' {} 'Like text object motion { but centers line'
   nnoremap '<leader>r' ':%s/\\<<c-r><c-w>\\>/<c-r><c-w>/gI<Left><Left><Left>' {} 'Search and replace, in current buffer, word under cursor'
   vnoremap '<leader>s' 'y:%s/<c-r>0/<c-r>0/gI<Left><Left><Left>' {} 'Search and replace, in current buffer, visual selection'
+  nnoremap '<leader>j' '<cmd>cnext<cr>zz' {} 'Jump to next result from quickfix'
+  nnoremap '<leader>k' '<cmd>cprev<cr>zz' {} 'Jump to prev result from quickfix'
 end
 
 return keymaps
