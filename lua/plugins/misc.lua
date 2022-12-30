@@ -1,7 +1,7 @@
 local misc = {}
 
 misc.cellular_automation = {
-  spec = { 'eandrju/cellular-automaton.nvim', event = 'VeryLazy' },
+  spec = { 'eandrju/cellular-automaton.nvim', cmd = 'CellularAutomation' },
 }
 
 misc.colorizer = {
@@ -11,17 +11,12 @@ misc.colorizer = {
     filetypes = { '*', '!lazy' },
     buftype = { '*', '!prompt', '!nofile' },
     user_default_options = {
-      RGB = true, -- #RGB hex codes
-      RRGGBB = true, -- #RRGGBB hex codes
-      names = false, -- "Name" codes like Blue
-      RRGGBBAA = true, -- #RRGGBBAA hex codes
-      AARRGGBB = true, -- 0xAARRGGBB hex codes
-      rgb_fn = true, -- CSS rgb() and rgba() functions
-      hsl_fn = true, -- CSS hsl() and hsla() functions
-      css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-      css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+      names = false,
+      RRGGBBAA = true,
+      AARRGGBB = true,
+      css_fn = true,
       -- Available modes for `mode`: foreground, background,  virtualtext
-      mode = 'virtualtext', -- Set the display mode.
+      mode = 'background', -- Set the display mode.
       virtualtext = '███',
     },
   },
@@ -36,7 +31,7 @@ misc.drop = {
         theme = 'snow',
         interval = 150,
         max = 90,
-        screensaver = 1000 * 30,
+        screensaver = 1000 * 60 * 2,
         filetypes = { 'greeter' },
       }
     end,

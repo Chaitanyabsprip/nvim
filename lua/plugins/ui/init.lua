@@ -39,6 +39,7 @@ ui.incline = {
         if #label > 0 then table.insert(label, { '| ' }) end
         return label
       end
+
       local function get_git_diff(props)
         local icons = { removed = '', changed = '', added = '' }
         local labels = {}
@@ -54,21 +55,29 @@ ui.incline = {
         if #labels > 0 then table.insert(labels, { '| ' }) end
         return labels
       end
+
       local colors = require('tokyonight.colors').setup()
       require('incline').setup {
         highlight = {
           groups = {
-            InclineNormal = { gui = 'bold', guibg = colors.black, guifg = '#FC56B1' },
-            InclineNormalNC = { guifg = '#853661', guibg = colors.black },
+            InclineNormal = { guibg = colors.black, guifg = colors.purple },
+            InclineNormalNC = { guifg = colors.purple, guibg = colors.black },
           },
         },
-        window = { margin = { horizontal = 2, vertical = 0 } },
+        window = {
+          margin = { horizontal = 2, vertical = 0 },
+          options = { winblend = 5 },
+          padding = 0,
+        },
         render = function(props)
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
           local icon, color = require('nvim-web-devicons').get_icon_color(filename)
+          local modified = vim.api.nvim_buf_get_option(props.buf, 'modified') and { '~ ' } or { '' }
           return {
+            props.focused and { '▍', group = 'VertSplit' } or { ' ' },
             { get_diagnostic_label(props) },
             { get_git_diff(props) },
+            modified,
             { icon, guifg = color },
             { ' ' },
             filename,
