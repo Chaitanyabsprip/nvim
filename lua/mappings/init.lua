@@ -12,8 +12,9 @@ keymaps.setup = function()
   vim.g.mapleader = ' '
 
   nnoremap '<leader>w' '<cmd>up<cr>' 'Save file (only if modified)'
-  inoremap 'jk' '<Esc>' 'Escape insert mode'
-  inoremap 'kj' '<Esc>' 'Escape insert mode'
+  inoremap 'jk' '<esc>' 'Escape insert mode'
+  inoremap 'kj' '<esc>' 'Escape insert mode'
+  inoremap '<c-c>' '<esc>' 'Escape insert mode'
   nnoremap '<leader>q' '<cmd>q<cr>' 'Close window (:q)'
   nnoremap '<leader>Q' '<cmd>qa<cr>' 'Quit all (:qa)'
   nnoremap '<leader>e' '<cmd>Explorer<cr>' 'Toggle file explorer'
