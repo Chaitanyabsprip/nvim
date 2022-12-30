@@ -7,10 +7,10 @@ function utils.bootstrap_packer()
       'git',
       'clone',
       '--filter=blob:none',
-      '--single-branch',
       'https://github.com/folke/lazy.nvim.git',
       lazypath,
     }
+    vim.fn.system { 'git', '-C', lazypath, 'checkout', 'tags/stable' } -- last stable release
   end
   vim.opt.runtimepath:prepend(lazypath)
 end
