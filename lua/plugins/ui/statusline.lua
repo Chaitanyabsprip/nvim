@@ -30,6 +30,11 @@ statusline.lualine = {
     event = 'VeryLazy',
   },
   setup = function()
+    local navic = require 'nvim-navic'
+    local get_location = function()
+      local location = navic.get_location {}
+      return (#location > 0 and ' ' or '~') .. location
+    end
     require('lualine').setup {
       options = {
         component_separators = { '', '' },
@@ -41,9 +46,9 @@ statusline.lualine = {
         lualine_a = { { 'mode', icon = '', fmt = function(mode) return mode:sub(1, 1) end } },
         lualine_b = { 'branch' },
         lualine_c = {
-          { 'diff', symbols = { added = ' ', modified = ' ', removed = '  ' } },
-          'filename',
-          { 'diagnostics', sources = { 'nvim_diagnostic', 'nvim_lsp' } },
+          -- { 'diff', symbols = { added = ' ', modified = ' ', removed = '  ' } },
+          { get_location, cond = navic.is_available },
+          -- { 'diagnostics', sources = { 'nvim_diagnostic', 'nvim_lsp' } },
         },
         lualine_x = { get_lsp_client, 'filetype' },
         lualine_y = { 'location' },
