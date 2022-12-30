@@ -8,7 +8,6 @@ function utils.bootstrap_packer()
       'clone',
       '--filter=blob:none',
       '--single-branch',
-      '--branch=stable',
       'https://github.com/folke/lazy.nvim.git',
       lazypath,
     }
