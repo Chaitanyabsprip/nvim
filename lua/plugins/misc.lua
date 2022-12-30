@@ -1,5 +1,9 @@
 local misc = {}
 
+misc.cellular_automation = {
+  spec = { 'eandrju/cellular-automaton.nvim', event = 'VeryLazy' },
+}
+
 misc.drop = {
   spec = {
     'folke/drop.nvim',
@@ -40,6 +44,12 @@ misc.whichkey = {
   },
 }
 
-misc.spec = { misc.drop.spec, misc.fish.spec, misc.startuptime.spec, misc.whichkey.spec }
+misc.spec = {
+  misc.cellular_automation.spec,
+  misc.drop.spec,
+  misc.fish.spec,
+  misc.startuptime.spec,
+  misc.whichkey.spec,
+}
 
 return misc

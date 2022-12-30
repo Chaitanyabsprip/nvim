@@ -4,18 +4,26 @@ externals.toggleterm = {
   spec = {
     'akinsho/toggleterm.nvim',
     config = function() require('plugins.externals').toggleterm.setup() end,
-    init = function()
-      local nnoremap = require('mappings.hashish').nnoremap
-      nnoremap '<leader>tf'(function() require('plugins.externals').terminal(true):toggle() end) {
-        silent = true,
-      } 'Toggle floating terminal'
-      nnoremap '<leader>tt'(function() require('plugins.externals').terminal():toggle() end) {
-        silent = true,
-      } 'Toggle terminal'
-      nnoremap '<leader>tg'(function() require('plugins.externals').gitui():toggle() end) {
-        silent = true,
-      } 'Toggle gitui in floating window'
-    end,
+    keys = {
+      {
+        '<leader>tf',
+        function() require('plugins.externals').terminal(true):toggle() end,
+        noremap = true,
+        desc = 'Toggle floating terminal',
+      },
+      {
+        '<leader>tt',
+        function() require('plugins.externals').terminal():toggle() end,
+        noremap = true,
+        desc = 'Toggle terminal',
+      },
+      {
+        '<leader>tg',
+        function() require('plugins.externals').gitui():toggle() end,
+        noremap = true,
+        desc = 'Toggle gitui in floating window',
+      },
+    },
   },
   setup = function()
     require('toggleterm').setup {

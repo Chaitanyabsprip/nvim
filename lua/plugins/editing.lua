@@ -8,6 +8,10 @@ editing.autoclose = {
   },
 }
 
+editing.hop = {
+  spec = {},
+}
+
 editing.matchparen = {
   spec = {
     'monkoose/matchparen.nvim',
