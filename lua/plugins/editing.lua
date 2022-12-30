@@ -9,7 +9,30 @@ editing.autoclose = {
 }
 
 editing.hop = {
-  spec = {},
+  spec = {
+    'phaazon/hop.nvim',
+    event = 'BufReadPost',
+    branch = 'v2',
+    keys = {
+      {
+        '<c-f>',
+        function() require('hop').hint_char1() end,
+        silent = true,
+        desc = 'Initiate hop with 1 character search',
+      },
+      {
+        '<c-g>',
+        function() require('hop').hint_words() end,
+        silent = true,
+        desc = 'Initiate hop to words',
+      },
+    },
+    config = {
+
+      jump_on_sole_occurrence = true,
+      keys = 'nrsaeogpcldkbhvwmjzfuxt',
+    },
+  },
 }
 
 editing.matchparen = {
@@ -59,8 +82,9 @@ editing.comment = editing.mini_comment
 editing.autopairs = editing.autoclose
 
 editing.spec = {
-  editing.comment.spec,
   editing.autopairs.spec,
+  editing.comment.spec,
+  editing.hop.spec,
   editing.matchparen.spec,
   editing.ufo.spec,
 }
