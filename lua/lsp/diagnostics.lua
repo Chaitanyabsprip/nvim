@@ -13,19 +13,19 @@ local get_diagnostics = function(bufnr, severity)
   end
 end
 
-function diagnostics.on_attach(_)
+function diagnostics.on_attach(_, bufnr)
   local nnoremap = require('mappings.hashish').nnoremap
-  local opts = { silent = true, bufnr = 0 }
+  local opts = { silent = true, bufnr = bufnr }
   local workspace_errors = get_diagnostics(nil, vim.diagnostic.severity.ERROR)
   local workspace_warnings = get_diagnostics(nil, vim.diagnostic.severity.WARN)
   local workspace_infos = get_diagnostics(nil, vim.diagnostic.severity.INFO)
   local workspace_hints = get_diagnostics(nil, vim.diagnostic.severity.HINT)
-  local document_errors = get_diagnostics(0, vim.diagnostic.severity.ERROR)
-  local document_warnings = get_diagnostics(0, vim.diagnostic.severity.WARN)
-  local document_infos = get_diagnostics(0, vim.diagnostic.severity.INFO)
-  local document_hints = get_diagnostics(0, vim.diagnostic.severity.HINT)
+  local document_errors = get_diagnostics(bufnr, vim.diagnostic.severity.ERROR)
+  local document_warnings = get_diagnostics(bufnr, vim.diagnostic.severity.WARN)
+  local document_infos = get_diagnostics(bufnr, vim.diagnostic.severity.INFO)
+  local document_hints = get_diagnostics(bufnr, vim.diagnostic.severity.HINT)
   nnoremap ',D'(get_diagnostics())(opts) 'Enlist all workspace diagnostics in quickfix'
-  nnoremap ',d'(get_diagnostics(0))(opts) 'Enlist all workspace diagnostics in quickfix'
+  nnoremap ',d'(get_diagnostics(bufnr))(opts) 'Enlist all workspace diagnostics in quickfix'
   nnoremap ',E'(workspace_errors)(opts) 'Enlist workspace error diagnostics in quickfix'
   nnoremap ',W'(workspace_warnings)(opts) 'Enlist workspace warning diagnostics in quickfix'
   nnoremap ',I'(workspace_infos)(opts) 'Enlist workspace info diagnostics in quickfix'

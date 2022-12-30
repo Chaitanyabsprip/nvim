@@ -4,14 +4,11 @@ local M = {}
 -- module name: the same as appropriate capability
 -- module structure:
 --     function(capability_value) - function to call if capability were resolved
-M.resolve_capabilities = function(client)
+M.resolve_capabilities = function(client, bufnr)
   local capabilities = require 'lsp.capabilities'
   for _, capability in pairs(capabilities) do
-    if client.supports_method(capability.name) then capability.callback() end
+    if client.supports_method(capability.name) then capability.callback(client, bufnr) end
   end
-  -- for capability, module in pairs(capabilities) do
-  --   if client.supports_method(capability) then module() end
-  -- end
 end
 
 -- applies each handler from a handlers module
@@ -21,19 +18,10 @@ end
 --     callback - function, a handler callback
 M.resolve_handlers = function()
   local handlers = require 'lsp.handlers'
-  for _, handler_fn in pairs(handlers) do
-    local handler = handler_fn()
+  for _, factory in pairs(handlers) do
+    local handler = factory()
     if handler.enabled then vim.lsp.handlers[handler.name] = handler.callback end
   end
-end
-
-M.prequire = function(module)
-  local status, err = pcall(require, module)
-  if not status then
-    print(err)
-    return nil
-  end
-  return status
 end
 
 return M

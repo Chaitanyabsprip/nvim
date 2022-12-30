@@ -1,13 +1,5 @@
 local lsp = {}
 
-lsp.lsp_lines = {
-  spec = {
-    url = 'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-    event = 'BufReadPost',
-    config = function() require('lsp_lines').setup() end,
-  },
-}
-
 lsp.code_actions = {
   spec = {
     'Chaitanyabsprip/lsp-fastaction.nvim',
@@ -41,19 +33,11 @@ lsp.code_actions = {
   end,
 }
 
-lsp.rename = {
+lsp.lsp_lines = {
   spec = {
-    'smjonas/inc-rename.nvim',
-    cmd = 'IncRename',
-    config = function()
-      require('inc_rename').setup { preview_empty_name = true }
-      local c = require 'lsp.capabilities'
-      local nnoremap = require('mappings.hashish').nnoremap
-      c.rename.callback = function()
-        local opts = { bufnr = 0, silent = true, expr = true }
-        nnoremap 'gr'(function() return ':IncRename ' .. vim.fn.expand '<cword> ' end)(opts) 'Rename symbol under cursor'
-      end
-    end,
+    url = 'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+    event = 'BufReadPost',
+    config = function() require('lsp_lines').setup() end,
   },
 }
 
@@ -94,6 +78,17 @@ lsp.mason_lspconfig = {
   },
 }
 
+lsp.navic = {
+  spec = {
+    'SmiteshP/nvim-navic',
+    init = function()
+      require('lsp.capabilities').document_symbols.callback =
+        function(client, bufnr) require('nvim-navic').attach(client, bufnr) end
+    end,
+    config = { highlight = true, separator = '  ', depth_limit = 6 },
+  },
+}
+
 lsp.refactoring = {
   spec = {
     'ThePrimeagen/refactoring.nvim',
@@ -105,7 +100,23 @@ lsp.refactoring = {
         { noremap = true, silent = true, expr = false }
       )
     end,
-    config = function() require('refactoring').setup {} end,
+    config = true,
+  },
+}
+
+lsp.rename = {
+  spec = {
+    'smjonas/inc-rename.nvim',
+    cmd = 'IncRename',
+    config = function()
+      require('inc_rename').setup { preview_empty_name = true }
+      local c = require 'lsp.capabilities'
+      local nnoremap = require('mappings.hashish').nnoremap
+      c.rename.callback = function()
+        local opts = { bufnr = 0, silent = true, expr = true }
+        nnoremap 'gr'(function() return ':IncRename ' .. vim.fn.expand '<cword> ' end)(opts) 'Rename symbol under cursor'
+      end
+    end,
   },
 }
 
@@ -117,6 +128,7 @@ lsp.spec = {
   lsp.mason_lspconfig.spec,
   lsp.mason_nullls.spec,
   lsp.mason_update.spec,
+  lsp.navic.spec,
   lsp.refactoring.spec,
 }
 

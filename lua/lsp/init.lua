@@ -1,5 +1,4 @@
 local lsp = {}
-local lsp_utils = require 'lsp.utils'
 local diagnostic = require 'lsp.diagnostics'
 
 lsp.capabilities = function(_)
@@ -22,10 +21,11 @@ lsp.capabilities = function(_)
   return capabilities
 end
 
-lsp.common_on_attach = function(client, _)
-  lsp_utils.resolve_capabilities(client)
-  diagnostic.on_attach(client)
-  require('lsp.utils').resolve_handlers()
+lsp.common_on_attach = function(client, bufnr)
+  local lsp_utils = require 'lsp.utils'
+  lsp_utils.resolve_capabilities(client, bufnr)
+  diagnostic.on_attach(client, bufnr)
+  lsp_utils.resolve_handlers()
 end
 
 lsp.no_formatting_on_attach = function(client, bufnr)

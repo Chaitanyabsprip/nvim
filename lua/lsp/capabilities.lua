@@ -45,7 +45,7 @@ M.formatting = {
   end,
 }
 
-M.documentHighlight = {
+M.document_highlight = {
   name = 'textDocument/documentHighlight',
   callback = function()
     vim.schedule(function()
