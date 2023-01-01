@@ -112,10 +112,9 @@ ui.noice = {
         override = {
           ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
           ['vim.lsp.util.stylize_markdown'] = true,
-          ['cmp.entry.get_documentation'] = true,
+          ['cmp.entry.get_documentation'] = false,
         },
         message = { view = 'mini' },
-        documentation = { opts = { render = 'plain' } },
       },
       presets = {
         bottom_search = true,
@@ -125,6 +124,7 @@ ui.noice = {
         lsp_doc_border = true,
       },
       views = {
+        notify = { win_options = { winblend = 30 } },
         cmdline_popup = {
           border = { style = 'none', padding = { 1, 1 } },
           win_options = { winhighlight = { Normal = 'NormalFloat' } },

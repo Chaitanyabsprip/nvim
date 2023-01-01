@@ -22,9 +22,7 @@ completion.luasnip = {
       enable_autosnippets = true,
       ext_opts = {
         [types.choiceNode] = { active = { virt_text = { { '●', 'Error' } } } },
-        [types.insertNode] = {
-          active = { virt_text = { { '●', 'Comment' } } },
-        },
+        [types.insertNode] = { active = { virt_text = { { '●', 'Comment' } } } },
       },
     }
     require('luasnip.loaders.from_vscode').lazy_load()
@@ -35,13 +33,10 @@ completion.cmp = {}
 
 function completion.cmp.setup()
   local cmp = require 'cmp'
-  local types = require 'cmp.types'
-  local select_item_opts = { behavior = types.cmp.SelectBehavior.Select }
   local luasnip = require 'luasnip'
   local lspkind = require 'lspkind'
 
   local function has_words_before()
-    ---@diagnostic disable-next-line: deprecated
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0
       and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
@@ -75,12 +70,12 @@ function completion.cmp.setup()
       ['<C-j>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
       ['<C-k>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
       ['<C-Space>'] = cmp.mapping(cmp.mapping.complete {}, { 'i', 'c' }),
-      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
       ['<C-e>'] = cmp.mapping { i = cmp.mapping.abort(), c = cmp.mapping.close() },
       ['<CR>'] = cmp.mapping.confirm { select = true },
     },
     sources = {
       { name = 'nvim_lsp' },
+      -- { name = 'nvim_lsp_signature_help' },
       { name = 'luasnip' },
       { name = 'buffer' },
       { name = 'path' },
@@ -124,6 +119,7 @@ completion.cmp.spec = {
     'hrsh7th/cmp-path',
     'onsails/lspkind.nvim',
     'rafamadriz/friendly-snippets',
+    -- 'hrsh7th/cmp-nvim-lsp-signature-help',
   },
 }
 
