@@ -4,6 +4,7 @@ externals.toggleterm = {
   spec = {
     'akinsho/toggleterm.nvim',
     config = function() require('plugins.externals').toggleterm.setup() end,
+    event = 'VeryLazy',
     keys = {
       {
         '<leader>tf',
@@ -43,16 +44,16 @@ externals.toggleterm = {
       },
     }
 
-    local nnoremap = require('mappings.hashish').nnoremap
-    nnoremap '<leader>tf' "<cmd>lua require('plugins.externals').terminal(true):toggle()<CR>" {
-      silent = true,
-    } 'Toggle floating terminal'
-    nnoremap '<leader>tt' "<cmd>lua require('plugins.externals').terminal():toggle()<CR>" {
-      silent = true,
-    } 'Toggle terminal'
-    nnoremap '<leader>tg' "<cmd>lua require('plugins.externals').gitui():toggle()<CR>" {
-      silent = true,
-    } 'Toggle gitui in floating window'
+    -- local nnoremap = require('mappings.hashish').nnoremap
+    -- nnoremap '<leader>tf' "<cmd>lua require('plugins.externals').terminal(true):toggle()<CR>" {
+    --   silent = true,
+    -- } 'Toggle floating terminal'
+    -- nnoremap '<leader>tt' "<cmd>lua require('plugins.externals').terminal():toggle()<CR>" {
+    --   silent = true,
+    -- } 'Toggle terminal'
+    -- nnoremap '<leader>tg' "<cmd>lua require('plugins.externals').gitui():toggle()<CR>" {
+    --   silent = true,
+    -- } 'Toggle gitui in floating window'
   end,
 }
 

@@ -15,23 +15,31 @@ editing.hop = {
     branch = 'v2',
     keys = {
       {
-        '<c-f>',
-        function() require('hop').hint_char1() end,
+        's',
+        function() require('hop').hint_char2 { multi_windows = true } end,
         silent = true,
-        desc = 'Initiate hop with 1 character search',
+        noremap = true,
+        desc = 'Initiate hop with 2 character search',
+        mode = { 'n', 'x' },
       },
       {
-        '<c-g>',
-        function() require('hop').hint_words() end,
+        'S',
+        function() require('hop').hint_words { multi_windows = true } end,
         silent = true,
+        noremap = true,
         desc = 'Initiate hop to words',
+        mode = { 'n', 'x' },
+      },
+      {
+        'f',
+        function() require('hop').hint_char1 { current_line_only = true } end,
+        silent = true,
+        noremap = true,
+        desc = 'Initiate hop to letters in current line',
+        mode = { 'n', 'x' },
       },
     },
-    config = {
-
-      jump_on_sole_occurrence = true,
-      keys = 'nrsaeogpcldkbhvwmjzfuxt',
-    },
+    config = { jump_on_sole_occurrence = true, keys = 'nepoihufxbzyqjkcvlmwdasgrt' },
   },
 }
 

@@ -2,8 +2,10 @@ local keymaps = {}
 
 keymaps.setup = function()
   local hashish = require 'mappings.hashish'
+  local map = hashish.map
   local nnoremap = hashish.nnoremap
   local vnoremap = hashish.vnoremap
+  local tnoremap = hashish.tnoremap
   local inoremap = hashish.inoremap
   local xnoremap = hashish.xnoremap
 
@@ -15,6 +17,9 @@ keymaps.setup = function()
   inoremap 'jk' '<esc>' 'Escape insert mode'
   inoremap 'kj' '<esc>' 'Escape insert mode'
   inoremap '<c-c>' '<esc>' 'Escape insert mode'
+  tnoremap '<esc>' '<C-\\><C-n>' 'Escape insert mode in terminal'
+  tnoremap 'jk' '<C-\\><C-n>' 'Escape insert mode in terminal'
+  tnoremap 'kj' '<C-\\><C-n>' 'Escape insert mode in terminal'
   nnoremap '<leader>q' '<cmd>q<cr>' 'Close window (:q)'
   nnoremap '<leader>Q' '<cmd>qa<cr>' 'Quit all (:qa)'
   nnoremap '<leader>e' '<cmd>Explorer<cr>' 'Toggle file explorer'
@@ -52,6 +57,10 @@ keymaps.setup = function()
   vnoremap '<leader>s' 'y:%s/<c-r>0/<c-r>0/gI<Left><Left><Left>' 'Search and replace, in current buffer, visual selection'
   nnoremap '<leader>j' '<cmd>cnext<cr>zz' 'Jump to next result from quickfix'
   nnoremap '<leader>k' '<cmd>cprev<cr>zz' 'Jump to prev result from quickfix'
+  nnoremap "'" '<NOP>' "don't trigger marks with '"
+  xnoremap "'" '<NOP>' "don't trigger marks with '"
+  map 's' '<NOP>' 'unmap s'
+  map 'S' '<NOP>' 'unmap S'
 end
 
 return keymaps
