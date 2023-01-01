@@ -57,7 +57,7 @@ misc.whichkey = {
     'folke/which-key.nvim',
     config = function()
       vim.o.timeoutlen = 500
-      require('which-key').setup {}
+      require('which-key').setup { plugins = { marks = false, registers = false } }
     end,
   },
 }
