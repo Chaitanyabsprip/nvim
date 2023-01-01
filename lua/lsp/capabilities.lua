@@ -108,7 +108,6 @@ M.rename = {
 M.signature_help = {
   name = 'textDocument/signatureHelp',
   callback = function()
-    nnoremap 'sh'(lsp.signature_help)(opts) 'Show signature help of symbol under cursor'
   end,
 }
 
