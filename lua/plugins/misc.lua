@@ -68,7 +68,7 @@ misc.spec = {
   misc.drop.spec,
   misc.fish.spec,
   misc.startuptime.spec,
-  misc.whichkey.spec,
+  -- misc.whichkey.spec,
 }
 
 return misc
