@@ -25,8 +25,8 @@ plugin.spec = {
 
 plugin.setup = function()
   require('plugins.utils').bootstrap_packer()
-  local start = vim.loop.hrtime()
-  require('lazy').setup(plugin.spec, {
+  local lazy = require 'lazy'
+  lazy.setup(plugin.spec, {
     defaults = { lazy = true },
     dev = { path = '~/Projects/Languages/Lua' },
     cache = { disable_events = {} },
@@ -40,7 +40,6 @@ plugin.setup = function()
     checker = { enabled = true },
     readme = { files = { 'README.md', 'readme.md', 'README.rst', 'readme.rst' } },
   })
-  plugin.load_time = vim.loop.hrtime() - start
 end
 
 plugin.disabled_builtins = {
@@ -68,5 +67,4 @@ plugin.disabled_builtins = {
   'zipPlugin',
 }
 
-plugin.startup = function() vim.notify('Lazy took ' .. (plugin.load_time / 1e6) .. 'ms') end
 return plugin

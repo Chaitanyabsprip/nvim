@@ -22,6 +22,12 @@ autocommands.setup = function()
   local restore_fold = augroup 'restore fold state'
   autocmd('BufWinLeave', { group = restore_fold, pattern = '*.*', command = 'mkview 1' })
   autocmd('BufWinEnter', { group = restore_fold, pattern = '*.*', command = 'silent! loadview 1' })
+
+  autocmd('User', {
+    group = augroup 'startuptime',
+    pattern = 'VeryLazy',
+    command = "lua vim.notify('Startuptime ' .. require('lazy').stats().startuptime, vim.log.levels.INFO)",
+  })
 end
 
 return autocommands
