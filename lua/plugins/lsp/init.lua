@@ -81,11 +81,13 @@ lsp.mason_lspconfig = {
 lsp.navic = {
   spec = {
     'SmiteshP/nvim-navic',
-    init = function()
+    event = 'LspAttach',
+    config = function()
+      local navic = require 'nvim-navic'
+      navic.setup { highlight = true, separator = '  ', depth_limit = 6 }
       require('lsp.capabilities').document_symbols.callback =
-        function(client, bufnr) require('nvim-navic').attach(client, bufnr) end
+        function(client, bufnr) navic.attach(client, bufnr) end
     end,
-    config = { highlight = true, separator = '  ', depth_limit = 6 },
   },
 }
 
