@@ -33,13 +33,13 @@ git.gitsigns = {
         end
 
         -- Navigation
-        map('n', '<leader>ph', function()
+        map('n', '<leader>nh', function()
           if vim.wo.diff then return '<leader>ph' end
           vim.schedule(gs.next_hunk)
           return '<Ignore>'
         end, { expr = true, desc = 'Jump to next hunk' })
 
-        map('n', '<leader>nh', function()
+        map('n', '<leader>ph', function()
           if vim.wo.diff then return '<leader>nh' end
           vim.schedule(gs.prev_hunk)
           return '<Ignore>'
