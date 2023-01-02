@@ -43,6 +43,42 @@ editing.hop = {
   },
 }
 
+editing.leap = {
+  spec = {
+    'ggandor/leap.nvim',
+    event = 'BufReadPost',
+    keys = {
+      {
+        's',
+        function() require('leap').leap { target_windows = { vim.fn.win_getid() } } end,
+        silent = true,
+        noremap = true,
+        desc = 'Initiate leap with 2 character search',
+        mode = { 'n', 'x' },
+      },
+      {
+        'S',
+        function()
+          require('leap').leap {
+            target_windows = vim.tbl_filter(
+              function(win) return vim.api.nvim_win_get_config(win).focusable end,
+              vim.api.nvim_tabpage_list_wins(0)
+            ),
+          }
+        end,
+        silent = true,
+        noremap = true,
+        desc = 'Initiate leap to words',
+        mode = { 'n', 'x' },
+      },
+      config = function()
+        -- require('leap').opts.labels =
+        --   { 'n', 'e', 'p', 'o', 'i', 'h', 't', 'r', 's', 'a', 'd', "'", 'l', ',', 'c', 'x', 'u' }
+      end,
+    },
+  },
+}
+
 editing.matchparen = {
   spec = {
     'monkoose/matchparen.nvim',
@@ -92,7 +128,8 @@ editing.autopairs = editing.autoclose
 editing.spec = {
   editing.autopairs.spec,
   editing.comment.spec,
-  editing.hop.spec,
+  -- editing.hop.spec,
+  editing.leap.spec,
   editing.matchparen.spec,
   editing.ufo.spec,
 }

@@ -81,6 +81,7 @@ explorer.nvim_tree = {
       sync_root_with_cwd = true,
       update_focused_file = { enable = true },
       view = {
+        cursorline = true,
         centralize_selection = true,
         mappings = mappings,
         preserve_window_proportions = true,
