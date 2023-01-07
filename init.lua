@@ -8,7 +8,6 @@ vim.defer_fn(function()
   vim.api.nvim_create_autocmd('User', {
     pattern = 'VeryLazy',
     callback = function()
-      plugin.startup()
       settings.lazy()
       require('autocommands').setup()
       require('plugins.ui').setup()

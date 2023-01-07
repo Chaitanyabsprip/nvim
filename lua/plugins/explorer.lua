@@ -62,33 +62,62 @@ explorer.nvim_tree = {
         { key = { 'o' }, cb = tree_cb 'system_open' },
       },
     }
-    require('nvim-tree').setup {
+    require('nvim-tree').setup { -- BEGIN_DEFAULT_OPTS
+      disable_netrw = true,
+      hijack_cursor = true,
+      hijack_netrw = true,
+      hijack_unnamed_buffer_when_opening = true,
+      -- sync_root_with_cwd = false,
+      reload_on_bufenter = true,
+      respect_buf_cwd = true,
+      on_attach = 'disable',
+      select_prompts = true,
+      view = {
+        centralize_selection = true,
+        cursorline = true,
+        width = 40,
+        side = 'right',
+        mappings = mappings,
+        float = {
+          enable = true,
+          quit_on_focus_loss = true,
+          open_win_config = {
+            relative = 'editor',
+            border = 'rounded',
+            width = 50,
+            height = 30,
+            row = 1,
+            col = 1,
+          },
+        },
+      },
+      renderer = {
+        add_trailing = true,
+        highlight_git = true,
+        full_name = true,
+        highlight_opened_files = 'name',
+        indent_width = 2,
+        indent_markers = { enable = true },
+        special_files = {
+          'Cargo.toml',
+          'Makefile',
+          'README.md',
+          'readme.md',
+          'readme.rst',
+          'README.rst',
+          'README',
+        },
+      },
+      update_focused_file = { enable = true },
       diagnostics = {
-        debounce_delay = 400,
         enable = true,
         show_on_dirs = true,
         show_on_open_dirs = false,
+        debounce_delay = 50,
       },
-      filters = { dotfiles = false },
-      git = { enable = true, ignore = true, show_on_open_dirs = false, timeout = 400 },
-      renderer = {
-        add_trailing = true,
-        full_name = true,
-        highlight_git = true,
-        indent_markers = { enable = true },
-      },
+      modified = { enable = true },
       trash = { cmd = 'trash', require_confirm = true },
-      sync_root_with_cwd = true,
-      update_focused_file = { enable = true },
-      view = {
-        cursorline = true,
-        centralize_selection = true,
-        mappings = mappings,
-        preserve_window_proportions = true,
-        side = 'right',
-        width = 40,
-      },
-    }
+    } -- END_DEFAULT_OPTS
   end,
 }
 
