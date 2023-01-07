@@ -123,6 +123,11 @@ ui.noice = {
         inc_rename = true,
         lsp_doc_border = true,
       },
+      routes = {
+        { filter = { event = 'msg_show', find = '%d+L, %d+B' }, view = 'mini' },
+        { filter = { event = 'msg_show', find = 'after #%d+' }, view = 'mini' },
+        { filter = { event = 'msg_show', find = 'before #%d+' }, view = 'mini' },
+      },
       views = {
         notify = { win_options = { winblend = 30 } },
         cmdline_popup = {
