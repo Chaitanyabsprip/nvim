@@ -95,7 +95,7 @@ settings.setup = function()
   vim.opt.pumblend = 10
   vim.opt.pumheight = 10
 
-  vim.o.shortmess = 'filnxtToOFIcC'
+  vim.o.shortmess = 'filnxtToOFIcCs'
 end
 
 settings.lazy = function() vim.cmd 'syntax on' end
