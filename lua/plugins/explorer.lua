@@ -13,21 +13,46 @@ explorer.bqf = {
 explorer.harpoon = {
   spec = {
     'ThePrimeagen/harpoon',
-    keys = { '<c-b>', '<c-e>', '<c-n>', '<c-l>', '<c-h>', '<c-;>' },
-    config = function() require('plugins.explorer').harpoon.setup() end,
+    keys = {
+      {
+        '<c-b>',
+        function() require('harpoon.mark').add_file() end,
+        noremap = true,
+        desc = 'Add file to harpoon',
+      },
+      {
+        '<c-f>',
+        function() require('harpoon.ui').toggle_quick_menu() end,
+        noremap = true,
+        desc = 'Toggle harpoon marks list',
+      },
+      {
+        '<c-n>',
+        function() require('harpoon.ui').nav_file(1) end,
+        noremap = true,
+        desc = 'Jump to file 1 in harpoon',
+      },
+      {
+        '<c-e>',
+        function() require('harpoon.ui').nav_file(2) end,
+        noremap = true,
+        desc = 'Jump to file 2 in harpoon',
+      },
+      {
+        '<c-o>',
+        function() require('harpoon.ui').nav_file(3) end,
+        noremap = true,
+        desc = 'Jump to file 3 in harpoon',
+      },
+      {
+        '<c-i>',
+        function() require('harpoon.ui').nav_file(4) end,
+        noremap = true,
+        desc = 'Jump to file 4 in harpoon',
+      },
+    },
+    config = { global_settings = { mark_branch = true } },
   },
-  setup = function()
-    require('harpoon').setup { global_settings = { mark_branch = true } }
-    local mark = require 'harpoon.mark'
-    local harpoon = require 'harpoon.ui'
-
-    nnoremap '<c-b>'(mark.add_file) 'Add file to harpoon'
-    nnoremap '<c-e>'(harpoon.toggle_quick_menu) 'Toggle harpoon menu'
-    nnoremap '<c-n>'(function() harpoon.nav_file(1) end) 'Jump to file 1 in harpoon'
-    nnoremap '<c-l>'(function() harpoon.nav_file(2) end) 'Jump to file 2 in harpoon'
-    nnoremap '<c-h>'(function() harpoon.nav_file(3) end) 'Jump to file 3 in harpoon'
-    nnoremap '<c-;>'(function() harpoon.nav_file(4) end) 'Jump to file 4 in harpoon'
-  end,
 }
 
 explorer.nvim_tree = {
