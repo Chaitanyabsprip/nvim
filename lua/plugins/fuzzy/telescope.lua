@@ -70,9 +70,10 @@ telescope = {
       i = {
         ['<c-j>'] = actions.move_selection_next,
         ['<c-k>'] = actions.move_selection_previous,
+        ['<c-d>'] = actions.delete_buffer,
         ['<esc>'] = actions.close,
       },
-      n = { ['q'] = actions.close, ['<c-c>'] = actions.close },
+      n = { ['q'] = actions.close, ['<c-c>'] = actions.close, ['d'] = actions.delete_buffer },
     }
 
     require('telescope').setup {
