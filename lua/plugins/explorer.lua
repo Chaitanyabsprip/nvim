@@ -87,7 +87,7 @@ explorer.nvim_tree = {
         { key = { 'o' }, cb = tree_cb 'system_open' },
       },
     }
-    require('nvim-tree').setup { -- BEGIN_DEFAULT_OPTS
+    require('nvim-tree').setup {
       disable_netrw = true,
       hijack_cursor = true,
       hijack_netrw = true,
@@ -104,7 +104,7 @@ explorer.nvim_tree = {
         side = 'right',
         mappings = mappings,
         float = {
-          enable = true,
+          enable = false,
           quit_on_focus_loss = true,
           open_win_config = {
             relative = 'editor',
@@ -141,8 +141,8 @@ explorer.nvim_tree = {
         debounce_delay = 50,
       },
       modified = { enable = true },
-      trash = { cmd = 'trash', require_confirm = true },
-    } -- END_DEFAULT_OPTS
+      trash = { cmd = 'trash' },
+    }
   end,
 }
 
