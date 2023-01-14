@@ -59,6 +59,8 @@ keymaps.setup = function()
   nnoremap '<leader>k' '<cmd>cprev<cr>zz' 'Jump to prev result from quickfix'
   nnoremap "'" '<NOP>' "don't trigger marks with '"
   xnoremap "'" '<NOP>' "don't trigger marks with '"
+  nnoremap '<c-j>' '<c-o>' 'Jump back the jump list'
+  nnoremap '<c-k>' '<c-i>' 'Jump forward the jump list'
   map 's' '<NOP>' 'unmap s'
   map 'S' '<NOP>' 'unmap S'
 end
