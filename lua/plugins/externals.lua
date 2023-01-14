@@ -90,11 +90,11 @@ function externals.gitui()
     close_on_exit = true,
     dir = 'git_dir',
     direction = 'float',
-    on_open = function(_)
-      -- local nnoremap = require("mappings.hashish").nnoremap
-      -- nnoremap("q")("<cmd>close<cr>")({ silent = true, bufnr = term.bufnr })("Close Terminal Window")
-      -- vim.api.nvim_del_keymap("t", "jk")
-      -- vim.api.nvim_del_keymap("t", "kj")
+    on_open = function(term)
+      local nnoremap = require('mappings.hashish').nnoremap
+      nnoremap 'q' '<cmd>close<cr>' { silent = true, bufnr = term.bufnr } 'Close Terminal Window'
+      vim.api.nvim_del_keymap('t', 'jk')
+      vim.api.nvim_del_keymap('t', 'kj')
     end,
     on_close = function()
       local tnoremap = require('mappings.hashish').tnoremap
