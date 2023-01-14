@@ -3,7 +3,8 @@ local completion = {}
 function completion.get_capabilities()
   local cmp_lsp = require 'cmp_nvim_lsp'
   local capabilities = require('lsp').capabilities()
-  return cmp_lsp.default_capabilities(capabilities)
+  local cmp_capabilities = cmp_lsp.default_capabilities()
+  return vim.tbl_deep_extend('force', capabilities, cmp_capabilities)
 end
 
 completion.luasnip = {

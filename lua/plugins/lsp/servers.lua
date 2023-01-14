@@ -175,8 +175,11 @@ function servers.lsp.configs.lua()
 end
 
 function servers.lsp.configs.json()
+  local get_capabilities = require('plugins.lsp.completion').get_capabilities
   local lspconfig = require 'lspconfig'
   local config = extend {
+    on_attach = lsp.common_on_attach,
+    capabilities = get_capabilities(),
     settings = { json = { schemas = require('schemastore').json.schemas() } },
     commands = {
       Format = { function() vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line '$', 0 }) end },

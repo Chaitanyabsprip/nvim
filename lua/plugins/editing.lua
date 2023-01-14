@@ -116,8 +116,24 @@ editing.ufo = {
   },
   setup = function()
     local nnoremap = require('mappings.hashish').nnoremap
+    local opts = { bufnr = 0, silent = true }
     nnoremap 'zR'(require('ufo').openAllFolds) 'Open all folds'
     nnoremap 'zM'(require('ufo').closeAllFolds) 'Close all folds'
+    local fold_win
+    local hover = function()
+      if fold_win and vim.api.nvim_win_is_valid(fold_win) then
+        vim.api.nvim_set_current_win(fold_win)
+      end
+      fold_win = require('ufo').peekFoldedLinesUnderCursor()
+      if not fold_win then
+        vim.lsp.buf.hover()
+      else
+        vim.api.nvim_win_set_option(fold_win, 'winhl', 'Normal:Normal')
+        vim.api.nvim_win_set_option(fold_win, 'winblend', 0)
+      end
+    end
+    require('lsp.capabilities').hover.callback =
+      function() nnoremap 'K'(hover)(opts) 'Show hover info of symbol under cursor' end
     require('ufo').setup()
   end,
 }
