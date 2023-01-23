@@ -25,7 +25,7 @@ function diagnostics.on_attach(_, bufnr)
   local document_infos = get_diagnostics(bufnr, vim.diagnostic.severity.INFO)
   local document_hints = get_diagnostics(bufnr, vim.diagnostic.severity.HINT)
   nnoremap ',D'(get_diagnostics())(opts) 'Enlist all workspace diagnostics in quickfix'
-  nnoremap ',d'(get_diagnostics(bufnr))(opts) 'Enlist all workspace diagnostics in quickfix'
+  nnoremap ',d'(get_diagnostics(bufnr))(opts) 'Enlist all document diagnostics in quickfix'
   nnoremap ',E'(workspace_errors)(opts) 'Enlist workspace error diagnostics in quickfix'
   nnoremap ',W'(workspace_warnings)(opts) 'Enlist workspace warning diagnostics in quickfix'
   nnoremap ',I'(workspace_infos)(opts) 'Enlist workspace info diagnostics in quickfix'
