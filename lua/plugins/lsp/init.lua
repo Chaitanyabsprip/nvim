@@ -84,7 +84,12 @@ lsp.navic = {
     event = 'LspAttach',
     config = function()
       local navic = require 'nvim-navic'
+      -- local get_location = function()
+      --   local location = navic.get_location {}
+      --   return (#location > 0 and ' ' or '~') .. location
+      -- end
       navic.setup { highlight = true, separator = '  ', depth_limit = 6 }
+      vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
       require('lsp.capabilities').document_symbols.callback =
         function(client, bufnr) navic.attach(client, bufnr) end
     end,
