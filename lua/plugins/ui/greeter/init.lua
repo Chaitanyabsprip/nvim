@@ -133,13 +133,15 @@ function M.set_options()
     'nomodeline',
     'nomodifiable',
     'foldlevel=999',
+    'statuscolumn=""',
   }
   -- Vim's `setlocal` is currently more robust comparing to `opt_local`
   vim.cmd(('silent! noautocmd setlocal %s'):format(table.concat(options, ' ')))
 end
 
 function M.dont_show()
-  if #vim.v.argv > 1 then return true end
+  local argv = vim.tbl_filter(function(arg) return arg ~= '--embed' end, vim.v.argv)
+  if #argv > 1 then return true end
 
   -- taken from mini.starter
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
