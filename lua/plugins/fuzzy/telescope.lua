@@ -73,7 +73,7 @@ telescope = {
         ['<c-d>'] = actions.delete_buffer,
         ['<esc>'] = actions.close,
       },
-      n = { ['q'] = actions.close, ['<c-c>'] = actions.close, ['d'] = actions.delete_buffer },
+      n = { ['q'] = actions.close, ['<c-c>'] = actions.close, ['dd'] = actions.delete_buffer },
     }
 
     require('telescope').setup {
