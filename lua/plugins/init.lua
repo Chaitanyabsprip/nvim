@@ -36,7 +36,7 @@ plugin.setup = function()
         paths = { '/usr/local/share/nvim/runtime/pack/dist/opt/cfilter' },
       },
     },
-    install = { colorscheme = { 'tokyonight', 'habamax' } },
+    install = { colorscheme = { 'rosepine', 'habamax' } },
     checker = { enabled = true },
     readme = { files = { 'README.md', 'readme.md', 'README.rst', 'readme.rst' } },
   })
