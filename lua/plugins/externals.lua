@@ -13,12 +13,6 @@ externals.toggleterm = {
         desc = 'Toggle floating terminal',
       },
       {
-        '<leader>tt',
-        function() require('plugins.externals').terminal():toggle() end,
-        noremap = true,
-        desc = 'Toggle terminal',
-      },
-      {
         '<leader>tg',
         function() require('plugins.externals').gitui():toggle() end,
         noremap = true,

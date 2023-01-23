@@ -1,5 +1,4 @@
 local explorer = {}
-local nnoremap = require('mappings.hashish').nnoremap
 explorer.fuzzy = require 'plugins.fuzzy.telescope'
 
 explorer.bqf = {
