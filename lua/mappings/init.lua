@@ -63,6 +63,9 @@ keymaps.setup = function()
   nnoremap '<c-k>' '<c-i>' 'Jump forward the jump list'
   map 's' '<NOP>' 'unmap s'
   map 'S' '<NOP>' 'unmap S'
+  local offset = math.floor(vim.api.nvim_list_uis()[1].height / 2)
+  nnoremap '<c-d>'(offset .. 'jzz') 'Scroll down one-third page'
+  nnoremap '<c-u>'(offset .. 'kzz') 'Scroll up one-third page'
 end
 
 return keymaps
