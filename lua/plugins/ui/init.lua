@@ -130,6 +130,8 @@ ui.noice = {
       },
       views = {
         notify = { win_options = { winblend = 30 } },
+        notify = { win_options = { winblend = 0 } },
+        mini = { win_options = { winhighlight = {}, winblend = 0 } },
         cmdline_popup = {
           border = { style = 'none', padding = { 1, 1 } },
           win_options = { winhighlight = { Normal = 'NormalFloat' } },
