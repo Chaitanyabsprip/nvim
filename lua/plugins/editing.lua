@@ -1,11 +1,17 @@
 local editing = {}
 
-editing.autoclose = {
+editing.autopairs = {
   spec = {
-    'm4xshen/autoclose.nvim',
-    config = function() require('autoclose').setup {} end,
+    'windwp/nvim-autopairs',
+    config = function() require('plugins.editing').autopairs.setup() end,
     event = { 'InsertEnter' },
   },
+  setup = function()
+    require('nvim-autopairs').setup()
+    local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+    local cmp = require 'cmp'
+    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+  end,
 }
 
 editing.hop = {
@@ -54,7 +60,7 @@ editing.leap = {
         silent = true,
         noremap = true,
         desc = 'Initiate leap with 2 character search',
-        mode = { 'n', 'x' },
+        mode = { 'n' },
       },
       {
         'S',
@@ -69,7 +75,7 @@ editing.leap = {
         silent = true,
         noremap = true,
         desc = 'Initiate leap to words',
-        mode = { 'n', 'x' },
+        mode = { 'n' },
       },
       config = function()
         -- require('leap').opts.labels =
@@ -107,6 +113,15 @@ editing.mini_autopairs = {
   setup = function() require('mini.pairs').setup { modes = { command = true, terminal = true } } end,
 }
 
+editing.surround = {
+  spec = {
+    'kylechui/nvim-surround',
+    version = '*',
+    event = 'VeryLazy',
+    config = { keymaps = { visual = 's' } },
+  },
+}
+
 editing.ufo = {
   spec = {
     'kevinhwang91/nvim-ufo',
@@ -139,14 +154,13 @@ editing.ufo = {
 }
 
 editing.comment = editing.mini_comment
-editing.autopairs = editing.autoclose
 
 editing.spec = {
   editing.autopairs.spec,
   editing.comment.spec,
-  -- editing.hop.spec,
   editing.leap.spec,
   editing.matchparen.spec,
+  editing.surround.spec,
   editing.ufo.spec,
 }
 
