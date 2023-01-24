@@ -11,16 +11,14 @@ function M.fold()
   return vim.fn.foldclosed(line) > 0 and '' or ''
 end
 
-M.show_foldcolumn = true
-
-function config.toggle_foldcolumn()
-  M.show_foldcolumn = not M.show_foldcolumn
+function M.toggle_foldcolumn()
+  vim.g.foldcolumn = not vim.g.foldcolumn
   vim.o.statuscolumn = M.status_column()
 end
 
 function M.status_column()
   local folds = ''
-  if M.show_foldcolumn then folds = [[%#FoldColumn#%{v:lua.Status.fold()} ]] end
+  if vim.g.foldcolumn then folds = [[%#FoldColumn#%{v:lua.Status.fold()} ]] end
   local components = {
     [[%=]],
     [[%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . '  ' : v:lnum) : ''}]],
@@ -155,6 +153,7 @@ config.options.setup = function()
   vim.o.laststatus = 3
 
   -- folding
+  vim.g.foldcolumn = false
   vim.wo.foldmethod = 'expr'
   vim.o.foldlevel = 99
   vim.o.foldlevelstart = 99
