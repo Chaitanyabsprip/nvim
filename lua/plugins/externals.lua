@@ -24,8 +24,8 @@ externals.toggleterm = {
     require('toggleterm').setup {
       size = 15,
       open_mapping = [[<c-t>]],
-      shade_terminals = false,
-      shading_factor = '3',
+      shade_terminals = true,
+      -- shading_factor = '-30',
       start_in_insert = true,
       persist_size = true,
       direction = 'horizontal',
