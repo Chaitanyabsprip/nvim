@@ -23,14 +23,14 @@ keymaps.setup = function()
   nnoremap '<leader>q' '<cmd>q<cr>' 'Close window (:q)'
   nnoremap '<leader>Q' '<cmd>qa<cr>' 'Quit all (:qa)'
   nnoremap '<leader>e' '<cmd>Explorer<cr>' 'Toggle file explorer'
-  nnoremap 'H' '^' 'Jump to the start of the line'
-  xnoremap 'H' '^' 'Jump to the start of the line'
-  nnoremap 'L' 'g_' 'Jump to the end of the line'
-  xnoremap 'L' 'g_' 'Jump to the end of the line'
-  nnoremap 'gh' '<cmd>wincmd h<cr>' 'Move to the window on the left'
-  nnoremap 'gl' '<cmd>wincmd l<cr>' 'Move to the window on the right'
-  nnoremap 'gj' '<cmd>wincmd j<cr>' 'Move to the window on the below'
-  nnoremap 'gk' '<cmd>wincmd k<cr>' 'Move to the window on the above'
+  nnoremap '_' '^' 'Jump to the start of the line'
+  xnoremap '_' '^' 'Jump to the start of the line'
+  nnoremap '&' 'g_' 'Jump to the end of the line'
+  xnoremap '&' 'g_' 'Jump to the end of the line'
+  nnoremap 'gh' '<c-w>h' 'Move to the window on the left'
+  nnoremap 'gl' '<c-w>l' 'Move to the window on the right'
+  nnoremap 'gj' '<c-w>j' 'Move to the window on the below'
+  nnoremap 'gk' '<c-w>k' 'Move to the window on the above'
   vnoremap 'J' ":m '>+1<cr>gv=gv" { silent = true } 'Move selected lines down'
   vnoremap 'K' ":m '<-2<cr>gv=gv" { silent = true } 'Move selected lines up'
   nnoremap 'X' '<cmd>bd<cr>' 'Close current buffer'
@@ -46,7 +46,6 @@ keymaps.setup = function()
   vnoremap 'p' '"_dP' 'Paste inplace without yanking selected text'
   nnoremap '<TAB>' '<cmd>bnext<cr>' 'Focus next buffer'
   nnoremap '<S-TAB>' '<cmd>:bprevious<cr>' 'Focus previous buffer'
-  nnoremap '<leader>c' '<cmd>copen<cr>' 'Open quickfix'
   nnoremap 'gF' '<cmd>e <cfile><cr>' "Open path to file under cursor even if it doesn't exist"
   nnoremap 'n' 'nzzzv' 'Jump to next match and center line'
   nnoremap 'N' 'Nzzzv' 'Jump to previous match and center line'
@@ -57,8 +56,8 @@ keymaps.setup = function()
   vnoremap '<leader>s' 'y:%s/<c-r>0/<c-r>0/gI<Left><Left><Left>' 'Search and replace, in current buffer, visual selection'
   nnoremap '<leader>j' '<cmd>cnext<cr>zz' 'Jump to next result from quickfix'
   nnoremap '<leader>k' '<cmd>cprev<cr>zz' 'Jump to prev result from quickfix'
-  nnoremap "'" '<NOP>' "don't trigger marks with '"
-  xnoremap "'" '<NOP>' "don't trigger marks with '"
+  -- nnoremap "'" '<NOP>' "don't trigger marks with '"
+  -- xnoremap "'" '<NOP>' "don't trigger marks with '"
   nnoremap '<c-j>' '<c-o>' 'Jump back the jump list'
   nnoremap '<c-k>' '<c-i>' 'Jump forward the jump list'
   map 's' '<NOP>' 'unmap s'
