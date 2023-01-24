@@ -83,7 +83,7 @@ function completion.cmp.setup()
     },
     formatting = {
       format = lspkind.cmp_format {
-        mode = 'symbol_text',
+        mode = 'symbol',
         menu = {
           buffer = '[Buffer]',
           nvim_lsp = '[LSP]',
@@ -93,7 +93,16 @@ function completion.cmp.setup()
         },
       },
     },
-    window = { completion = { border = 'rounded' }, documentation = { border = 'rounded' } },
+    window = {
+      completion = {
+        border = 'rounded',
+        winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
+      },
+      documentation = {
+        border = 'rounded',
+        winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
+      },
+    },
     experimental = { ghost_text = true },
   }
 
@@ -106,6 +115,8 @@ function completion.cmp.setup()
     mapping = cmp.config.mapping.preset.cmdline(),
     sources = cmp.config.sources { { name = 'path' }, { name = 'cmdline' }, { name = 'nvim_lsp' } },
   })
+
+  -- cmp.event.on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
 end
 
 completion.cmp.spec = {
