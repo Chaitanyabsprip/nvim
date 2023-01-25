@@ -24,12 +24,12 @@ local setup_keymaps = function()
   nnoremap '<leader>gb'(builtin.git_branches) 'Telescope Git Branches'
   nnoremap '<leader>gc'(builtin.git_status) 'Telescope git changes'
   nnoremap '<leader><space>'(builtin.fd) 'Telescope File Finder'
+  nnoremap '<leader>fn'(find_notes) 'Find notes using telescope'
   nnoremap 'gb' '<cmd>Telescope buffers previewer=false theme=dropdown initial_mode=normal<CR>' 'Telescope Buffers'
   nnoremap 'go'(builtin.oldfiles) 'Telescope oldfiles'
   nnoremap 'gW'(builtin.grep_string) 'Telescope grep word under cursor'
   vnoremap 'gw' '<esc><cmd>lua require("plugins.fuzzy.telescope").search_visual_selection()<cr>' 'Telescope grep visual selection'
   nnoremap 'gw'(function() builtin.grep_string { search = vim.fn.input { prompt = 'Grep > ' } } end) 'Telescope grep and filter'
-  nnoremap 'gn'(find_notes) 'Find notes'
 end
 
 ---@diagnostic disable-next-line: unused-function, unused-local
