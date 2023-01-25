@@ -130,7 +130,7 @@ editing.ufo = {
     config = function() require('plugins.editing').ufo.setup() end,
   },
   setup = function()
-    local nnoremap = require('mappings.hashish').nnoremap
+    local nnoremap = require('hashish').nnoremap
     local opts = { bufnr = 0, silent = true }
     nnoremap 'zR'(require('ufo').openAllFolds) 'Open all folds'
     nnoremap 'zM'(require('ufo').closeAllFolds) 'Close all folds'

@@ -37,17 +37,6 @@ externals.toggleterm = {
         highlights = { border = 'Normal', background = 'Normal' },
       },
     }
-
-    -- local nnoremap = require('mappings.hashish').nnoremap
-    -- nnoremap '<leader>tf' "<cmd>lua require('plugins.externals').terminal(true):toggle()<CR>" {
-    --   silent = true,
-    -- } 'Toggle floating terminal'
-    -- nnoremap '<leader>tt' "<cmd>lua require('plugins.externals').terminal():toggle()<CR>" {
-    --   silent = true,
-    -- } 'Toggle terminal'
-    -- nnoremap '<leader>tg' "<cmd>lua require('plugins.externals').gitui():toggle()<CR>" {
-    --   silent = true,
-    -- } 'Toggle gitui in floating window'
   end,
 }
 
@@ -66,11 +55,11 @@ function externals.terminal(floating)
     float_opts = float_opts,
     on_open = function(term)
       vim.cmd 'startinsert!'
-      local nnoremap = require('mappings.hashish').nnoremap
+      local nnoremap = require('hashish').nnoremap
       nnoremap 'q' '<cmd>close<cr>' { silent = true, bufnr = term.bufnr } 'Close Terminal Window'
     end,
     on_close = function()
-      local tnoremap = require('mappings.hashish').tnoremap
+      local tnoremap = require('hashish').tnoremap
       tnoremap 'jk' '<C-\\><C-N>' 'jk as escape'
       tnoremap 'kj' '<C-\\><C-N>' 'kj as escape'
     end,
@@ -85,13 +74,13 @@ function externals.gitui()
     dir = 'git_dir',
     direction = 'float',
     on_open = function(term)
-      local nnoremap = require('mappings.hashish').nnoremap
+      local nnoremap = require('hashish').nnoremap
       nnoremap 'q' '<cmd>close<cr>' { silent = true, bufnr = term.bufnr } 'Close Terminal Window'
       vim.api.nvim_del_keymap('t', 'jk')
       vim.api.nvim_del_keymap('t', 'kj')
     end,
     on_close = function()
-      local tnoremap = require('mappings.hashish').tnoremap
+      local tnoremap = require('hashish').tnoremap
       tnoremap 'jk' '<C-\\><C-N>' 'jk as escape'
       tnoremap 'kj' '<C-\\><C-N>' 'kj as escape'
     end,

@@ -25,7 +25,7 @@ misc.colorizer = {
 misc.drop = {
   spec = {
     'folke/drop.nvim',
-    lazy = false,
+    event = 'VeryLazy',
     config = function()
       require('drop').setup {
         theme = 'snow',

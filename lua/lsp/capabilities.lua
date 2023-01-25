@@ -1,5 +1,5 @@
 local capabilities = {}
-local mappings = require 'mappings.hashish'
+local mappings = require 'hashish'
 local nnoremap = mappings.nnoremap
 local vnoremap = mappings.vnoremap
 local augroup = function(group) vim.api.nvim_create_augroup(group, { clear = true }) end

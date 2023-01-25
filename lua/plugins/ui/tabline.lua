@@ -1,5 +1,5 @@
 local tabline = {}
-local nnoremap = require('mappings.hashish').nnoremap
+local nnoremap = require('hashish').nnoremap
 
 tabline.bufferline = {
   spec = {

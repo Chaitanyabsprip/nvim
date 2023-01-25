@@ -14,11 +14,14 @@ hashish.xnoremap = function(key) return hashish.noremap 'x'(key) end
 
 hashish.inoremap = function(key) return hashish.noremap 'i'(key) end
 
+-- local m = require 'mappings.keys'
+
 local register_keymap = function(mode, key, command, options)
   -- vim.schedule(function()
   --   local ok, wk = pcall(require, 'which-key')
   --   if ok then wk.register { [key] = { options } } end
   -- end)
+  -- table.insert(m.keys, { mode = mode, lhs = key, rhs = command, options = options })
   return vim.keymap.set(mode, key, command, options)
 end
 

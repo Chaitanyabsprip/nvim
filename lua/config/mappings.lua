@@ -1,7 +1,7 @@
 local keymaps = {}
 
 keymaps.setup = function()
-  local hashish = require 'mappings.hashish'
+  local hashish = require 'hashish'
   local map = hashish.map
   local nnoremap = hashish.nnoremap
   local vnoremap = hashish.vnoremap

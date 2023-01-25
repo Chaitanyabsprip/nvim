@@ -3,7 +3,7 @@ local config = require 'config'
 config.options.disable_builtins()
 require('plugins').setup()
 config.options.setup()
-require('mappings').setup()
+require('config.mappings').setup()
 vim.api.nvim_create_autocmd('User', {
   group = vim.api.nvim_create_augroup('init', { clear = true }),
   pattern = 'VeryLazy',

@@ -1,6 +1,6 @@
 local telescope = {}
 
-local hashish = require 'mappings.hashish'
+local hashish = require 'hashish'
 local nnoremap = hashish.nnoremap
 local vnoremap = hashish.vnoremap
 

@@ -114,11 +114,11 @@ lsp.refactoring = {
 lsp.rename = {
   spec = {
     'smjonas/inc-rename.nvim',
-    cmd = 'IncRename',
+    event = 'LspAttach',
     config = function()
       require('inc_rename').setup { preview_empty_name = true }
       local c = require 'lsp.capabilities'
-      local nnoremap = require('mappings.hashish').nnoremap
+      local nnoremap = require('hashish').nnoremap
       c.rename.callback = function()
         local opts = { bufnr = 0, silent = true, expr = true }
         nnoremap 'gr'(function() return ':IncRename ' .. vim.fn.expand '<cword> ' end)(opts) 'Rename symbol under cursor'
