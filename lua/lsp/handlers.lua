@@ -71,9 +71,10 @@ end
 --     callback - function, a handler callback
 handlers.resolve = function()
   for _, factory in pairs(handlers) do
-    if _ == 'resolve' then return end -- protect against recursion
-    local handler = factory()
-    if handler.enabled then vim.lsp.handlers[handler.name] = handler.callback end
+    if _ ~= 'resolve' then
+      local handler = factory()
+      if handler.enabled then vim.lsp.handlers[handler.name] = handler.callback end
+    end
   end
 end
 

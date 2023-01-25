@@ -139,8 +139,9 @@ capabilities.symbol = {
 --     function(capability_value) - function to call if capability were resolved
 capabilities.resolve = function(client, bufnr)
   for _, capability in pairs(capabilities) do
-    if _ == 'resolve' then return end -- protect against recursion
-    if client.supports_method(capability.name) then capability.callback(client, bufnr) end
+    if _ ~= 'resolve' and client.supports_method(capability.name) then
+      capability.callback(client, bufnr)
+    end
   end
 end
 
