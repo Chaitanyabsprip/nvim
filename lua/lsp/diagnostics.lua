@@ -1,9 +1,15 @@
 local diagnostics = {}
 
-local get_diagnostics = function(bufnr, severity)
+local function get_qf_diagnostics(bufnr, severity)
+  vim.g.d_bufnr = bufnr
+  vim.g.d_severity = severity
+  local d = vim.diagnostic
+  return d.toqflist(d.get(bufnr, { severity = severity }))
+end
+
+local function get_diagnostics(bufnr, severity)
   return function()
-    local diagnostic = vim.diagnostic
-    local qf_items = diagnostic.toqflist(diagnostic.get(bufnr, { severity = severity }))
+    local qf_items = get_qf_diagnostics(bufnr, severity)
     vim.fn.setqflist({}, ' ', { title = 'Diagnostics', items = qf_items })
     if #qf_items > 0 then
       vim.api.nvim_command 'botright copen'
@@ -13,8 +19,10 @@ local get_diagnostics = function(bufnr, severity)
   end
 end
 
+diagnostics.get_diagnostics = get_diagnostics
+
 function diagnostics.on_attach(_, bufnr)
-  local nnoremap = require('mappings.hashish').nnoremap
+  local nnoremap = require('hashish').nnoremap
   local opts = { silent = true, bufnr = bufnr }
   local workspace_errors = get_diagnostics(nil, vim.diagnostic.severity.ERROR)
   local workspace_warnings = get_diagnostics(nil, vim.diagnostic.severity.WARN)
@@ -37,6 +45,16 @@ function diagnostics.on_attach(_, bufnr)
   nnoremap ',l'(vim.diagnostic.open_float)(opts) 'Show current line diagnostics in a floating window'
   nnoremap ',n' '<cmd>lua vim.diagnostic.goto_next()<cr>'(opts) 'Go to the next diagnostic'
   nnoremap ',p' '<cmd>lua vim.diagnostic.goto_prev()<cr>'(opts) 'Go to the previous diagnostic'
+
+  local group = vim.api.nvim_create_augroup('update_diagnostics', { clear = true })
+
+  vim.api.nvim_create_autocmd('DiagnosticChanged', {
+    group = group,
+    callback = require('utils').debounce(300, function()
+      local qf_items = get_qf_diagnostics(vim.g.d_bufnr, vim.g.d_severity)
+      vim.fn.setqflist({}, ' ', { title = 'Diagnostics', items = qf_items })
+    end),
+  })
 end
 
 return diagnostics
