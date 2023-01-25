@@ -1,4 +1,4 @@
-local M = {}
+local capabilities = {}
 local mappings = require 'mappings.hashish'
 local nnoremap = mappings.nnoremap
 local vnoremap = mappings.vnoremap
@@ -9,7 +9,7 @@ end
 local opts = function(bufnr) return { bufnr = bufnr, silent = true } end
 local lsp = vim.lsp.buf
 
-M.code_action = {
+capabilities.code_action = {
   name = 'textDocument/codeAction',
   callback = function(_, bufnr)
     nnoremap '<leader>a'(require('lsp-fastaction').code_action)(opts(bufnr)) 'Show code actions for the current cursor position'
@@ -19,7 +19,7 @@ M.code_action = {
   end,
 }
 
-M.code_lens = {
+capabilities.code_lens = {
   name = 'textDocument/codeLens',
   callback = function(_, bufnr)
     autocmd({ 'BufEnter, InsertLeave, BufWritePost', 'CursorHold' }, {
@@ -30,14 +30,14 @@ M.code_lens = {
   end,
 }
 
-M.declaration = {
+capabilities.declaration = {
   name = 'textDocument/declaration',
   callback = function(_, bufnr)
     nnoremap 'gD'(lsp.declaration)(opts(bufnr)) 'Go to declaration of symbol under cursor'
   end,
 }
 
-M.formatting = {
+capabilities.formatting = {
   name = 'textDocument/formatting',
   callback = function(_, bufnr)
     autocmd('BufWritePre', {
@@ -48,7 +48,7 @@ M.formatting = {
   end,
 }
 
-M.document_highlight = {
+capabilities.document_highlight = {
   name = 'textDocument/documentHighlight',
   callback = function()
     vim.schedule(function()
@@ -65,74 +65,83 @@ M.document_highlight = {
   end,
 }
 
-M.range_formatting = {
+capabilities.range_formatting = {
   name = 'textDocument/rangeFormatting',
   callback = function() end,
 }
 
-M.document_symbols = {
+capabilities.document_symbols = {
   name = 'textDocument/documentSymbol',
   callback = function(_, bufnr)
-    vim.notify('document', vim.log.levels.INFO)
     nnoremap 'gs'(function() lsp.document_symbol() end)(opts(bufnr)) 'View document symbols'
   end,
 }
 
-M.references = {
+capabilities.references = {
   name = 'textDocument/references',
   callback = function(_, bufnr)
     nnoremap 'gR'(lsp.references)(opts(bufnr)) 'Find references of symbol under cursor'
   end,
 }
 
-M.definition = {
+capabilities.definition = {
   name = 'textDocument/definition',
   callback = function(_, bufnr)
     nnoremap 'gd'(lsp.definition)(opts(bufnr)) 'Go to definition of symbol under cursor'
   end,
 }
 
-M.hover = {
+capabilities.hover = {
   name = 'textDocument/hover',
   callback = function(_, bufnr)
     nnoremap 'K'(lsp.hover)(opts(bufnr)) 'Show hover info of symbol under cursor'
   end,
 }
 
-M.implementation = {
+capabilities.implementation = {
   name = 'textDocument/implementation',
   callback = function(_, bufnr)
     nnoremap 'gi'(lsp.implementation)(opts(bufnr)) 'Show implementations of symbol under cursor'
   end,
 }
 
-M.rename = {
+capabilities.rename = {
   name = 'textDocument/rename',
   callback = function(_, bufnr)
     nnoremap 'gr'(function() vim.ui.input({ prompt = 'Rename: ' }, lsp.rename) end)(opts(bufnr)) 'Rename symbol under cursor'
   end,
 }
 
-M.signature_help = {
+capabilities.signature_help = {
   name = 'textDocument/signatureHelp',
   callback = function() end,
 }
 
-M.type_definition = {
+capabilities.type_definition = {
   name = 'textDocument/typeDefinition',
   callback = function(_, bufnr)
     nnoremap '<leader>gnd'(lsp.type_definition)(opts(bufnr)) 'Show type definition of symbol under cursor'
   end,
 }
 
-M.symbol = {
+capabilities.symbol = {
   name = 'workspace/symbol',
   callback = function(_, bufnr)
-    vim.notify('workspace', vim.log.levels.INFO)
     nnoremap 'gS'(function() lsp.workspace_symbol(vim.fn.input { prompt = '> Search: ' }) end)(
       opts(bufnr)
     ) 'View Workspace symbols'
   end,
 }
 
-return M
+-- calls function for each capability from a capabilities module if it's resolved
+-- module name: the same as appropriate capability
+-- module structure:
+--     function(capability_value) - function to call if capability were resolved
+capabilities.resolve = function(client, bufnr)
+  for _, capability in pairs(capabilities) do
+    if _ == 'resolve' then return end -- protect against recursion
+    if client.supports_method(capability.name) then capability.callback(client, bufnr) end
+  end
+end
+
+return capabilities

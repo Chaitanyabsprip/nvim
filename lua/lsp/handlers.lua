@@ -64,4 +64,17 @@ handlers.signature_help = function()
   }
 end
 
+-- applies each handler from a handlers module
+-- object name: any
+-- object structure:
+--     name - string, a handler name in `vim.lsp.handlers` object
+--     callback - function, a handler callback
+handlers.resolve = function()
+  for _, factory in pairs(handlers) do
+    if _ == 'resolve' then return end -- protect against recursion
+    local handler = factory()
+    if handler.enabled then vim.lsp.handlers[handler.name] = handler.callback end
+  end
+end
+
 return handlers

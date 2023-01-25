@@ -1,5 +1,4 @@
 local lsp = {}
-local diagnostic = require 'lsp.diagnostics'
 
 lsp.capabilities = function(_)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -11,10 +10,9 @@ lsp.capabilities = function(_)
 end
 
 lsp.common_on_attach = function(client, bufnr)
-  local lsp_utils = require 'lsp.utils'
-  lsp_utils.resolve_capabilities(client, bufnr)
-  diagnostic.on_attach(client, bufnr)
-  lsp_utils.resolve_handlers()
+  require('lsp.diagnostics').on_attach(client, bufnr)
+  require('lsp.capabilities').resolve(client, bufnr)
+  require('lsp.handlers').resolve()
 end
 
 lsp.no_formatting_on_attach = function(client, bufnr)
