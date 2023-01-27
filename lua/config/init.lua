@@ -169,6 +169,7 @@ config.options.setup = function()
   vim.opt.pumheight = 10
 
   vim.o.shortmess = 'filnxtToOFIcCs'
+  vim.o.whichwrap = ''
   vim.opt.fillchars = {
     foldopen = '',
     foldclose = '',
