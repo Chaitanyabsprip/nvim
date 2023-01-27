@@ -1,19 +1,5 @@
 local editing = {}
 
-editing.autopairs = {
-  spec = {
-    'windwp/nvim-autopairs',
-    config = function() require('plugins.editing').autopairs.setup() end,
-    event = { 'InsertEnter' },
-  },
-  setup = function()
-    require('nvim-autopairs').setup()
-    local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
-    local cmp = require 'cmp'
-    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-  end,
-}
-
 editing.hop = {
   spec = {
     'phaazon/hop.nvim',
@@ -103,16 +89,6 @@ editing.mini_comment = {
   setup = function() require('mini.comment').setup {} end,
 }
 
-editing.mini_autopairs = {
-  spec = {
-    'echasnovski/mini.pairs',
-    branch = 'stable',
-    event = { 'InsertEnter' },
-    config = function() require('plugins.editing').mini_autopairs.setup() end,
-  },
-  setup = function() require('mini.pairs').setup { modes = { command = true, terminal = true } } end,
-}
-
 editing.surround = {
   spec = {
     'kylechui/nvim-surround',
@@ -156,7 +132,6 @@ editing.ufo = {
 editing.comment = editing.mini_comment
 
 editing.spec = {
-  editing.autopairs.spec,
   editing.comment.spec,
   editing.leap.spec,
   editing.matchparen.spec,
