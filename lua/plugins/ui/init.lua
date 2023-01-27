@@ -141,6 +141,18 @@ ui.noice = {
   end,
 }
 
+ui.styler = {
+  spec = {
+    'folke/styler.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('styler').setup {
+        themes = { greeter = { colorscheme = 'tokyonight', background = 'dark' } },
+      }
+    end,
+  },
+}
+
 ui.treesitter = {
   spec = {
     'nvim-treesitter/nvim-treesitter',
@@ -191,12 +203,13 @@ ui.zen_mode = {
 function ui.setup() ui.highlight_override() end
 
 ui.spec = {
-  ui.zen_mode.spec,
   ui.colorscheme.spec,
   ui.incline.spec,
   ui.noice.spec,
   ui.statusline.spec,
+  ui.styler.spec,
   ui.treesitter.spec,
+  ui.zen_mode.spec,
 }
 
 return ui
