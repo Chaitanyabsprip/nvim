@@ -44,7 +44,7 @@ explorer.harpoon = {
         desc = 'Jump to file 3 in harpoon',
       },
       {
-        '<c-x>',
+        '<c-s>',
         function() require('harpoon.ui').nav_file(4) end,
         noremap = true,
         desc = 'Jump to file 4 in harpoon',
