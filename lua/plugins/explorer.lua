@@ -44,7 +44,7 @@ explorer.harpoon = {
         desc = 'Jump to file 3 in harpoon',
       },
       {
-        '<c-i>',
+        '<c-x>',
         function() require('harpoon.ui').nav_file(4) end,
         noremap = true,
         desc = 'Jump to file 4 in harpoon',
@@ -145,13 +145,35 @@ explorer.nvim_tree = {
   end,
 }
 
+explorer.project = {
+  spec = {
+    'ahmedkhalf/project.nvim',
+    keys = {
+      {
+        '<c-p>',
+        function() require('telescope').extensions.projects.projects() end,
+        noremap = true,
+        desc = 'Search projects',
+      },
+    },
+    event = 'VeryLazy',
+    config = function()
+      require('project_nvim').setup {
+        ignore_lsp = { 'null-ls' },
+      }
+      require('telescope').load_extension 'projects'
+    end,
+  },
+}
+
 explorer.filetree = explorer.nvim_tree
 
 explorer.spec = {
   explorer.bqf.spec,
   explorer.filetree.spec,
-  explorer.harpoon.spec,
   explorer.fuzzy.spec,
+  explorer.harpoon.spec,
+  explorer.project.spec,
 }
 
 return explorer
