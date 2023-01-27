@@ -108,6 +108,7 @@ themes.github = {
           CmpItemKindText = { fg = c.base, bg = c.teal },
           CmpItemKindSnippet = { fg = c.base, bg = c.mauve },
           CmpItemKindVariable = { fg = c.base, bg = c.flamingo },
+
           LeapBackdrop = { fg = '#545c7e' },
         }
       end,
@@ -176,8 +177,7 @@ themes.rosepine = {
         TelescopePromptTitle = { fg = 'base', bg = 'love' },
         TelescopeResultsTitle = { fg = 'base', bg = 'foam' },
         NotifyBackground = { bg = 'base' },
-        Drop = {},
-
+        MatchParen = { fg = 'none', bg = 'highlight_med' },
         LeapBackdrop = { fg = '#545c7e' },
       },
     }
