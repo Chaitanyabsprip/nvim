@@ -1,4 +1,5 @@
 local diagnostics = {}
+-- Open folds under the cursor
 
 local function get_qf_diagnostics(bufnr, severity)
   vim.g.d_bufnr = bufnr
@@ -7,19 +8,29 @@ local function get_qf_diagnostics(bufnr, severity)
   return d.toqflist(d.get(bufnr, { severity = severity }))
 end
 
+local function jump_to_location(qf_item)
+  local api = vim.api
+  local bufnr = qf_item.bufnr
+  local win = api.nvim_get_current_win()
+  api.nvim_buf_set_option(bufnr, 'buflisted', true)
+  api.nvim_win_set_buf(win, bufnr)
+  api.nvim_set_current_win(win)
+  api.nvim_win_set_cursor(win, { qf_item.lnum, qf_item.col })
+  api.nvim_win_call(win, function() vim.cmd 'normal! zv' end) -- Open folds under the cursor
+end
+
 local function get_diagnostics(bufnr, severity)
   return function()
     local qf_items = get_qf_diagnostics(bufnr, severity)
-    vim.fn.setqflist({}, ' ', { title = 'Diagnostics', items = qf_items })
-    if #qf_items > 0 then
-      vim.api.nvim_command 'botright copen'
-    else
-      vim.notify('No diagnostics found in the workspace.', vim.log.levels.INFO)
+    if #qf_items == 0 then
+      local scope = bufnr and 'document.' or 'workspace.'
+      return vim.notify('No diagnostics found in the ' .. scope, vim.log.levels.INFO)
     end
+    if #qf_items == 1 then return jump_to_location(qf_items[1]) end
+    vim.fn.setqflist({}, ' ', { title = 'Diagnostics', items = qf_items })
+    vim.api.nvim_command 'botright copen'
   end
 end
-
-diagnostics.get_diagnostics = get_diagnostics
 
 function diagnostics.on_attach(_, bufnr)
   local nnoremap = require('hashish').nnoremap
