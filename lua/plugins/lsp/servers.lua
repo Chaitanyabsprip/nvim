@@ -89,11 +89,12 @@ servers.flutter = {
       fvm = true,
       lsp = {
         color = {
-          -- enabled = true,
-          background = true,
+          enabled = true,
+          background = false,
+          background_color = { r = 19, g = 17, b = 24, bg = '#191724' },
           foreground = false,
-          virtual_text = false,
-          -- virtual_text_str = "■",
+          virtual_text = true,
+          virtual_text_str = '■',
         },
         capabilities = get_capabilities(),
         on_attach = lsp.common_on_attach,
@@ -110,8 +111,9 @@ servers.flutter = {
         ),
         settings = {
           showTodos = false,
-          renameFilesWithClasses = true,
-          enableSnippets = true,
+          renameFilesWithClasses = 'prompt',
+          updateImportsOnRename = true,
+          includeDependenciesInWorkspaceSymbols = false,
         },
       },
       ui = { border = 'rounded', notification_style = 'native' },
@@ -124,6 +126,18 @@ servers.flutter = {
       ":lua require('telescope').extensions.flutter.commands()<CR>",
       { noremap = true, silent = true }
     )
+
+    local group = vim.api.nvim_create_augroup('auto fix lints', { clear = true })
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      group = group,
+      pattern = '*.dart',
+      callback = function()
+        vim.lsp.buf.code_action {
+          filter = function(action) return action.title == 'Fix All' end,
+          apply = true,
+        }
+      end,
+    })
   end,
 }
 
