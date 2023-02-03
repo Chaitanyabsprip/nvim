@@ -55,6 +55,7 @@ config.autocommands = function()
     pattern = 'VeryLazy',
     command = "lua vim.notify('Startuptime ' .. require('lazy').stats().startuptime, vim.log.levels.INFO)",
   })
+
   autocmd({ 'FileType' }, {
     group = augroup 'fix_conceal',
     pattern = { 'json', 'jsonc' },
@@ -116,6 +117,7 @@ config.options.setup = function()
   vim.o.number = true
   vim.o.numberwidth = 3
   vim.o.relativenumber = true
+  vim.o.cursorline = true
   vim.wo.signcolumn = 'yes'
 
   -- indent
