@@ -1,29 +1,29 @@
 local plugin = {}
 
-local completion = require 'plugins.lsp.completion'
-local editing = require 'plugins.editing'
-local explorer = require 'plugins.explorer'
-local externals = require 'plugins.externals'
-local git = require 'plugins.git'
-local lsp = require 'plugins.lsp'
-local misc = require 'plugins.misc'
-local servers = require 'plugins.lsp.servers'
-local session = require 'plugins.session'
-local ui = require 'plugins.ui'
-
-plugin.spec = {
-  completion.spec,
-  editing.spec,
-  explorer.spec,
-  externals.spec,
-  git.spec,
-  misc.spec,
-  session.spec,
-  ui.spec,
-  { lsp.spec, servers.spec },
-}
-
 plugin.setup = function()
+  local completion = require 'plugins.lsp.completion'
+  local editing = require 'plugins.editing'
+  local explorer = require 'plugins.explorer'
+  local externals = require 'plugins.externals'
+  local git = require 'plugins.git'
+  local lsp = require 'plugins.lsp'
+  local tools = require 'plugins.tools'
+  local servers = require 'plugins.lsp.servers'
+  local session = require 'plugins.session'
+  local ui = require 'plugins.ui'
+
+  plugin.spec = {
+    completion.spec,
+    editing.spec,
+    explorer.spec,
+    externals.spec,
+    git.spec,
+    tools.spec,
+    session.spec,
+    ui.spec,
+    { lsp.spec, servers.spec },
+  }
+
   require('plugins.utils').bootstrap_packer()
   local lazy = require 'lazy'
   lazy.setup(plugin.spec, {
