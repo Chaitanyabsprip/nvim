@@ -19,15 +19,27 @@ local function jump_to_location(qf_item)
   api.nvim_win_call(win, function() vim.cmd 'normal! zv' end) -- Open folds under the cursor
 end
 
+local function set_list(items, scope, action)
+  action = action or ' '
+  if scope == 'Document' then
+    vim.fn.setloclist(0, {}, action, { title = scope .. ' Diagnostics', items = items })
+    vim.api.nvim_command 'botright lopen'
+  else
+    vim.fn.setqflist({}, action, { title = scope .. ' Diagnostics', items = items })
+    vim.api.nvim_command 'botright copen'
+  end
+end
+
 local function get_diagnostics(bufnr, severity)
   return function()
-    local qf_items = get_qf_diagnostics(bufnr, severity)
-    if #qf_items == 0 then
-      local scope = bufnr and 'document.' or 'workspace.'
+    local items = get_qf_diagnostics(bufnr, severity)
+    local scope = bufnr and 'Document' or 'Workspace'
+    if #items == 0 then
       return vim.notify('No diagnostics found in the ' .. scope, vim.log.levels.INFO)
     end
-    if #qf_items == 1 then return jump_to_location(qf_items[1]) end
-    vim.fn.setqflist({}, ' ', { title = 'Diagnostics', items = qf_items })
+    if #items == 1 then return jump_to_location(items[1]) end
+    vim.g.qf_source = 'diagnostics'
+    set_list(items, scope)
     vim.api.nvim_command 'botright copen'
   end
 end
@@ -62,8 +74,9 @@ function diagnostics.on_attach(_, bufnr)
   vim.api.nvim_create_autocmd('DiagnosticChanged', {
     group = group,
     callback = require('utils').debounce(300, function()
+      if vim.g.qf_source ~= 'diagnostics' then return end
       local qf_items = get_qf_diagnostics(vim.g.d_bufnr, vim.g.d_severity)
-      vim.fn.setqflist({}, ' ', { title = 'Diagnostics', items = qf_items })
+      vim.fn.setqflist({}, 'r', { title = 'Diagnostics', items = qf_items })
     end),
   })
 end
