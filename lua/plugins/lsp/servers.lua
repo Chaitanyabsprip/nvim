@@ -185,7 +185,7 @@ function servers.lsp.configs.lua()
       },
     },
   }
-  lspconfig.sumneko_lua.setup(config)
+  lspconfig.lua_ls.setup(config)
 end
 
 function servers.lsp.configs.json()
