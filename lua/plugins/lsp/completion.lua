@@ -75,9 +75,9 @@ function completion.cmp.setup()
       ['<CR>'] = cmp.mapping.confirm { select = true },
     },
     sources = {
+      { name = 'luasnip' },
       { name = 'nvim_lsp' },
       -- { name = 'nvim_lsp_signature_help' },
-      { name = 'luasnip' },
       { name = 'buffer' },
       { name = 'path' },
     },

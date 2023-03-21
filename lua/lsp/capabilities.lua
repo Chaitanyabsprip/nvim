@@ -73,6 +73,8 @@ capabilities.range_formatting = {
 capabilities.document_symbols = {
   name = 'textDocument/documentSymbol',
   callback = function(_, bufnr)
+    print 'hahah'
+    nnoremap 'gs'(function() lsp.document_symbol() end)(opts(bufnr)) 'View document symbols'
     nnoremap 'gs'(function() lsp.document_symbol() end)(opts(bufnr)) 'View document symbols'
   end,
 }

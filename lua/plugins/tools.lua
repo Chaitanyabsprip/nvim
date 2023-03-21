@@ -28,7 +28,7 @@ tools.drop = {
     event = 'VeryLazy',
     config = function()
       require('drop').setup {
-        theme = 'snow',
+        theme = 'leaves',
         interval = 150,
         max = 90,
         screensaver = 1000 * 60 * 2,
@@ -89,6 +89,28 @@ tools.neotest = {
   end,
 }
 
+tools.peek = {
+  spec = {
+    'toppair/peek.nvim',
+    build = 'deno task --quiet build:fast',
+    keys = {
+      {
+        '<leader>op',
+        function()
+          local peek = require 'peek'
+          if peek.is_open() then
+            peek.close()
+          else
+            peek.open()
+          end
+        end,
+        desc = 'Peek (Markdown Preview)',
+      },
+    },
+    opts = { app = 'browser' },
+  },
+}
+
 tools.startuptime = {
   spec = {
     'dstein64/vim-startuptime',
@@ -97,8 +119,134 @@ tools.startuptime = {
   },
 }
 
+tools.mkdnflow = {
+  spec = {
+    'jakewvincent/mkdnflow.nvim',
+    ft = { 'md', 'markdown' },
+    config = function()
+      require('mkdnflow').setup {
+        modules = {
+          bib = false,
+          buffers = false,
+          conceal = true,
+          cursor = true,
+          folds = true,
+          links = false,
+          lists = true,
+          maps = false,
+          paths = false,
+          tables = true,
+          yaml = false,
+        },
+        create_dirs = false,
+        perspective = {
+          priority = 'first',
+          fallback = 'current',
+          root_tell = false,
+          nvim_wd_heel = false,
+          update = false,
+        },
+        links = {
+          style = 'wiki',
+          name_is_source = false,
+          conceal = false,
+          context = 0,
+          implicit_extension = nil,
+          transform_implicit = false,
+          transform_explicit = function(text)
+            text = text:gsub(' ', '-')
+            text = text:lower()
+            text = os.date '%Y-%m-%d_' .. text
+            return text
+          end,
+        },
+        to_do = {
+          symbols = { ' ', 'x' },
+          update_parents = true,
+          not_started = ' ',
+          in_progress = '-',
+          complete = 'x',
+        },
+        tables = {
+          trim_whitespace = true,
+          format_on_move = true,
+          auto_extend_rows = false,
+          auto_extend_cols = false,
+        },
+        yaml = {
+          bib = { override = false },
+        },
+        mappings = {
+          MkdnEnter = { { 'n', 'v' }, '<CR>' },
+          MkdnTab = false,
+          MkdnSTab = false,
+          MkdnNextLink = { 'n', '<Tab>' },
+          MkdnPrevLink = { 'n', '<S-Tab>' },
+          MkdnNextHeading = { 'n', ']]' },
+          MkdnPrevHeading = { 'n', '[[' },
+          MkdnGoBack = { 'n', '<BS>' },
+          MkdnGoForward = { 'n', '<Del>' },
+          MkdnCreateLink = false, -- see MkdnEnter
+          MkdnCreateLinkFromClipboard = { { 'n', 'v' }, '<leader>p' }, -- see MkdnEnter
+          MkdnFollowLink = false, -- see MkdnEnter
+          MkdnDestroyLink = { 'n', '<M-CR>' },
+          MkdnTagSpan = { 'v', '<M-CR>' },
+          MkdnMoveSource = { 'n', '<F2>' },
+          MkdnYankAnchorLink = { 'n', 'ya' },
+          MkdnYankFileAnchorLink = { 'n', 'yfa' },
+          MkdnIncreaseHeading = { 'n', '+' },
+          MkdnDecreaseHeading = { 'n', '-' },
+          MkdnToggleToDo = { { 'n', 'v' }, '<C-Space>' },
+          MkdnNewListItem = false,
+          MkdnNewListItemBelowInsert = { 'n', 'o' },
+          MkdnNewListItemAboveInsert = { 'n', 'O' },
+          MkdnExtendList = false,
+          MkdnUpdateNumbering = { 'n', '<leader>nn' },
+          MkdnTableNextCell = { 'i', '<Tab>' },
+          MkdnTablePrevCell = { 'i', '<S-Tab>' },
+          MkdnTableNextRow = false,
+          MkdnTablePrevRow = { 'i', '<M-CR>' },
+          MkdnTableNewRowBelow = { 'n', '<leader>ir' },
+          MkdnTableNewRowAbove = { 'n', '<leader>iR' },
+          MkdnTableNewColAfter = { 'n', '<leader>ic' },
+          MkdnTableNewColBefore = { 'n', '<leader>iC' },
+          MkdnFoldSection = { 'n', '<leader>f' },
+          MkdnUnfoldSection = { 'n', '<leader>F' },
+        },
+      }
+      local nnoremap = require('hashish').nnoremap
+      nnoremap '<c-space>' '<cmd>MkdnToggleToDo<CR>' 'Toggle todo'
+    end,
+  },
+}
+
 tools.obsidian = {
-  spec = { dir = '/Users/chaitanyasharma/Projects/Languages/Lua/obsidian.nvim', ft = 'markdown' },
+  spec = {
+    'epwalsh/obsidian.nvim',
+    dependencies = {
+      {
+        'preservim/vim-markdown',
+        ft = { 'md', 'markdown', 'rmd', 'rst' },
+        config = function() vim.g.vim_markdown_no_default_key_mappings = 1 end,
+      },
+      { 'godlygeek/tabular', ft = { 'md', 'markdown', 'rmd', 'rst' } },
+    },
+    ft = { 'md', 'markdown', 'rmd', 'rst' },
+    config = function()
+      local nnoremap = require('hashish').nnoremap
+      local obsidian = require 'obsidian'
+      obsidian.setup {
+        dir = '~/Projects/Notes',
+        notes_subdir = 'Transient',
+        completion = { nvim_cmp = true },
+      }
+      nnoremap 'gf'(
+        function()
+          return obsidian.util.cursor_on_markdown_link() and '<cmd>ObsidianFollowLink<CR>' or 'gf'
+        end
+      ) { expr = true } 'Jump to file under cursor'
+    end,
+  },
 }
 
 tools.whichkey = {
@@ -117,6 +265,9 @@ tools.spec = {
   tools.drop.spec,
   tools.fish.spec,
   tools.neotest.spec,
+  -- tools.mkdnflow.spec,
+  -- tools.obsidian.spec,
+  tools.peek.spec,
   tools.startuptime.spec,
   -- tools.whichkey.spec,
 }

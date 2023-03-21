@@ -18,6 +18,18 @@ function ui.highlight_override()
   vim.cmd [[ hi! clear CursorLine ]]
 end
 
+ui.headlines = {
+  spec = {
+    'lukas-reineke/headlines.nvim',
+    config = {
+      markdown = {
+        fat_headline_lower_string = '▀',
+      },
+    },
+    ft = { 'markdown', 'md', 'rmd' },
+  },
+}
+
 ui.incline = {
   spec = {
     'b0o/incline.nvim',
@@ -127,13 +139,16 @@ ui.noice = {
         { filter = { event = 'msg_show', find = '%d+L, %d+B' }, view = 'mini' },
         { filter = { event = 'msg_show', find = 'after #%d+' }, view = 'mini' },
         { filter = { event = 'msg_show', find = 'before #%d+' }, view = 'mini' },
+        { filter = { event = 'msg_showmode' }, view = 'mini' },
       },
       views = {
-        notify = { win_options = { winblend = 30 } },
         notify = { win_options = { winblend = 0 } },
         mini = { win_options = { winhighlight = {}, winblend = 0 } },
+        popup = { position = { row = '23', col = '50%' } },
+        popupmenu = { position = { row = '23', col = '50%' } },
         cmdline_popup = {
           border = { style = 'none', padding = { 1, 1 } },
+          position = { row = '23', col = '50%' },
           win_options = { winhighlight = { Normal = 'NormalFloat' } },
         },
       },
@@ -158,7 +173,7 @@ ui.treesitter = {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     event = 'BufReadPost',
-    dependencies = { 'p00f/nvim-ts-rainbow' },
+    dependencies = { 'p00f/nvim-ts-rainbow', 'nvim-treesitter/playground' },
     config = function() require('plugins.ui').treesitter.setup() end,
   },
   setup = function()
@@ -186,8 +201,37 @@ ui.treesitter = {
       highlight = { enable = true },
       indent = { enable = true },
       rainbow = { enable = true, max_file_lines = 3000 },
+      playground = {
+        enable = true,
+        persist_queries = false, -- Whether the query persists across vim sessions
+        keybindings = {
+          toggle_query_editor = 'o',
+          toggle_hl_groups = 'i',
+          toggle_injected_languages = 't',
+          toggle_anonymous_nodes = 'a',
+          toggle_language_display = 'I',
+          focus_language = 'f',
+          unfocus_language = 'F',
+          update = 'R',
+          goto_node = '<cr>',
+          show_help = '?',
+        },
+      },
+      query_linter = {
+        enable = true,
+        use_virtual_text = true,
+        lint_events = { 'BufWrite', 'CursorHold' },
+      },
     }
   end,
+}
+
+ui.win_sep = {
+  spec = {
+    'nvim-zh/colorful-winsep.nvim',
+    config = { no_exec_files = { 'lazy', 'TelescopePrompt', 'mason', 'CompetiTest' } },
+    event = 'BufWinEnter',
+  },
 }
 
 ui.zen_mode = {
@@ -204,11 +248,13 @@ function ui.setup() ui.highlight_override() end
 
 ui.spec = {
   ui.colorscheme.spec,
+  ui.headlines.spec,
   ui.incline.spec,
   ui.noice.spec,
   ui.statusline.spec,
   ui.styler.spec,
   ui.treesitter.spec,
+  ui.win_sep.spec,
   ui.zen_mode.spec,
 }
 

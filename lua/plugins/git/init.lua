@@ -50,7 +50,7 @@ git.gitsigns = {
         map('n', '<leader>uh', function() gs.undo_stage_hunk() end, 'Undo stage hunk')
         map('n', '<leader>dh', function() gs.diffthis() end, 'Diff this')
         map('n', '<leader>DH', function() gs.diffthis '~' end, 'Diff this ~')
-        map('n', '<leader>td', function() gs.toggle_deleted() end, 'Toggle view deletion changes')
+        map('n', '<leader>gtd', function() gs.toggle_deleted() end, 'Toggle view deletion changes')
         map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', 'Select hunk')
       end,
       current_line_blame = true,

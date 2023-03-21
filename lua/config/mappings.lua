@@ -66,6 +66,7 @@ keymaps.setup = function()
   local offset = math.floor(vim.api.nvim_list_uis()[1].height / 2)
   nnoremap '<c-d>'(offset .. 'jzz') 'Scroll down one-third page'
   nnoremap '<c-u>'(offset .. 'kzz') 'Scroll up one-third page'
+  nnoremap '<leader>td' '<cmd> e /Users/chaitanyasharma/Projects/Notes/Todo.md<cr>' 'Open Todo file'
 end
 
 return keymaps

@@ -60,6 +60,7 @@ explorer.nvim_tree = {
     dependencies = { 'kyazdani42/nvim-web-devicons' },
     cmd = { 'Explorer' },
     config = function() require('plugins.explorer').nvim_tree.setup() end,
+    commit = '9c97e6449b0b0269bd44e1fd4857184dfa57bb4c',
   },
   setup = function()
     vim.api.nvim_create_user_command('Explorer', 'NvimTreeToggle', { nargs = 0 })
@@ -91,7 +92,6 @@ explorer.nvim_tree = {
       hijack_cursor = true,
       hijack_netrw = true,
       hijack_unnamed_buffer_when_opening = true,
-      -- sync_root_with_cwd = false,
       reload_on_bufenter = true,
       respect_buf_cwd = true,
       on_attach = 'disable',
@@ -142,6 +142,13 @@ explorer.nvim_tree = {
       modified = { enable = true },
       trash = { cmd = 'trash' },
     }
+
+    local group = vim.api.nvim_create_augroup('nvim-tree', { clear = true })
+    vim.api.nvim_create_autocmd({ 'WinEnter', 'BufWinEnter' }, {
+      pattern = 'NvimTree*',
+      group = group,
+      callback = function() vim.cmd [[ setlocal statuscolumn= nonu nornu ]] end,
+    })
   end,
 }
 

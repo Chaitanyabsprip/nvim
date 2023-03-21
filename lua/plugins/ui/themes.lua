@@ -133,9 +133,9 @@ themes.rosepine = {
       disable_background = true,
       highlight_groups = {
         CmpItemAbbr = { fg = 'subtle' },
-        CmpItemAbbrDeprecated = { fg = 'subtle', style = 'strikethrough' },
-        CmpItemAbbrMatch = { fg = 'iris', style = 'bold' },
-        CmpItemAbbrMatchFuzzy = { fg = 'iris', style = 'bold' },
+        CmpItemAbbrDeprecated = { fg = 'subtle' },
+        CmpItemAbbrMatch = { fg = 'iris' },
+        CmpItemAbbrMatchFuzzy = { fg = 'iris' },
         CmpItemKind = { fg = 'base', bg = 'iris' },
         CmpItemKindClass = { fg = 'base', bg = 'gold' },
         CmpItemKindColor = { fg = 'base', bg = 'love' },
@@ -167,9 +167,9 @@ themes.rosepine = {
         TelescopeNormal = { bg = 'surface', fg = 'muted' },
         TelescopePromptCounter = { fg = 'text', bg = 'base' },
         TelescopePromptBorder = { fg = 'base', bg = 'base' },
-        TelescopePromptNormal = { fg = 'text', bg = 'base', style = 'bold' },
+        TelescopePromptNormal = { fg = 'text', bg = 'base' },
         TelescopePromptPrefix = { fg = 'gold' },
-        TelescopeMatching = { fg = 'text', style = 'bold' },
+        TelescopeMatching = { fg = 'text' },
         TelescopeSelection = { fg = 'muted', bg = 'overlay' },
         TelescopeSelectionCaret = { fg = 'rose', bg = 'overlay' },
         TelescopeTitle = { fg = 'muted', bg = 'love' },
@@ -188,7 +188,7 @@ themes.rosepine = {
 themes.tokyonight = {
   spec = {
     'folke/tokyonight.nvim',
-    -- lazy = false,
+    lazy = false,
     config = function() t().tokyonight.setup() end,
     event = 'VeryLazy',
   },
@@ -196,7 +196,7 @@ themes.tokyonight = {
     local tokyonight = require 'tokyonight'
     tokyonight.setup {
       style = 'night',
-      transparent = false,
+      transparent = true,
       terminal_colors = true,
       styles = {
         comments = 'italic',
@@ -217,7 +217,7 @@ themes.tokyonight = {
       end,
       on_colors = function(colors) colors.border = '#7aa2f7' end,
     }
-    -- tokyonight.load()
+    tokyonight.load()
   end,
 }
 
@@ -226,7 +226,7 @@ themes.setup = function() themes[config().theme.name].set() end
 themes.spec = {
   -- themes.catppuccin.spec,
   -- themes.github.spec,
-  themes.rosepine.spec,
+  -- themes.rosepine.spec,
   themes.tokyonight.spec,
 }
 

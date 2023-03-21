@@ -40,13 +40,10 @@ statusline.lualine = {
         theme = theme(),
       },
       sections = {
-        lualine_a = { { 'mode', icon = '', fmt = function(mode) return mode:sub(1, 1) end } },
-        lualine_b = { 'branch' },
-        lualine_c = {
-          -- { 'diff', symbols = { added = ' ', modified = ' ', removed = '  ' } },
-          -- { 'diagnostics', sources = { 'nvim_diagnostic', 'nvim_lsp' } },
-        },
-        lualine_x = { get_lsp_client, 'filetype' },
+        lualine_a = { 'branch' },
+        lualine_b = { get_lsp_client },
+        lualine_c = {},
+        lualine_x = { 'filetype' },
         lualine_y = { 'location' },
         lualine_z = { { clock, color = { gui = 'bold' } } },
       },

@@ -142,7 +142,7 @@ config.options.setup = function()
   vim.o.cmdheight = 0
   vim.o.scrolloff = 8
   vim.o.colorcolumn = '81'
-  vim.o.conceallevel = 3
+  vim.o.conceallevel = 2
 
   vim.o.sessionoptions = 'buffers,curdir,winsize,resize,winpos,folds,tabpages'
   vim.o.shell = '/usr/bin/env zsh'
