@@ -4,18 +4,17 @@ local setup = function()
   vim.cmd [[setlocal shiftwidth=4 softtabstop=4 expandtab tabstop=4]]
   local status, jdtls = pcall(require, 'jdtls')
   if not status then return end
-
   -- Determine OS
   local home = os.getenv 'HOME'
-  if vim.fn.has 'mac' == 1 then
-    WORKSPACE_PATH = home .. '/workspace/'
-    CONFIG = 'mac'
-  elseif vim.fn.has 'unix' == 1 then
-    WORKSPACE_PATH = home .. '/workspace/'
-    CONFIG = 'linux'
-  else
-    print 'Unsupported system'
-  end
+  -- if vim.fn.has 'mac' == 1 then
+  --   WORKSPACE_PATH = home .. '/workspace/'
+  --   CONFIG = 'mac'
+  -- elseif vim.fn.has 'unix' == 1 then
+  --   WORKSPACE_PATH = home .. '/workspace/'
+  --   CONFIG = 'linux'
+  -- else
+  --   print 'Unsupported system'
+  -- end
 
   -- Find root of project
   local root_markers = { '.git', 'mvnw', 'gradlew', 'pom.xml', 'build.gradle' }
@@ -27,7 +26,7 @@ local setup = function()
 
   local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 
-  local workspace_dir = '/Users/chaitanyasharma/Projects/Languages/Java/.workspace/' .. project_name
+  local workspace_dir = os.getenv 'HOME' .. '/Projects/Languages/Java/.workspace/' .. project_name
 
   local bundles = {
     vim.fn.glob(
@@ -51,9 +50,10 @@ local setup = function()
       '--add-opens',
       'java.base/java.lang=ALL-UNNAMED',
       '-jar',
-      '/Users/chaitanyasharma/Programs/jdt-language-server-latest/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar',
+      home
+        .. '/Programs/jdt-language-server-latest/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar',
       '-configuration',
-      '/Users/chaitanyasharma/Programs/jdt-language-server-latest/config_mac',
+      home .. '/Programs/jdt-language-server-latest/config_mac',
       '-data',
       workspace_dir,
     },

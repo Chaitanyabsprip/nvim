@@ -1,6 +1,6 @@
 local M = {}
 local ns = vim.api.nvim_create_namespace 'dashboard'
-local notes_path = '/Users/chaitanyasharma/Projects/Notes/Transient/'
+local notes_path = os.getenv 'HOME' .. '/Projects/Notes/Transient/'
 local get_note_name = function() return os.date '%Y-%m-%d' .. '.md' end
 local new_note = function() return 'e ' .. notes_path .. get_note_name() end
 

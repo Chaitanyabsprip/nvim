@@ -17,7 +17,7 @@ local setup_keymaps = function()
   local themes = require 'telescope.themes'
   local ivy = themes.get_ivy { layout_config = { height = 12 } }
   local find_notes =
-    function() builtin.fd { cwd = '/Users/chaitanyasharma/Projects/Notes', hidden = true } end
+    function() builtin.fd { cwd = os.getenv 'HOME' .. '/Projects/Notes', hidden = true } end
   nnoremap '<leader>tht'(function() builtin.help_tags(ivy) end) 'Telescope Help tags'
   nnoremap '<leader>thk'(function() builtin.keymaps(ivy) end) 'Telescope Keymaps'
   nnoremap '<leader>thi'(builtin.highlights) 'Telescope Higlights'

@@ -66,7 +66,7 @@ servers.flutter = {
             type = 'executable',
             command = 'node',
             args = {
-              '/Users/chaitanyasharma/.cache/nvim/dart-code/out/dist/debug.js',
+              os.getenv 'HOME' .. '/.cache/nvim/dart-code/out/dist/debug.js',
               'flutter',
             },
           }
