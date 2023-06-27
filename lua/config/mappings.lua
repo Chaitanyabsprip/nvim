@@ -54,6 +54,7 @@ keymaps.setup = function()
   nnoremap '{' '{zzzv' 'Like text object motion { but centers line'
   nnoremap 'gq' '<cmd>copen<cr>' 'Open quickfix list'
   nnoremap '<leader>r' ':%s/\\<<c-r><c-w>\\>/<c-r><c-w>/gI<Left><Left><Left>' 'Search and replace, in current buffer, word under cursor'
+  vnoremap '<leader>r' '"hy:%s/<C-r>h//gI<left><left><left>' 'Search and replace, in current buffer, selection'
   vnoremap '<leader>s' 'y:%s/<c-r>0/<c-r>0/gI<Left><Left><Left>' 'Search and replace, in current buffer, visual selection'
   nnoremap '<leader>j' '<cmd>cnext<cr>zz' 'Jump to next result from quickfix'
   nnoremap '<leader>k' '<cmd>cprev<cr>zz' 'Jump to prev result from quickfix'
