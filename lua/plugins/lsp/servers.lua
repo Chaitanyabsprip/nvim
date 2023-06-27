@@ -233,6 +233,15 @@ function servers.lsp.configs.python()
   }
 end
 
+function servers.lsp.configs.graphql()
+  local get_capabilities = require('plugins.lsp.completion').get_capabilities
+  local lspconfig = require 'lspconfig'
+  lspconfig.graphql.setup {
+    on_attach = lsp.common_on_attach,
+    capabilities = get_capabilities(),
+  }
+end
+
 servers.spec = {
   servers.null.spec,
   servers.lsp.spec,

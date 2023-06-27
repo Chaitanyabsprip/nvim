@@ -127,9 +127,11 @@ lsp.rename = {
   },
 }
 
+lsp.graphql = { spec = { 'jparise/vim-graphql', ft = 'graphql' } }
+
 lsp.spec = {
   lsp.code_actions.spec,
-  lsp.rename.spec,
+  lsp.graphql.spec,
   lsp.lsp_lines.spec,
   lsp.mason.spec,
   lsp.mason_lspconfig.spec,
@@ -137,6 +139,7 @@ lsp.spec = {
   lsp.mason_update.spec,
   lsp.navic.spec,
   lsp.refactoring.spec,
+  lsp.rename.spec,
 }
 
 return lsp
