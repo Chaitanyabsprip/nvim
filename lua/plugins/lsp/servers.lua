@@ -90,10 +90,10 @@ servers.flutter = {
       lsp = {
         color = {
           enabled = true,
-          background = false,
+          background = true,
           background_color = { r = 19, g = 17, b = 24, bg = '#191724' },
           foreground = false,
-          virtual_text = true,
+          virtual_text = false,
           virtual_text_str = '■',
         },
         capabilities = get_capabilities(),
@@ -110,10 +110,12 @@ servers.flutter = {
           vim.fn.getcwd()
         ),
         settings = {
-          showTodos = false,
-          renameFilesWithClasses = 'prompt',
-          updateImportsOnRename = true,
+          completeFunctionCalls = true,
+          enableSnippets = true,
           includeDependenciesInWorkspaceSymbols = false,
+          renameFilesWithClasses = 'prompt',
+          showTodos = false,
+          updateImportsOnRename = true,
         },
       },
       ui = { border = 'rounded', notification_style = 'native' },
