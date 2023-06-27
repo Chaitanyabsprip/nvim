@@ -1,5 +1,7 @@
 local lsp = {}
 
+lsp.database = require 'plugins.lsp.database'
+
 lsp.code_actions = {
   spec = {
     'Chaitanyabsprip/lsp-fastaction.nvim',
@@ -131,6 +133,7 @@ lsp.graphql = { spec = { 'jparise/vim-graphql', ft = 'graphql' } }
 
 lsp.spec = {
   lsp.code_actions.spec,
+  lsp.database.spec,
   lsp.graphql.spec,
   lsp.lsp_lines.spec,
   lsp.mason.spec,
