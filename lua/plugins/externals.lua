@@ -24,6 +24,8 @@ externals.toggleterm = {
     require('toggleterm').setup {
       size = 15,
       open_mapping = [[<c-t>]],
+      on_open = function() vim.cmd [[setlocal statuscolumn=]] end,
+      on_close = function() vim.o.statuscolumn = _G.Status.status_column() end,
       shade_terminals = true,
       -- shading_factor = '-30',
       start_in_insert = true,
@@ -33,10 +35,15 @@ externals.toggleterm = {
       shade_filetypes = {},
       shell = vim.o.shell,
       float_opts = {
-        winblend = 3,
         highlights = { border = 'Normal', background = 'Normal' },
       },
     }
+    local ext = require 'plugins.externals'
+
+    local nnoremap = require('hashish').nnoremap
+    local opts = { silent = true }
+    nnoremap '<leader>tf'(function() ext.terminal(true):toggle() end)(opts) 'Toggle floating terminal'
+    nnoremap '<leader>tg'(function() ext.gitui(true):toggle() end)(opts) 'Toggle gitui in floating window'
   end,
 }
 
