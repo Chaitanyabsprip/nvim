@@ -103,7 +103,7 @@ function completion.cmp.setup()
         winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
       },
     },
-    experimental = { ghost_text = true },
+    experimental = { ghost_text = { hl_group = 'Comment' } },
   }
 
   cmp.setup.cmdline('/', {
