@@ -3,7 +3,7 @@ local session = {}
 session.auto_session = {
   spec = {
     'rmagatti/auto-session',
-    init = function() vim.api.nvim_create_user_command('Continue', 'RestoreSession', { nargs = 0 }) end,
+    init = function() vim.api.nvim_create_user_command('Continue', 'SessionRestore', { nargs = 0 }) end,
     config = {
       log_level = 'error',
       auto_session_enable_last_session = false,
@@ -15,7 +15,7 @@ session.auto_session = {
       auto_session_use_git_branch = true,
     },
     event = 'BufReadPre',
-    cmd = { 'Continue', 'RestoreSession' },
+    cmd = { 'Continue', 'SessionRestore' },
   },
 }
 
