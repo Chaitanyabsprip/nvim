@@ -82,7 +82,7 @@ editing.matchparen = {
 editing.mini_comment = {
   spec = {
     'echasnovski/mini.comment',
-    branch = 'stable',
+    version = '*',
     event = { 'BufReadPost' },
     config = function() require('plugins.editing').mini_comment.setup() end,
   },
@@ -119,8 +119,8 @@ editing.ufo = {
       if not fold_win then
         vim.lsp.buf.hover()
       else
-        vim.api.nvim_win_set_option(fold_win, 'winhl', 'Normal:Normal')
-        vim.api.nvim_win_set_option(fold_win, 'winblend', 0)
+        vim.api.nvim_set_option_value('winhl', 'Normal:Normal', { win = fold_win })
+        vim.api.nvim_set_option_value('winblend', 0, { win = fold_win })
       end
     end
     require('lsp.capabilities').hover.callback =
