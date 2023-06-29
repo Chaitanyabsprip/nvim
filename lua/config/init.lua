@@ -42,19 +42,13 @@ config.autocommands = function()
   autocmd('TextYankPost', {
     group = augroup 'higlight_yank',
     callback = function()
-      require('vim.highlight').on_yank { higroup = 'Substitute', timeout = 500, on_macro = true }
+      require('vim.highlight').on_yank { higroup = 'Substitute', timeout = 1000, on_macro = true }
     end,
   })
 
   local restore_fold = augroup 'restore fold state'
   autocmd('BufWinLeave', { group = restore_fold, pattern = '*.*', command = 'mkview 1' })
   autocmd('BufWinEnter', { group = restore_fold, pattern = '*.*', command = 'silent! loadview 1' })
-
-  autocmd('User', {
-    group = augroup 'startuptime',
-    pattern = 'VeryLazy',
-    command = "lua vim.notify('Startuptime ' .. require('lazy').stats().startuptime, vim.log.levels.INFO)",
-  })
 
   autocmd({ 'FileType' }, {
     group = augroup 'fix_conceal',
