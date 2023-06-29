@@ -22,7 +22,7 @@ externals.toggleterm = {
   },
   setup = function()
     require('toggleterm').setup {
-      size = 15,
+      size = 22,
       open_mapping = [[<c-t>]],
       on_open = function() vim.cmd [[setlocal statuscolumn=]] end,
       on_close = function() vim.o.statuscolumn = _G.Status.status_column() end,
@@ -39,11 +39,10 @@ externals.toggleterm = {
       },
     }
     local ext = require 'plugins.externals'
-
     local nnoremap = require('hashish').nnoremap
     local opts = { silent = true }
     nnoremap '<leader>tf'(function() ext.terminal(true):toggle() end)(opts) 'Toggle floating terminal'
-    nnoremap '<leader>tg'(function() ext.gitui(true):toggle() end)(opts) 'Toggle gitui in floating window'
+    nnoremap '<c-g>'(function() ext.gitui(true):toggle() end)(opts) 'Toggle gitui in floating window'
   end,
 }
 
