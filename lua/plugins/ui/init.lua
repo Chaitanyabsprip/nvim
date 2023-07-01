@@ -18,6 +18,18 @@ function ui.highlight_override()
   vim.cmd [[ hi! clear CursorLine ]]
 end
 
+ui.dressing = {
+  spec = {
+    'stevearc/dressing.nvim',
+    config = {
+      select = {
+        backend = { 'nui', 'builtin', 'telescope' },
+      },
+    },
+    event = 'VeryLazy',
+  },
+}
+
 ui.headlines = {
   spec = {
     'lukas-reineke/headlines.nvim',
@@ -248,6 +260,7 @@ function ui.setup() ui.highlight_override() end
 
 ui.spec = {
   ui.colorscheme.spec,
+  ui.dressing.spec,
   ui.headlines.spec,
   ui.incline.spec,
   ui.noice.spec,

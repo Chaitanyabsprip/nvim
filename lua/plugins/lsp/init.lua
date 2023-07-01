@@ -80,6 +80,16 @@ lsp.mason_lspconfig = {
   },
 }
 
+lsp.mason_dap = {
+  spec = {
+    'jay-babu/mason-nvim-dap.nvim',
+    config = function()
+      require 'mason'
+      require('mason-nvim-dap').setup()
+    end,
+  },
+}
+
 lsp.navic = {
   spec = {
     'SmiteshP/nvim-navic',

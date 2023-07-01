@@ -59,18 +59,21 @@ servers.flutter = {
     require('flutter-tools').setup {
       closing_tags = { enabled = false },
       debugger = {
-        enabled = false,
+        enabled = true,
         run_via_dap = true,
         register_configurations = function(_)
-          require('dap').adapters.dart = {
+          local dap = require 'dap'
+          dap.adapters.dart = {
             type = 'executable',
-            command = 'node',
-            args = {
-              os.getenv 'HOME' .. '/.cache/nvim/dart-code/out/dist/debug.js',
-              'flutter',
-            },
+            command = 'flutter',
+            args = { 'debug-adapter' },
+            -- command = 'node',
+            -- args = {
+            --   os.getenv 'HOME' .. '/.cache/nvim/dart-code/out/dist/debug.js',
+            --   'flutter',
+            -- },
           }
-          require('dap').configurations.dart = {
+          dap.configurations.dart = {
             {
               type = 'dart',
               request = 'launch',
@@ -97,7 +100,11 @@ servers.flutter = {
           virtual_text_str = '■',
         },
         capabilities = get_capabilities(),
-        on_attach = lsp.common_on_attach,
+        on_attach = function(client, bufnr)
+          lsp.common_on_attach(client, bufnr)
+          local nnoremap = require('hashish').nnoremap
+          nnoremap 'gr' '<cmd>FlutterRename<cr>' {} 'Flutter: Rename variable and related imports'
+        end,
         init_options = {
           onlyAnalyzeProjectsWithOpenFiles = true,
           suggestFromUnimportedLibraries = true,
@@ -235,10 +242,19 @@ function servers.lsp.configs.python()
   }
 end
 
-function servers.lsp.configs.graphql()
+function servers.lsp.configs.sqlls()
   local get_capabilities = require('plugins.lsp.completion').get_capabilities
   local lspconfig = require 'lspconfig'
-  lspconfig.graphql.setup {
+  lspconfig.sqlls.setup {
+    on_attach = lsp.common_on_attach,
+    capabilities = get_capabilities(),
+    root_dir = lspconfig.util.root_pattern('.git', '.gitignore', '.sqllsrc.json', vim.fn.getcwd()),
+  }
+end
+
+function servers.lsp.configs.graphql()
+  local get_capabilities = require('plugins.lsp.completion').get_capabilities
+  require('lspconfig').graphql.setup {
     on_attach = lsp.common_on_attach,
     capabilities = get_capabilities(),
   }

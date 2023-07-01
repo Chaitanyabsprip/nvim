@@ -2,6 +2,7 @@ local plugin = {}
 
 plugin.setup = function()
   local completion = require 'plugins.lsp.completion'
+  local debugger = require 'plugins.lsp.debugger'
   local editing = require 'plugins.editing'
   local explorer = require 'plugins.explorer'
   local externals = require 'plugins.externals'
@@ -21,7 +22,7 @@ plugin.setup = function()
     tools.spec,
     session.spec,
     ui.spec,
-    { lsp.spec, servers.spec },
+    { debugger.spec, lsp.spec, servers.spec },
   }
 
   require('plugins.utils').bootstrap_packer()
