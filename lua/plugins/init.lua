@@ -38,7 +38,7 @@ plugin.setup = function()
       },
     },
     install = { colorscheme = { 'rose-pine', 'tokyonight', 'habamax' } },
-    checker = { enabled = true },
+    checker = { enabled = true, notify = false },
     readme = { files = { 'README.md', 'readme.md', 'README.rst', 'readme.rst' } },
   })
 end
