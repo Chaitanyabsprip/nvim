@@ -1,29 +1,9 @@
 local config = {}
 local M = {}
-_G.Status = M
-
-function M.fold()
-  local line = vim.v.lnum
-  if vim.fn.foldlevel(line) > 1 then return ' ' end
-  if vim.fn.foldlevel(line) <= vim.fn.foldlevel(line - 1) then return ' ' end
-  return vim.fn.foldclosed(line) > 0 and '' or ''
-end
-
-function M.toggle_foldcolumn()
-  vim.g.foldcolumn = not vim.g.foldcolumn
-  vim.o.statuscolumn = M.status_column()
-end
 
 function M.status_column()
-  local folds = ''
-  if vim.g.foldcolumn then folds = [[%#FoldColumn#%{v:lua.Status.fold()} ]] end
-  local components = {
-    [[%=]],
-    [[%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . '  ' : v:lnum) : ''}]],
-    [[%=]],
-    [[%s]],
-    folds,
-  }
+  local number = [[%{v:lnum}]]
+  local components = { [[%=]], number, [[%=]], [[%s]] }
   return table.concat(components, '')
 end
 
@@ -180,7 +160,6 @@ config.options.lazy = function()
   vim.cmd 'syntax on'
   require('plugins.ui').setup()
   require('plugins.ui.greeter').setup()
-  vim.api.nvim_create_user_command('ToggleFoldcolumn', M.toggle_foldcolumn, { nargs = 0 })
 end
 
 return config
