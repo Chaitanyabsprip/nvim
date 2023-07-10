@@ -46,109 +46,7 @@ servers.null = {
   end,
 }
 
-servers.flutter = {
-  spec = {
-    'akinsho/flutter-tools.nvim',
-    ft = { 'dart' },
-    config = function() require('plugins.lsp.servers').flutter.setup() end,
-  },
-
-  setup = function()
-    local get_capabilities = require('plugins.lsp.completion').get_capabilities
-    local lspconfig = require 'lspconfig'
-    require('flutter-tools').setup {
-      closing_tags = { enabled = false },
-      debugger = {
-        enabled = true,
-        run_via_dap = true,
-        register_configurations = function(_)
-          local dap = require 'dap'
-          dap.adapters.dart = {
-            type = 'executable',
-            command = 'flutter',
-            args = { 'debug-adapter' },
-            -- command = 'node',
-            -- args = {
-            --   os.getenv 'HOME' .. '/.cache/nvim/dart-code/out/dist/debug.js',
-            --   'flutter',
-            -- },
-          }
-          dap.configurations.dart = {
-            {
-              type = 'dart',
-              request = 'launch',
-              name = 'Launch flutter',
-              dartSdkPath = vim.fn.getcwd() .. '/.fvm/flutter_sdk/bin/cache/dart-sdk/',
-              flutterSdkPath = vim.fn.getcwd() .. '/.fvm/flutter_sdk',
-              program = '${workspaceFolder}/lib/main.dart',
-              cwd = '${workspaceFolder}',
-            },
-          }
-          require('dap.ext.vscode').load_launchjs()
-        end,
-      },
-      dev_tools = { autostart = true, auto_open_browser = true },
-      dev_log = { enabled = false },
-      fvm = true,
-      lsp = {
-        color = {
-          enabled = true,
-          background = true,
-          background_color = { r = 19, g = 17, b = 24, bg = '#191724' },
-          foreground = false,
-          virtual_text = false,
-          virtual_text_str = '■',
-        },
-        capabilities = get_capabilities(),
-        on_attach = function(client, bufnr)
-          lsp.common_on_attach(client, bufnr)
-          local nnoremap = require('hashish').nnoremap
-          nnoremap 'gr' '<cmd>FlutterRename<cr>' {} 'Flutter: Rename variable and related imports'
-        end,
-        init_options = {
-          onlyAnalyzeProjectsWithOpenFiles = true,
-          suggestFromUnimportedLibraries = true,
-          closingLabels = true,
-        },
-        root_dir = lspconfig.util.root_pattern(
-          '.git',
-          '.gitignore',
-          'pubspec.yaml',
-          vim.fn.getcwd()
-        ),
-        settings = {
-          completeFunctionCalls = true,
-          enableSnippets = true,
-          includeDependenciesInWorkspaceSymbols = false,
-          renameFilesWithClasses = 'prompt',
-          showTodos = false,
-          updateImportsOnRename = true,
-        },
-      },
-      ui = { border = 'rounded', notification_style = 'native' },
-      widget_guides = { enabled = true },
-    }
-    require('telescope').load_extension 'flutter'
-    vim.keymap.set(
-      'n',
-      '<leader>F',
-      ":lua require('telescope').extensions.flutter.commands()<CR>",
-      { noremap = true, silent = true }
-    )
-
-    local group = vim.api.nvim_create_augroup('auto fix lints', { clear = true })
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      group = group,
-      pattern = '*.dart',
-      callback = function()
-        vim.lsp.buf.code_action {
-          filter = function(action) return action.title == 'Fix All' end,
-          apply = true,
-        }
-      end,
-    })
-  end,
-}
+servers.flutter = require('plugins.lsp.flutter').config
 
 servers.__neodev = {
   spec = { 'folke/neodev.nvim', config = function() require('neodev').setup {} end },
@@ -163,7 +61,7 @@ servers.lsp = {
 
   spec = {
     'neovim/nvim-lspconfig',
-    event = 'BufReadPre',
+    event = { 'BufReadPre', 'FileType' },
     config = function()
       require 'mason-lspconfig'
       require('plugins.lsp.servers').lsp.setup()

@@ -23,7 +23,7 @@ ui.dressing = {
     'stevearc/dressing.nvim',
     config = {
       select = {
-        backend = { 'nui', 'builtin', 'telescope' },
+        backend = { 'telescope', 'nui', 'builtin' },
       },
     },
     event = 'VeryLazy',
@@ -180,6 +180,17 @@ ui.styler = {
   },
 }
 
+ui.ansi = {
+  'm00qek/baleia.nvim',
+  event = 'BufReadPost',
+  config = function()
+    vim.cmd [[
+      let s:baleia = luaeval("require('baleia').setup { }")
+      command! BaleiaColorize call s:baleia.once(bufnr('%'))
+    ]]
+  end,
+}
+
 ui.treesitter = {
   spec = {
     'nvim-treesitter/nvim-treesitter',
@@ -259,6 +270,7 @@ ui.zen_mode = {
 function ui.setup() ui.highlight_override() end
 
 ui.spec = {
+  ui.ansi,
   ui.colorscheme.spec,
   ui.dressing.spec,
   ui.headlines.spec,

@@ -105,12 +105,28 @@ debugger.ui = {
           position = 'right',
         },
         {
-          elements = { { id = 'repl', size = 0.75 }, { id = 'console', size = 0.25 } },
+          elements = { { id = 'repl', size = 1 }, { id = 'console', size = 0 } },
           size = 16,
           position = 'bottom',
         },
       },
     }
+    local nnoremap = require('hashish').nnoremap
+    nnoremap '<c-h>'(function() require('dapui').toggle() end) {} 'Toggle debugger UI'
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      group = vim.api.nvim_create_augroup('dapui', { clear = true }),
+      pattern = 'dapui*',
+      callback = function() vim.cmd [[setlocal statuscolumn=""]] end,
+    })
+    vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
+      group = vim.api.nvim_create_augroup('ansi', { clear = true }),
+      pattern = '*',
+      callback = function()
+        if vim.bo.filetype == 'dap-repl' then
+          require('baleia').setup({}).automatically(vim.api.nvim_get_current_buf())
+        end
+      end,
+    })
   end,
 }
 
