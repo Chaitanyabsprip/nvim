@@ -1,9 +1,5 @@
 local telescope = {}
 
-local hashish = require 'hashish'
-local nnoremap = hashish.nnoremap
-local vnoremap = hashish.vnoremap
-
 local highlight_overrides = function()
   local hl = vim.api.nvim_set_hl
   hl(0, 'TelescopePromptPrefix', { link = 'diffRemoved' })
@@ -13,11 +9,13 @@ local highlight_overrides = function()
 end
 
 local setup_keymaps = function()
+  local hashish = require 'hashish'
+  local nnoremap = hashish.nnoremap
+  local vnoremap = hashish.vnoremap
   local builtin = require 'telescope.builtin'
   local themes = require 'telescope.themes'
   local ivy = themes.get_ivy { layout_config = { height = 12 } }
-  local find_notes =
-    function() builtin.fd { cwd = os.getenv 'HOME' .. '/Projects/Notes', hidden = true } end
+  local find_notes = function() builtin.fd { cwd = os.getenv 'HOME' .. '/Projects/Notes' } end
   nnoremap '<leader>tht'(function() builtin.help_tags(ivy) end) 'Telescope Help tags'
   nnoremap '<leader>thk'(function() builtin.keymaps(ivy) end) 'Telescope Keymaps'
   nnoremap '<leader>thi'(builtin.highlights) 'Telescope Higlights'
@@ -34,6 +32,8 @@ end
 
 ---@diagnostic disable-next-line: unused-function, unused-local
 local override_lsp_handler = function()
+  local hashish = require 'hashish'
+  local nnoremap = hashish.nnoremap
   local capabilities = require 'lsp.capabilities'
   local opts = { bufnr = 0, silent = true }
   capabilities.references.callback = function()
@@ -109,6 +109,8 @@ telescope = {
   end,
 
   diagnostic_keymaps = function()
+    local hashish = require 'hashish'
+    local nnoremap = hashish.nnoremap
     local builtins = require 'telescope.builtin'
     local themes = require 'telescope.themes'
     local document_diagnostics_config =
@@ -126,9 +128,7 @@ telescope = {
 }
 
 telescope.get_visual_selection = function()
-  -- vim.api.nvim_input '<esc>'
   local s_start = vim.fn.getpos "'<"
-  vim.pretty_print(s_start)
   local s_end = vim.fn.getpos "'>"
   local n_lines = math.abs(s_end[2] - s_start[2]) + 1
   local lines = vim.api.nvim_buf_get_lines(0, s_start[2] - 1, s_end[2], false)
