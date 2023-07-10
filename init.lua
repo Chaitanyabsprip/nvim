@@ -13,4 +13,4 @@ vim.api.nvim_create_autocmd('User', {
     config.options.lazy()
   end,
 })
--- vim.lsp.set_log_level 'TRACE'
+-- vim.lsp.set_log_level 'debug'
