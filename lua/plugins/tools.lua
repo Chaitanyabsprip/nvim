@@ -15,8 +15,7 @@ tools.colorizer = {
       RRGGBBAA = true,
       AARRGGBB = true,
       css_fn = true,
-      -- Available modes for `mode`: foreground, background,  virtualtext
-      mode = 'background', -- Set the display mode.
+      mode = 'background', -- Available modes for `mode`: foreground, background,  virtualtext
       virtualtext = '███',
     },
   },
@@ -223,28 +222,49 @@ tools.mkdnflow = {
 tools.obsidian = {
   spec = {
     'epwalsh/obsidian.nvim',
-    dependencies = {
-      {
-        'preservim/vim-markdown',
-        ft = { 'md', 'markdown', 'rmd', 'rst' },
-        config = function() vim.g.vim_markdown_no_default_key_mappings = 1 end,
-      },
-      { 'godlygeek/tabular', ft = { 'md', 'markdown', 'rmd', 'rst' } },
-    },
     ft = { 'md', 'markdown', 'rmd', 'rst' },
-    config = function()
-      local nnoremap = require('hashish').nnoremap
-      local obsidian = require 'obsidian'
-      obsidian.setup {
-        dir = '~/Projects/Notes',
-        notes_subdir = 'Transient',
-        completion = { nvim_cmp = true },
-      }
-      nnoremap 'gf'(
-        function()
-          return obsidian.util.cursor_on_markdown_link() and '<cmd>ObsidianFollowLink<CR>' or 'gf'
+    opts = {
+      dir = '~/Projects/Notes',
+      -- Optional, if you keep notes in a specific subdirectory of your vault.
+      notes_subdir = 'Transient',
+      completion = {
+        nvim_cmp = true,
+        min_chars = 2,
+        new_notes_location = 'notes_subdir',
+      },
+      daily_notes = {
+        folder = 'Transient',
+        date_format = '%Y-%m-%d',
+      },
+      -- Optional, alternatively you can customize the frontmatter data.
+      note_frontmatter_func = function(note)
+        -- This is equivalent to the default frontmatter function.
+        local out = { id = note.id, aliases = note.aliases, tags = note.tags }
+        -- `note.metadata` contains any manually added fields in the frontmatter.
+        -- So here we just make sure those fields are kept in the frontmatter.
+        if note.metadata ~= nil and require('obsidian').util.table_length(note.metadata) > 0 then
+          for k, v in pairs(note.metadata) do
+            out[k] = v
+          end
         end
-      ) { expr = true } 'Jump to file under cursor'
+        return out
+      end,
+      follow_url_func = function(url)
+        vim.fn.jobstart { 'open', url } -- Mac OS
+        -- vim.fn.jobstart({"xdg-open", url})  -- linux
+      end,
+      use_advanced_uri = true,
+      open_app_foreground = true,
+      finder = 'telescope.nvim',
+    },
+    config = function(_, opts)
+      local nmap = require('hashish').nmap
+      local obsidian = require 'obsidian'
+      obsidian.setup(opts)
+      local function follow_link()
+        return obsidian.util.cursor_on_markdown_link() and '<cmd>ObsidianFollowLink<CR>' or 'gf'
+      end
+      nmap 'gf'(follow_link) { expr = true } 'Jump to file under cursor'
     end,
   },
 }
@@ -266,7 +286,7 @@ tools.spec = {
   tools.fish.spec,
   tools.neotest.spec,
   -- tools.mkdnflow.spec,
-  -- tools.obsidian.spec,
+  tools.obsidian.spec,
   tools.peek.spec,
   tools.startuptime.spec,
   -- tools.whichkey.spec,
