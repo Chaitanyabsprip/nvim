@@ -68,59 +68,37 @@ themes.catppuccin = {
   set = function() vim.cmd.colorscheme 'catppuccin' end,
 }
 
-themes.github = {
+themes.material = {
   spec = {
-    'projekt0n/github-nvim-theme',
-    version = '*',
-    config = function() t().github.setup() end,
+    'marko-cerovac/material.nvim',
     lazy = false,
+    priority = 1000,
+    config = function() t().material.setup() end,
   },
   setup = function()
-    require('github-theme').setup {
-      options = {
-        transparent = true,
-        darken = {
-          float = true,
-          sidebars = { list = { 'qf', 'terminal', 'nvimtree', 'telescope', 'harpoon', 'neotest' } },
-        },
+    local colors = require 'material.colors'
+    require('material').setup {
+      contrast = {
+        terminal = true, -- Enable contrast for the built-in terminal
+        sidebars = true, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
+        floating_windows = true, -- Enable contrast for floating windows
+        non_current_windows = true, -- Enable contrasted background for non-current windows
       },
-      groups = {
-        all = {
-          CmpItemKindConstructor = { fg = 'bg1', bg = 'blue' },
-          CmpItemKindEvent = { fg = 'bg1', bg = 'blue' },
-          CmpItemKindFile = { fg = 'bg1', bg = 'blue' },
-          CmpItemKindFolder = { fg = 'bg1', bg = 'blue' },
-          CmpItemKindFunction = { fg = 'bg1', bg = 'blue' },
-          CmpItemKindMethod = { fg = 'bg1', bg = 'blue' },
-          CmpItemKindModule = { fg = 'bg1', bg = 'blue' },
-          CmpItemKindOperator = { fg = 'bg1', bg = 'blue' },
-          CmpItemKindStruct = { fg = 'bg1', bg = 'blue' },
-          CmpItemKindTypeParameter = { fg = 'bg1', bg = 'blue' },
-          CmpItemKindEnum = { fg = 'bg1', bg = 'green' },
-          CmpItemKindField = { fg = 'bg1', bg = 'green' },
-          CmpItemKindProperty = { fg = 'bg1', bg = 'green' },
-          CmpItemKindUnit = { fg = 'bg1', bg = 'green' },
-          CmpItemKindKeyword = { fg = 'bg1', bg = 'red' },
-          CmpItemKindReference = { fg = 'bg1', bg = 'red' },
-          CmpItemKindEnumMember = { fg = 'bg1', bg = 'red' },
-          CmpItemKindColor = { fg = 'bg1', bg = 'red' },
-          CmpItemKindClass = { fg = 'bg1', bg = 'yellow' },
-          CmpItemKindInterface = { fg = 'bg1', bg = 'yellow' },
-          CmpItemKindValue = { fg = 'bg1', bg = 'yellow' },
-          CmpItemKindConstant = { fg = 'bg1', bg = 'yellow' },
-          CmpItemKindCopilot = { fg = 'bg1', bg = 'cyan' },
-          CmpItemKindText = { fg = 'bg1', bg = 'cyan' },
-          CmpItemKindSnippet = { fg = 'bg1', bg = 'red' },
-          CmpItemKindVariable = { fg = 'bg1', bg = 'magenta' },
-          NotifyBackground = { bg = 'bg1', fg = 'fg1' },
-          Cursor = { bg = 'black', fg = 'fg1' },
-          LeapBackdrop = { fg = '#545c7e' },
-        },
+      disable = { background = true },
+      styles = { -- Give comments style such as bold, italic, underline etc.
+        comments = { italic = true },
+        strings = { bold = true },
+      },
+      plugins = { 'dap', 'gitsigns', 'mini', 'nvim-cmp', 'nvim-navic', 'nvim-tree', 'telescope' },
+      custom_highlights = {
+        NotifyBackground = { bg = colors.editor.bg, fg = colors.editor.fg },
+        CursorLine = { bg = '#1a1c25' },
+        LeapBackdrop = { fg = '#545c7e' },
       },
     }
-    vim.cmd.colorscheme 'github_dark'
+    vim.g.material_style = 'deep ocean'
+    vim.cmd 'colorscheme material'
   end,
-  set = function() end,
 }
 
 themes.rosepine = {
@@ -223,7 +201,7 @@ themes.tokyonight = {
       end,
       on_colors = function(colors) colors.border = '#7aa2f7' end,
     }
-    tokyonight.load()
+    -- tokyonight.load()
   end,
 }
 
@@ -231,8 +209,8 @@ themes.setup = function() themes[config().theme.name].set() end
 
 themes.spec = {
   -- themes.catppuccin.spec,
-  -- themes.github.spec,
   -- themes.rosepine.spec,
+  themes.material.spec,
   themes.tokyonight.spec,
 }
 
