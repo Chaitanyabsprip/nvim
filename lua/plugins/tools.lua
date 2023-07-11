@@ -222,6 +222,7 @@ tools.mkdnflow = {
 tools.obsidian = {
   spec = {
     'epwalsh/obsidian.nvim',
+    cmd = { 'ObsidianNew', 'ObsidianSearch' },
     ft = { 'md', 'markdown', 'rmd', 'rst' },
     opts = {
       dir = '~/Projects/Notes',

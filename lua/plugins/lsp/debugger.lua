@@ -44,23 +44,21 @@ debugger.dap = {
   },
   setup = function()
     local icons = { bookmark = '', bug = '' } --   '󰠭'
-    vim.fn.sign_define {
-      {
-        name = 'DapBreakpoint',
-        texthl = 'DapBreakpoint',
-        text = icons.bug,
-        linehl = '',
-        numhl = 'DapBreakpoint',
-      },
-      {
-        name = 'DapStopped',
-        texthl = 'DapStopped',
-        text = icons.bookmark,
-        linehl = '',
-        numhl = 'DapStopped',
-      },
-    }
     local dap = require 'dap'
+    local sign = vim.fn.sign_define
+    sign(
+      'DapBreakpointCondition',
+      { text = '●', texthl = 'DapBreakpointCondition', linehl = '', numhl = '' }
+    )
+    sign('DapLogPoint', { text = '◆', texthl = 'DapLogPoint', linehl = '', numhl = '' })
+    sign(
+      'DapBreakpoint',
+      { texthl = 'DapBreakpoint', text = icons.bug, linehl = '', numhl = 'DapBreakpoint' }
+    )
+    sign(
+      'DapStopped',
+      { texthl = 'DapStopped', text = icons.bookmark, linehl = '', numhl = 'DapStopped' }
+    )
     local ui_ok, dapui = pcall(require, 'dapui')
     if not ui_ok then return end
     dap.listeners.before.event_exited['dapui_config'] = function()

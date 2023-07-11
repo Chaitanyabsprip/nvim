@@ -48,10 +48,12 @@ themes.catppuccin = {
         }
       end,
       integrations = {
+        dap = { enabled = true, enable_ui = true },
         gitsigns = true,
         harpoon = true,
         leap = true,
         markdown = true,
+        mason = true,
         mini = true,
         navic = { enabled = true },
         neotest = true,
@@ -73,7 +75,7 @@ themes.material = {
     'marko-cerovac/material.nvim',
     lazy = false,
     priority = 1000,
-    config = function() t().material.setup() end,
+    config = function() t().setup() end,
   },
   setup = function()
     local colors = require 'material.colors'
@@ -84,7 +86,7 @@ themes.material = {
         floating_windows = true, -- Enable contrast for floating windows
         non_current_windows = true, -- Enable contrasted background for non-current windows
       },
-      disable = { background = true },
+      disable = { background = false },
       styles = { -- Give comments style such as bold, italic, underline etc.
         comments = { italic = true },
         strings = { bold = true },
@@ -94,11 +96,12 @@ themes.material = {
         NotifyBackground = { bg = colors.editor.bg, fg = colors.editor.fg },
         CursorLine = { bg = '#1a1c25' },
         LeapBackdrop = { fg = '#545c7e' },
+        ['@text.reference'] = { guifg = 'cyan' },
       },
     }
     vim.g.material_style = 'deep ocean'
-    vim.cmd 'colorscheme material'
   end,
+  set = function() vim.cmd.colorscheme 'material' end,
 }
 
 themes.rosepine = {
@@ -107,7 +110,7 @@ themes.rosepine = {
     -- 'denspiro/rose-pine',
     -- 'sindrets/rose-pine-neovim',
     name = 'rose-pine',
-    config = function() require('plugins.ui.themes').rosepine.setup() end,
+    config = function() t().setup() end,
     lazy = false,
   },
   setup = function()
@@ -165,16 +168,16 @@ themes.rosepine = {
         LeapBackdrop = { fg = '#545c7e' },
       },
     }
-    vim.cmd.colorscheme 'rose-pine'
   end,
+  set = function() vim.cmd.colorscheme 'rose-pine' end,
 }
 
 themes.tokyonight = {
   spec = {
     'folke/tokyonight.nvim',
     lazy = false,
-    config = function() t().tokyonight.setup() end,
-    event = 'VeryLazy',
+    config = function() t().setup() end,
+    -- event = 'VeryLazy',
   },
   setup = function()
     local tokyonight = require 'tokyonight'
@@ -201,16 +204,53 @@ themes.tokyonight = {
       end,
       on_colors = function(colors) colors.border = '#7aa2f7' end,
     }
-    -- tokyonight.load()
   end,
+  set = function() require('tokyonight').load() end,
+}
+
+themes.kanagawa = {
+  spec = {
+    'rebelot/kanagawa.nvim',
+    lazy = false,
+    config = function() t().setup() end,
+  },
+  setup = function()
+    require('kanagawa').setup {
+      -- compile = false, -- enable compiling the colorscheme
+      -- undercurl = true, -- enable undercurls
+      -- commentStyle = { italic = true },
+      -- functionStyle = {},
+      -- keywordStyle = { italic = true },
+      -- statementStyle = { bold = true },
+      -- typeStyle = {},
+      transparent = true, -- do not set background color
+      -- dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+      -- terminalColors = true, -- define vim.g.terminal_color_{0,17}
+      -- colors = { -- add/modify theme and palette colors
+      --   palette = {},
+      --   theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
+      -- },
+      ---@diagnostic disable-next-line: unused-local
+      -- overrides = function(colors) -- add/modify highlights
+      --   return {}
+      -- end,
+      -- theme = 'dragon', -- Load "wave" theme when 'background' option is not set
+      -- background = { -- map the value of 'background' option to a theme
+      --   dark = 'dragon', -- try "dragon" !
+      --   light = 'lotus',
+      -- },
+    }
+  end,
+  set = function() vim.cmd.colorscheme 'kanagawa' end,
 }
 
 themes.setup = function() themes[config().theme.name].set() end
 
 themes.spec = {
-  -- themes.catppuccin.spec,
+  -- themes.kanagawa.spec,
+  themes.catppuccin.spec,
   -- themes.rosepine.spec,
-  themes.material.spec,
+  -- themes.material.spec,
   themes.tokyonight.spec,
 }
 

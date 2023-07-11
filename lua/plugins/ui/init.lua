@@ -10,22 +10,18 @@ function ui.highlight_override()
   elseif vim.g.colors_name == 'nightfox' then
     vim.cmd [[ hi! link TelescopeNormal NvimTreeNormal ]]
   end
-  vim.cmd [[ hi! CursorLineNr guifg=#605180 gui=bold ]]
-  vim.cmd [[ hi! link FoldColumn Comment ]]
-  vim.cmd [[ hi! link Folded Comment ]]
+  -- vim.cmd [[ hi! CursorLineNr guifg=#605180 gui=bold ]]
+  -- vim.cmd [[ hi! link FoldColumn Comment ]]
+  -- vim.cmd [[ hi! link Folded Comment ]]
   -- vim.cmd [[ hi! InlayHints guifg=#555169 ctermfg=235 ]]
   -- vim.cmd [[ hi! LineNr guifg=#1f2335 ]]
-  vim.cmd [[ hi! clear CursorLine ]]
+  -- vim.cmd [[ hi! clear CursorLine ]]
 end
 
 ui.dressing = {
   spec = {
     'stevearc/dressing.nvim',
-    config = {
-      select = {
-        backend = { 'telescope', 'nui', 'builtin' },
-      },
-    },
+    config = { select = { backend = { 'telescope', 'nui', 'builtin' } } },
     event = 'VeryLazy',
   },
 }
@@ -33,12 +29,22 @@ ui.dressing = {
 ui.headlines = {
   spec = {
     'lukas-reineke/headlines.nvim',
-    config = {
-      markdown = {
-        fat_headline_lower_string = '▀',
-      },
-    },
-    ft = { 'markdown', 'md', 'rmd' },
+    config = function()
+      vim.cmd [[highlight Headline1 guibg=#1E2718]]
+      vim.cmd [[highlight Headline2 guibg=#21262D]]
+      vim.cmd [[highlight CodeBlock guibg=#1C1C1C]]
+      vim.cmd [[highlight Dash guibg=#1C1C1C gui=bold]]
+      require('headlines').setup {
+        markdown = {
+          -- fat_headline_lower_string = "🬂",
+          fat_headline_lower_string = '▀',
+          dash_string = '─',
+          fat_headlines = true,
+          fat_headline_upper_string = '▃',
+        },
+      }
+    end,
+    ft = { 'markdown', 'md', 'rmd', 'rst' },
   },
 }
 
@@ -50,7 +56,6 @@ ui.incline = {
       local function get_diagnostic_label(props)
         local icons = { error = '', warn = '', info = '', hint = '' }
         local label = {}
-
         for severity, icon in pairs(icons) do
           local n = #vim.diagnostic.get(
             props.buf,
@@ -63,17 +68,13 @@ ui.incline = {
         if #label > 0 then table.insert(label, { '| ' }) end
         return label
       end
-
       local function get_git_diff(props)
         local icons = { removed = '', changed = '', added = '' }
         local labels = {}
         local signs = vim.api.nvim_buf_get_var(props.buf, 'gitsigns_status_dict')
         for name, icon in pairs(icons) do
           if tonumber(signs[name]) and signs[name] > 0 then
-            table.insert(labels, {
-              icon .. ' ' .. signs[name] .. ' ',
-              group = 'Diff' .. name,
-            })
+            table.insert(labels, { icon .. ' ' .. signs[name] .. ' ', group = 'Diff' .. name })
           end
         end
         if #labels > 0 then table.insert(labels, { '| ' }) end
@@ -174,7 +175,10 @@ ui.styler = {
     event = 'VeryLazy',
     config = function()
       require('styler').setup {
-        themes = { greeter = { colorscheme = 'tokyonight', background = 'dark' } },
+        themes = {
+          greeter = { colorscheme = 'tokyonight', background = 'dark' },
+          markdown = { colorscheme = 'catppuccin', background = 'dark' },
+        },
       }
     end,
   },
