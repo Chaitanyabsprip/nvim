@@ -82,16 +82,25 @@ function completion.cmp.setup()
       { name = 'path' },
     },
     formatting = {
-      format = lspkind.cmp_format {
-        mode = 'symbol',
-        menu = {
-          buffer = '[Buffer]',
-          nvim_lsp = '[LSP]',
-          luasnip = '[LuaSnip]',
-          nvim_lua = '[Lua]',
-          latex_symbols = '[Latex]',
-        },
-      },
+      fields = { 'kind', 'abbr', 'menu' },
+      format = function(entry, vim_item)
+        local fmt = lspkind.cmp_format {
+          mode = 'symbol_text',
+          maxwidth = 50,
+          menu = {
+            buffer = 'Buffer',
+            nvim_lsp = 'LSP',
+            luasnip = 'LuaSnip',
+            nvim_lua = 'Lua',
+            latex_symbols = 'Latex',
+            path = 'Path',
+          },
+        }(entry, vim_item)
+        local strings = vim.split(fmt.kind, '%s', { trimempty = true })
+        fmt.kind = ' ' .. (strings[1] or '') .. ' '
+        fmt.menu = '\t\t(' .. (fmt.menu or '') .. ')'
+        return fmt
+      end,
     },
     window = {
       completion = {
