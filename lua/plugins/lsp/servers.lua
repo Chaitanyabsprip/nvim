@@ -16,7 +16,7 @@ end
 servers.null = {
   spec = {
     'jose-elias-alvarez/null-ls.nvim',
-    ft = { 'lua', 'fish', 'yaml' },
+    ft = { 'lua', 'fish', 'yaml', 'markdown', 'md', 'rmd', 'rst', 'python' },
     config = function() require('plugins.lsp.servers').null.setup() end,
   },
 
@@ -30,6 +30,29 @@ servers.null = {
       filetypes = { 'go', 'javascript', 'typescript', 'lua', 'python', 'c', 'cpp' },
     }
 
+    local python = {
+      isort_opts = {
+        extra_args = { '--quiet' },
+      },
+      black_opts = {
+        extra_args = { '--quiet', '-l', '80' },
+      },
+      flake8_opts = {
+        extra_args = {
+          '--max-line-length=80',
+          '--ignore=W503, W504, W391',
+          '--exit-zero',
+          "--format='%f:%l:%c: %m'",
+        },
+      },
+      pylint_opts = {
+        extra_args = {
+          '-d',
+          'C0114,C0115,C0116',
+        },
+      },
+    }
+
     null_ls.setup {
       save_after_formatting = true,
       on_attach = lsp.common_on_attach,
@@ -38,8 +61,11 @@ servers.null = {
         code_actions.refactoring.with(refactoring_opts),
         code_actions.gitsigns,
         diagnostics.yamllint,
+        formatting.black.with(python.black_opts),
+        formatting.isort.with(python.isort_opts),
         formatting.fish_indent,
         formatting.stylua,
+        -- formatting.yapf.with(isort_opts),
       },
     }
     require 'mason-null-ls'
