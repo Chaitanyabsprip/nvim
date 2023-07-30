@@ -94,7 +94,7 @@ editing.surround = {
     'kylechui/nvim-surround',
     version = '*',
     event = 'VeryLazy',
-    config = { keymaps = { visual = 's' } },
+    opts = { keymaps = { visual = 's' } },
   },
 }
 
@@ -103,19 +103,20 @@ editing.ufo = {
     'kevinhwang91/nvim-ufo',
     event = 'BufReadPost',
     dependencies = { 'kevinhwang91/promise-async' },
-    config = function() require('plugins.editing').ufo.setup() end,
+    config = function(plugin, opts) require('plugins.editing').ufo.setup(plugin, opts) end,
+    opts = { close_fold_kinds = { 'imports', 'comment' } },
   },
-  setup = function()
+  setup = function(_, opts)
     local nnoremap = require('hashish').nnoremap
-    local opts = { bufnr = 0, silent = true }
-    nnoremap 'zR'(require('ufo').openAllFolds) 'Open all folds'
-    nnoremap 'zM'(require('ufo').closeAllFolds) 'Close all folds'
+    local ufo = require 'ufo'
+    nnoremap 'zR'(ufo.openAllFolds) 'Open all folds'
+    nnoremap 'zM'(ufo.closeAllFolds) 'Close all folds'
     local fold_win
     local hover = function()
       if fold_win and vim.api.nvim_win_is_valid(fold_win) then
         vim.api.nvim_set_current_win(fold_win)
       end
-      fold_win = require('ufo').peekFoldedLinesUnderCursor()
+      fold_win = ufo.peekFoldedLinesUnderCursor()
       if not fold_win then
         vim.lsp.buf.hover()
       else
@@ -123,9 +124,31 @@ editing.ufo = {
         vim.api.nvim_set_option_value('winblend', 0, { win = fold_win })
       end
     end
-    require('lsp.capabilities').hover.callback =
-      function() nnoremap 'K'(hover)(opts) 'Show hover info of symbol under cursor' end
-    require('ufo').setup()
+    require('lsp.capabilities').hover.callback = function(_, bufnr)
+      nnoremap 'K'(hover) { bufnr = bufnr, silent = true } 'Show hover info of symbol under cursor'
+    end
+    local ftMap = {
+      markdown = 'treesitter',
+    }
+
+    ---@param bufnr number
+    ---@return Promise
+    local function customizeSelector(bufnr)
+      local function handleFallbackException(err, providerName)
+        if type(err) == 'string' and err:match 'UfoFallbackException' then
+          return require('ufo').getFolds(bufnr, providerName)
+        else
+          return require('promise').reject(err)
+        end
+      end
+
+      return require('ufo')
+        .getFolds(bufnr, 'lsp')
+        :catch(function(err) return handleFallbackException(err, 'treesitter') end)
+        :catch(function(err) return handleFallbackException(err, 'indent') end)
+    end
+    opts.provider_selector = function(_, filetype, _) return ftMap[filetype] or customizeSelector end
+    ufo.setup(opts)
   end,
 }
 

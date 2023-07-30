@@ -4,7 +4,7 @@ session.auto_session = {
   spec = {
     'rmagatti/auto-session',
     init = function() vim.api.nvim_create_user_command('Continue', 'SessionRestore', { nargs = 0 }) end,
-    config = {
+    opts = {
       log_level = 'error',
       auto_session_enable_last_session = false,
       auto_session_root_dir = vim.fn.stdpath 'data' .. '/sessions/',

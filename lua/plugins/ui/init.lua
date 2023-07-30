@@ -21,7 +21,7 @@ end
 ui.dressing = {
   spec = {
     'stevearc/dressing.nvim',
-    config = { select = { backend = { 'telescope', 'nui', 'builtin' } } },
+    opts = { select = { backend = { 'telescope', 'nui', 'builtin' } } },
     event = 'VeryLazy',
   },
 }
@@ -97,9 +97,11 @@ ui.incline = {
         render = function(props)
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
           local icon, color = require('nvim-web-devicons').get_icon_color(filename)
-          local modified = vim.api.nvim_buf_get_option(props.buf, 'modified') and { '~ ' } or { '' }
+          local modified = vim.api.nvim_get_option_value('modified', { buf = props.buf })
+              and { '~ ' }
+            or { '' }
           return {
-            props.focused and { '▍', group = 'VertSplit' } or { ' ' },
+            props.focused and { '▍ ', group = 'VertSplit' } or { ' ' },
             { get_diagnostic_label(props) },
             { get_git_diff(props) },
             modified,
@@ -116,12 +118,12 @@ ui.incline = {
 ui.noice = {
   spec = {
     'folke/noice.nvim',
-    config = function() require('plugins.ui').noice.setup() end,
-    dependencies = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      { 'rcarriga/nvim-notify', opts = { render = 'compact', top_down = false } },
+    },
     event = 'VeryLazy',
-  },
-  setup = function()
-    require('noice').setup {
+    opts = {
       cmdline = {
         format = {
           substitute = {
@@ -156,7 +158,11 @@ ui.noice = {
       },
       views = {
         notify = { win_options = { winblend = 0 } },
-        mini = { win_options = { winhighlight = {}, winblend = 0 } },
+        mini = {
+          align = 'message-center',
+          position = { col = '50%' },
+          win_options = { winhighlight = {}, winblend = 0 },
+        },
         popup = { position = { row = '23', col = '50%' } },
         popupmenu = { position = { row = '23', col = '50%' } },
         cmdline_popup = {
@@ -165,22 +171,19 @@ ui.noice = {
           win_options = { winhighlight = { Normal = 'NormalFloat' } },
         },
       },
-    }
-  end,
+    },
+  },
 }
 
 ui.styler = {
   spec = {
     'folke/styler.nvim',
     event = 'VeryLazy',
-    config = function()
-      require('styler').setup {
-        themes = {
-          greeter = { colorscheme = 'tokyonight', background = 'dark' },
-          markdown = { colorscheme = 'catppuccin', background = 'dark' },
-        },
-      }
-    end,
+    opts = {
+      themes = {
+        markdown = { colorscheme = 'catppuccin', background = 'dark' },
+      },
+    },
   },
 }
 
@@ -188,10 +191,12 @@ ui.ansi = {
   'm00qek/baleia.nvim',
   event = 'BufReadPost',
   config = function()
-    vim.cmd [[
-      let s:baleia = luaeval("require('baleia').setup { }")
-      command! BaleiaColorize call s:baleia.once(bufnr('%'))
-    ]]
+    local baleia = require('baleia').setup {}
+    vim.api.nvim_create_user_command(
+      'BaleiaColorize',
+      function() baleia.once(vim.api.nvim_get_current_buf()) end,
+      {}
+    )
   end,
 }
 
@@ -200,11 +205,9 @@ ui.treesitter = {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     event = 'BufReadPost',
-    dependencies = { 'p00f/nvim-ts-rainbow', 'nvim-treesitter/playground' },
-    config = function() require('plugins.ui').treesitter.setup() end,
-  },
-  setup = function()
-    require('nvim-treesitter.configs').setup {
+    dependencies = { 'salfum/nvim-ts-rainbow', 'nvim-treesitter/playground' },
+    config = function(_, opts) require('plugins.ui').treesitter.setup(opts) end,
+    opts = {
       ensure_installed = {
         'bash',
         'dart',
@@ -226,7 +229,7 @@ ui.treesitter = {
         'yaml',
       },
       highlight = { enable = true },
-      indent = { enable = true },
+      indent = { enable = true, disable = { 'dart' } },
       rainbow = { enable = true, max_file_lines = 3000 },
       playground = {
         enable = true,
@@ -249,14 +252,15 @@ ui.treesitter = {
         use_virtual_text = true,
         lint_events = { 'BufWrite', 'CursorHold' },
       },
-    }
-  end,
+    },
+  },
+  setup = function(opts) require('nvim-treesitter.configs').setup(opts) end,
 }
 
 ui.win_sep = {
   spec = {
     'nvim-zh/colorful-winsep.nvim',
-    config = { no_exec_files = { 'lazy', 'TelescopePrompt', 'mason', 'CompetiTest' } },
+    opts = { no_exec_files = { 'lazy', 'TelescopePrompt', 'mason', 'CompetiTest' } },
     event = 'BufWinEnter',
   },
 }
@@ -265,9 +269,7 @@ ui.zen_mode = {
   spec = {
     'folke/zen-mode.nvim',
     cmd = 'ZenMode',
-    config = function()
-      require('zen-mode').setup { options = { number = true, relativenumber = true } }
-    end,
+    opts = { options = { number = true, relativenumber = true } },
   },
 }
 

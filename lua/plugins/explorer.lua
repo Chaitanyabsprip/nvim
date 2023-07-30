@@ -50,7 +50,7 @@ explorer.harpoon = {
         desc = 'Jump to file 4 in harpoon',
       },
     },
-    config = { global_settings = { mark_branch = true } },
+    opts = { global_settings = { mark_branch = true } },
   },
 }
 

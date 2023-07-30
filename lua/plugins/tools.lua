@@ -7,7 +7,7 @@ tools.cellular_automation = {
 tools.colorizer = {
   'NvChad/nvim-colorizer.lua',
   cmd = { 'ColorizerAttachToBuffer', 'ColorizerToggle' },
-  config = {
+  opts = {
     filetypes = { '*', '!lazy' },
     buftype = { '*', '!prompt', '!nofile' },
     user_default_options = {
@@ -49,24 +49,22 @@ tools.neotest = {
       { 'nvim-neotest/neotest-go' },
       { 'antoinemadec/FixCursorHold.nvim' },
     },
-    config = function() require('plugins.tools').neotest.setup() end,
+    config = function(_, opts) require('plugins.tools').neotest.setup(opts) end,
     version = '2.*',
     event = 'VeryLazy',
-  },
-  setup = function()
-    local nnoremap = require('hashish').nnoremap
-
-    require('neotest').setup {
+    opts = {
       quickfix = { open = false },
       status = { icons = true, virtual_text = false },
       icons = {
         running_animated = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
       },
-      adapters = {
-        require 'neotest-dart' { command = 'flutter', use_lsp = true },
-        require 'neotest-go',
-      },
-    }
+    },
+  },
+  setup = function(config)
+    config.adapters =
+      { require 'neotest-dart' { command = 'flutter', use_lsp = true }, require 'neotest-go' }
+    local nnoremap = require('hashish').nnoremap
+    require('neotest').setup(config)
     local neotest_config = vim.api.nvim_create_augroup('NeotestConfig', { clear = true })
     for _, ft in ipairs { 'output', 'attach', 'summary' } do
       vim.api.nvim_create_autocmd('FileType', {
@@ -80,11 +78,12 @@ tools.neotest = {
       })
     end
 
+    local open_opts = { enter = true }
     nnoremap '<leader>tn'(function() require('neotest').run.run() end) 'Run nearest test'
     nnoremap '<leader>tl'(function() require('neotest').run.run_last() end) 'Run nearest test'
     nnoremap '<leader>ta'(function() require('neotest').run.run(vim.fn.expand '%') end) 'Run test for file'
     nnoremap '<leader>ts'(function() require('neotest').summary.toggle() end) 'Toggle tests summary'
-    nnoremap '<leader>to'(function() require('neotest').output.open { enter = true } end) 'Toggle tests summary'
+    nnoremap '<leader>to'(function() require('neotest').output.open(open_opts) end) 'Toggle tests summary'
   end,
 }
 
@@ -115,6 +114,14 @@ tools.startuptime = {
     'dstein64/vim-startuptime',
     cmd = 'StartupTime',
     config = function() vim.g.startuptime_tries = 50 end,
+  },
+}
+
+tools.hologram = {
+  spec = {
+    'edluffy/hologram.nvim',
+    opts = { auto_display = true },
+    ft = { 'markdown', 'md', 'rst', 'rmd' },
   },
 }
 
@@ -222,23 +229,36 @@ tools.mkdnflow = {
 tools.obsidian = {
   spec = {
     'epwalsh/obsidian.nvim',
-    cmd = { 'ObsidianNew', 'ObsidianSearch' },
+    cmd = {
+      'ObsidianNew',
+      'ObsidianSearch',
+      'Today',
+      'Yesterday',
+      'Notes',
+      'SearchNotes',
+    },
     ft = { 'md', 'markdown', 'rmd', 'rst' },
     opts = {
       dir = '~/Projects/Notes',
       -- Optional, if you keep notes in a specific subdirectory of your vault.
-      notes_subdir = 'Transient',
+      notes_subdir = 'transient',
       completion = {
         nvim_cmp = true,
         min_chars = 2,
         new_notes_location = 'notes_subdir',
       },
       daily_notes = {
-        folder = 'Transient',
+        folder = 'transient',
         date_format = '%Y-%m-%d',
       },
       -- Optional, alternatively you can customize the frontmatter data.
-      note_frontmatter_func = function(note)
+      follow_url_func = function(url) vim.fn.jobstart { 'open', url } end,
+      use_advanced_uri = true,
+      open_app_foreground = true,
+      finder = 'telescope.nvim',
+    },
+    config = function(_, opts)
+      opts.note_frontmatter_func = function(note)
         -- This is equivalent to the default frontmatter function.
         local out = { id = note.id, aliases = note.aliases, tags = note.tags }
         -- `note.metadata` contains any manually added fields in the frontmatter.
@@ -249,23 +269,14 @@ tools.obsidian = {
           end
         end
         return out
-      end,
-      follow_url_func = function(url)
-        vim.fn.jobstart { 'open', url } -- Mac OS
-        -- vim.fn.jobstart({"xdg-open", url})  -- linux
-      end,
-      use_advanced_uri = true,
-      open_app_foreground = true,
-      finder = 'telescope.nvim',
-    },
-    config = function(_, opts)
-      local nmap = require('hashish').nmap
+      end
+      local command = vim.api.nvim_create_user_command
       local obsidian = require 'obsidian'
       obsidian.setup(opts)
-      local function follow_link()
-        return obsidian.util.cursor_on_markdown_link() and '<cmd>ObsidianFollowLink<CR>' or 'gf'
-      end
-      nmap 'gf'(follow_link) { expr = true } 'Jump to file under cursor'
+      command('Today', 'ObsidianToday', {})
+      command('Yesterday', 'ObsidianYesterday', {})
+      command('SearchNotes', 'ObsidianSemanticSearch', {})
+      command('Notes', 'ObsidianSemanticSearch', {})
     end,
   },
 }
@@ -285,12 +296,11 @@ tools.spec = {
   tools.colorizer,
   tools.drop.spec,
   tools.fish.spec,
+  -- tools.hologram.spec,
   tools.neotest.spec,
-  -- tools.mkdnflow.spec,
   tools.obsidian.spec,
   tools.peek.spec,
   tools.startuptime.spec,
-  -- tools.whichkey.spec,
 }
 
 return tools

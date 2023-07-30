@@ -102,8 +102,9 @@ lsp.navic = {
       -- end
       navic.setup { highlight = true, separator = '  ', depth_limit = 6 }
       vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
-      require('lsp.capabilities').document_symbols.callback =
-        function(client, bufnr) navic.attach(client, bufnr) end
+      require('lsp.capabilities').document_symbols.callback = function(client, bufnr)
+        navic.attach(client, bufnr)
+      end
     end,
   },
 }
@@ -115,7 +116,7 @@ lsp.refactoring = {
       vim.keymap.set(
         'v',
         '<leader>r',
-        function() require('refactoring').select_refactor() end,
+        function() require('refactoring').select_refactor {} end,
         { noremap = true, silent = true, expr = false }
       )
     end,
