@@ -4,6 +4,7 @@ local M = {}
 local function dap_configuration(_)
   local dap = require 'dap'
   dap.adapters.dart = {
+    enrich_config = function(config, on_config) on_config(config) end,
     type = 'executable',
     command = 'flutter',
     args = { 'debug-adapter' },
@@ -38,17 +39,11 @@ function M.will_rename_files(old_name, new_name, callback)
   end)
 end
 
-local function on_attach(client, bufnr)
-  lsp.common_on_attach(client, bufnr)
-  local nnoremap = require('hashish').nnoremap
-  nnoremap 'gr' '<cmd>FlutterRename<cr>' {} 'Flutter: Rename variable and related imports'
-end
-
 local function integrate_telescope()
   require('telescope').load_extension 'flutter'
   vim.keymap.set(
     'n',
-    '<leader>F',
+    '<leader>f',
     ":lua require('telescope').extensions.flutter.commands()<CR>",
     { noremap = true, silent = true }
   )
@@ -57,27 +52,32 @@ end
 M.config = {
   spec = {
     'akinsho/flutter-tools.nvim',
-    ft = { 'dart' },
+    ft = { 'dart', 'yaml' },
     config = function() require('plugins.lsp.servers').flutter.setup() end,
   },
   setup = function()
     local get_capabilities = require('plugins.lsp.completion').get_capabilities
     local lspconfig = require 'lspconfig'
     local init_options = {
-      onlyAnalyzeProjectsWithOpenFiles = true,
+      onlyAnalyzeProjectsWithOpenFiles = false,
       suggestFromUnimportedLibraries = true,
-      closingLabels = true,
+      closingLabels = false,
+      outline = false,
+      flutterOutline = false,
     }
     local root_dir =
       lspconfig.util.root_pattern('.git', '.gitignore', 'pubspec.yaml', vim.fn.getcwd())
     local settings = {
       completeFunctionCalls = true,
       enableSnippets = true,
+      enableSdkFormatter = true,
       includeDependenciesInWorkspaceSymbols = false,
-      renameFilesWithClasses = 'prompt',
+      renameFilesWithClasses = 'always',
       showTodos = false,
+      documentation = 'full',
       updateImportsOnRename = true,
     }
+
     local lsp_color = {
       enabled = true,
       background = true,
