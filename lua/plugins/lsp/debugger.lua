@@ -102,11 +102,7 @@ debugger.ui = {
           size = 40,
           position = 'right',
         },
-        {
-          elements = { { id = 'repl', size = 1 }, { id = 'console', size = 0 } },
-          size = 16,
-          position = 'bottom',
-        },
+        { elements = { { id = 'repl', size = 1 } }, size = 16, position = 'bottom' },
       },
     }
     local nnoremap = require('hashish').nnoremap
@@ -120,6 +116,7 @@ debugger.ui = {
       group = vim.api.nvim_create_augroup('ansi', { clear = true }),
       pattern = '*',
       callback = function()
+        vim.cmd.setlocal 'statuscolumn='
         if vim.bo.filetype == 'dap-repl' then
           require('baleia').setup({}).automatically(vim.api.nvim_get_current_buf())
         end
