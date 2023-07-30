@@ -1,11 +1,22 @@
 local explorer = {}
 explorer.fuzzy = require 'plugins.fuzzy.telescope'
 
-explorer.bqf = {
+explorer.better_qf = {
   spec = {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
-    config = function() require('bqf').setup {} end,
+    opts = function()
+      require 'pqf'
+      return {}
+    end,
+  },
+}
+
+explorer.pretty_qf = {
+  spec = {
+    'yorickpeterse/nvim-pqf',
+    event = 'VeryLazy',
+    opts = {},
   },
 }
 
@@ -177,9 +188,7 @@ explorer.project = {
     },
     event = 'VeryLazy',
     config = function()
-      require('project_nvim').setup {
-        ignore_lsp = { 'null-ls' },
-      }
+      require('project_nvim').setup { ignore_lsp = { 'null-ls' } }
       require('telescope').load_extension 'projects'
     end,
   },
@@ -188,11 +197,12 @@ explorer.project = {
 explorer.filetree = explorer.nvim_tree
 
 explorer.spec = {
-  explorer.bqf.spec,
+  explorer.better_qf.spec,
   explorer.filetree.spec,
   explorer.fuzzy.spec,
   explorer.harpoon.spec,
   explorer.project.spec,
+  explorer.pretty_qf.spec,
 }
 
 return explorer
