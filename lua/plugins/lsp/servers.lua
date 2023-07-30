@@ -11,7 +11,6 @@ local function extend(config)
     capabilities = get_capabilities(),
     root_dir = lspconfig.util.root_pattern(unpack(roots)),
   }
-  vim.print(roots)
   local updated_config = vim.tbl_deep_extend('force', config, defaults)
   return updated_config
 end

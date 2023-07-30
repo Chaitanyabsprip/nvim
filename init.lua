@@ -1,4 +1,3 @@
-vim.g.loaded_matchparen = 1
 local config = require 'config'
 config.options.disable_builtins()
 vim.g.mapleader = ' '

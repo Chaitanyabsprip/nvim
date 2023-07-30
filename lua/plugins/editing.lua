@@ -75,7 +75,7 @@ editing.matchparen = {
   spec = {
     'monkoose/matchparen.nvim',
     event = 'BufReadPost',
-    config = function() require('matchparen').setup {} end,
+    opts = {},
   },
 }
 

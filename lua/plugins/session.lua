@@ -31,7 +31,7 @@ session.persistence = {
     end,
     event = 'BufReadPre',
     cmd = { 'Continue' },
-    config = {
+    opts = {
       dir = vim.fn.expand(vim.fn.stdpath 'data' .. '/sessions/'),
       options = { 'buffers', 'curdir', 'winsize', 'resize', 'winpos', 'folds', 'tabpages', 'help' },
     },

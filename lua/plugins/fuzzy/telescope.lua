@@ -56,7 +56,6 @@ telescope = {
     branch = '0.1.x',
     dependencies = { 'nvim-lua/plenary.nvim' },
     cmd = { 'Telescope' },
-    event = 'VeryLazy',
     config = function() require('plugins.fuzzy.telescope').setup() end,
   },
 

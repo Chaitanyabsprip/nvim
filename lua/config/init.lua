@@ -53,33 +53,8 @@ config.options.disable_builtins = function()
     syntax off
     filetype off
   ]]
-  local disabled_built_ins = {
-    '2html_plugin',
-    -- 'fzf',
-    'getscript',
-    'getscriptPlugin',
-    'gzip',
-    'logiPat',
-    'man',
-    'matchit',
-    'matchparen',
-    'netrw',
-    'netrwFileHandlers',
-    'netrwPlugin',
-    'netrwSettings',
-    'rrhelper',
-    'shada_plugin',
-    'tar',
-    'tarPlugin',
-    'vimball',
-    'vimballPlugin',
-    'zip',
-    'zipPlugin',
-  }
 
-  for i = 1, #disabled_built_ins do
-    vim.g['loaded_' .. disabled_built_ins[i]] = 1
-  end
+  vim.g.editorconfig = false
 
   -- Skip some remote provider loading
   vim.g.loaded_python3_provider = 0

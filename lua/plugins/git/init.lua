@@ -69,17 +69,12 @@ git.git_conflict = {
   spec = {
     'akinsho/git-conflict.nvim',
     version = '*',
-    config = function() require('plugins.git').git_conflict.setup() end,
-    cmd = { 'GitConflictListQf' },
-    keys = { ']x', '[x' },
-  },
-  setup = function()
-    require('git-conflict').setup {
-      default_mappings = true,
+    event = 'VeryLazy',
+    opts = {
       disable_diagnostics = true,
       highlights = { incoming = 'DiffText', current = 'DiffAdd' },
-    }
-  end,
+    },
+  },
 }
 
 git.spec = { git.git_conflict.spec, git.gitsigns.spec }

@@ -30,7 +30,6 @@ plugin.setup = function()
   lazy.setup(plugin.spec, {
     defaults = { lazy = true },
     dev = { path = '~/Projects/Languages/Lua' },
-    cache = { disable_events = {} },
     performance = {
       rtp = {
         disabled_plugins = plugin.disabled_builtins,
