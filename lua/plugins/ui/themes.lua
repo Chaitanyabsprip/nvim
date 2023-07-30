@@ -1,4 +1,5 @@
 local themes = {}
+local utils = require 'utils'
 local config = function() return require 'plugins.ui.config' end
 
 local t = function() return require 'plugins.ui.themes' end
@@ -94,6 +95,14 @@ themes.catppuccin = {
           CmpItemKindVariable = { fg = c.base, bg = c.flamingo },
           NotifyBackground = { bg = c.base, fg = c.text },
           LeapBackdrop = { fg = '#545c7e' },
+          TelescopePromptPrefix = { bg = c.surface0, fg = c.red },
+          TelescopePromptNormal = { bg = c.surface0 },
+          TelescopePromptBorder = { bg = c.surface0 },
+          TelescopePreviewTitle = { bg = utils.darken(c.sky, 0.30, c.base), fg = c.text },
+          TelescopePromptTitle = { bg = c.red, fg = c.crust },
+          TelescopeResultsTitle = { bg = c.mantle, fg = c.mantle },
+          TelescopeNormal = { bg = c.mantle },
+          TelescopeBorder = { bg = c.mantle },
         }
       end,
       integrations = {
