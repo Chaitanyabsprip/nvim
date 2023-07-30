@@ -1,5 +1,5 @@
 local explorer = {}
-explorer.fuzzy = require 'plugins.fuzzy.telescope'
+explorer.fuzzy = require 'plugs.fuzzy.telescope'
 
 explorer.better_qf = {
   spec = {
@@ -70,7 +70,7 @@ explorer.nvim_tree = {
     'kyazdani42/nvim-tree.lua',
     dependencies = { 'kyazdani42/nvim-web-devicons' },
     cmd = { 'Explorer' },
-    config = function() require('plugins.explorer').nvim_tree.setup() end,
+    config = function() require('plugs.explorer').nvim_tree.setup() end,
     commit = '9c97e6449b0b0269bd44e1fd4857184dfa57bb4c',
   },
   setup = function()

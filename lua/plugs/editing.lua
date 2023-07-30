@@ -84,7 +84,7 @@ editing.mini_comment = {
     'echasnovski/mini.comment',
     version = '*',
     event = { 'BufReadPost' },
-    config = function() require('plugins.editing').mini_comment.setup() end,
+    config = function() require('plugs.editing').mini_comment.setup() end,
   },
   setup = function() require('mini.comment').setup {} end,
 }
@@ -103,7 +103,7 @@ editing.ufo = {
     'kevinhwang91/nvim-ufo',
     event = 'BufReadPost',
     dependencies = { 'kevinhwang91/promise-async' },
-    config = function(plugin, opts) require('plugins.editing').ufo.setup(plugin, opts) end,
+    config = function(plugin, opts) require('plugs.editing').ufo.setup(plugin, opts) end,
     opts = { close_fold_kinds = { 'imports', 'comment' } },
   },
   setup = function(_, opts)

@@ -3,18 +3,18 @@ local externals = {}
 externals.toggleterm = {
   spec = {
     'akinsho/toggleterm.nvim',
-    config = function() require('plugins.externals').toggleterm.setup() end,
+    config = function() require('plugs.externals').toggleterm.setup() end,
     event = 'VeryLazy',
     keys = {
       {
         '<leader>tf',
-        function() require('plugins.externals').terminal(true):toggle() end,
+        function() require('plugs.externals').terminal(true):toggle() end,
         noremap = true,
         desc = 'Toggle floating terminal',
       },
       {
         '<c-g>',
-        function() require('plugins.externals').gitui():toggle() end,
+        function() require('plugs.externals').gitui():toggle() end,
         noremap = true,
         desc = 'Toggle gitui in floating window',
       },

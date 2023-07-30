@@ -24,7 +24,7 @@ function M.button(keymap_opts)
 end
 
 function M.show()
-  local theme = require('plugins.ui.greeter.config').get_theme()
+  local theme = require('plugs.ui.greeter.config').get_theme()
 
   local buf = vim.api.nvim_get_current_buf()
   vim.bo[buf].filetype = 'greeter'
@@ -35,7 +35,8 @@ function M.show()
   M.button { shortcut = 'n', action = new_note() }
   M.button { shortcut = 'q', action = 'quit' }
 
-  -- local plugins = require('lazy').stats().count
+  local stats = require('lazy').stats()
+  vim.print(stats.times)
   local sections = {
     {
       text = string.rep('\n', 5),
@@ -58,10 +59,15 @@ function M.show()
       ]],
       hl_group = 'DashboardFooter',
     },
-    -- {
-    --   text = '🎉 Neovim loaded ' .. plugins .. ' plugins ' .. theme.statusline,
-    --   hl_group = 'DashboardFooter',
-    -- },
+    {
+      text = string.rep('\n', 5),
+    },
+    {
+      text = '🎉 Neovim loaded ' .. stats.loaded .. ' plugins in ' .. (math.floor(
+        stats.startuptime * 100 + 0.5
+      ) / 100) .. 'ms',
+      hl_group = 'DashboardHeader',
+    },
   }
 
   vim.bo[buf].modifiable = true

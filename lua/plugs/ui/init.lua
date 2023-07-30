@@ -1,8 +1,8 @@
 local ui = {}
 
-ui.colorscheme = require 'plugins.ui.themes'
-ui.statusline = require 'plugins.ui.statusline'
-ui.tabline = require 'plugins.ui.tabline'
+ui.colorscheme = require 'plugs.ui.themes'
+ui.statusline = require 'plugs.ui.statusline'
+ui.tabline = require 'plugs.ui.tabline'
 
 function ui.highlight_override()
   if vim.g.colors_name == 'rose-pine' then

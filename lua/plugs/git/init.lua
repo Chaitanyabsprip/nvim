@@ -3,7 +3,7 @@ local git = {}
 git.gitsigns = {
   spec = {
     'lewis6991/gitsigns.nvim',
-    config = function() require('plugins.git').gitsigns.setup() end,
+    config = function() require('plugs.git').gitsigns.setup() end,
     cond = function() return vim.loop.fs_stat '.git' end,
     event = 'BufReadPre',
   },

@@ -1,6 +1,6 @@
 local themes = {}
 local utils = require 'utils'
-local config = require 'plugins.ui.config'
+local config = require 'plugs.ui.config'
 
 local function cmp_highlight()
   local groups = {

@@ -53,7 +53,7 @@ end
 
 completion.cmp.spec = {
   'hrsh7th/nvim-cmp',
-  config = function(_, opts) require('plugins.lsp.completion').cmp.setup(opts) end,
+  config = function(_, opts) require('plugs.lsp.completion').cmp.setup(opts) end,
   event = 'InsertEnter',
   dependencies = {
     'hrsh7th/cmp-buffer',

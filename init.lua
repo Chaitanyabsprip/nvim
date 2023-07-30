@@ -1,7 +1,7 @@
 local config = require 'config'
 config.options.disable_builtins()
 vim.g.mapleader = ' '
-require('plugins').setup()
+require('plugs').setup()
 config.options.setup()
 require('config.mappings').setup()
 vim.api.nvim_create_autocmd('User', {
@@ -10,6 +10,7 @@ vim.api.nvim_create_autocmd('User', {
   callback = function()
     config.autocommands()
     config.options.lazy()
+    vim.cmd.packadd 'cfilter'
   end,
 })
 -- vim.lsp.set_log_level 'debug'

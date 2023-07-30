@@ -1,6 +1,6 @@
 local lsp = {}
 
-lsp.database = require 'plugins.lsp.database'
+lsp.database = require 'plugs.lsp.database'
 
 lsp.code_actions = {
   spec = {

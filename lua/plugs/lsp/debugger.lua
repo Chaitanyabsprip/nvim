@@ -3,7 +3,7 @@ local debugger = {}
 debugger.dap = {
   spec = {
     'mfussenegger/nvim-dap',
-    config = function() require('plugins.lsp.debugger').dap.setup() end,
+    config = function() require('plugs.lsp.debugger').dap.setup() end,
     keys = {
       {
         '<leader>b',

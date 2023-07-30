@@ -17,7 +17,7 @@ local function get_lsp_client(msg)
 end
 
 -- local function theme()
---   if vim.g.colors_name == 'noirbuddy' then return require('noirbuddy.plugins.lualine').theme end
+--   if vim.g.colors_name == 'noirbuddy' then return require('noirbuddy.plugs.lualine').theme end
 --   if vim.g.colors_name == 'material' then return 'material-nvim' end
 --   if vim.g.colors_name == 'rose-pine' then return 'rose-pine' end
 --   if vim.g.colors_name == 'catppuccin' then return 'catppuccin' end
@@ -31,7 +31,6 @@ statusline.lualine = {
     'hoob3rt/lualine.nvim',
     event = 'VeryLazy',
     opts = function()
-      print(vim.g.lualine_theme)
       return {
         options = {
           component_separators = { '', '' },

@@ -5,7 +5,7 @@ tabline.bufferline = {
   spec = {
     'akinsho/bufferline.nvim',
     version = 'v2.*',
-    config = function() require('plugins.ui.tabline').setup() end,
+    config = function() require('plugs.ui.tabline').setup() end,
     event = 'BufReadPre',
   },
 

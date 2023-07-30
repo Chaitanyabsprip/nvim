@@ -54,7 +54,7 @@ M.config = {
     'akinsho/flutter-tools.nvim',
     ft = { 'dart', 'yaml' },
     opts = function()
-      local get_capabilities = require('plugins.lsp.completion').get_capabilities
+      local get_capabilities = require('plugs.lsp.completion').get_capabilities
       local lspconfig = require 'lspconfig'
       local init_options = {
         onlyAnalyzeProjectsWithOpenFiles = false,

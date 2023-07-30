@@ -140,8 +140,8 @@ end
 
 function config.options.lazy()
   vim.cmd 'syntax on'
-  require('plugins.ui').setup()
-  require('plugins.ui.greeter').setup()
+  require('plugs.ui').setup()
+  require('plugs.ui.greeter').setup()
 end
 
 return config

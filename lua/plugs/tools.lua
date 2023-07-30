@@ -43,7 +43,7 @@ tools.neotest = {
       { 'nvim-neotest/neotest-go' },
       { 'antoinemadec/FixCursorHold.nvim' },
     },
-    config = function(_, opts) require('plugins.tools').neotest.setup(opts) end,
+    config = function(_, opts) require('plugs.tools').neotest.setup(opts) end,
     version = '2.*',
     event = 'VeryLazy',
     opts = {

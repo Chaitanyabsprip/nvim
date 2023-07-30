@@ -9,7 +9,7 @@ snap.spec = {
     '<leader>fo',
     '<leader>fn',
   },
-  config = function() require('plugins.fuzzy.snap').setup() end,
+  config = function() require('plugs.fuzzy.snap').setup() end,
 }
 
 snap.setup = function()
