@@ -23,6 +23,7 @@ servers.null = {
   setup = function()
     local null_ls = require 'null-ls'
     local code_actions = null_ls.builtins.code_actions
+    local hover = null_ls.builtins.hover
     local formatting = null_ls.builtins.formatting
     local get_capabilities = require('plugins.lsp.completion').get_capabilities
     local diagnostics = null_ls.builtins.diagnostics
@@ -30,42 +31,28 @@ servers.null = {
       filetypes = { 'go', 'javascript', 'typescript', 'lua', 'python', 'c', 'cpp' },
     }
 
-    local python = {
-      isort_opts = {
-        extra_args = { '--quiet' },
-      },
-      black_opts = {
-        extra_args = { '--quiet', '-l', '80' },
-      },
-      flake8_opts = {
-        extra_args = {
-          '--max-line-length=80',
-          '--ignore=W503, W504, W391',
-          '--exit-zero',
-          "--format='%f:%l:%c: %m'",
-        },
-      },
-      pylint_opts = {
-        extra_args = {
-          '-d',
-          'C0114,C0115,C0116',
-        },
-      },
-    }
-
     null_ls.setup {
       save_after_formatting = true,
       on_attach = lsp.common_on_attach,
       capabilities = get_capabilities(),
       sources = {
-        code_actions.refactoring.with(refactoring_opts),
         code_actions.gitsigns,
+        code_actions.refactoring.with(refactoring_opts),
+        diagnostics.markdownlint,
+        diagnostics.codespell.with { filetypes = { 'markdown' } },
         diagnostics.yamllint,
-        formatting.black.with(python.black_opts),
-        formatting.isort.with(python.isort_opts),
+        formatting.beautysh,
+        formatting.black.with { extra_args = { '--quiet', '-l', '80' } },
+        formatting.deno_fmt.with {
+          filetypes = { 'markdown' },
+          extra_args = { '--prose-wrap="preserve"' },
+        },
         formatting.fish_indent,
+        formatting.isort.with { extra_args = { '--quiet' } },
+        formatting.markdownlint,
         formatting.stylua,
-        -- formatting.yapf.with(isort_opts),
+        formatting.shfmt,
+        hover.dictionary,
       },
     }
     require 'mason-null-ls'
