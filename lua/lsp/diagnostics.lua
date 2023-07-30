@@ -1,5 +1,4 @@
 local diagnostics = {}
--- Open folds under the cursor
 
 local function get_qf_diagnostics(bufnr, severity)
   vim.g.d_bufnr = bufnr
@@ -40,7 +39,6 @@ local function get_diagnostics(bufnr, severity)
     if #items == 1 then return jump_to_location(items[1]) end
     vim.g.qf_source = 'diagnostics'
     set_list(items, scope)
-    vim.api.nvim_command 'botright copen'
   end
 end
 
@@ -70,7 +68,6 @@ function diagnostics.on_attach(_, bufnr)
   nnoremap ',p' '<cmd>lua vim.diagnostic.goto_prev()<cr>'(opts) 'Go to the previous diagnostic'
 
   local group = vim.api.nvim_create_augroup('update_diagnostics', { clear = true })
-
   vim.api.nvim_create_autocmd('DiagnosticChanged', {
     group = group,
     callback = require('utils').debounce(300, function()
@@ -78,6 +75,10 @@ function diagnostics.on_attach(_, bufnr)
       local qf_items = get_qf_diagnostics(vim.g.d_bufnr, vim.g.d_severity)
       vim.fn.setqflist({}, 'r', { title = 'Diagnostics', items = qf_items })
     end),
+  })
+  vim.api.nvim_create_autocmd('WinLeave', {
+    group = group,
+    callback = function() vim.g.qf_source = nil end,
   })
 end
 
