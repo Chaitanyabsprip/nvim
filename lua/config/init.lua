@@ -9,6 +9,17 @@ function M.get_signs(win)
     vim.fn.sign_getplaced(buf, { group = '*', lnum = vim.v.lnum })[1].signs
   )
 end
+
+M.fold = {
+  display = function(lnum)
+    local icon = ' '
+    if vim.fn.foldlevel(lnum) <= 0 then return icon end -- Line isn't in folding range
+    if vim.fn.foldlevel(lnum) <= vim.fn.foldlevel(lnum - 1) then return icon end -- Not the first line of folding range
+    icon = vim.v.virtnum == 0 and (vim.fn.foldclosed(lnum) == -1 and '' or '') or ' '
+    return icon
+  end,
+}
+
 function config.status_column()
   local win = vim.g.statusline_winid
   if vim.wo[win].signcolumn == 'no' then return '' end
@@ -22,16 +33,18 @@ function config.status_column()
   end
 
   local nu = ' '
-  if vim.wo[win].number and vim.wo[win].relativenumber and vim.v.virtnum == 0 then
-    nu = [[%{v:lnum}]]
-  end
+  if vim.wo[win].number and vim.v.virtnum == 0 then nu = vim.v.lnum end
+
   local components = {
-    sign and ('%#' .. (sign.texthl or 'DiagnosticInfo') .. '#' .. sign.text .. '%*') or '  ',
+    vim.v.virtnum == 0
+        and sign
+        and ('%#' .. (sign.texthl or 'DiagnosticInfo') .. '#' .. sign.text .. '%*')
+      or ' ',
+    M.fold.display(vim.v.lnum),
     [[%=]],
     nu .. ' ',
     git_sign and ('%#' .. git_sign.texthl .. '#' .. git_sign.text .. '%*') or '  ',
   }
-  print(table.concat(components, ''))
   return table.concat(components, '')
 end
 
