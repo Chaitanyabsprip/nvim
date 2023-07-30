@@ -5,12 +5,8 @@ lsp.database = require 'plugins.lsp.database'
 lsp.code_actions = {
   spec = {
     'Chaitanyabsprip/lsp-fastaction.nvim',
-    config = function() require('plugins.lsp').code_actions.setup() end,
     dev = true,
-  },
-  setup = function()
-    local fastaction = require 'lsp-fastaction'
-    local opts = {
+    opts = {
       hide_cursor = true,
       action_data = {
         dart = {
@@ -29,41 +25,35 @@ lsp.code_actions = {
           { order = 5, pattern = 'extract local', key = 'v' },
         },
       },
-    }
-
-    fastaction.setup(opts)
-  end,
+    },
+  },
 }
 
 lsp.lsp_lines = {
   spec = {
     url = 'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     event = 'BufReadPost',
-    config = function() require('lsp_lines').setup() end,
+    opts = {},
   },
 }
 
 lsp.mason = {
   spec = {
     'williamboman/mason.nvim',
-    config = function() require('mason').setup() end,
     dependencies = { 'RubixDev/mason-update-all' },
+    opts = {},
   },
 }
 
-lsp.mason_update = {
-  spec = {
-    'RubixDev/mason-update-all',
-    config = function() require('mason-update-all').setup() end,
-  },
-}
+lsp.mason_update = { spec = { 'RubixDev/mason-update-all', opts = {} } }
 
 lsp.mason_nullls = {
   spec = {
     'jay-babu/mason-null-ls.nvim',
-    config = function()
+    opts = { automatic_installation = true },
+    config = function(_, opts)
       require 'mason'
-      require('mason-null-ls').setup { automatic_installation = true }
+      require('mason-null-ls').setup(opts)
     end,
   },
 }
@@ -71,11 +61,10 @@ lsp.mason_nullls = {
 lsp.mason_lspconfig = {
   spec = {
     'williamboman/mason-lspconfig.nvim',
-    config = function()
+    opts = { automatic_installation = true },
+    config = function(_, opts)
       require 'mason'
-      require('mason-lspconfig').setup {
-        automatic_installation = true,
-      }
+      require('mason-lspconfig').setup(opts)
     end,
   },
 }
@@ -102,27 +91,12 @@ lsp.navic = {
       -- end
       navic.setup { highlight = true, separator = '  ', depth_limit = 6 }
       vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
-      require('lsp.capabilities').document_symbols.callback = function(client, bufnr)
-        navic.attach(client, bufnr)
-      end
+      require('lsp.capabilities').document_symbols.callback = navic.attach
     end,
   },
 }
 
-lsp.refactoring = {
-  spec = {
-    'ThePrimeagen/refactoring.nvim',
-    init = function()
-      vim.keymap.set(
-        'v',
-        '<leader>r',
-        function() require('refactoring').select_refactor {} end,
-        { noremap = true, silent = true, expr = false }
-      )
-    end,
-    config = true,
-  },
-}
+lsp.refactoring = { spec = { 'ThePrimeagen/refactoring.nvim', opts = {} } }
 
 lsp.rename = {
   spec = {

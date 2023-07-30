@@ -20,44 +20,46 @@ servers.null = {
   spec = {
     'jose-elias-alvarez/null-ls.nvim',
     ft = { 'lua', 'fish', 'yaml', 'markdown', 'md', 'rmd', 'rst', 'python' },
-    config = function() require('plugins.lsp.servers').null.setup() end,
-  },
+    config = function(_, opts) require('plugins.lsp.servers').null.setup(opts) end,
+    opts = function()
+      local get_capabilities = require('plugins.lsp.completion').get_capabilities
+      local builtins = require('null-ls').builtins
+      local code_actions = builtins.code_actions
+      local hover = builtins.hover
+      local formatting = builtins.formatting
+      local diagnostics = builtins.diagnostics
+      local refactoring_opts = {
+        filetypes = { 'go', 'javascript', 'typescript', 'lua', 'python', 'c', 'cpp' },
+      }
 
-  setup = function()
-    local null = require 'null-ls'
-    local code_actions = null.builtins.code_actions
-    local hover = null.builtins.hover
-    local formatting = null.builtins.formatting
-    local get_capabilities = require('plugins.lsp.completion').get_capabilities
-    local diagnostics = null.builtins.diagnostics
-    local refactoring_opts = {
-      filetypes = { 'go', 'javascript', 'typescript', 'lua', 'python', 'c', 'cpp' },
-    }
-
-    null.setup {
-      save_after_formatting = true,
-      on_attach = lsp.on_attach,
-      capabilities = get_capabilities(),
-      sources = {
-        code_actions.gitsigns,
-        code_actions.refactoring.with(refactoring_opts),
-        diagnostics.markdownlint,
-        diagnostics.codespell.with { filetypes = { 'markdown' } },
-        diagnostics.yamllint,
-        formatting.beautysh,
-        formatting.black.with { extra_args = { '--quiet', '-l', '80' } },
-        formatting.deno_fmt.with {
-          filetypes = { 'markdown' },
-          extra_args = { '--prose-wrap="preserve"' },
+      return {
+        save_after_formatting = true,
+        on_attach = lsp.on_attach,
+        capabilities = get_capabilities(),
+        sources = {
+          code_actions.gitsigns,
+          code_actions.refactoring.with(refactoring_opts),
+          diagnostics.markdownlint,
+          diagnostics.codespell.with { filetypes = { 'markdown' } },
+          diagnostics.yamllint,
+          formatting.beautysh,
+          formatting.black.with { extra_args = { '--quiet', '-l', '80' } },
+          formatting.deno_fmt.with {
+            filetypes = { 'markdown' },
+            extra_args = { '--prose-wrap="preserve"' },
+          },
+          formatting.fish_indent,
+          formatting.isort.with { extra_args = { '--quiet' } },
+          formatting.markdownlint,
+          formatting.stylua,
+          formatting.shfmt,
+          hover.dictionary,
         },
-        formatting.fish_indent,
-        formatting.isort.with { extra_args = { '--quiet' } },
-        formatting.markdownlint,
-        formatting.stylua,
-        formatting.shfmt,
-        hover.dictionary,
-      },
-    }
+      }
+    end,
+  },
+  setup = function(opts)
+    require('null-ls').setup(opts)
     require 'mason-null-ls'
   end,
 }
@@ -69,13 +71,6 @@ servers.__neodev = {
 }
 
 servers.lsp = {
-  setup = function()
-    local lspconfig = require 'lspconfig'
-    for _, server in pairs(servers.lsp.configs) do
-      server(lspconfig)
-    end
-  end,
-
   spec = {
     'neovim/nvim-lspconfig',
     event = { 'BufReadPre', 'FileType' },
@@ -85,6 +80,12 @@ servers.lsp = {
     end,
     dependencies = { servers.__neodev.spec },
   },
+  setup = function()
+    local lspconfig = require 'lspconfig'
+    for _, server in pairs(servers.lsp.configs) do
+      server(lspconfig)
+    end
+  end,
 
   configs = {},
 }

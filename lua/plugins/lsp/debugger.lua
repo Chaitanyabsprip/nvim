@@ -79,50 +79,49 @@ debugger.dap = {
 debugger.ui = {
   spec = {
     'rcarriga/nvim-dap-ui',
-    config = function() require('plugins.lsp.debugger').ui.setup() end,
-  },
-  setup = function()
-    require('dapui').setup {
-      mappings = {
-        expand = { '<CR>', '<2-LeftMouse>', 'l' },
-        open = 'o',
-        remove = 'd',
-        edit = 'e',
-        repl = 'r',
-        toggle = 't',
-      },
-      layouts = {
-        {
-          elements = {
-            { id = 'scopes', size = 0.25 },
-            { id = 'breakpoints', size = 0.25 },
-            { id = 'watches', size = 00.25 },
-            { id = 'stacks', size = 0.25 },
-          },
-          size = 40,
-          position = 'right',
+    keys = { { '<c-h>', function() require('dapui').toggle() end, desc = 'Toggle debugger UI' } },
+    opts = function()
+      require 'dap'
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        group = vim.api.nvim_create_augroup('dapui', { clear = true }),
+        pattern = 'dapui*',
+        callback = function() vim.cmd [[setlocal statuscolumn=""]] end,
+      })
+      vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
+        group = vim.api.nvim_create_augroup('ansi', { clear = true }),
+        pattern = '*',
+        callback = function()
+          vim.cmd.setlocal 'statuscolumn='
+          if vim.bo.filetype == 'dap-repl' then
+            require('baleia').setup({}).automatically(vim.api.nvim_get_current_buf())
+          end
+        end,
+      })
+      return {
+        mappings = {
+          expand = { '<CR>', '<2-LeftMouse>', 'l' },
+          open = 'o',
+          remove = 'd',
+          edit = 'e',
+          repl = 'r',
+          toggle = 't',
         },
-        { elements = { { id = 'repl', size = 1 } }, size = 16, position = 'bottom' },
-      },
-    }
-    local nnoremap = require('hashish').nnoremap
-    nnoremap '<c-h>'(function() require('dapui').toggle() end) {} 'Toggle debugger UI'
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      group = vim.api.nvim_create_augroup('dapui', { clear = true }),
-      pattern = 'dapui*',
-      callback = function() vim.cmd [[setlocal statuscolumn=""]] end,
-    })
-    vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
-      group = vim.api.nvim_create_augroup('ansi', { clear = true }),
-      pattern = '*',
-      callback = function()
-        vim.cmd.setlocal 'statuscolumn='
-        if vim.bo.filetype == 'dap-repl' then
-          require('baleia').setup({}).automatically(vim.api.nvim_get_current_buf())
-        end
-      end,
-    })
-  end,
+        layouts = {
+          {
+            elements = {
+              { id = 'scopes', size = 0.25 },
+              { id = 'breakpoints', size = 0.25 },
+              { id = 'watches', size = 00.25 },
+              { id = 'stacks', size = 0.25 },
+            },
+            size = 40,
+            position = 'right',
+          },
+          { elements = { { id = 'repl', size = 1 } }, size = 16, position = 'bottom' },
+        },
+      }
+    end,
+  },
 }
 
 debugger.spec = {

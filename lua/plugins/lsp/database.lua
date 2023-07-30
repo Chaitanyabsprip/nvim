@@ -1,12 +1,6 @@
 local db = {}
 
-db.dadbod = {
-  spec = {
-    'tpope/vim-dadbod',
-    config = function() require('plugins.lsp.database').dadbod.setup() end,
-  },
-  setup = function() end,
-}
+db.dadbod = { spec = { 'tpope/vim-dadbod', event = 'VeryLazy' } }
 
 db.dbee = {
   spec = {
@@ -18,7 +12,8 @@ db.dbee = {
       --    "curl", "wget", "bitsadmin", "go"
       require('dbee').install()
     end,
-    config = function() require('dbee').setup {} end,
+    event = 'VeryLazy',
+    opts = {},
   },
   setup = function() end,
 }
