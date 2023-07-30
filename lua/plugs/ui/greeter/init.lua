@@ -36,7 +36,6 @@ function M.show()
   M.button { shortcut = 'q', action = 'quit' }
 
   local stats = require('lazy').stats()
-  vim.print(stats.times)
   local sections = {
     {
       text = string.rep('\n', 5),

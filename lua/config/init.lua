@@ -1,9 +1,37 @@
 local config = {}
 local M = {}
 
-function M.status_column()
-  local number = [[%{v:lnum}]]
-  local components = { [[%=]], number, [[%=]], [[%s]] }
+---@return {name:string, text:string, texthl:string}[]
+function M.get_signs(win)
+  local buf = vim.api.nvim_win_get_buf(win)
+  return vim.tbl_map(
+    function(sign) return vim.fn.sign_getdefined(sign.name)[1] end,
+    vim.fn.sign_getplaced(buf, { group = '*', lnum = vim.v.lnum })[1].signs
+  )
+end
+function config.status_column()
+  local win = vim.g.statusline_winid
+  if vim.wo[win].signcolumn == 'no' then return '' end
+  local sign, git_sign
+  for _, s in ipairs(M.get_signs(win)) do
+    if s.name:find 'GitSign' then
+      git_sign = s
+    else
+      sign = s
+    end
+  end
+
+  local nu = ' '
+  if vim.wo[win].number and vim.wo[win].relativenumber and vim.v.virtnum == 0 then
+    nu = [[%{v:lnum}]]
+  end
+  local components = {
+    sign and ('%#' .. (sign.texthl or 'DiagnosticInfo') .. '#' .. sign.text .. '%*') or '  ',
+    [[%=]],
+    nu .. ' ',
+    git_sign and ('%#' .. git_sign.texthl .. '#' .. git_sign.text .. '%*') or '  ',
+  }
+  print(table.concat(components, ''))
   return table.concat(components, '')
 end
 
@@ -114,7 +142,7 @@ config.options.setup = function()
   vim.o.foldlevel = 99
   vim.o.foldlevelstart = 99
 
-  vim.o.statuscolumn = M.status_column()
+  vim.o.statuscolumn = [[%!v:lua.require'config.init'.status_column()]]
 
   -- search
   vim.o.hlsearch = false
