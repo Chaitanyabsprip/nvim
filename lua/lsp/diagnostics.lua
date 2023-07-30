@@ -12,7 +12,7 @@ local function jump_to_location(qf_item)
   local api = vim.api
   local bufnr = qf_item.bufnr
   local win = api.nvim_get_current_win()
-  api.nvim_buf_set_option(bufnr, 'buflisted', true)
+  api.nvim_set_option_value('buflisted', true, { buf = bufnr })
   api.nvim_win_set_buf(win, bufnr)
   api.nvim_set_current_win(win)
   api.nvim_win_set_cursor(win, { qf_item.lnum, qf_item.col })

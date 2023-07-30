@@ -37,6 +37,46 @@ capabilities.declaration = {
   end,
 }
 
+capabilities.definition = {
+  name = 'textDocument/definition',
+  callback = function(_, bufnr)
+    nnoremap 'gd'(lsp.definition)(opts(bufnr)) 'Go to definition of symbol under cursor'
+  end,
+}
+
+capabilities.document_highlight = {
+  name = 'textDocument/documentHighlight',
+  callback = function(_, bufnr)
+    local hl = vim.api.nvim_set_hl
+    local folded = { link = 'Folded' }
+    hl(0, 'LspReferenceRead', folded)
+    hl(0, 'LspReferenceText', folded)
+    hl(0, 'LspReferenceWrite', folded)
+    local bold = { bold = true, bg = 'none' }
+    hl(0, 'LspReferenceRead', bold)
+    hl(0, 'LspReferenceText', bold)
+    hl(0, 'LspReferenceWrite', bold)
+    autocmd('CursorHold', {
+      group = augroup 'lsp_document_highlight',
+      buffer = bufnr,
+      callback = function() vim.lsp.buf.document_highlight() end,
+    })
+    autocmd('CursorMoved', {
+      group = augroup 'lsp_document_highlight',
+      buffer = bufnr,
+      callback = function() vim.lsp.buf.clear_references() end,
+    })
+  end,
+}
+
+capabilities.document_symbols = {
+  name = 'textDocument/documentSymbol',
+  callback = function(_, bufnr)
+    nnoremap 'gs'(function() lsp.document_symbol() end)(opts(bufnr)) 'View document symbols'
+    nnoremap 'gs'(function() lsp.document_symbol() end)(opts(bufnr)) 'View document symbols'
+  end,
+}
+
 capabilities.formatting = {
   name = 'textDocument/formatting',
   callback = function(_, bufnr)
@@ -45,51 +85,6 @@ capabilities.formatting = {
       buffer = bufnr,
       callback = function() lsp.format() end,
     })
-  end,
-}
-
-capabilities.document_highlight = {
-  name = 'textDocument/documentHighlight',
-  callback = function()
-    vim.schedule(function()
-      local hl = vim.api.nvim_set_hl
-      local folded = { link = 'Folded' }
-      hl(0, 'LspReferenceRead', folded)
-      hl(0, 'LspReferenceText', folded)
-      hl(0, 'LspReferenceWrite', folded)
-      local underline = { underline = true, bg = 'none' }
-      hl(0, 'LspReferenceRead', underline)
-      hl(0, 'LspReferenceText', underline)
-      hl(0, 'LspReferenceWrite', underline)
-    end)
-  end,
-}
-
-capabilities.range_formatting = {
-  name = 'textDocument/rangeFormatting',
-  callback = function() end,
-}
-
-capabilities.document_symbols = {
-  name = 'textDocument/documentSymbol',
-  callback = function(_, bufnr)
-    print 'hahah'
-    nnoremap 'gs'(function() lsp.document_symbol() end)(opts(bufnr)) 'View document symbols'
-    nnoremap 'gs'(function() lsp.document_symbol() end)(opts(bufnr)) 'View document symbols'
-  end,
-}
-
-capabilities.references = {
-  name = 'textDocument/references',
-  callback = function(_, bufnr)
-    nnoremap 'gR'(lsp.references)(opts(bufnr)) 'Find references of symbol under cursor'
-  end,
-}
-
-capabilities.definition = {
-  name = 'textDocument/definition',
-  callback = function(_, bufnr)
-    nnoremap 'gd'(lsp.definition)(opts(bufnr)) 'Go to definition of symbol under cursor'
   end,
 }
 
@@ -107,9 +102,29 @@ capabilities.implementation = {
   end,
 }
 
+capabilities.inlay_hints = {
+  name = 'textDocument/inlayHint',
+  callback = function(_, bufnr) vim.lsp.inlay_hint(bufnr, true) end,
+}
+
+capabilities.range_formatting = {
+  name = 'textDocument/rangeFormatting',
+  callback = function() end,
+}
+
+capabilities.references = {
+  name = 'textDocument/references',
+  callback = function(_, bufnr)
+    nnoremap 'gR'(lsp.references)(opts(bufnr)) 'Find references of symbol under cursor'
+  end,
+}
+
 capabilities.rename = {
   name = 'textDocument/rename',
-  callback = function(_, bufnr)
+  callback = function(client, bufnr)
+    if client.name == 'dartls' then
+      return nnoremap 'gr' '<cmd>FlutterRename<cr>' { buffer = bufnr } 'Flutter: Rename variable and related imports'
+    end
     nnoremap 'gr'(function() vim.ui.input({ prompt = 'Rename: ' }, lsp.rename) end)(opts(bufnr)) 'Rename symbol under cursor'
   end,
 }
@@ -119,19 +134,19 @@ capabilities.signature_help = {
   callback = function() end,
 }
 
-capabilities.type_definition = {
-  name = 'textDocument/typeDefinition',
-  callback = function(_, bufnr)
-    nnoremap '<leader>gnd'(lsp.type_definition)(opts(bufnr)) 'Show type definition of symbol under cursor'
-  end,
-}
-
 capabilities.symbol = {
   name = 'workspace/symbol',
   callback = function(_, bufnr)
     nnoremap 'gS'(function() lsp.workspace_symbol(vim.fn.input { prompt = '> Search: ' }) end)(
       opts(bufnr)
     ) 'View Workspace symbols'
+  end,
+}
+
+capabilities.type_definition = {
+  name = 'textDocument/typeDefinition',
+  callback = function(_, bufnr)
+    nnoremap '<leader>gnd'(lsp.type_definition)(opts(bufnr)) 'Show type definition of symbol under cursor'
   end,
 }
 
