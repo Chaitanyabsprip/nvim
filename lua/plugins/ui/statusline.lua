@@ -16,44 +16,43 @@ local function get_lsp_client(msg)
   return msg
 end
 
-local function theme()
-  if vim.g.colors_name == 'noirbuddy' then return require('noirbuddy.plugins.lualine').theme end
-  if vim.g.colors_name == 'material' then return 'material-nvim' end
-  if vim.g.colors_name == 'rose-pine' then return 'rose-pine' end
-  if vim.g.colors_name == 'catppuccin' then return 'catppuccin' end
-  return 'auto'
-end
+-- local function theme()
+--   if vim.g.colors_name == 'noirbuddy' then return require('noirbuddy.plugins.lualine').theme end
+--   if vim.g.colors_name == 'material' then return 'material-nvim' end
+--   if vim.g.colors_name == 'rose-pine' then return 'rose-pine' end
+--   if vim.g.colors_name == 'catppuccin' then return 'catppuccin' end
+--   return 'auto'
+-- end
 
 local function clock() return ' ' .. os.date '%H:%M' end
 
 statusline.lualine = {
   spec = {
     'hoob3rt/lualine.nvim',
-    config = function() require('plugins.ui.statusline').setup() end,
     event = 'VeryLazy',
+    opts = function()
+      print(vim.g.lualine_theme)
+      return {
+        options = {
+          component_separators = { '', '' },
+          globalstatus = true,
+          section_separators = '',
+          theme = vim.g.lualine_theme or 'auto',
+        },
+        sections = {
+          lualine_a = { 'branch' },
+          lualine_b = { get_lsp_client },
+          lualine_c = {},
+          lualine_x = { 'filetype' },
+          lualine_y = { 'location' },
+          lualine_z = { { clock, color = { gui = 'bold' } } },
+        },
+        extensions = { 'nvim-tree', 'toggleterm' },
+      }
+    end,
   },
-  setup = function()
-    require('lualine').setup {
-      options = {
-        component_separators = { '', '' },
-        globalstatus = true,
-        section_separators = '',
-        theme = theme(),
-      },
-      sections = {
-        lualine_a = { 'branch' },
-        lualine_b = { get_lsp_client },
-        lualine_c = {},
-        lualine_x = { 'filetype' },
-        lualine_y = { 'location' },
-        lualine_z = { { clock, color = { gui = 'bold' } } },
-      },
-      extensions = { 'nvim-tree', 'toggleterm' },
-    }
-  end,
 }
 
-statusline.setup = statusline.lualine.setup
 statusline.spec = statusline.lualine.spec
 
 return statusline

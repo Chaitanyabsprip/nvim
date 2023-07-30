@@ -10,12 +10,6 @@ function ui.highlight_override()
   elseif vim.g.colors_name == 'nightfox' then
     vim.cmd [[ hi! link TelescopeNormal NvimTreeNormal ]]
   end
-  -- vim.cmd [[ hi! CursorLineNr guifg=#605180 gui=bold ]]
-  -- vim.cmd [[ hi! link FoldColumn Comment ]]
-  -- vim.cmd [[ hi! link Folded Comment ]]
-  -- vim.cmd [[ hi! InlayHints guifg=#555169 ctermfg=235 ]]
-  -- vim.cmd [[ hi! LineNr guifg=#1f2335 ]]
-  -- vim.cmd [[ hi! clear CursorLine ]]
 end
 
 ui.dressing = {
@@ -205,8 +199,7 @@ ui.treesitter = {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     event = 'BufReadPost',
-    dependencies = { 'salfum/nvim-ts-rainbow', 'nvim-treesitter/playground' },
-    config = function(_, opts) require('plugins.ui').treesitter.setup(opts) end,
+    -- dependencies = { 'salfum/nvim-ts-rainbow', 'nvim-treesitter/playground' },
     opts = {
       ensure_installed = {
         'bash',
@@ -254,14 +247,13 @@ ui.treesitter = {
       },
     },
   },
-  setup = function(opts) require('nvim-treesitter.configs').setup(opts) end,
 }
 
 ui.win_sep = {
   spec = {
     'nvim-zh/colorful-winsep.nvim',
     opts = { no_exec_files = { 'lazy', 'TelescopePrompt', 'mason', 'CompetiTest' } },
-    event = 'BufWinEnter',
+    event = 'VeryLazy',
   },
 }
 
@@ -273,7 +265,10 @@ ui.zen_mode = {
   },
 }
 
-function ui.setup() ui.highlight_override() end
+function ui.setup()
+  ui.highlight_override()
+  ui.colorscheme.setup()
+end
 
 ui.spec = {
   ui.ansi,

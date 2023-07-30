@@ -53,7 +53,6 @@ M.config = {
   spec = {
     'akinsho/flutter-tools.nvim',
     ft = { 'dart', 'yaml' },
-    config = function(_, opts) require('plugins.lsp.servers').flutter.setup(opts) end,
     opts = function()
       local get_capabilities = require('plugins.lsp.completion').get_capabilities
       local lspconfig = require 'lspconfig'
@@ -85,6 +84,20 @@ M.config = {
         virtual_text = false,
         virtual_text_str = '■',
       }
+
+      integrate_telescope()
+      local group = vim.api.nvim_create_augroup('auto fix lints', { clear = true })
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        group = group,
+        pattern = '*.dart',
+        callback = function()
+          vim.lsp.buf.code_action {
+            filter = function(action) return action.title == 'Fix All' end,
+            apply = true,
+          }
+        end,
+      })
+
       return {
         closing_tags = { enabled = false },
         debugger = {
@@ -108,21 +121,6 @@ M.config = {
       }
     end,
   },
-  setup = function(opts)
-    require('flutter-tools').setup(opts)
-    integrate_telescope()
-    local group = vim.api.nvim_create_augroup('auto fix lints', { clear = true })
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      group = group,
-      pattern = '*.dart',
-      callback = function()
-        vim.lsp.buf.code_action {
-          filter = function(action) return action.title == 'Fix All' end,
-          apply = true,
-        }
-      end,
-    })
-  end,
 }
 
 return M
