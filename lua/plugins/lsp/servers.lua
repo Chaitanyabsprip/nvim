@@ -5,7 +5,7 @@ local function extend(config)
   local get_capabilities = require('plugins.lsp.completion').get_capabilities
   local lspconfig = require 'lspconfig'
   local defaults = {
-    on_attach = lsp.common_on_attach,
+    on_attach = lsp.on_attach,
     capabilities = get_capabilities(),
     root_dir = lspconfig.util.root_pattern('.git', '.gitignore', vim.fn.getcwd()),
   }
@@ -33,7 +33,7 @@ servers.null = {
 
     null_ls.setup {
       save_after_formatting = true,
-      on_attach = lsp.common_on_attach,
+      on_attach = lsp.on_attach,
       capabilities = get_capabilities(),
       sources = {
         code_actions.gitsigns,
@@ -93,13 +93,14 @@ function servers.lsp.configs.lua()
 
   local config = {
     root_dir = lspconfig.util.root_pattern('.git', '.gitignore', '.stylua', vim.fn.getcwd()),
-    on_attach = lsp.common_on_attach,
+    on_attach = lsp.on_attach,
     capabilities = get_capabilities(),
     settings = {
       Lua = {
         workspace = { checkThirdParty = false },
         completion = { showWord = 'Disable', callSnippet = 'Both', displayContext = true },
         -- diagnostics = { globals = { 'vim', 'require' } },
+        hint = { enable = true },
         telemetry = { enable = false },
         format = { enable = false },
       },
@@ -112,7 +113,7 @@ function servers.lsp.configs.json()
   local get_capabilities = require('plugins.lsp.completion').get_capabilities
   local lspconfig = require 'lspconfig'
   local config = extend {
-    on_attach = lsp.common_on_attach,
+    on_attach = lsp.on_attach,
     capabilities = get_capabilities(),
     settings = { json = { schemas = require('schemastore').json.schemas() } },
     commands = {
@@ -126,7 +127,7 @@ function servers.lsp.configs.yaml()
   local get_capabilities = require('plugins.lsp.completion').get_capabilities
   local lspconfig = require 'lspconfig'
   lspconfig.yamlls.setup {
-    on_attach = lsp.common_on_attach,
+    on_attach = lsp.on_attach,
     capabilities = get_capabilities(),
     root_dir = lspconfig.util.root_pattern('.git', '.gitignore', vim.fn.getcwd()),
     settings = {
@@ -146,7 +147,7 @@ function servers.lsp.configs.python()
   local get_capabilities = require('plugins.lsp.completion').get_capabilities
   local lspconfig = require 'lspconfig'
   lspconfig.pyright.setup {
-    on_attach = lsp.common_on_attach,
+    on_attach = lsp.on_attach,
     capabilities = get_capabilities(),
     root_dir = lspconfig.util.root_pattern('.git', 'pyproject.toml', '.gitignore', vim.fn.getcwd()),
     settings = { python = { venvPath = '.', analysis = {} } },
@@ -157,7 +158,7 @@ function servers.lsp.configs.sqlls()
   local get_capabilities = require('plugins.lsp.completion').get_capabilities
   local lspconfig = require 'lspconfig'
   lspconfig.sqlls.setup {
-    on_attach = lsp.common_on_attach,
+    on_attach = lsp.on_attach,
     capabilities = get_capabilities(),
     root_dir = lspconfig.util.root_pattern('.git', '.gitignore', '.sqllsrc.json', vim.fn.getcwd()),
   }
@@ -166,8 +167,26 @@ end
 function servers.lsp.configs.graphql()
   local get_capabilities = require('plugins.lsp.completion').get_capabilities
   require('lspconfig').graphql.setup {
-    on_attach = lsp.common_on_attach,
+    on_attach = lsp.on_attach,
     capabilities = get_capabilities(),
+  }
+end
+
+function servers.lsp.configs.bash()
+  local get_capabilities = require('plugins.lsp.completion').get_capabilities
+  require('lspconfig').bashls.setup {
+    on_attach = lsp.on_attach,
+    capabilities = get_capabilities(),
+  }
+end
+
+function servers.lsp.configs.marksman()
+  local get_capabilities = require('plugins.lsp.completion').get_capabilities
+  local lspconfig = require 'lspconfig'
+  require('lspconfig').marksman.setup {
+    on_attach = lsp.on_attach,
+    capabilities = get_capabilities(),
+    root_dir = lspconfig.util.root_pattern('.git', '.marksman.toml', vim.fn.getcwd()),
   }
 end
 
