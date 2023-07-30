@@ -3,9 +3,6 @@ local telescope = {}
 local highlight_overrides = function()
   local hl = vim.api.nvim_set_hl
   hl(0, 'TelescopePromptPrefix', { link = 'diffRemoved' })
-  hl(0, 'TelescopePromptTitle', { link = 'Substitute' })
-  hl(0, 'TelescopePreviewTitle', { link = 'Search' })
-  hl(0, 'TelescopeResultsTitle', { link = 'EndOfBuffer' })
 end
 
 local setup_keymaps = function()
@@ -22,7 +19,7 @@ local setup_keymaps = function()
   nnoremap '<leader>gb'(builtin.git_branches) 'Telescope Git Branches'
   nnoremap '<leader>gc'(builtin.git_status) 'Telescope git changes'
   nnoremap '<leader><space>'(builtin.fd) 'Telescope File Finder'
-  nnoremap '<leader>fn'(find_notes) 'Find notes using telescope'
+  nnoremap '<leader>n'(find_notes) 'Find notes using telescope'
   nnoremap 'gb' '<cmd>Telescope buffers previewer=false theme=dropdown initial_mode=normal<CR>' 'Telescope Buffers'
   nnoremap 'go'(builtin.oldfiles) 'Telescope oldfiles'
   nnoremap 'gW'(builtin.grep_string) 'Telescope grep word under cursor'
