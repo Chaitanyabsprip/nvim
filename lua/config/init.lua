@@ -7,7 +7,7 @@ function M.status_column()
   return table.concat(components, '')
 end
 
-config.autocommands = function()
+function config.autocommands()
   local augroup = function(group) vim.api.nvim_create_augroup(group, { clear = true }) end
   local autocmd = function(event, opts)
     if not opts.disable then vim.api.nvim_create_autocmd(event, opts) end
@@ -122,10 +122,11 @@ config.options.setup = function()
   vim.o.cmdheight = 0
   vim.o.scrolloff = 8
   vim.o.colorcolumn = '81'
+  vim.o.textwidth = 80
   vim.o.conceallevel = 2
-
   vim.o.sessionoptions = 'buffers,curdir,winsize,resize,winpos,folds,tabpages'
   vim.o.shell = '/usr/bin/env zsh'
+  vim.o.updatetime = 1000
 
   -- split options
   vim.o.splitbelow = true
@@ -162,7 +163,7 @@ config.options.setup = function()
   }
 end
 
-config.options.lazy = function()
+function config.options.lazy()
   vim.cmd 'syntax on'
   require('plugins.ui').setup()
   require('plugins.ui.greeter').setup()
