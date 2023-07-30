@@ -12,6 +12,11 @@
   (task_list_marker_unchecked)
   )) 
 
-([(task_list_marker_checked)] @conceal (#set! conceal "✔"))
+([(task_list_marker_checked)] @conceal (#set! conceal "✅"))
 
-([(task_list_marker_unchecked)] @conceal (#set! conceal "☐"))
+([(task_list_marker_unchecked)] @conceal (#set! conceal "🔲"))
+
+(list
+  (list_item
+    (list_marker_star) @conceal (#set! conceal "⚫")
+    ))

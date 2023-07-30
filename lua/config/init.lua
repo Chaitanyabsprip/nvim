@@ -38,6 +38,12 @@ config.autocommands = function()
       vim.wo.conceallevel = 0
     end,
   })
+
+  autocmd('BufWritePre', {
+    group = augroup 'eliminate_trailing_spaces',
+    pattern = { 'markdown', 'md', 'rmd', 'rst' },
+    command = [[%s/\s\+$//]],
+  })
 end
 
 config.options = {}

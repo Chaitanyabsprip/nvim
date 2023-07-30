@@ -106,6 +106,12 @@ telescope = {
     -- override_lsp_handler()
     setup_keymaps()
     highlight_overrides()
+
+    local dir = '/Users/chaitanyasharma/Projects/Notes'
+    require('semantic_search').setup {
+      directory = dir,
+      embeddings_path = dir .. '/.embeddings',
+    }
   end,
 
   diagnostic_keymaps = function()
