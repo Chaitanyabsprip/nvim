@@ -1,3 +1,5 @@
+local config = require 'config.ui'
+---@class Colorscheme
 local rosepine = {}
 
 vim.g.lualine_theme = 'rose-pine'
@@ -59,7 +61,7 @@ rosepine.spec = {
   lazy = false,
   opts = {
     dark_variant = 'main',
-    disable_background = false,
+    disable_background = config.transparent,
     highlight_groups = rosepine.highlight,
   },
 }

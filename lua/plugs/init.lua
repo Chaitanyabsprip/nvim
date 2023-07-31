@@ -10,7 +10,6 @@ plugin.setup = function()
   local tools = require 'plugs.tools'
   local servers = require 'plugs.lsp.servers'
   local session = require 'plugs.session'
-  local ui = require 'plugs.ui'
 
   plugin.spec = {
     completion.spec,
@@ -20,7 +19,6 @@ plugin.setup = function()
     git.spec,
     tools.spec,
     session.spec,
-    ui.spec,
     { debugger.spec, lsp.spec, servers.spec },
   }
 

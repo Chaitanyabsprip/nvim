@@ -1,5 +1,5 @@
 return {
-  theme = 'rosepine',
+  theme = 'material',
   transparent = false,
   hide_eob = true,
   strings = {},
