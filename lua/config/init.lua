@@ -10,13 +10,20 @@ function M.get_signs(win)
   )
 end
 
-M.fold = {
-  display = function(lnum)
-    local icon = ' '
+config.fold = {
+  display = function()
+    local lnum = vim.v.lnum
+    local icon = '  '
     if vim.fn.foldlevel(lnum) <= 0 then return icon end -- Line isn't in folding range
     if vim.fn.foldlevel(lnum) <= vim.fn.foldlevel(lnum - 1) then return icon end -- Not the first line of folding range
     icon = vim.v.virtnum == 0 and (vim.fn.foldclosed(lnum) == -1 and '' or '') or ' '
     return icon
+  end,
+  callback = function()
+    local lnum = vim.fn.getmousepos().line
+    if vim.fn.foldlevel(lnum) <= vim.fn.foldlevel(lnum - 1) then return end -- Only lines with a mark should be clickable
+    local state = vim.fn.foldclosed(lnum) == -1 and 'close' or 'open'
+    vim.cmd.execute("'" .. lnum .. 'fold' .. state .. "'")
   end,
 }
 
@@ -35,15 +42,18 @@ function config.status_column()
   local nu = ' '
   if vim.wo[win].number and vim.v.virtnum == 0 then nu = vim.v.lnum end
 
+  local signcolumn = vim.v.virtnum == 0
+      and sign
+      and ('%#' .. (sign.texthl or 'DiagnosticInfo') .. '#' .. sign.text .. '%*')
+    or '  '
+
   local components = {
-    vim.v.virtnum == 0
-        and sign
-        and ('%#' .. (sign.texthl or 'DiagnosticInfo') .. '#' .. sign.text .. '%*')
-      or ' ',
-    M.fold.display(vim.v.lnum),
-    [[%=]],
+    signcolumn,
     nu .. ' ',
-    git_sign and ('%#' .. git_sign.texthl .. '#' .. git_sign.text .. '%*') or '  ',
+    [[%@v:lua.require'config'.fold.callback@]],
+    [[%{v:lua.require'config'.fold.display()}]],
+    [[%=]],
+    git_sign and ('%#' .. git_sign.texthl .. '#' .. git_sign.text .. '%*') or ' ',
   }
   return table.concat(components, '')
 end
