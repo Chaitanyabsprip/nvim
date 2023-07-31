@@ -36,24 +36,8 @@ completion.luasnip = {
 
 completion.cmp = {}
 
-function completion.cmp.setup(opts)
-  local cmp = require 'cmp'
-  cmp.setup(opts)
-
-  local cmdline_map_presets = cmp.config.mapping.preset.cmdline()
-  local search_opts = { mapping = cmdline_map_presets, sources = { { name = 'buffer' } } }
-  local cmdline_opt = {
-    mapping = cmdline_map_presets,
-    sources = cmp.config.sources { { name = 'path' }, { name = 'cmdline' }, { name = 'nvim_lsp' } },
-  }
-
-  cmp.setup.cmdline('/', search_opts)
-  cmp.setup.cmdline(':', cmdline_opt)
-end
-
 completion.cmp.spec = {
   'hrsh7th/nvim-cmp',
-  config = function(_, opts) require('plugs.lsp.completion').cmp.setup(opts) end,
   event = 'InsertEnter',
   dependencies = {
     'hrsh7th/cmp-buffer',
@@ -71,6 +55,17 @@ completion.cmp.spec = {
       return col ~= 0
         and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
     end
+
+    local cmdline_map_presets = cmp.config.mapping.preset.cmdline()
+    local search_opts = { mapping = cmdline_map_presets, sources = { { name = 'buffer' } } }
+    local cmdline_opt = {
+      mapping = cmdline_map_presets,
+      sources = cmp.config.sources { { name = 'path' }, { name = 'cmdline' }, { name = 'nvim_lsp' } },
+    }
+
+    cmp.setup.cmdline('/', search_opts)
+    cmp.setup.cmdline(':', cmdline_opt)
+
     return {
       snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end },
       sources = {

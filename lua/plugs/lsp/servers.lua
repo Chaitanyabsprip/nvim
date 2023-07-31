@@ -19,7 +19,10 @@ servers.null = {
   spec = {
     'jose-elias-alvarez/null-ls.nvim',
     ft = { 'lua', 'fish', 'yaml', 'markdown', 'md', 'rmd', 'rst', 'python' },
-    config = function(_, opts) require('plugs.lsp.servers').null.setup(opts) end,
+    config = function(_, opts)
+      require('null-ls').setup(opts)
+      require 'mason-null-ls'
+    end,
     opts = function()
       local get_capabilities = require('plugs.lsp.completion').get_capabilities
       local builtins = require('null-ls').builtins
@@ -57,10 +60,7 @@ servers.null = {
       }
     end,
   },
-  setup = function(opts)
-    require('null-ls').setup(opts)
-    require 'mason-null-ls'
-  end,
+  setup = function(opts) end,
 }
 
 servers.flutter = require('plugs.lsp.flutter').config
@@ -75,17 +75,13 @@ servers.lsp = {
     event = { 'BufReadPre', 'FileType' },
     config = function()
       require 'mason-lspconfig'
-      require('plugs.lsp.servers').lsp.setup()
+      local lspconfig = require 'lspconfig'
+      for _, server in pairs(servers.lsp.configs) do
+        server(lspconfig)
+      end
     end,
     dependencies = { servers.__neodev.spec },
   },
-  setup = function()
-    local lspconfig = require 'lspconfig'
-    for _, server in pairs(servers.lsp.configs) do
-      server(lspconfig)
-    end
-  end,
-
   configs = {},
 }
 
