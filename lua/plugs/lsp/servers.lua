@@ -60,7 +60,6 @@ servers.null = {
       }
     end,
   },
-  setup = function(opts) end,
 }
 
 servers.flutter = require('plugs.lsp.flutter').config

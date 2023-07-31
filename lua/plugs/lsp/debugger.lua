@@ -80,18 +80,15 @@ debugger.ui = {
   spec = {
     'rcarriga/nvim-dap-ui',
     keys = { { '<c-h>', function() require('dapui').toggle() end, desc = 'Toggle debugger UI' } },
+    dependencies = { 'mfussenegger/nvim-dap' },
     opts = function()
-      require 'dap'
-      vim.api.nvim_create_autocmd('BufWritePre', {
-        group = vim.api.nvim_create_augroup('dapui', { clear = true }),
-        pattern = 'dapui*',
-        callback = function() vim.cmd [[setlocal statuscolumn=""]] end,
-      })
+      -- require 'dap'
       vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
         group = vim.api.nvim_create_augroup('ansi', { clear = true }),
-        pattern = '*',
+        pattern = { 'DAP *', '[dap-repl*' },
         callback = function()
           vim.cmd.setlocal 'statuscolumn='
+          vim.cmd.setlocal 'nocursorline'
           if vim.bo.filetype == 'dap-repl' then
             require('baleia').setup({}).automatically(vim.api.nvim_get_current_buf())
           end
