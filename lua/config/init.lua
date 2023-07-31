@@ -39,9 +39,7 @@ function config.status_column()
     end
   end
 
-  local nu = ' '
-  if vim.wo[win].number and vim.v.virtnum == 0 then nu = vim.v.lnum end
-
+  local nu = vim.wo[win].number and vim.v.virtnum == 0 and vim.v.lnum or ' '
   local signcolumn = vim.v.virtnum == 0
       and sign
       and ('%#' .. (sign.texthl or 'DiagnosticInfo') .. '#' .. sign.text .. '%*')
@@ -50,6 +48,7 @@ function config.status_column()
   local components = {
     signcolumn,
     nu .. ' ',
+    [[%=]],
     [[%@v:lua.require'config'.fold.callback@]],
     [[%{v:lua.require'config'.fold.display()}]],
     [[%=]],
