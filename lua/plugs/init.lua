@@ -15,6 +15,7 @@ plugin.setup = function()
 
   plugin.spec = {
     completion.spec,
+    { import = 'plugins' },
     editing.spec,
     explorer.spec,
     externals.spec,
