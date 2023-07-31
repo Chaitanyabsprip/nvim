@@ -1,7 +1,7 @@
 return {
   theme = {
-    name = 'catppuccin',
-    transparent = true,
+    name = 'rosepine',
+    transparent = false,
     hide_eob = true,
     comments = { 'italic' },
     functions = { 'italic' },
