@@ -12,7 +12,6 @@ db.dbee = {
       --    "curl", "wget", "bitsadmin", "go"
       require('dbee').install()
     end,
-    event = 'VeryLazy',
     opts = {},
   },
   setup = function() end,
