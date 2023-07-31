@@ -43,42 +43,67 @@ tools.neotest = {
       { 'nvim-neotest/neotest-go' },
       { 'antoinemadec/FixCursorHold.nvim' },
     },
-    config = function(_, opts) require('plugs.tools').neotest.setup(opts) end,
     version = '2.*',
-    event = 'VeryLazy',
-    opts = {
-      quickfix = { open = false },
-      status = { icons = true, virtual_text = false },
-      icons = {
-        running_animated = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
+    opts = function()
+      local nnoremap = require('hashish').nnoremap
+      local neotest_config = vim.api.nvim_create_augroup('NeotestConfig', { clear = true })
+      for _, ft in ipairs { 'output', 'attach', 'summary' } do
+        vim.api.nvim_create_autocmd('FileType', {
+          pattern = 'neotest-' .. ft,
+          group = neotest_config,
+          callback = function(opts)
+            nnoremap 'q'(function() pcall(vim.api.nvim_win_close, 0, true) end) { buffer = opts.buf }(
+              'Quit ' .. ft
+            )
+          end,
+        })
+      end
+      return {
+        quickfix = { open = false },
+        status = { icons = true, virtual_text = false },
+        adapters = {
+          require 'neotest-dart' { command = 'flutter', use_lsp = false },
+          require 'neotest-go',
+        },
+        icons = {
+          running_animated = {
+            '⠋',
+            '⠙',
+            '⠹',
+            '⠸',
+            '⠼',
+            '⠴',
+            '⠦',
+            '⠧',
+            '⠇',
+            '⠏',
+          },
+        },
+      }
+    end,
+    keys = {
+      { '<leader>tn', function() require('neotest').run.run() end, desc = 'Run nearest test' },
+      { '<leader>tl', function() require('neotest').run.run_last() end, desc = 'Run last test' },
+      {
+        '<leader>ta',
+        function() require('neotest').run.run(vim.fn.expand '%') end,
+        desc = 'Run test for file',
+      },
+      {
+        '<leader>ts',
+        function() require('neotest').summary.toggle() end,
+        desc = 'Toggle tests summary',
+      },
+      {
+        '<leader>to',
+        function()
+          local open_opts = { enter = true }
+          require('neotest').output.open(open_opts)
+        end,
+        desc = 'Toggle tests output',
       },
     },
   },
-  setup = function(config)
-    config.adapters =
-      { require 'neotest-dart' { command = 'flutter', use_lsp = true }, require 'neotest-go' }
-    local nnoremap = require('hashish').nnoremap
-    require('neotest').setup(config)
-    local neotest_config = vim.api.nvim_create_augroup('NeotestConfig', { clear = true })
-    for _, ft in ipairs { 'output', 'attach', 'summary' } do
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'neotest-' .. ft,
-        group = neotest_config,
-        callback = function(opts)
-          nnoremap 'q'(function() pcall(vim.api.nvim_win_close, 0, true) end) { buffer = opts.buf }(
-            'Quit ' .. ft
-          )
-        end,
-      })
-    end
-
-    local open_opts = { enter = true }
-    nnoremap '<leader>tn'(function() require('neotest').run.run() end) 'Run nearest test'
-    nnoremap '<leader>tl'(function() require('neotest').run.run_last() end) 'Run nearest test'
-    nnoremap '<leader>ta'(function() require('neotest').run.run(vim.fn.expand '%') end) 'Run test for file'
-    nnoremap '<leader>ts'(function() require('neotest').summary.toggle() end) 'Toggle tests summary'
-    nnoremap '<leader>to'(function() require('neotest').output.open(open_opts) end) 'Toggle tests summary'
-  end,
 }
 
 tools.peek = {

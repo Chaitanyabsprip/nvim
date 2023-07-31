@@ -187,56 +187,53 @@ ui.ansi = {
 }
 
 ui.treesitter = {
-  spec = {
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
-    event = 'BufReadPost',
-    -- dependencies = { 'salfum/nvim-ts-rainbow', 'nvim-treesitter/playground' },
-    opts = {
-      ensure_installed = {
-        'bash',
-        'dart',
-        'go',
-        'graphql',
-        'help',
-        'java',
-        'javascript',
-        'json',
-        'kotlin',
-        'lua',
-        'markdown',
-        'markdown_inline',
-        'python',
-        'regex',
-        'ruby',
-        'typescript',
-        'vim',
-        'yaml',
+  'nvim-treesitter/nvim-treesitter',
+  build = ':TSUpdate',
+  event = 'BufReadPre',
+  config = function(_, opts) require('nvim-treesitter.configs').setup(opts) end,
+  opts = {
+    ensure_installed = {
+      'bash',
+      'dart',
+      'go',
+      'graphql',
+      'java',
+      'javascript',
+      'json',
+      'kotlin',
+      'lua',
+      'markdown',
+      'markdown_inline',
+      'python',
+      'regex',
+      'ruby',
+      'typescript',
+      'vim',
+      'yaml',
+    },
+    highlight = { enable = true },
+    indent = { enable = true, disable = { 'dart' } },
+    rainbow = { enable = true, max_file_lines = 3000 },
+    playground = {
+      enable = true,
+      persist_queries = false, -- Whether the query persists across vim sessions
+      keybindings = {
+        toggle_query_editor = 'o',
+        toggle_hl_groups = 'i',
+        toggle_injected_languages = 't',
+        toggle_anonymous_nodes = 'a',
+        toggle_language_display = 'I',
+        focus_language = 'f',
+        unfocus_language = 'F',
+        update = 'R',
+        goto_node = '<cr>',
+        show_help = '?',
       },
-      highlight = { enable = true },
-      indent = { enable = true, disable = { 'dart' } },
-      rainbow = { enable = true, max_file_lines = 3000 },
-      playground = {
-        enable = true,
-        persist_queries = false, -- Whether the query persists across vim sessions
-        keybindings = {
-          toggle_query_editor = 'o',
-          toggle_hl_groups = 'i',
-          toggle_injected_languages = 't',
-          toggle_anonymous_nodes = 'a',
-          toggle_language_display = 'I',
-          focus_language = 'f',
-          unfocus_language = 'F',
-          update = 'R',
-          goto_node = '<cr>',
-          show_help = '?',
-        },
-      },
-      query_linter = {
-        enable = true,
-        use_virtual_text = true,
-        lint_events = { 'BufWrite', 'CursorHold' },
-      },
+    },
+    query_linter = {
+      enable = true,
+      use_virtual_text = true,
+      lint_events = { 'BufWrite', 'CursorHold' },
     },
   },
 }
@@ -268,9 +265,11 @@ ui.spec = {
   ui.noice.spec,
   ui.statusline.spec,
   ui.styler.spec,
-  ui.treesitter.spec,
+  ui.treesitter,
   ui.win_sep.spec,
   ui.zen_mode.spec,
+
+  { 'nvim-treesitter/playground', cmd = { 'TsPlaygroundToggle' } },
 }
 
 return ui
