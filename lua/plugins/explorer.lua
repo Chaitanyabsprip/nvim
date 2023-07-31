@@ -1,42 +1,58 @@
-local M = {}
+local explorer = {}
 
-M.nvim_tree = {
+explorer.better_qf = {
+  'kevinhwang91/nvim-bqf',
+  ft = 'qf',
+  dependencies = { 'yorickpeterse/nvim-pqf' },
+  opts = {},
+}
+
+local function on_attach(bufnr)
+  local api = require 'nvim-tree.api'
+  local function opts(desc)
+    return {
+      desc = 'nvim-tree: ' .. desc,
+      buffer = bufnr,
+      noremap = true,
+      silent = true,
+      nowait = true,
+    }
+  end
+  local function grep_at_current_tree_node()
+    local node = require('nvim-tree.lib').get_node_at_cursor()
+    if not node then return end
+    require('telescope.builtin').live_grep { search_dirs = { node.absolute_path } }
+  end
+
+  api.config.mappings.default_on_attach(bufnr)
+
+  vim.keymap.del('n', ']e', { buffer = bufnr })
+  vim.keymap.del('n', '[e', { buffer = bufnr })
+
+  vim.keymap.set('n', 'l', api.node.open.edit, opts 'Open')
+  vim.keymap.set('n', 'cd', api.tree.change_root_to_node, opts 'CD')
+  vim.keymap.set('n', 'v', api.node.open.vertical, opts 'Open: Vertical Split')
+  vim.keymap.set('n', 's', api.node.open.horizontal, opts 'Open: Horizontal Split')
+  vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts 'Close Directory')
+  vim.keymap.set('n', '<S-CR>', api.node.navigate.parent_close, opts 'Close Directory')
+  vim.keymap.set('n', 'o', api.node.run.system, opts 'Run System')
+  vim.keymap.set('n', ',n', api.node.navigate.diagnostics.next, opts 'Next Diagnostic')
+  vim.keymap.set('n', ',p', api.node.navigate.diagnostics.prev, opts 'Prev Diagnostic')
+  vim.keymap.set('n', 'gr', grep_at_current_tree_node, opts 'Telescope Live Grep at node')
+end
+
+explorer.nvim_tree = {
   'nvim-tree/nvim-tree.lua',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   cmd = { 'Explorer' },
-  commit = '9c97e6449b0b0269bd44e1fd4857184dfa57bb4c',
   opts = function()
     vim.api.nvim_create_user_command('Explorer', 'NvimTreeToggle', { nargs = 0 })
-    local function grep_at_current_tree_node()
-      local node = require('nvim-tree.lib').get_node_at_cursor()
-      if not node then return end
-      require('telescope.builtin').live_grep { search_dirs = { node.absolute_path } }
-    end
-
     local group = vim.api.nvim_create_augroup('nvim-tree', { clear = true })
-    vim.api.nvim_create_autocmd({ 'WinEnter', 'BufWinEnter' }, {
+    vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
       pattern = 'NvimTree*',
       group = group,
       callback = function() vim.cmd [[ setlocal statuscolumn= nonu nornu ]] end,
     })
-
-    local tree_cb = require('nvim-tree.config').nvim_tree_callback
-    local mappings = {
-      custom_only = false,
-      list = {
-        {
-          key = { '<Leader>gr', 'gr' },
-          cb = grep_at_current_tree_node,
-          mode = 'n',
-        },
-        { key = { '<CR>', '<2-LeftMouse>', 'l' }, cb = tree_cb 'edit' },
-        { key = { '<2-RightMouse>', '<C-]>', 'cd' }, cb = tree_cb 'cd' },
-        { key = { '<C-v>', 'v' }, cb = tree_cb 'vsplit' },
-        { key = { '<C-x>', 's' }, cb = tree_cb 'split' },
-        { key = { '<BS>', 'h', '<S-CR>' }, cb = tree_cb 'close_node' },
-        { key = { 'o' }, cb = tree_cb 'system_open' },
-      },
-    }
     return {
       disable_netrw = true,
       hijack_cursor = true,
@@ -44,14 +60,13 @@ M.nvim_tree = {
       hijack_unnamed_buffer_when_opening = true,
       reload_on_bufenter = true,
       respect_buf_cwd = true,
-      on_attach = 'disable',
+      on_attach = on_attach,
       select_prompts = true,
       view = {
         centralize_selection = true,
         cursorline = true,
         width = 40,
         side = 'right',
-        mappings = mappings,
         float = {
           enable = true,
           quit_on_focus_loss = true,
@@ -107,8 +122,38 @@ M.nvim_tree = {
   end,
 }
 
-M.spec = {
-  M.nvim_tree,
+explorer.pretty_qf = {
+  'yorickpeterse/nvim-pqf',
+  event = 'Filetype qf',
+  opts = {},
 }
 
-return M.spec
+explorer.project = {
+  'ahmedkhalf/project.nvim',
+  dependencies = {
+    {
+      'nvim-telescope/telescope.nvim',
+      keys = {
+        {
+          '<c-p>',
+          function() require('telescope').extensions.projects.projects() end,
+          noremap = true,
+          desc = 'Search projects',
+        },
+      },
+    },
+  },
+  config = function()
+    require('project_nvim').setup { ignore_lsp = { 'null-ls' } }
+    require('telescope').load_extension 'projects'
+  end,
+}
+
+explorer.spec = {
+  explorer.better_qf,
+  explorer.nvim_tree,
+  explorer.pretty_qf,
+  explorer.project,
+}
+
+return explorer.spec
