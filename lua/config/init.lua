@@ -189,9 +189,10 @@ config.options.setup = function()
 end
 
 function config.options.lazy()
-  vim.cmd 'syntax on'
-  require('plugs.ui').setup()
-  require('plugs.ui.greeter').setup()
+  -- vim.cmd 'syntax on'
+  local ui = require 'config.ui'
+  require('plugins.ui.themes.' .. ui.theme).set()
+  require('config.greeter').setup()
 end
 
 return config

@@ -1,7 +1,6 @@
 local ui = {}
 
 ui.colorscheme = require 'plugs.ui.themes'
-ui.statusline = require 'plugs.ui.statusline'
 ui.tabline = require 'plugs.ui.tabline'
 
 ui.dressing = {
@@ -31,73 +30,6 @@ ui.headlines = {
       }
     end,
     ft = { 'markdown', 'md', 'rmd', 'rst' },
-  },
-}
-
-ui.incline = {
-  spec = {
-    'b0o/incline.nvim',
-    event = 'BufReadPre',
-    config = function()
-      local function get_diagnostic_label(props)
-        local icons = { error = '', warn = '', info = '', hint = '' }
-        local label = {}
-        for severity, icon in pairs(icons) do
-          local n = #vim.diagnostic.get(
-            props.buf,
-            { severity = vim.diagnostic.severity[string.upper(severity)] }
-          )
-          if n > 0 then
-            table.insert(label, { icon .. ' ' .. n .. ' ', group = 'DiagnosticSign' .. severity })
-          end
-        end
-        if #label > 0 then table.insert(label, { '| ' }) end
-        return label
-      end
-      local function get_git_diff(props)
-        local icons = { removed = '', changed = '', added = '' }
-        local labels = {}
-        local signs = vim.api.nvim_buf_get_var(props.buf, 'gitsigns_status_dict')
-        for name, icon in pairs(icons) do
-          if tonumber(signs[name]) and signs[name] > 0 then
-            table.insert(labels, { icon .. ' ' .. signs[name] .. ' ', group = 'Diff' .. name })
-          end
-        end
-        if #labels > 0 then table.insert(labels, { '| ' }) end
-        return labels
-      end
-
-      local colors = require('tokyonight.colors').setup()
-      require('incline').setup {
-        highlight = {
-          groups = {
-            InclineNormal = { guibg = colors.black, guifg = colors.purple },
-            InclineNormalNC = { guifg = colors.purple, guibg = colors.black },
-          },
-        },
-        window = {
-          margin = { horizontal = 2, vertical = 0 },
-          options = { winblend = 5 },
-          padding = 0,
-        },
-        render = function(props)
-          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
-          local icon, color = require('nvim-web-devicons').get_icon_color(filename)
-          local modified = vim.api.nvim_get_option_value('modified', { buf = props.buf })
-              and { '~ ' }
-            or { '' }
-          return {
-            props.focused and { '▍ ', group = 'VertSplit' } or { ' ' },
-            { get_diagnostic_label(props) },
-            { get_git_diff(props) },
-            modified,
-            { icon, guifg = color },
-            { ' ' },
-            filename,
-          }
-        end,
-      }
-    end,
   },
 }
 
@@ -242,7 +174,7 @@ ui.win_sep = {
   spec = {
     'nvim-zh/colorful-winsep.nvim',
     opts = { no_exec_files = { 'lazy', 'TelescopePrompt', 'mason', 'CompetiTest' } },
-    event = 'VeryLazy',
+    event = 'WinNew',
   },
 }
 
@@ -258,17 +190,13 @@ function ui.setup() ui.colorscheme.setup() end
 
 ui.spec = {
   ui.ansi,
-  ui.colorscheme.spec,
   ui.dressing.spec,
   ui.headlines.spec,
-  ui.incline.spec,
   ui.noice.spec,
-  ui.statusline.spec,
   ui.styler.spec,
   ui.treesitter,
   ui.win_sep.spec,
   ui.zen_mode.spec,
-
   { 'nvim-treesitter/playground', cmd = { 'TsPlaygroundToggle' } },
 }
 

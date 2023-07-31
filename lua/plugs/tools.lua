@@ -20,7 +20,8 @@ tools.colorizer = {
 tools.drop = {
   spec = {
     'folke/drop.nvim',
-    event = 'VeryLazy',
+    event = { 'BufReadPre' },
+    ft = { 'greeter' },
     opts = {
       theme = 'leaves',
       interval = 150,
@@ -134,6 +135,12 @@ tools.hologram = {
     opts = { auto_display = true },
     ft = { 'markdown', 'md', 'rst', 'rmd' },
   },
+}
+
+tools.startuptime = {
+  'dstein64/vim-startuptime',
+  config = function() vim.g.startuptime_tries = 50 end,
+  cmd = 'StartupTime',
 }
 
 tools.mkdnflow = {
@@ -308,6 +315,7 @@ tools.spec = {
   tools.neotest.spec,
   tools.obsidian.spec,
   tools.peek.spec,
+  tools.startuptime,
 }
 
 return tools

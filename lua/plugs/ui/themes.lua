@@ -1,6 +1,6 @@
 local themes = {}
 local utils = require 'utils'
-local config = require 'plugs.ui.config'
+local config = require 'config.ui'
 
 themes.catppuccin = {
   spec = {
@@ -201,7 +201,7 @@ themes.tokyonight = {
           sidebars = 'dark',
           floats = 'dark',
         },
-        sidebars = config.theme.sidebars,
+        sidebars = config.sidebars,
         day_brightness = 0.3,
         hide_inactive_statusline = false,
         dim_inactive = false,
@@ -254,7 +254,7 @@ themes.kanagawa = {
 }
 
 themes.setup = function()
-  themes[config.theme.name].set()
+  themes[config.theme].set()
   -- cmp_highlight()
 end
 

@@ -4,7 +4,6 @@ plugin.setup = function()
   local completion = require 'plugs.lsp.completion'
   local debugger = require 'plugs.lsp.debugger'
   local editing = require 'plugs.editing'
-  local explorer = require 'plugs.explorer'
   local externals = require 'plugs.externals'
   local git = require 'plugs.git'
   local lsp = require 'plugs.lsp'
@@ -17,7 +16,6 @@ plugin.setup = function()
     completion.spec,
     { import = 'plugins' },
     editing.spec,
-    explorer.spec,
     externals.spec,
     git.spec,
     tools.spec,

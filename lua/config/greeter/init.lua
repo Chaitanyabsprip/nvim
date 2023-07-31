@@ -24,7 +24,7 @@ function M.button(keymap_opts)
 end
 
 function M.show()
-  local theme = require('plugs.ui.greeter.config').get_theme()
+  local theme = require('config.greeter.config').get_theme()
 
   local buf = vim.api.nvim_get_current_buf()
   vim.bo[buf].filetype = 'greeter'
@@ -37,13 +37,8 @@ function M.show()
 
   local stats = require('lazy').stats()
   local sections = {
-    {
-      text = string.rep('\n', 5),
-    },
-    {
-      text = theme.header .. string.rep('\n', 5),
-      hl_group = 'DashboardHeader',
-    },
+    { text = string.rep('\n', 5) },
+    { text = theme.header .. string.rep('\n', 5), hl_group = 'DashboardHeader' },
     {
       text = [[
  Find File                    f
@@ -58,9 +53,7 @@ function M.show()
       ]],
       hl_group = 'DashboardFooter',
     },
-    {
-      text = string.rep('\n', 5),
-    },
+    { text = string.rep('\n', 5) },
     {
       text = '🎉 Neovim loaded ' .. stats.loaded .. ' plugins in ' .. (math.floor(
         stats.startuptime * 100 + 0.5
@@ -84,16 +77,15 @@ function M.show()
 
   vim.bo[buf].modifiable = false
 
-  -- local cursor = vim.go.guicursor
-  -- vim.api.nvim_set_hl(0, "HiddenCursor", { blend = 100, nocombine = true })
-  -- vim.go.guicursor = "a:HiddenCursor/HiddenCursor"
+  local cursor = vim.go.guicursor
+  vim.api.nvim_set_hl(0, 'HiddenCursor', { blend = 100, nocombine = true })
+  vim.go.guicursor = 'a:HiddenCursor/HiddenCursor'
 
   vim.api.nvim_create_autocmd('BufWipeout', {
     buffer = buf,
     once = true,
     callback = function()
-      vim.cmd [[echo '']]
-      -- vim.go.guicursor = cursor
+      vim.go.guicursor = cursor
       vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
     end,
   })
@@ -144,9 +136,23 @@ function M.set_options()
   vim.cmd(('silent! noautocmd setlocal %s'):format(table.concat(options, ' ')))
 end
 
+table.contains = function(table, element)
+  for _, value in pairs(table) do
+    if value == element then return true end
+  end
+  return false
+end
+
 function M.dont_show()
-  local argv = vim.tbl_filter(function(arg) return arg ~= '--embed' end, vim.v.argv)
-  if #argv > 1 then return true end
+  local argv = vim.tbl_filter(function(arg)
+    local embed = arg ~= '--embed'
+    local i = arg ~= '-i'
+    local none = arg ~= 'NONE'
+    local val = embed and i and none
+    return val
+  end, vim.v.argv)
+
+  if (not table.contains(argv, '-i')) and #argv > 1 then return true end
 
   -- taken from mini.starter
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
