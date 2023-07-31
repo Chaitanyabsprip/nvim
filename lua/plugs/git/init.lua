@@ -69,7 +69,8 @@ git.git_conflict = {
   spec = {
     'akinsho/git-conflict.nvim',
     version = '*',
-    event = 'VeryLazy',
+    event = 'BufReadPre',
+    cmd = 'GitConflictListQf',
     opts = {
       disable_diagnostics = true,
       highlights = { incoming = 'DiffText', current = 'DiffAdd' },

@@ -4,7 +4,6 @@ externals.toggleterm = {
   spec = {
     'akinsho/toggleterm.nvim',
     config = function() require('plugs.externals').toggleterm.setup() end,
-    event = 'VeryLazy',
     keys = {
       {
         '<leader>tf',

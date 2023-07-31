@@ -164,7 +164,7 @@ ui.noice = {
 ui.styler = {
   spec = {
     'folke/styler.nvim',
-    event = 'VeryLazy',
+    ft = 'markdown',
     opts = {
       themes = {
         markdown = { colorscheme = 'catppuccin', background = 'dark' },

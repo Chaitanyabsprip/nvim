@@ -71,7 +71,7 @@ servers.__neodev = {
 servers.lsp = {
   spec = {
     'neovim/nvim-lspconfig',
-    event = { 'BufReadPre', 'FileType' },
+    event = { 'BufReadPre' },
     config = function()
       require 'mason-lspconfig'
       local lspconfig = require 'lspconfig'
