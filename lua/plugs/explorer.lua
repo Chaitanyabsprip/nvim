@@ -67,8 +67,8 @@ explorer.harpoon = {
 
 explorer.nvim_tree = {
   spec = {
-    'kyazdani42/nvim-tree.lua',
-    dependencies = { 'kyazdani42/nvim-web-devicons' },
+    'nvim-tree/nvim-tree.lua',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     cmd = { 'Explorer' },
     config = function() require('plugs.explorer').nvim_tree.setup() end,
     commit = '9c97e6449b0b0269bd44e1fd4857184dfa57bb4c',
