@@ -125,6 +125,7 @@ themes.rosepine = {
         dark_variant = 'main',
         disable_background = false,
         highlight_groups = {
+          ColorColumn = { bg = '#1c1a30' },
           CmpItemAbbr = { fg = 'subtle' },
           CmpItemAbbrDeprecated = { fg = 'subtle' },
           CmpItemAbbrMatch = { fg = 'iris' },

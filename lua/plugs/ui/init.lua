@@ -4,14 +4,6 @@ ui.colorscheme = require 'plugs.ui.themes'
 ui.statusline = require 'plugs.ui.statusline'
 ui.tabline = require 'plugs.ui.tabline'
 
-function ui.highlight_override()
-  if vim.g.colors_name == 'rose-pine' then
-    vim.cmd [[ hi! ColorColumn guibg=#1c1a30 ctermbg=235 ]]
-  elseif vim.g.colors_name == 'nightfox' then
-    vim.cmd [[ hi! link TelescopeNormal NvimTreeNormal ]]
-  end
-end
-
 ui.dressing = {
   spec = {
     'stevearc/dressing.nvim',
@@ -265,10 +257,7 @@ ui.zen_mode = {
   },
 }
 
-function ui.setup()
-  ui.highlight_override()
-  ui.colorscheme.setup()
-end
+function ui.setup() ui.colorscheme.setup() end
 
 ui.spec = {
   ui.ansi,
