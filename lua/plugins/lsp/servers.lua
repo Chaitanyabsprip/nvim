@@ -15,14 +15,12 @@ local function extend(config)
   return updated_config
 end
 
+local null_ft = { 'lua', 'fish', 'yaml', 'markdown', 'md', 'rmd', 'rst', 'python' }
 servers.null = {
+  ft = null_ft,
   spec = {
     'jose-elias-alvarez/null-ls.nvim',
-    ft = { 'lua', 'fish', 'yaml', 'markdown', 'md', 'rmd', 'rst', 'python' },
-    config = function(_, opts)
-      require('null-ls').setup(opts)
-      require 'mason-null-ls'
-    end,
+    ft = null_ft,
     opts = function()
       local get_capabilities = require('plugins.lsp.completion').get_capabilities
       local builtins = require('null-ls').builtins
@@ -33,7 +31,6 @@ servers.null = {
       local refactoring_opts = {
         filetypes = { 'go', 'javascript', 'typescript', 'lua', 'python', 'c', 'cpp' },
       }
-
       return {
         save_after_formatting = true,
         on_attach = lsp.on_attach,
@@ -73,13 +70,16 @@ servers.lsp = {
     'neovim/nvim-lspconfig',
     event = { 'BufReadPre' },
     config = function()
-      require 'mason-lspconfig'
       local lspconfig = require 'lspconfig'
       for _, server in pairs(servers.lsp.configs) do
         server(lspconfig)
       end
     end,
-    dependencies = { servers.__neodev.spec },
+    dependencies = {
+      servers.__neodev.spec,
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+    },
   },
   configs = {},
 }
