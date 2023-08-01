@@ -18,30 +18,35 @@ ui.ansi = {
   end,
 }
 
+---@class LazyPluginSpec
 ui.dressing = {
   'stevearc/dressing.nvim',
+  init = function()
+    ---@diagnostic disable-next-line: duplicate-set-field
+    vim.ui.select = function(...)
+      require('lazy').load { plugins = { 'dressing.nvim' } }
+      return vim.ui.select(...)
+    end
+    ---@diagnostic disable-next-line: duplicate-set-field
+    vim.ui.input = function(...)
+      require('lazy').load { plugins = { 'dressing.nvim' } }
+      return vim.ui.input(...)
+    end
+  end,
   opts = { select = { backend = { 'telescope', 'nui', 'builtin' } } },
-  event = 'VeryLazy',
 }
 
 ui.headlines = {
   'lukas-reineke/headlines.nvim',
-  config = function()
-    vim.cmd [[highlight Headline1 guibg=#1E2718]]
-    vim.cmd [[highlight Headline2 guibg=#21262D]]
-    vim.cmd [[highlight CodeBlock guibg=#1C1C1C]]
-    vim.cmd [[highlight Dash guibg=#1C1C1C gui=bold]]
-    require('headlines').setup {
-      markdown = {
-        -- fat_headline_lower_string = "🬂",
-        fat_headline_lower_string = '▀',
-        dash_string = '─',
-        fat_headlines = true,
-        fat_headline_upper_string = '▃',
-      },
-    }
-  end,
   ft = { 'markdown', 'md', 'rmd', 'rst' },
+  opts = {
+    markdown = {
+      fat_headline_lower_string = '▀',
+      dash_string = '─',
+      fat_headlines = true,
+      fat_headline_upper_string = '▃',
+    },
+  },
 }
 
 ui.incline = {
@@ -170,8 +175,9 @@ ui.noice = {
 
 ui.styler = {
   'folke/styler.nvim',
-  ft = 'markdown',
-  opts = { themes = { markdown = { colorscheme = 'catppuccin', background = 'dark' } } },
+  -- ft = 'markdown',
+  dependencies = { { 'catppuccin/nvim', name = 'catppuccin', opts = { flavor = 'mocha' } } },
+  -- opts = { themes = { markdown = { colorscheme = 'catppuccin', background = 'dark' } } },
 }
 
 ui.treesitter = {
