@@ -51,6 +51,7 @@ end
 externals.toggleterm = {
   'akinsho/toggleterm.nvim',
   keys = {
+    { '<c-t>', '<cmd>ToggleTerm<cr>', desc = 'Toggle terminal', noremap = true },
     {
       '<leader>tf',
       function() externals.terminal(true):toggle() end,
