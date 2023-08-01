@@ -1,6 +1,6 @@
 local config = require 'config.ui'
 ---@class Colorscheme
----@field spec LazySpec
+---@field spec LazyPluginSpec
 ---@field set function
 local tokyonight = {}
 
