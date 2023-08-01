@@ -16,7 +16,6 @@ function plugin.bootstrap_packer()
 end
 
 plugin.setup = function()
-
   plugin.spec = 'plugins'
 
   plugin.disabled_builtins = {

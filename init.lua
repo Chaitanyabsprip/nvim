@@ -1,7 +1,7 @@
 local config = require 'config'
 config.options.disable_builtins()
 vim.g.mapleader = ' '
-require('plugs').setup()
+require('config.lazy').setup()
 config.options.setup()
 require('config.mappings').setup()
 vim.api.nvim_create_autocmd('User', {
