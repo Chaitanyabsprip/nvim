@@ -1,7 +1,9 @@
+---@diagnostic disable: no-unknown
 local ui = {}
 
 local config = require 'config.ui'
 
+---@type {spec: LazyPluginSpec, set: function}
 ui.colorscheme = require('plugins.ui.themes.' .. config.theme)
 ui.statusline = require 'plugins.ui.statusline'
 
@@ -220,7 +222,7 @@ ui.noice = {
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
         ['vim.lsp.util.stylize_markdown'] = true,
-        ['cmp.entry.get_documentation'] = false,
+        ['cmp.entry.get_documentation'] = true,
       },
       message = { view = 'mini' },
     },
@@ -314,6 +316,38 @@ ui.treesitter = {
   },
 }
 
+ui.whichkey = {
+  'folke/which-key.nvim',
+  event = 'VeryLazy',
+  opts = {
+    plugins = {},
+    defaults = {
+      mode = { 'n', 'v' },
+      ['<leader>d'] = { name = '+diff' },
+      -- ['g'] = { name = '+goto' },
+      -- ['gz'] = { name = '+surround' },
+      -- [']'] = { name = '+next' },
+      -- ['['] = { name = '+prev' },
+      -- ['<leader><tab>'] = { name = '+tabs' },
+      -- ['<leader>b'] = { name = '+buffer' },
+      -- ['<leader>c'] = { name = '+code' },
+      -- ['<leader>f'] = { name = '+file/find' },
+      -- ['<leader>g'] = { name = '+git' },
+      -- ['<leader>gh'] = { name = '+hunks' },
+      -- ['<leader>q'] = { name = '+quit/session' },
+      -- ['<leader>s'] = { name = '+search' },
+      -- ['<leader>u'] = { name = '+ui' },
+      -- ['<leader>w'] = { name = '+windows' },
+      -- ['<leader>x'] = { name = '+diagnostics/quickfix' },
+    },
+  },
+  config = function(_, opts)
+    local wk = require 'which-key'
+    wk.setup(opts)
+    wk.register(opts.defaults)
+  end,
+}
+
 ui.win_sep = {
   'nvim-zh/colorful-winsep.nvim',
   opts = { no_exec_files = { 'lazy', 'TelescopePrompt', 'mason', 'CompetiTest' } },
@@ -338,7 +372,8 @@ return {
   ui.styler,
   ui.statusline,
   ui.treesitter,
+  ui.whichkey,
   ui.win_sep,
   ui.zen_mode,
-  { 'nvim-treesitter/playground', cmd = { 'TsPlaygroundToggle' } },
+  { 'nvim-treesitter/playground', cmd = { 'TSPlaygroundToggle' } },
 }
