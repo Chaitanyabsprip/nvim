@@ -73,7 +73,17 @@ editing.matchparen = {
   opts = {},
 }
 
-editing.mini_comment = {
+editing.matchup = {
+  'andymass/vim-matchup',
+  event = 'BufReadPost',
+  enabled = false,
+  init = function() vim.o.matchpairs = '(:),{:},[:],<:>' end,
+  config = function()
+    vim.g.matchup_matchparen_deferred = 1
+    vim.g.matchup_matchparen_offscreen = { method = 'status_manual' }
+  end,
+}
+
 editing.comment = {
   'echasnovski/mini.comment',
   version = '*',
