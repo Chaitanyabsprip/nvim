@@ -1,10 +1,13 @@
 local config = {}
 local M = {}
 
----@return {name:string, text:string, texthl:string}[]
+---@alias Sign {name:string, text:string, texthl:string}
+---
+---@return Sign[]
 function M.get_signs(win)
   local buf = vim.api.nvim_win_get_buf(win)
   return vim.tbl_map(
+    ---@param sign Sign
     function(sign) return vim.fn.sign_getdefined(sign.name)[1] end,
     vim.fn.sign_getplaced(buf, { group = '*', lnum = vim.v.lnum })[1].signs
   )
@@ -20,6 +23,7 @@ config.fold = {
     return icon
   end,
   callback = function()
+    ---@type number
     local lnum = vim.fn.getmousepos().line
     if vim.fn.foldlevel(lnum) <= vim.fn.foldlevel(lnum - 1) then return end -- Only lines with a mark should be clickable
     local state = vim.fn.foldclosed(lnum) == -1 and 'close' or 'open'
@@ -30,6 +34,7 @@ config.fold = {
 function config.status_column()
   local win = vim.g.statusline_winid
   if vim.wo[win].signcolumn == 'no' then return '' end
+  ---@type Sign, Sign
   local sign, git_sign
   for _, s in ipairs(M.get_signs(win)) do
     if s.name:find 'GitSign' then
@@ -39,7 +44,10 @@ function config.status_column()
     end
   end
 
-  local nu = vim.wo[win].number and vim.v.virtnum == 0 and vim.v.lnum or ' '
+  local nu = vim.wo[win].number and vim.v.lnum
+  local rnu = vim.wo[win].relativenumber and vim.v.relnum
+  local showlnum = nu or rnu and vim.v.virtnum == 0
+  local lnum = (showlnum and vim.v.relnum == 0 and nu) or rnu or nu or ' '
   local signcolumn = vim.v.virtnum == 0
       and sign
       and ('%#' .. (sign.texthl or 'DiagnosticInfo') .. '#' .. sign.text .. '%*')
@@ -47,7 +55,7 @@ function config.status_column()
 
   local components = {
     signcolumn,
-    nu .. ' ',
+    lnum .. ' ',
     [[%=]],
     [[%@v:lua.require'config'.fold.callback@]],
     [[%{v:lua.require'config'.fold.display()}]],

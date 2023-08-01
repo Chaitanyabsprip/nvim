@@ -13,6 +13,7 @@ keymaps.setup = function()
   nnoremap '<Space>' '<NOP>' 'Leader key'
   vim.g.mapleader = ' '
 
+  require('utils').cowbow()
   nnoremap '<leader>w' '<cmd>up<cr>' 'Save file (only if modified)'
   inoremap 'jk' '<esc>' 'Escape insert mode'
   inoremap 'kj' '<esc>' 'Escape insert mode'
@@ -46,7 +47,6 @@ keymaps.setup = function()
   vnoremap 'p' '"_dP' 'Paste inplace without yanking selected text'
   nnoremap '<TAB>' '<cmd>bnext<cr>' 'Focus next buffer'
   nnoremap '<S-TAB>' '<cmd>:bprevious<cr>' 'Focus previous buffer'
-  nnoremap 'gF' '<cmd>e <cfile><cr>' "Open path to file under cursor even if it doesn't exist"
   nnoremap 'n' 'nzzzv' 'Jump to next match and center line'
   nnoremap 'N' 'Nzzzv' 'Jump to previous match and center line'
   nnoremap 'J' 'mzJ`z' 'Join lines without moving cursor'
@@ -58,16 +58,19 @@ keymaps.setup = function()
   vnoremap '<leader>s' 'y:%s/<c-r>0/<c-r>0/gI<Left><Left><Left>' 'Search and replace, in current buffer, visual selection'
   nnoremap '<leader>j' '<cmd>cnext<cr>zz' 'Jump to next result from quickfix'
   nnoremap '<leader>k' '<cmd>cprev<cr>zz' 'Jump to prev result from quickfix'
-  -- nnoremap "'" '<NOP>' "don't trigger marks with '"
-  -- xnoremap "'" '<NOP>' "don't trigger marks with '"
   nnoremap '<c-j>' '<c-o>' 'Jump back the jump list'
   nnoremap '<c-k>' '<c-i>' 'Jump forward the jump list'
   map 's' '<NOP>' 'unmap s'
   map 'S' '<NOP>' 'unmap S'
-  local offset = math.floor(vim.api.nvim_list_uis()[1].height / 2)
-  nnoremap '<c-d>'(offset .. 'jzz') 'Scroll down one-third page'
-  nnoremap '<c-u>'(offset .. 'kzz') 'Scroll up one-third page'
   nnoremap '<leader>td'('<cmd> e ' .. os.getenv 'HOME' .. '/Projects/Notes/Todo.md<cr>') 'Open Todo file'
+  nnoremap 'gn'(function()
+    local nu = vim.wo[vim.api.nvim_get_current_win()].number
+    return '<cmd>setlocal ' .. (nu and 'no' or '') .. 'nu<cr>'
+  end) { expr = true } 'Toggle line number'
+  nnoremap 'gN'(function()
+    local rnu = vim.wo[vim.api.nvim_get_current_win()].relativenumber
+    return '<cmd>setlocal ' .. (rnu and 'no' or '') .. 'rnu<cr>'
+  end) { expr = true } 'Toggle relative line number'
 end
 
 return keymaps
