@@ -1,80 +1,59 @@
-local utils = {}
-utils.ntst = { noremap = true, silent = true }
-utils.nt = { noremap = true }
-utils.st = { silent = true }
+local M = {}
 
--- Check whether the current buffer is empty
-utils.is_buffer_empty = function()
-  return vim.fn.empty(vim.fn.expand '%:t') == 1
-end
-
--- Check if the windows width is greater than a given number of columns
-utils.has_width_gt = function(cols)
-  return vim.fn.winwidth(0) / 2 > cols
-end
-
-utils.map = function(mode, key, cmd, opts)
-  vim.api.nvim_set_keymap(mode or '', key, cmd, opts)
-end
-
-utils.nnoremap = function(key, cmd, silent)
-  vim.api.nvim_set_keymap('n', key, cmd, { noremap = true, silent = silent })
-end
-
-utils.inoremap = function(key, cmd)
-  vim.api.nvim_set_keymap('i', key, cmd, { noremap = true })
-end
-
-function utils.vnoremap(key, cmd)
-  vim.api.nvim_set_keymap('v', key, cmd, { noremap = true })
-end
-
-utils.xnoremap = function(key, cmd)
-  vim.api.nvim_set_keymap('x', key, cmd, { noremap = true })
-end
-
-function utils.tnoremap(key, cmd)
-  vim.api.nvim_set_keymap('t', key, cmd, { noremap = true })
-end
-
-utils.onoremap = function(key, cmd, silent)
-  vim.api.nvim_set_keymap('o', key, cmd, { noremap = true, silent = silent })
-end
-
-function utils.bmap(bufnr, mode, key, command, opts)
-  vim.api.nvim_buf_set_keymap(bufnr, mode, key, command, opts)
-end
-
-utils.execr = function(cmd)
-  local fh = assert(io.popen(cmd))
-  local data = fh:read '*a'
-  fh:close()
-  return data
-end
-
-function utils.preq(module)
-  local status_ok, pmodule = pcall(require, module)
-  if not status_ok then
-    print(module .. ' not found')
-    vim.notify(module .. ' not found', 'error', {})
+function M.debounce(ms, fn)
+  local timer = vim.loop.new_timer()
+  return function(...)
+    local argv = { ... }
+    assert(timer ~= nil, 'time must not be nil')
+    timer:start(ms, 0, function()
+      timer:stop()
+      vim.schedule_wrap(fn)(unpack(argv))
+    end)
   end
-  return pmodule
 end
 
-utils.table_to_string = function(tbl)
-  local str = '{'
-  for k, v in pairs(tbl) do
-    if type(v) == 'table' then
-      v = utils.table_to_string(v)
+function M.throttle(ms, fn)
+  local timer = vim.loop.new_timer()
+  local running = false
+  return function(...)
+    if not running then
+      local argv = { ... }
+      local argc = select('#', ...)
+      assert(timer ~= nil, 'time must not be nil')
+      timer:start(ms, 0, function()
+        running = false
+        pcall(vim.schedule_wrap(fn), unpack(argv, 1, argc))
+      end)
+      running = true
     end
-    str = str .. tostring(k) .. '=' .. tostring(v) .. ','
   end
-  str = str .. '}'
-  return str
 end
 
-function utils.trim(s)
-  return s:match '^%s*(.-)%s*$'
+local hex_to_rgb = function(hex_str)
+  local hex = '[abcdef0-9][abcdef0-9]'
+  local pat = '^#(' .. hex .. ')(' .. hex .. ')(' .. hex .. ')$'
+  hex_str = string.lower(hex_str)
+
+  assert(string.find(hex_str, pat) ~= nil, 'hex_to_rgb: invalid hex_str: ' .. tostring(hex_str))
+
+  local red, green, blue = string.match(hex_str, pat)
+  return { tonumber(red, 16), tonumber(green, 16), tonumber(blue, 16) }
 end
 
-return utils
+function M.blend(fg, bg, alpha)
+  bg = hex_to_rgb(bg)
+  fg = hex_to_rgb(fg)
+
+  local blendChannel = function(i)
+    local ret = (alpha * fg[i] + ((1 - alpha) * bg[i]))
+    return math.floor(math.min(math.max(0, ret), 255) + 0.5)
+  end
+
+  return string.format('#%02X%02X%02X', blendChannel(1), blendChannel(2), blendChannel(3))
+end
+
+function M.darken(hex, amount, bg) return M.blend(hex, bg or M.bg, math.abs(amount)) end
+
+function M.lighten(hex, amount, fg) return M.blend(hex, fg or M.fg, math.abs(amount)) end
+
+return M

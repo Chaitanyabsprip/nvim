@@ -1,11 +1,18 @@
-return {
-  init = function()
-    local servers = require 'lsp.servers'
-    local lsp_utils = require 'lsp.utils'
-    lsp_utils.apply_handlers()
-    for _, server in ipairs(servers.list) do
-      servers[server]()
-    end
-    servers.setup()
-  end,
-}
+local lsp = {}
+
+lsp.capabilities = function(_)
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
+  -- local completionItem = capabilities.textDocument.completion.completionItem
+  -- completionItem.documentationFormat = { 'markdown', 'plaintext' }
+  -- completionItem.workspaceWord = true
+  return capabilities
+end
+
+lsp.on_attach = function(client, bufnr)
+  require('lsp.diagnostics').on_attach(client, bufnr)
+  require('lsp.capabilities').resolve(client, bufnr)
+  require('lsp.handlers').resolve()
+end
+
+return lsp
