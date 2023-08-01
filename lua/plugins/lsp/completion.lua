@@ -1,12 +1,5 @@
 local completion = {}
 
-function completion.get_capabilities()
-  local cmp_lsp = require 'cmp_nvim_lsp'
-  local capabilities = require('lsp').capabilities()
-  local cmp_capabilities = cmp_lsp.default_capabilities()
-  return vim.tbl_deep_extend('force', capabilities, cmp_capabilities)
-end
-
 ---@class LazyPluginSpec
 completion.luasnip = {
   'L3MON4D3/LuaSnip',
@@ -35,9 +28,9 @@ completion.luasnip = {
 ---@class LazyPluginSpec
 completion.cmp = {
   'hrsh7th/nvim-cmp',
-  event = 'InsertEnter',
+  event = { 'InsertEnter', 'BufReadPre' },
   dependencies = {
-  'saadparwaiz1/cmp_luasnip',
+    'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-cmdline',
     'hrsh7th/cmp-nvim-lsp',
@@ -146,4 +139,11 @@ completion.spec = {
   { 'natebosch/dartlang-snippets', ft = 'dart' },
 }
 
-return completion
+function completion.spec.get_capabilities()
+  local cmp_lsp = require 'cmp_nvim_lsp'
+  local capabilities = require('lsp').capabilities()
+  local cmp_capabilities = cmp_lsp.default_capabilities()
+  return vim.tbl_deep_extend('force', capabilities, cmp_capabilities)
+end
+
+return completion.spec

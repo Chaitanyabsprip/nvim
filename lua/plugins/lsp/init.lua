@@ -59,7 +59,7 @@ lsp.mason_lspconfig = {
 lsp.mason_nulls = {
   'jay-babu/mason-null-ls.nvim',
   dependencies = { 'williamboman/mason.nvim', 'jose-elias-alvarez/null-ls.nvim' },
-  ft = lsp.servers.null.ft,
+  ft = require('plugins.lsp.null').ft,
   opts = { automatic_installation = true },
 }
 
@@ -95,9 +95,6 @@ lsp.rename = {
 
 lsp.spec = {
   lsp.code_actions,
-  lsp.completion.spec,
-  lsp.database.spec,
-  lsp.debugger.spec,
   lsp.graphql,
   lsp.lsp_lines,
   lsp.mason,
@@ -107,7 +104,6 @@ lsp.spec = {
   lsp.navic,
   lsp.refactoring,
   lsp.rename,
-  lsp.servers.spec,
 }
 
 return lsp.spec

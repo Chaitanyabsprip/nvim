@@ -154,7 +154,6 @@ function M.dont_show()
 
   if (not table.contains(argv, '-i')) and #argv > 1 then return true end
 
-  -- taken from mini.starter
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
   if #lines > 1 or (#lines == 1 and lines[1]:len() > 0) then return true end
 

@@ -1,4 +1,3 @@
-local lsp = require 'lsp'
 local M = {}
 
 local function dap_configuration(_)
@@ -23,21 +22,6 @@ local function dap_configuration(_)
   require('dap.ext.vscode').load_launchjs()
 end
 
-function M.will_rename_files(old_name, new_name, callback)
-  local params = vim.lsp.util.make_position_params()
-  if not new_name then return end
-  local file_change = {
-    newUri = vim.uri_from_fname(new_name),
-    oldUri = vim.uri_from_fname(old_name),
-  }
-  params.files = { file_change }
-  vim.lsp.buf_request(0, 'workspace/willRenameFiles', params, function(err, result)
-    if err then
-      return vim.notify(err.message or 'Error on getting lsp rename results!', vim.log.levels.ERROR)
-    end
-    callback(result)
-  end)
-end
 
 local function integrate_telescope()
   require('telescope').load_extension 'flutter'
@@ -49,8 +33,7 @@ local function integrate_telescope()
   )
 end
 
-M.config = {
-  spec = {
+M.spec = {
     'akinsho/flutter-tools.nvim',
     ft = { 'dart', 'yaml' },
     opts = function()
@@ -111,7 +94,7 @@ M.config = {
         lsp = {
           color = lsp_color,
           capabilities = get_capabilities(),
-          on_attach = lsp.on_attach,
+          on_attach = require('lsp').on_attach,
           init_options = init_options,
           root_dir = root_dir,
           settings = settings,
@@ -120,7 +103,22 @@ M.config = {
         widget_guides = { enabled = true },
       }
     end,
-  },
 }
 
-return M
+function M.spec.will_rename_files(old_name, new_name, callback)
+  local params = vim.lsp.util.make_position_params()
+  if not new_name then return end
+  local file_change = {
+    newUri = vim.uri_from_fname(new_name),
+    oldUri = vim.uri_from_fname(old_name),
+  }
+  params.files = { file_change }
+  vim.lsp.buf_request(0, 'workspace/willRenameFiles', params, function(err, result)
+    if err then
+      return vim.notify(err.message or 'Error on getting lsp rename results!', vim.log.levels.ERROR)
+    end
+    callback(result)
+  end)
+end
+
+return M.spec

@@ -74,6 +74,7 @@ editing.matchparen = {
 }
 
 editing.mini_comment = {
+editing.comment = {
   'echasnovski/mini.comment',
   version = '*',
   event = { 'BufReadPost' },
@@ -139,7 +140,7 @@ editing.ufo = {
 }
 
 editing.spec = {
-  editing.mini_comment,
+  editing.comment,
   editing.leap,
   editing.matchparen,
   editing.surround,

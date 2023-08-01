@@ -1,4 +1,5 @@
 local servers = {}
+
 local lsp = require 'lsp'
 
 local function extend(config)
@@ -15,51 +16,7 @@ local function extend(config)
   return updated_config
 end
 
-local null_ft = { 'lua', 'fish', 'yaml', 'markdown', 'md', 'rmd', 'rst', 'python' }
-servers.null = {
-  ft = null_ft,
-  spec = {
-    'jose-elias-alvarez/null-ls.nvim',
-    ft = null_ft,
-    opts = function()
-      local get_capabilities = require('plugins.lsp.completion').get_capabilities
-      local builtins = require('null-ls').builtins
-      local code_actions = builtins.code_actions
-      local hover = builtins.hover
-      local formatting = builtins.formatting
-      local diagnostics = builtins.diagnostics
-      local refactoring_opts = {
-        filetypes = { 'go', 'javascript', 'typescript', 'lua', 'python', 'c', 'cpp' },
-      }
-      return {
-        save_after_formatting = true,
-        on_attach = lsp.on_attach,
-        capabilities = get_capabilities(),
-        sources = {
-          code_actions.gitsigns,
-          code_actions.refactoring.with(refactoring_opts),
-          diagnostics.markdownlint,
-          diagnostics.codespell.with { filetypes = { 'markdown' } },
-          diagnostics.yamllint,
-          formatting.beautysh,
-          formatting.black.with { extra_args = { '--quiet', '-l', '80' } },
-          formatting.deno_fmt.with {
-            filetypes = { 'markdown' },
-            extra_args = { '--prose-wrap="preserve"' },
-          },
-          formatting.fish_indent,
-          formatting.isort.with { extra_args = { '--quiet' } },
-          formatting.markdownlint,
-          formatting.stylua,
-          formatting.shfmt,
-          hover.dictionary,
-        },
-      }
-    end,
-  },
-}
-
-servers.flutter = require('plugins.lsp.flutter').config
+-- servers.flutter = require('plugins.lsp.flutter')
 
 servers.__neodev = {
   spec = { 'folke/neodev.nvim', config = function() require('neodev').setup {} end },
@@ -71,6 +28,7 @@ servers.lsp = {
     event = { 'BufReadPre' },
     config = function()
       local lspconfig = require 'lspconfig'
+      ---@diagnostic disable-next-line: no-unknown
       for _, server in pairs(servers.lsp.configs) do
         server(lspconfig)
       end
@@ -92,8 +50,36 @@ function servers.lsp.configs.lua(lspconfig)
     settings = {
       Lua = {
         workspace = { checkThirdParty = false },
-        completion = { showWord = 'Disable', callSnippet = 'Both', displayContext = true },
-        hint = { enable = true },
+        completion = {
+          workspaceword = true,
+          -- showWord = 'Disable',
+          callSnippet = 'Both',
+          displayContext = true,
+        },
+        diagnostics = {
+          disable = { 'incomplete-signature-doc' },
+          groupFileStatus = {
+            ['ambiguity'] = 'Any',
+            ['await'] = 'Any',
+            ['codestyle'] = 'None',
+            ['duplicate'] = 'Any',
+            ['global'] = 'Any',
+            ['luadoc'] = 'Any',
+            ['redefined'] = 'Any',
+            ['strict'] = 'Any',
+            ['strong'] = 'Any',
+            ['type-check'] = 'Any',
+            ['unbalanced'] = 'Any',
+            ['unused'] = 'Any',
+          },
+          unusedLocalExclude = { '_*' },
+        },
+        hint = {
+          enable = true,
+          semicolon = 'Disable',
+          arrayIndex = 'Disable',
+        },
+        type = { castNumberToInteger = true },
         telemetry = { enable = false },
         format = { enable = false },
       },
@@ -147,11 +133,10 @@ function servers.lsp.configs.markdown(lspconfig)
 end
 
 servers.spec = {
-  servers.null.spec,
   servers.lsp.spec,
-  servers.flutter.spec,
+  -- servers.flutter.spec,
   servers.__schemastore.spec,
   servers.__neodev.spec,
 }
 
-return servers
+return servers.spec
