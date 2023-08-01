@@ -16,15 +16,8 @@ function plugin.bootstrap_packer()
 end
 
 plugin.setup = function()
-  local completion = require 'plugins.lsp.completion'
-  local debugger = require 'plugins.lsp.debugger'
-  local servers = require 'plugins.lsp.servers'
 
-  plugin.spec = {
-    { import = 'plugins' },
-    completion.spec,
-    { debugger.spec, servers.spec },
-  }
+  plugin.spec = 'plugins'
 
   plugin.disabled_builtins = {
     '2html_plugin',

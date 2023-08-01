@@ -10,7 +10,6 @@ vim.api.nvim_create_autocmd('User', {
   callback = function()
     config.autocommands()
     config.options.lazy()
-    vim.cmd.packadd 'cfilter'
   end,
 })
 -- vim.lsp.set_log_level 'debug'

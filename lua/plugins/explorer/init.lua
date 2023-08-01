@@ -7,7 +7,7 @@ explorer.better_qf = {
   opts = {},
 }
 
-explorer.fuzzy = require 'plugs.fuzzy.telescope'
+explorer.fuzzy = require 'plugins.explorer.telescope'
 
 explorer.harpoon = {
   'ThePrimeagen/harpoon',

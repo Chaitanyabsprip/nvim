@@ -23,7 +23,7 @@ local setup_keymaps = function()
   nnoremap 'gb' '<cmd>Telescope buffers previewer=false theme=dropdown initial_mode=normal<CR>' 'Telescope Buffers'
   nnoremap 'go'(builtin.oldfiles) 'Telescope oldfiles'
   nnoremap 'gW'(builtin.grep_string) 'Telescope grep word under cursor'
-  vnoremap 'gw' '<esc><cmd>lua require("plugs.fuzzy.telescope").search_visual_selection()<cr>' 'Telescope grep visual selection'
+  vnoremap 'gw' '<esc><cmd>lua require("plugins.explorer.telescope").search_visual_selection()<cr>' 'Telescope grep visual selection'
   nnoremap 'gw'(function() builtin.grep_string { search = vim.fn.input { prompt = 'Grep > ' } } end) 'Telescope grep and filter'
 end
 
@@ -56,8 +56,8 @@ telescope = {
     branch = '0.1.x',
     dependencies = { 'nvim-lua/plenary.nvim' },
     cmd = { 'Telescope' },
-    keys = {'<leader><leader>', 'gb', 'gw'},
-    config = function() require('plugs.fuzzy.telescope').setup() end,
+    keys = { '<leader><leader>', 'gb', 'gw' },
+    config = function() require('plugins.explorer.telescope').setup() end,
   },
 
   setup = function()
@@ -146,7 +146,7 @@ end
 
 telescope.search_visual_selection = function()
   require('telescope.builtin').grep_string {
-    search = require('plugs.fuzzy.telescope').get_visual_selection(),
+    search = require('plugins.explorer.telescope').get_visual_selection(),
   }
 end
 
