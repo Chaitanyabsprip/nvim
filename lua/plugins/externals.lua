@@ -1,45 +1,5 @@
 local externals = {}
 
-externals.toggleterm = {
-  spec = {
-    'akinsho/toggleterm.nvim',
-    config = function() require('plugs.externals').toggleterm.setup() end,
-    keys = {
-      {
-        '<leader>tf',
-        function() require('plugs.externals').terminal(true):toggle() end,
-        noremap = true,
-        desc = 'Toggle floating terminal',
-      },
-      {
-        '<c-g>',
-        function() require('plugs.externals').gitui():toggle() end,
-        noremap = true,
-        desc = 'Toggle gitui in floating window',
-      },
-    },
-  },
-  setup = function()
-    require('toggleterm').setup {
-      size = 22,
-      open_mapping = [[<c-t>]],
-      on_open = function() vim.cmd [[setlocal statuscolumn=]] end,
-      on_close = function() end,
-      shade_terminals = true,
-      shading_factor = '-30',
-      start_in_insert = true,
-      persist_size = true,
-      direction = 'horizontal',
-      hide_numbers = true,
-      shade_filetypes = {},
-      shell = vim.o.shell,
-      float_opts = {
-        highlights = { border = 'Normal', background = 'Normal' },
-      },
-    }
-  end,
-}
-
 function externals.terminal(floating)
   floating = floating or false
   local Terminal = require('toggleterm.terminal').Terminal
@@ -51,7 +11,7 @@ function externals.terminal(floating)
     float_opts = { border = 'double' }
     direction = 'float'
   end
-  return Terminal:new {
+  local opts = {
     dir = 'git_dir',
     direction = direction,
     float_opts = float_opts,
@@ -64,6 +24,7 @@ function externals.terminal(floating)
       tnoremap 'kj' '<C-\\><C-N>' 'kj as escape'
     end,
   }
+  return Terminal:new(opts)
 end
 
 function externals.gitui()
@@ -87,5 +48,40 @@ function externals.gitui()
   }
 end
 
-externals.spec = externals.toggleterm.spec
-return externals
+externals.toggleterm = {
+  'akinsho/toggleterm.nvim',
+  keys = {
+    {
+      '<leader>tf',
+      function() externals.terminal(true):toggle() end,
+      noremap = true,
+      desc = 'Toggle floating terminal',
+    },
+    {
+      '<c-g>',
+      function() externals.gitui():toggle() end,
+      noremap = true,
+      desc = 'Toggle gitui in floating window',
+    },
+  },
+  opts = {
+    size = 22,
+    open_mapping = [[<c-t>]],
+    on_open = function() vim.cmd [[setlocal statuscolumn=]] end,
+    on_close = function() end,
+    shade_terminals = true,
+    shading_factor = '-30',
+    start_in_insert = true,
+    persist_size = true,
+    direction = 'horizontal',
+    hide_numbers = true,
+    shade_filetypes = {},
+    shell = vim.o.shell,
+    float_opts = {
+      highlights = { border = 'Normal', background = 'Normal' },
+    },
+  },
+}
+
+externals.spec = { externals.toggleterm }
+return externals.spec

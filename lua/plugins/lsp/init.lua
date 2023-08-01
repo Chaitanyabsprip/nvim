@@ -1,6 +1,6 @@
 local lsp = {}
 
-lsp.database = require 'plugs.lsp.database'
+lsp.database = require 'plugins.lsp.database'
 
 lsp.code_actions = {
   spec = {
@@ -130,4 +130,4 @@ lsp.spec = {
   lsp.rename.spec,
 }
 
-return lsp
+return lsp.spec

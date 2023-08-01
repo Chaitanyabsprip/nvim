@@ -1,25 +1,29 @@
 local plugin = {}
 
+function plugin.bootstrap_packer()
+  local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+  if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system {
+      'git',
+      'clone',
+      '--filter=blob:none',
+      'https://github.com/folke/lazy.nvim.git',
+      lazypath,
+    }
+    vim.fn.system { 'git', '-C', lazypath, 'checkout', 'tags/stable' } -- last stable release
+  end
+  vim.opt.runtimepath:prepend(lazypath)
+end
+
 plugin.setup = function()
-  local completion = require 'plugs.lsp.completion'
-  local debugger = require 'plugs.lsp.debugger'
-  local editing = require 'plugs.editing'
-  local externals = require 'plugs.externals'
-  local git = require 'plugs.git'
-  local lsp = require 'plugs.lsp'
-  local tools = require 'plugs.tools'
-  local servers = require 'plugs.lsp.servers'
-  local session = require 'plugs.session'
+  local completion = require 'plugins.lsp.completion'
+  local debugger = require 'plugins.lsp.debugger'
+  local servers = require 'plugins.lsp.servers'
 
   plugin.spec = {
-    completion.spec,
     { import = 'plugins' },
-    editing.spec,
-    externals.spec,
-    git.spec,
-    tools.spec,
-    session.spec,
-    { debugger.spec, lsp.spec, servers.spec },
+    completion.spec,
+    { debugger.spec, servers.spec },
   }
 
   plugin.disabled_builtins = {
@@ -48,16 +52,11 @@ plugin.setup = function()
     'zipPlugin',
   }
 
-  require('plugs.utils').bootstrap_packer()
+  plugin.bootstrap_packer()
   require('lazy').setup(plugin.spec, {
     defaults = { lazy = true },
     dev = { path = '~/Projects/Languages/Lua' },
-    performance = {
-      rtp = {
-        disabled_plugins = plugin.disabled_builtins,
-        -- paths = { '/usr/local/share/nvim/runtime/pack/dist/opt/cfilter' },
-      },
-    },
+    performance = { rtp = { disabled_plugins = plugin.disabled_builtins } },
     install = { colorscheme = { 'rose-pine', 'tokyonight', 'habamax' } },
     checker = { enabled = true, notify = false },
     readme = { files = { 'README.md', 'readme.md', 'README.rst', 'readme.rst' } },

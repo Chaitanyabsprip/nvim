@@ -2,7 +2,7 @@ local servers = {}
 local lsp = require 'lsp'
 
 local function extend(config)
-  local get_capabilities = require('plugs.lsp.completion').get_capabilities
+  local get_capabilities = require('plugins.lsp.completion').get_capabilities
   local def_root = { '.git', '.gitignore', vim.fn.getcwd() }
   local roots = vim.list_extend(def_root, config.root or {})
   local lspconfig = require 'lspconfig'
@@ -24,7 +24,7 @@ servers.null = {
       require 'mason-null-ls'
     end,
     opts = function()
-      local get_capabilities = require('plugs.lsp.completion').get_capabilities
+      local get_capabilities = require('plugins.lsp.completion').get_capabilities
       local builtins = require('null-ls').builtins
       local code_actions = builtins.code_actions
       local hover = builtins.hover
@@ -62,7 +62,7 @@ servers.null = {
   },
 }
 
-servers.flutter = require('plugs.lsp.flutter').config
+servers.flutter = require('plugins.lsp.flutter').config
 
 servers.__neodev = {
   spec = { 'folke/neodev.nvim', config = function() require('neodev').setup {} end },

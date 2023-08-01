@@ -1,30 +1,27 @@
 local git = {}
 
 git.gitsigns = {
-  spec = {
-    'lewis6991/gitsigns.nvim',
-    config = function() require('plugs.git').gitsigns.setup() end,
-    cond = function() return vim.loop.fs_stat '.git' end,
-    event = 'BufReadPre',
-  },
-  setup = function()
+  'lewis6991/gitsigns.nvim',
+  cond = function() return vim.loop.fs_stat '.git' end,
+  event = 'BufReadPre',
+  opts = function()
     local signs = { add = 'Add', change = 'Change', delete = 'Delete' }
-    local get_sign_opts = function(sign, text)
+    local sign = function(sign, text)
       text = text or '▍'
       local hl = 'GitSigns' .. sign
       return { text = text, hl = hl, numhl = hl .. 'Nr', linehl = hl .. 'Ln' }
     end
-    require('gitsigns').setup {
+    return {
       signs = {
-        add = get_sign_opts(signs.add),
-        change = get_sign_opts(signs.change),
-        delete = get_sign_opts(signs.delete, '▸'),
-        topdelete = get_sign_opts(signs.delete, '▾'),
-        changedelete = get_sign_opts(signs.change),
-        untracked = get_sign_opts(signs.add),
+        add = sign(signs.add),
+        change = sign(signs.change),
+        delete = sign(signs.delete, '_'),
+        topdelete = sign(signs.delete, '‾'),
+        changedelete = sign(signs.change),
+        untracked = sign(signs.add, '▘'),
       },
       on_attach = function(bufnr)
-        local gs = package.loaded.gitsigns
+        local gs = require 'gitsigns'
         local function map(mode, l, r, opts)
           opts = opts or {}
           if type(opts) == 'string' then opts = { desc = opts } end
@@ -55,10 +52,10 @@ git.gitsigns = {
       end,
       current_line_blame = true,
       current_line_blame_opts = {
-        virt_text = true,
-        virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
         delay = 700,
         ignore_whitespace = false,
+        virt_text = true,
+        virt_text_pos = 'eol',
       },
       current_line_blame_formatter_opts = { relative_time = true },
     }
@@ -66,18 +63,16 @@ git.gitsigns = {
 }
 
 git.git_conflict = {
-  spec = {
-    'akinsho/git-conflict.nvim',
-    version = '*',
-    event = 'BufReadPre',
-    cmd = 'GitConflictListQf',
-    opts = {
-      disable_diagnostics = true,
-      highlights = { incoming = 'DiffText', current = 'DiffAdd' },
-    },
+  'akinsho/git-conflict.nvim',
+  version = '*',
+  event = 'BufReadPre',
+  cmd = 'GitConflictListQf',
+  opts = {
+    disable_diagnostics = true,
+    highlights = { incoming = 'DiffText', current = 'DiffAdd' },
   },
 }
 
-git.spec = { git.git_conflict.spec, git.gitsigns.spec }
+git.spec = { git.git_conflict, git.gitsigns }
 
-return git
+return git.spec
