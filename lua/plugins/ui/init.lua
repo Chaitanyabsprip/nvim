@@ -235,7 +235,7 @@ ui.noice = {
       { filter = { event = 'msg_show', find = '%d+L, %d+B' }, view = 'mini' },
       { filter = { event = 'msg_show', find = 'after #%d+' }, view = 'mini' },
       { filter = { event = 'msg_show', find = 'before #%d+' }, view = 'mini' },
-      { filter = { event = 'msg_showmode' }, view = 'mini' },
+      { filter = { event = 'msg_showmode' }, opts = { skip = true } },
     },
     views = {
       notify = { win_options = { winblend = 0 } },

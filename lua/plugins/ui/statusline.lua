@@ -7,6 +7,7 @@ local function get_lsp_client(_)
   local clients = vim.lsp.get_clients()
   if next(clients) == nil then return msg end
   for _, client in ipairs(clients) do
+    ---@type table
     local filetypes = client.config.filetypes
     local client_name = client.name
     if filetypes and vim.fn.index(filetypes, filetype) ~= -1 and client_name ~= 'null-ls' then
@@ -32,9 +33,17 @@ statusline.lualine = {
       lualine_c = {
         { get_lsp_client, icon = '', on_click = function() vim.cmd [[LspInfo]] end },
       },
-      lualine_x = { 'filetype' },
+      lualine_x = {
+        {
+          function() return require('noice').api.status.mode.get() end,
+          cond = function()
+            return package.loaded['noice'] and require('noice').api.status.mode.has()
+          end,
+        },
+        'filetype',
+      },
       lualine_y = {},
-      lualine_z = { { 'datetime', style = '%H:%M', icon = '', color = { gui = 'bold' } } },
+      lualine_z = { { 'datetime', style = '%R', icon = '', color = { gui = 'bold' } } },
     },
     extensions = { 'lazy', 'nvim-dap-ui', 'nvim-tree', 'toggleterm', 'quickfix' },
   },
