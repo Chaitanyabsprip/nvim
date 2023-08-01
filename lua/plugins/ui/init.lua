@@ -5,9 +5,44 @@ local config = require 'config.ui'
 ui.colorscheme = require('plugins.ui.themes.' .. config.theme)
 ui.statusline = require 'plugins.ui.statusline'
 
+ui.animate_movement = {
+  'echasnovski/mini.animate',
+  event = 'BufReadPre',
+  opts = function()
+    -- don't use animate when scrolling with the mouse
+    local mouse_scrolled = false
+    for _, scroll in ipairs { 'Up', 'Down' } do
+      local key = '<ScrollWheel' .. scroll .. '>'
+      vim.keymap.set({ '', 'i' }, key, function()
+        mouse_scrolled = true
+        return key
+      end, { expr = true })
+    end
+
+    local animate = require 'mini.animate'
+    return {
+      resize = {
+        timing = animate.gen_timing.linear { duration = 100, unit = 'total' },
+      },
+      scroll = {
+        timing = animate.gen_timing.linear { duration = 150, unit = 'total' },
+        subscroll = animate.gen_subscroll.equal {
+          predicate = function(total_scroll)
+            if mouse_scrolled then
+              mouse_scrolled = false
+              return false
+            end
+            return total_scroll > 1
+          end,
+        },
+      },
+    }
+  end,
+}
+
 ui.ansi = {
   'm00qek/baleia.nvim',
-  event = 'BufReadPost',
+  optional = true,
   config = function()
     local baleia = require('baleia').setup {}
     vim.api.nvim_create_user_command(
@@ -18,7 +53,6 @@ ui.ansi = {
   end,
 }
 
----@class LazyPluginSpec
 ui.dressing = {
   'stevearc/dressing.nvim',
   init = function()
@@ -34,6 +68,46 @@ ui.dressing = {
     end
   end,
   opts = { select = { backend = { 'telescope', 'nui', 'builtin' } } },
+}
+
+ui.edgy = {
+  'folke/edgy.nvim',
+  event = 'BufReadPre',
+  opts = {
+    bottom = {
+      {
+        ft = 'toggleterm',
+        size = { height = 0.4 },
+        filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == '' end,
+      },
+      {
+        ft = 'noice',
+        size = { height = 0.4 },
+        filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == '' end,
+      },
+      {
+        ft = 'lazyterm',
+        title = 'LazyTerm',
+        size = { height = 0.4 },
+        filter = function(buf) return not vim.b[buf].lazyterm_cmd end,
+      },
+      { ft = 'qf', title = 'QuickFix' },
+      {
+        ft = 'help',
+        size = { height = 20 },
+        -- don't open help files in edgy that we're editing
+        filter = function(buf) return vim.bo[buf].buftype == 'help' end,
+      },
+      { title = 'Neotest Output', ft = 'neotest-output-panel', size = { height = 15 } },
+    },
+    left = { { title = 'Neotest Summary', ft = 'neotest-summary' } },
+    keys = {
+      ['<c-Right>'] = function(win) win:resize('width', 2) end,
+      ['<c-Left>'] = function(win) win:resize('width', -2) end,
+      ['<c-Up>'] = function(win) win:resize('height', 2) end,
+      ['<c-Down>'] = function(win) win:resize('height', -2) end,
+    },
+  },
 }
 
 ui.headlines = {
@@ -119,7 +193,15 @@ ui.noice = {
   'folke/noice.nvim',
   dependencies = {
     'MunifTanjim/nui.nvim',
-    { 'rcarriga/nvim-notify', opts = { render = 'compact', top_down = false } },
+    {
+      'rcarriga/nvim-notify',
+      opts = {
+        max_height = function() return math.floor(vim.o.lines * 0.75) end,
+        max_width = function() return math.floor(vim.o.columns * 0.75) end,
+        render = 'compact',
+        top_down = false,
+      },
+    },
   },
   event = 'VeryLazy',
   opts = {
@@ -245,9 +327,11 @@ ui.zen_mode = {
 }
 
 return {
+  ui.animate_movement,
   ui.ansi,
   ui.colorscheme.spec,
   ui.dressing,
+  ui.edgy,
   ui.headlines,
   ui.incline,
   ui.noice,
