@@ -80,7 +80,7 @@ debugger.ui = {
   spec = {
     'rcarriga/nvim-dap-ui',
     keys = { { '<c-h>', function() require('dapui').toggle() end, desc = 'Toggle debugger UI' } },
-    dependencies = { 'mfussenegger/nvim-dap' },
+    dependencies = { 'mfussenegger/nvim-dap', 'm00qek/baleia.nvim' },
     opts = function()
       -- require 'dap'
       vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
@@ -126,4 +126,4 @@ debugger.spec = {
   debugger.ui.spec,
 }
 
-return debugger
+return debugger.spec

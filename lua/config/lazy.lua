@@ -16,8 +16,6 @@ function plugin.bootstrap_packer()
 end
 
 plugin.setup = function()
-  plugin.spec = 'plugins'
-
   plugin.disabled_builtins = {
     '2html_plugin',
     'getscript',
@@ -45,11 +43,12 @@ plugin.setup = function()
   }
 
   plugin.bootstrap_packer()
-  require('lazy').setup(plugin.spec, {
+
+  require('lazy').setup({{import = 'plugins'}, {import = 'plugins.lsp'}}, {
     defaults = { lazy = true },
     dev = { path = '~/Projects/Languages/Lua' },
     performance = { rtp = { disabled_plugins = plugin.disabled_builtins } },
-    install = { colorscheme = { 'rose-pine', 'tokyonight', 'habamax' } },
+    install = { colorscheme = { 'tokyonight', 'habamax' } },
     checker = { enabled = true, notify = false },
     readme = { files = { 'README.md', 'readme.md', 'README.rst', 'readme.rst' } },
   })

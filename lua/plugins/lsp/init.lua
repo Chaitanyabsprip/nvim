@@ -3,7 +3,7 @@ local lsp = {}
 lsp.database = require 'plugins.lsp.database'
 lsp.servers = require 'plugins.lsp.servers'
 lsp.debugger = require 'plugins.lsp.debugger'
-lsp.completion = require("plugins.lsp.completion")
+lsp.completion = require 'plugins.lsp.completion'
 
 lsp.code_actions = {
   'Chaitanyabsprip/lsp-fastaction.nvim',
@@ -45,31 +45,22 @@ lsp.mason = {
 }
 
 lsp.mason_dap = {
-  spec = {
-    'jay-babu/mason-nvim-dap.nvim',
-    config = function()
-      require 'mason'
-      require('mason-nvim-dap').setup()
-    end,
-  },
+  'jay-babu/mason-nvim-dap.nvim',
+  dependencies = { 'williamboman/mason.nvim' },
+  opts = {},
 }
 
 lsp.mason_lspconfig = {
   'williamboman/mason-lspconfig.nvim',
+  dependencies = { 'williamboman/mason.nvim' },
   opts = { automatic_installation = true },
-  config = function(_, opts)
-    require 'mason'
-    require('mason-lspconfig').setup(opts)
-  end,
 }
 
 lsp.mason_nulls = {
   'jay-babu/mason-null-ls.nvim',
+  dependencies = { 'williamboman/mason.nvim', 'jose-elias-alvarez/null-ls.nvim' },
+  ft = require('plugins.lsp.null').ft,
   opts = { automatic_installation = true },
-  config = function(_, opts)
-    require 'mason'
-    require('mason-null-ls').setup(opts)
-  end,
 }
 
 lsp.mason_update = { 'RubixDev/mason-update-all', opts = {} }
@@ -77,13 +68,10 @@ lsp.mason_update = { 'RubixDev/mason-update-all', opts = {} }
 lsp.navic = {
   'SmiteshP/nvim-navic',
   event = 'LspAttach',
-  config = function()
+  opts = { highlight = true, separator = '  ', depth_limit = 6 },
+  config = function(_, opts)
     local navic = require 'nvim-navic'
-    -- local get_location = function()
-    --   local location = navic.get_location {}
-    --   return (#location > 0 and ' ' or '~') .. location
-    -- end
-    navic.setup { highlight = true, separator = '  ', depth_limit = 6 }
+    navic.setup(opts)
     vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
     require('lsp.capabilities').document_symbols.callback = navic.attach
   end,
@@ -107,9 +95,6 @@ lsp.rename = {
 
 lsp.spec = {
   lsp.code_actions,
-  lsp.completion.spec,
-  lsp.database.spec,
-  lsp.debugger.spec,
   lsp.graphql,
   lsp.lsp_lines,
   lsp.mason,
@@ -119,7 +104,6 @@ lsp.spec = {
   lsp.navic,
   lsp.refactoring,
   lsp.rename,
-  lsp.servers.spec,
 }
 
 return lsp.spec

@@ -1,49 +1,41 @@
 local completion = {}
 
-function completion.get_capabilities()
-  local cmp_lsp = require 'cmp_nvim_lsp'
-  local capabilities = require('lsp').capabilities()
-  local cmp_capabilities = cmp_lsp.default_capabilities()
-  return vim.tbl_deep_extend('force', capabilities, cmp_capabilities)
-end
-
+---@class LazyPluginSpec
 completion.luasnip = {
-  spec = {
-    'L3MON4D3/LuaSnip',
-    build = 'make install_jsregexp',
-    version = '2.*',
-    dependencies = {
-      'saadparwaiz1/cmp_luasnip',
-      {
-        'rafamadriz/friendly-snippets',
-        config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
-      },
+  'L3MON4D3/LuaSnip',
+  build = 'make install_jsregexp',
+  version = '2.*',
+  dependencies = {
+    {
+      'rafamadriz/friendly-snippets',
+      config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
     },
-    opts = function()
-      local types = require 'luasnip.util.types'
-      return {
-        history = true,
-        updateevents = 'TextChanged,TextChangedI',
-        enable_autosnippets = true,
-        ext_opts = {
-          [types.choiceNode] = { active = { virt_text = { { '●', 'Error' } } } },
-          [types.insertNode] = { active = { virt_text = { { '●', 'Comment' } } } },
-        },
-      }
-    end,
   },
+  opts = function()
+    local types = require 'luasnip.util.types'
+    return {
+      history = true,
+      updateevents = 'TextChanged,TextChangedI',
+      enable_autosnippets = true,
+      ext_opts = {
+        [types.choiceNode] = { active = { virt_text = { { '●', 'Error' } } } },
+        [types.insertNode] = { active = { virt_text = { { '●', 'Comment' } } } },
+      },
+    }
+  end,
 }
 
-completion.cmp = {}
-
-completion.cmp.spec = {
+---@class LazyPluginSpec
+completion.cmp = {
   'hrsh7th/nvim-cmp',
-  event = 'InsertEnter',
+  event = { 'InsertEnter', 'BufReadPre' },
   dependencies = {
+    'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-cmdline',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
+    'L3MON4D3/LuaSnip',
     'onsails/lspkind.nvim',
   },
   opts = function()
@@ -140,11 +132,18 @@ completion.cmp.spec = {
 }
 
 completion.spec = {
-  completion.luasnip.spec,
-  completion.cmp.spec,
+  completion.luasnip,
+  completion.cmp,
   { 'Alexisvt/flutter-snippets', ft = { 'dart' } },
   { 'Nash0x7E2/awesome-flutter-snippets', ft = { 'dart' } },
   { 'natebosch/dartlang-snippets', ft = 'dart' },
 }
 
-return completion
+function completion.spec.get_capabilities()
+  local cmp_lsp = require 'cmp_nvim_lsp'
+  local capabilities = require('lsp').capabilities()
+  local cmp_capabilities = cmp_lsp.default_capabilities()
+  return vim.tbl_deep_extend('force', capabilities, cmp_capabilities)
+end
+
+return completion.spec

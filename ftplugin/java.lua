@@ -1,4 +1,4 @@
----@diagnostic disable: unused-function
+---@diagnostic disable: unused-function, no-unknown
 ---@diagnostic disable-next-line: unused-local
 local setup = function()
   vim.cmd [[setlocal shiftwidth=4 softtabstop=4 expandtab tabstop=4]]

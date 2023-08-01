@@ -2,7 +2,7 @@ local config = require 'config.ui'
 ---@class Colorscheme
 local material = {}
 
-vim.g.lualine_theme = 'material-nvim'
+vim.g.lualine_theme = 'material-stealth'
 
 material.spec = {
   'marko-cerovac/material.nvim',
@@ -23,7 +23,18 @@ material.spec = {
         comments = { italic = true },
         -- strings = { bold = true },
       },
-      plugins = { 'dap', 'gitsigns', 'mini', 'nvim-cmp', 'nvim-navic', 'nvim-tree', 'telescope' },
+      plugins = {
+        'dap',
+        'dashboard',
+        'gitsigns',
+        'neogit',
+        'mini',
+        'nvim-cmp',
+        'nvim-navic',
+        'nvim-tree',
+        'nvim-web-devicons',
+        'telescope',
+      },
       custom_highlights = {
         NotifyBackground = { bg = colors.editor.bg, fg = colors.editor.fg },
         CursorLine = { bg = '#1a1c25' },

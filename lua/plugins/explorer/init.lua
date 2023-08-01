@@ -188,6 +188,7 @@ explorer.project = {
       },
     },
   },
+  event = 'BufReadPre',
   config = function()
     require('project_nvim').setup { ignore_lsp = { 'null-ls' } }
     require('telescope').load_extension 'projects'

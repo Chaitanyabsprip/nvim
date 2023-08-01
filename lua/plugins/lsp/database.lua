@@ -21,4 +21,4 @@ db.spec = {
   db.dbee.spec,
 }
 
-return db
+return db.spec

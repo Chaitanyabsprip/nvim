@@ -1,29 +1,22 @@
 local hashish = {}
 
-hashish.nmap = function(key) return hashish.map 'n'(key) end
+---@alias KeymapOpts {noremap: boolean, desc:string, silent:boolean, expr: boolean, bufnr: integer, buffer: integer}
 
-hashish.vmap = function(key) return hashish.map 'v'(key) end
+local keymap_set = vim.keymap.set
 
-hashish.nnoremap = function(key) return hashish.noremap 'n'(key) end
+hashish.keys = {}
 
-hashish.vnoremap = function(key) return hashish.noremap 'v'(key) end
-
-hashish.tnoremap = function(key) return hashish.noremap 't'(key) end
-
-hashish.xnoremap = function(key) return hashish.noremap 'x'(key) end
-
-hashish.inoremap = function(key) return hashish.noremap 'i'(key) end
-
--- local m = require 'mappings.keys'
-
+---@param mode string|table
+---@param key string
+---@param command string|function
+---@param options KeymapOpts|nil
+---@return nil
 local register_keymap = function(mode, key, command, options)
-  -- vim.schedule(function()
-  --   local ok, wk = pcall(require, 'which-key')
-  --   if ok then wk.register { [key] = { options } } end
-  -- end)
-  -- table.insert(m.keys, { mode = mode, lhs = key, rhs = command, options = options })
-  return vim.keymap.set(mode, key, command, options)
+  table.insert(hashish.keys, { mode = mode, lhs = key, rhs = command, options = options })
+  return keymap_set(mode, key, command, options)
 end
+
+vim.keymap.set = register_keymap
 
 hashish.noremap = function(mode)
   return function(key)
@@ -43,12 +36,14 @@ end
 hashish.map = function(mode)
   return function(key)
     return function(command)
+      ---@param options KeymapOpts | string
       return function(options)
         if type(options) == 'string' then
           options = { desc = options }
           return register_keymap(mode, key, command, options)
         end
         return function(description)
+          ---@type KeymapOpts
           options = vim.tbl_extend('force', options, { desc = description })
           options.buffer = options.bufnr
           options.bufnr = nil
@@ -58,5 +53,13 @@ hashish.map = function(mode)
     end
   end
 end
+
+hashish.nmap = function(key) return hashish.map 'n'(key) end
+hashish.vmap = function(key) return hashish.map 'v'(key) end
+hashish.nnoremap = function(key) return hashish.noremap 'n'(key) end
+hashish.vnoremap = function(key) return hashish.noremap 'v'(key) end
+hashish.tnoremap = function(key) return hashish.noremap 't'(key) end
+hashish.xnoremap = function(key) return hashish.noremap 'x'(key) end
+hashish.inoremap = function(key) return hashish.noremap 'i'(key) end
 
 return hashish

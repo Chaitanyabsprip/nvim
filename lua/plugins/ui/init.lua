@@ -1,13 +1,50 @@
+---@diagnostic disable: no-unknown
 local ui = {}
 
 local config = require 'config.ui'
 
+---@type {spec: LazyPluginSpec, set: function}
 ui.colorscheme = require('plugins.ui.themes.' .. config.theme)
 ui.statusline = require 'plugins.ui.statusline'
 
+ui.animate_movement = {
+  'echasnovski/mini.animate',
+  event = 'BufReadPre',
+  opts = function()
+    -- don't use animate when scrolling with the mouse
+    local mouse_scrolled = false
+    for _, scroll in ipairs { 'Up', 'Down' } do
+      local key = '<ScrollWheel' .. scroll .. '>'
+      vim.keymap.set({ '', 'i' }, key, function()
+        mouse_scrolled = true
+        return key
+      end, { expr = true })
+    end
+
+    local animate = require 'mini.animate'
+    return {
+      resize = {
+        timing = animate.gen_timing.linear { duration = 100, unit = 'total' },
+      },
+      scroll = {
+        timing = animate.gen_timing.linear { duration = 150, unit = 'total' },
+        subscroll = animate.gen_subscroll.equal {
+          predicate = function(total_scroll)
+            if mouse_scrolled then
+              mouse_scrolled = false
+              return false
+            end
+            return total_scroll > 1
+          end,
+        },
+      },
+    }
+  end,
+}
+
 ui.ansi = {
   'm00qek/baleia.nvim',
-  event = 'BufReadPost',
+  optional = true,
   config = function()
     local baleia = require('baleia').setup {}
     vim.api.nvim_create_user_command(
@@ -20,28 +57,72 @@ ui.ansi = {
 
 ui.dressing = {
   'stevearc/dressing.nvim',
+  init = function()
+    ---@diagnostic disable-next-line: duplicate-set-field
+    vim.ui.select = function(...)
+      require('lazy').load { plugins = { 'dressing.nvim' } }
+      return vim.ui.select(...)
+    end
+    ---@diagnostic disable-next-line: duplicate-set-field
+    vim.ui.input = function(...)
+      require('lazy').load { plugins = { 'dressing.nvim' } }
+      return vim.ui.input(...)
+    end
+  end,
   opts = { select = { backend = { 'telescope', 'nui', 'builtin' } } },
-  event = 'VeryLazy',
+}
+
+ui.edgy = {
+  'folke/edgy.nvim',
+  event = 'BufReadPre',
+  opts = {
+    bottom = {
+      {
+        ft = 'toggleterm',
+        size = { height = 0.4 },
+        filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == '' end,
+      },
+      {
+        ft = 'noice',
+        size = { height = 0.4 },
+        filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == '' end,
+      },
+      {
+        ft = 'lazyterm',
+        title = 'LazyTerm',
+        size = { height = 0.4 },
+        filter = function(buf) return not vim.b[buf].lazyterm_cmd end,
+      },
+      { ft = 'qf', title = 'QuickFix' },
+      {
+        ft = 'help',
+        size = { height = 20 },
+        -- don't open help files in edgy that we're editing
+        filter = function(buf) return vim.bo[buf].buftype == 'help' end,
+      },
+      { title = 'Neotest Output', ft = 'neotest-output-panel', size = { height = 15 } },
+    },
+    left = { { title = 'Neotest Summary', ft = 'neotest-summary' } },
+    keys = {
+      ['<c-Right>'] = function(win) win:resize('width', 2) end,
+      ['<c-Left>'] = function(win) win:resize('width', -2) end,
+      ['<c-Up>'] = function(win) win:resize('height', 2) end,
+      ['<c-Down>'] = function(win) win:resize('height', -2) end,
+    },
+  },
 }
 
 ui.headlines = {
   'lukas-reineke/headlines.nvim',
-  config = function()
-    vim.cmd [[highlight Headline1 guibg=#1E2718]]
-    vim.cmd [[highlight Headline2 guibg=#21262D]]
-    vim.cmd [[highlight CodeBlock guibg=#1C1C1C]]
-    vim.cmd [[highlight Dash guibg=#1C1C1C gui=bold]]
-    require('headlines').setup {
-      markdown = {
-        -- fat_headline_lower_string = "🬂",
-        fat_headline_lower_string = '▀',
-        dash_string = '─',
-        fat_headlines = true,
-        fat_headline_upper_string = '▃',
-      },
-    }
-  end,
   ft = { 'markdown', 'md', 'rmd', 'rst' },
+  opts = {
+    markdown = {
+      fat_headline_lower_string = '▀',
+      dash_string = '─',
+      fat_headlines = true,
+      fat_headline_upper_string = '▃',
+    },
+  },
 }
 
 ui.incline = {
@@ -114,7 +195,15 @@ ui.noice = {
   'folke/noice.nvim',
   dependencies = {
     'MunifTanjim/nui.nvim',
-    { 'rcarriga/nvim-notify', opts = { render = 'compact', top_down = false } },
+    {
+      'rcarriga/nvim-notify',
+      opts = {
+        max_height = function() return math.floor(vim.o.lines * 0.75) end,
+        max_width = function() return math.floor(vim.o.columns * 0.75) end,
+        render = 'compact',
+        top_down = false,
+      },
+    },
   },
   event = 'VeryLazy',
   opts = {
@@ -133,7 +222,7 @@ ui.noice = {
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
         ['vim.lsp.util.stylize_markdown'] = true,
-        ['cmp.entry.get_documentation'] = false,
+        ['cmp.entry.get_documentation'] = true,
       },
       message = { view = 'mini' },
     },
@@ -148,7 +237,7 @@ ui.noice = {
       { filter = { event = 'msg_show', find = '%d+L, %d+B' }, view = 'mini' },
       { filter = { event = 'msg_show', find = 'after #%d+' }, view = 'mini' },
       { filter = { event = 'msg_show', find = 'before #%d+' }, view = 'mini' },
-      { filter = { event = 'msg_showmode' }, view = 'mini' },
+      { filter = { event = 'msg_showmode' }, opts = { skip = true } },
     },
     views = {
       notify = { win_options = { winblend = 0 } },
@@ -170,8 +259,9 @@ ui.noice = {
 
 ui.styler = {
   'folke/styler.nvim',
-  ft = 'markdown',
-  opts = { themes = { markdown = { colorscheme = 'catppuccin', background = 'dark' } } },
+  -- ft = 'markdown',
+  dependencies = { { 'catppuccin/nvim', name = 'catppuccin', opts = { flavor = 'mocha' } } },
+  -- opts = { themes = { markdown = { colorscheme = 'catppuccin', background = 'dark' } } },
 }
 
 ui.treesitter = {
@@ -226,6 +316,38 @@ ui.treesitter = {
   },
 }
 
+ui.whichkey = {
+  'folke/which-key.nvim',
+  event = 'VeryLazy',
+  opts = {
+    plugins = {},
+    defaults = {
+      mode = { 'n', 'v' },
+      ['<leader>d'] = { name = '+diff' },
+      -- ['g'] = { name = '+goto' },
+      -- ['gz'] = { name = '+surround' },
+      -- [']'] = { name = '+next' },
+      -- ['['] = { name = '+prev' },
+      -- ['<leader><tab>'] = { name = '+tabs' },
+      -- ['<leader>b'] = { name = '+buffer' },
+      -- ['<leader>c'] = { name = '+code' },
+      -- ['<leader>f'] = { name = '+file/find' },
+      -- ['<leader>g'] = { name = '+git' },
+      -- ['<leader>gh'] = { name = '+hunks' },
+      -- ['<leader>q'] = { name = '+quit/session' },
+      -- ['<leader>s'] = { name = '+search' },
+      -- ['<leader>u'] = { name = '+ui' },
+      -- ['<leader>w'] = { name = '+windows' },
+      -- ['<leader>x'] = { name = '+diagnostics/quickfix' },
+    },
+  },
+  config = function(_, opts)
+    local wk = require 'which-key'
+    wk.setup(opts)
+    wk.register(opts.defaults)
+  end,
+}
+
 ui.win_sep = {
   'nvim-zh/colorful-winsep.nvim',
   opts = { no_exec_files = { 'lazy', 'TelescopePrompt', 'mason', 'CompetiTest' } },
@@ -239,16 +361,19 @@ ui.zen_mode = {
 }
 
 return {
+  ui.animate_movement,
   ui.ansi,
   ui.colorscheme.spec,
   ui.dressing,
+  ui.edgy,
   ui.headlines,
   ui.incline,
   ui.noice,
   ui.styler,
   ui.statusline,
   ui.treesitter,
+  ui.whichkey,
   ui.win_sep,
   ui.zen_mode,
-  { 'nvim-treesitter/playground', cmd = { 'TsPlaygroundToggle' } },
+  { 'nvim-treesitter/playground', cmd = { 'TSPlaygroundToggle' } },
 }

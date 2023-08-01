@@ -141,6 +141,7 @@ tools.obsidian = {
         folder = 'transient',
         date_format = '%Y-%m-%d',
       },
+      mappings = {},
       -- Optional, alternatively you can customize the frontmatter data.
       follow_url_func = function(url) vim.fn.jobstart { 'open', url } end,
       use_advanced_uri = true,
