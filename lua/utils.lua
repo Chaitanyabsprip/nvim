@@ -56,7 +56,19 @@ function M.darken(hex, amount, bg) return M.blend(hex, bg or M.bg, math.abs(amou
 
 function M.lighten(hex, amount, fg) return M.blend(hex, fg or M.fg, math.abs(amount)) end
 
-function M.cowbow()
+function M.get_visual_selection()
+  ---@type integer, integer, integer, integer
+  local _, strtlnum, strtcol, _ = unpack(vim.fn.getpos "'<")
+  ---@type integer, integer, integer, integer
+  local _, endlnum, endcol, _ = unpack(vim.fn.getpos "'>")
+  local lcount = math.abs(endlnum - strtlnum) + 1
+  local lines = vim.api.nvim_buf_get_lines(0, strtlnum - 1, endlnum, false)
+  lines[1] = string.sub(lines[1], strtcol, -1)
+  lines[lcount] = string.sub(lines[lcount], 1, endcol - (lcount == 1 and (strtcol + 1) or 0))
+  return table.concat(lines, '\n')
+end
+
+function M.cowboy()
   ---@type table?
   local id
   local ok = true
@@ -67,7 +79,7 @@ function M.cowbow()
     vim.keymap.set('n', key, function()
       if vim.v.count > 0 then count = 0 end
       if count >= 10 then
-        ok, id = pcall(vim.notify, 'ठहर जाओ', vim.log.levels.WARM, {
+        ok, id = pcall(vim.notify, 'धीरे भाई धीरे', vim.log.levels.WARM, {
           icon = ' 🤠',
           replace = id,
           keep = function() return count >= 10 end,
