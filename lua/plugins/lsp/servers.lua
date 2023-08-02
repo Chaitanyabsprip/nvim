@@ -52,7 +52,7 @@ function servers.lsp.configs.lua(lspconfig)
         workspace = { checkThirdParty = false },
         completion = {
           workspaceword = true,
-          -- showWord = 'Disable',
+          showWord = 'Disable',
           callSnippet = 'Both',
           displayContext = true,
         },

@@ -1,6 +1,6 @@
 local hashish = {}
 
----@alias KeymapOpts {noremap: boolean, desc:string, silent:boolean, expr: boolean, bufnr: integer, buffer: integer}
+---@alias KeymapOpts {noremap: boolean, desc:string, silent:boolean, expr: boolean, bufnr: integer | nil, buffer: integer | nil}
 
 local keymap_set = vim.keymap.set
 
@@ -18,9 +18,17 @@ end
 
 vim.keymap.set = register_keymap
 
+---@param mode string|string[]
+---@return function
 hashish.noremap = function(mode)
+  ---@param key string
+  ---@return function
   return function(key)
+    ---@param command string
+    ---@return function
     return function(command)
+      ---@param options KeymapOpts | string
+      ---@return nil
       return function(options)
         if type(options) == 'string' then
           options = vim.tbl_extend('force', { desc = options }, { noremap = true })
@@ -33,10 +41,17 @@ hashish.noremap = function(mode)
   end
 end
 
+---@param mode string | string[]
+---@return function
 hashish.map = function(mode)
+  ---@param key string
+  ---@return function
   return function(key)
+    ---@param command string
+    ---@return function
     return function(command)
       ---@param options KeymapOpts | string
+      ---@return nil
       return function(options)
         if type(options) == 'string' then
           options = { desc = options }
@@ -61,5 +76,6 @@ hashish.vnoremap = function(key) return hashish.noremap 'v'(key) end
 hashish.tnoremap = function(key) return hashish.noremap 't'(key) end
 hashish.xnoremap = function(key) return hashish.noremap 'x'(key) end
 hashish.inoremap = function(key) return hashish.noremap 'i'(key) end
+hashish.onoremap = function(key) return hashish.noremap 'o'(key) end
 
 return hashish

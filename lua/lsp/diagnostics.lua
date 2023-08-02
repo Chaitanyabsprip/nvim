@@ -78,7 +78,9 @@ function diagnostics.on_attach(_, bufnr)
   })
   vim.api.nvim_create_autocmd('WinLeave', {
     group = group,
-    callback = function() vim.g.qf_source = nil end,
+    callback = function()
+      if vim.bo.buftype == 'quickfix' then vim.g.qf_source = nil end
+    end,
   })
 end
 

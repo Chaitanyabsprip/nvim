@@ -318,7 +318,7 @@ ui.treesitter = {
 
 ui.whichkey = {
   'folke/which-key.nvim',
-  event = 'VeryLazy',
+  event = 'BufReadPre',
   opts = {
     plugins = {},
     defaults = {
