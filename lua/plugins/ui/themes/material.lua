@@ -45,6 +45,8 @@ material.spec = {
   end,
 }
 
-function material.set() vim.cmd.colorscheme 'material' end
+function material.set()
+  if package.loaded['material'] then vim.cmd.colorscheme 'material' end
+end
 
 return material
