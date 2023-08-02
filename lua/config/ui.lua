@@ -1,5 +1,5 @@
 return {
-  theme = 'material',
+  theme = 'tokyonight',
   transparent = false,
   hide_eob = true,
   strings = {},

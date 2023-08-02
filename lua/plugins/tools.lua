@@ -57,6 +57,7 @@ tools.neotest = {
       vim.api.nvim_create_autocmd('FileType', {
         pattern = 'neotest-' .. ft,
         group = neotest_config,
+        ---@param opts {buf: integer}
         callback = function(opts)
           nnoremap 'q'(function() pcall(vim.api.nvim_win_close, 0, true) end) { buffer = opts.buf }(
             'Quit ' .. ft

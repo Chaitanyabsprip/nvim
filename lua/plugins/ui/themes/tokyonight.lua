@@ -30,7 +30,10 @@ tokyonight.spec = {
       hl.NotifyBackground = { bg = c.bg, fg = c.fg }
       -- hl.Cursor = { fg = c.black, bg = c.fg }
     end,
-    -- on_colors = function(colors) colors.border = '#7aa2f7' end,
+    on_colors = function(colors)
+      -- colors.border = '#7aa2f7'
+      colors.bg = '#0f111a'
+    end,
   },
 }
 tokyonight.set = function() require('tokyonight').load() end
