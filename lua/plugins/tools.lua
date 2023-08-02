@@ -122,6 +122,17 @@ tools.obsidian = {
     'SearchNotes',
   },
   ft = { 'md', 'markdown', 'rmd', 'rst' },
+  keys = {
+    {
+      'gf',
+      function()
+        return require('obsidian').util.cursor_on_markdown_link() and '<cmd>ObsidianFollowLink<CR>'
+          or 'gf'
+      end,
+      expr = true,
+      desc = 'Notes: Open link or file under cursor',
+    },
+  },
   opts = function()
     local command = vim.api.nvim_create_user_command
     command('Today', 'ObsidianToday', {})
