@@ -357,7 +357,7 @@ ui.win_sep = {
 ui.zen_mode = {
   'folke/zen-mode.nvim',
   cmd = 'ZenMode',
-  opts = { options = { number = true, relativenumber = true } },
+  opts = { options = { number = false, relativenumber = false } },
 }
 
 return {
