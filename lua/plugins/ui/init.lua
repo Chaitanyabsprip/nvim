@@ -289,7 +289,7 @@ ui.treesitter = {
       'vim',
       'yaml',
     },
-    highlight = { enable = true },
+    highlight = { enable = true, additional_vim_regex_highlighting = { 'markdown' } },
     indent = { enable = true, disable = { 'dart' } },
     rainbow = { enable = true, max_file_lines = 3000 },
     playground = {
