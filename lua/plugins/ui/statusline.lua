@@ -10,7 +10,7 @@ local function get_lsp_client(_)
     ---@type table
     local filetypes = client.config.filetypes
     local client_name = client.name
-    if filetypes and vim.fn.index(filetypes, filetype) ~= -1 and client_name ~= 'null-ls' then
+    if filetypes and table.contains(filetypes, filetype) and client_name ~= 'null-ls' then
       return client.name or msg
     end
   end
