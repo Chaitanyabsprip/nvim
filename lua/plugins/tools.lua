@@ -42,6 +42,7 @@ tools.hologram = {
 
 tools.neotest = {
   'nvim-neotest/neotest',
+  version = '3.*',
   dependencies = {
     { 'nvim-lua/plenary.nvim' },
     { 'nvim-treesitter/nvim-treesitter' },
@@ -49,7 +50,6 @@ tools.neotest = {
     { 'nvim-neotest/neotest-go' },
     { 'antoinemadec/FixCursorHold.nvim' },
   },
-  version = '2.*',
   opts = function()
     local nnoremap = require('hashish').nnoremap
     local neotest_config = vim.api.nvim_create_augroup('NeotestConfig', { clear = true })
