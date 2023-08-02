@@ -200,7 +200,7 @@ function config.options.lazy()
   -- vim.cmd 'syntax on'
   local ui = require 'config.ui'
   require('plugins.ui.themes.' .. ui.theme).set()
-  require('config.greeter').setup()
+  require('greeter').setup()
   vim.cmd [[filetype on]]
 end
 

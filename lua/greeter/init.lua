@@ -14,6 +14,8 @@ function M.setup()
   end
 end
 
+---@param keymap_opts table<string, string>
+---@return table<string, string>
 function M.button(keymap_opts)
   if keymap_opts.shortcut then
     local opts = { noremap = true, silent = true, nowait = true }
@@ -24,7 +26,7 @@ function M.button(keymap_opts)
 end
 
 function M.show()
-  local theme = require('config.greeter.config').get_theme()
+  local theme = require('greeter.config').get_theme()
 
   local buf = vim.api.nvim_get_current_buf()
   vim.bo[buf].filetype = 'greeter'
@@ -136,6 +138,10 @@ function M.set_options()
   vim.cmd(('silent! noautocmd setlocal %s'):format(table.concat(options, ' ')))
 end
 
+---Check whether table contains element
+---@param table table<any, any>
+---@param element any
+---@return boolean
 table.contains = function(table, element)
   for _, value in pairs(table) do
     if value == element then return true end
