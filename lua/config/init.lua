@@ -1,69 +1,4 @@
 local config = {}
-local M = {}
-
----@alias Sign {name:string, text:string, texthl:string}
----
----@return Sign[]
-function M.get_signs(win)
-  local buf = vim.api.nvim_win_get_buf(win)
-  return vim.tbl_map(
-    ---@param sign Sign
-    function(sign) return vim.fn.sign_getdefined(sign.name)[1] end,
-    vim.fn.sign_getplaced(buf, { group = '*', lnum = vim.v.lnum })[1].signs
-  )
-end
-
-config.fold = {
-  display = function()
-    local lnum = vim.v.lnum
-    local icon = '  '
-    if vim.fn.foldlevel(lnum) <= 0 then return icon end -- Line isn't in folding range
-    if vim.fn.foldlevel(lnum) <= vim.fn.foldlevel(lnum - 1) then return icon end -- Not the first line of folding range
-    icon = vim.v.virtnum == 0 and (vim.fn.foldclosed(lnum) == -1 and '' or '') or ' '
-    return icon
-  end,
-  callback = function()
-    ---@type number
-    local lnum = vim.fn.getmousepos().line
-    if vim.fn.foldlevel(lnum) <= vim.fn.foldlevel(lnum - 1) then return end -- Only lines with a mark should be clickable
-    local state = vim.fn.foldclosed(lnum) == -1 and 'close' or 'open'
-    vim.cmd.execute("'" .. lnum .. 'fold' .. state .. "'")
-  end,
-}
-
-function config.status_column()
-  local win = vim.g.statusline_winid
-  if vim.wo[win].signcolumn == 'no' then return '' end
-  ---@type Sign, Sign
-  local sign, git_sign
-  for _, s in ipairs(M.get_signs(win)) do
-    if s.name:find 'GitSign' then
-      git_sign = s
-    else
-      sign = s
-    end
-  end
-
-  local nu = vim.wo[win].number and vim.v.lnum
-  local rnu = vim.wo[win].relativenumber and vim.v.relnum
-  local showlnum = nu or rnu and vim.v.virtnum == 0
-  local lnum = (showlnum and vim.v.relnum == 0 and nu) or rnu or nu or ' '
-  local signcolumn = vim.v.virtnum == 0
-      and sign
-      and ('%#' .. (sign.texthl or 'DiagnosticInfo') .. '#' .. sign.text .. '%*')
-    or '  '
-
-  local components = {
-    signcolumn,
-    lnum .. ' ',
-    [[%=]],
-    [[%@v:lua.require'config'.fold.callback@]],
-    [[%{v:lua.require'config'.fold.display()}]],
-    [[%=]],
-    git_sign and ('%#' .. git_sign.texthl .. '#' .. git_sign.text .. '%*') or ' ',
-  }
-  return table.concat(components, '')
-end
 
 function config.autocommands()
   local augroup = function(group) vim.api.nvim_create_augroup(group, { clear = true }) end
@@ -106,7 +41,7 @@ end
 
 config.options = {}
 
-config.options.disable_builtins = function()
+function config.disable_builtins()
   vim.cmd [[
     syntax off
     filetype off
@@ -167,12 +102,12 @@ config.options.setup = function()
   vim.o.laststatus = 3
 
   -- folding
-  vim.g.foldcolumn = false
+  vim.g.foldcolumn = true
   vim.wo.foldmethod = 'expr'
   vim.o.foldlevel = 99
   vim.o.foldlevelstart = 99
 
-  vim.o.statuscolumn = [[%!v:lua.require'config.init'.status_column()]]
+  vim.o.statuscolumn = [[%!v:lua.require'config.statuscolumn'.status_column()]]
 
   -- search
   vim.o.hlsearch = false
@@ -196,12 +131,11 @@ config.options.setup = function()
   }
 end
 
-function config.options.lazy()
-  -- vim.cmd 'syntax on'
+function config.lazy()
   local ui = require 'config.ui'
   require('plugins.ui.themes.' .. ui.theme).set()
   require('greeter').setup()
-  vim.cmd [[filetype on]]
+  vim.cmd [[filetype plugin indent on]]
 end
 
 return config

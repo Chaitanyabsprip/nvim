@@ -1,5 +1,5 @@
 local config = require 'config'
-config.options.disable_builtins()
+config.disable_builtins()
 vim.g.mapleader = ' '
 require('config.lazy').setup()
 config.options.setup()
@@ -9,7 +9,7 @@ vim.api.nvim_create_autocmd('User', {
   pattern = 'VeryLazy',
   callback = function()
     config.autocommands()
-    config.options.lazy()
+    config.lazy()
   end,
 })
 -- vim.lsp.set_log_level 'debug'

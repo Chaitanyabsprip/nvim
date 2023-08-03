@@ -1,10 +1,5 @@
 local lsp = {}
 
-lsp.database = require 'plugins.lsp.database'
-lsp.servers = require 'plugins.lsp.servers'
-lsp.debugger = require 'plugins.lsp.debugger'
-lsp.completion = require 'plugins.lsp.completion'
-
 lsp.code_actions = {
   'Chaitanyabsprip/lsp-fastaction.nvim',
   dev = true,
