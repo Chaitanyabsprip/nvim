@@ -1,4 +1,21 @@
+---@diagnostic disable: no-unknown
 local editing = {}
+
+editing.comment = {
+  'echasnovski/mini.comment',
+  version = '*',
+  event = { 'BufReadPost' },
+  opts = {},
+}
+
+editing.eyeliner = {
+  'jinh0/eyeliner.nvim',
+  event = 'BufReadPre',
+  opts = {
+    highlight_on_key = true,
+    dim = true,
+  },
+}
 
 editing.hop = {
   'phaazon/hop.nvim',
@@ -50,6 +67,8 @@ editing.leap = {
       function()
         require('leap').leap {
           target_windows = vim.tbl_filter(
+            ---@param win number
+            ---@return boolean
             function(win) return vim.api.nvim_win_get_config(win).focusable end,
             vim.api.nvim_tabpage_list_wins(0)
           ),
@@ -107,6 +126,7 @@ editing.ufo = {
     local ufo = require 'ufo'
     nnoremap 'zR'(ufo.openAllFolds) 'Open all folds'
     nnoremap 'zM'(ufo.closeAllFolds) 'Close all folds'
+    ---@type number?
     local fold_win
     local hover = function()
       if fold_win and vim.api.nvim_win_is_valid(fold_win) then
@@ -151,6 +171,7 @@ editing.ufo = {
 
 editing.spec = {
   editing.comment,
+  editing.eyeliner,
   editing.leap,
   editing.matchparen,
   editing.surround,
