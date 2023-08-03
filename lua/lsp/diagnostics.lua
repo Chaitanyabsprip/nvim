@@ -66,6 +66,8 @@ function diagnostics.on_attach(_, bufnr)
   nnoremap ',l'(vim.diagnostic.open_float)(opts) 'Show current line diagnostics in a floating window'
   nnoremap ',n' '<cmd>lua vim.diagnostic.goto_next()<cr>'(opts) 'Go to the next diagnostic'
   nnoremap ',p' '<cmd>lua vim.diagnostic.goto_prev()<cr>'(opts) 'Go to the previous diagnostic'
+  nnoremap ']d' '<cmd>lua vim.diagnostic.goto_next()<cr>'(opts) 'Go to the next diagnostic'
+  nnoremap '[d' '<cmd>lua vim.diagnostic.goto_prev()<cr>'(opts) 'Go to the previous diagnostic'
 
   local group = vim.api.nvim_create_augroup('update_diagnostics', { clear = true })
   vim.api.nvim_create_autocmd('DiagnosticChanged', {
