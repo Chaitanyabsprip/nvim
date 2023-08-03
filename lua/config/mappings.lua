@@ -13,7 +13,8 @@ keymaps.setup = function()
   nnoremap '<Space>' '<NOP>' 'Leader key'
   vim.g.mapleader = ' '
 
-  require('utils').cowboy()
+  local utils = require 'utils'
+  utils.cowboy()
   nnoremap '<leader>w' '<cmd>up<cr>' 'Save file (only if modified)'
   inoremap 'jk' '<esc>' 'Escape insert mode'
   inoremap 'kj' '<esc>' 'Escape insert mode'
@@ -63,6 +64,7 @@ keymaps.setup = function()
   map 's' '<NOP>' 'unmap s'
   map 'S' '<NOP>' 'unmap S'
   nnoremap '<leader>td'('<cmd> e ' .. os.getenv 'HOME' .. '/Projects/Notes/Todo.md<cr>') 'Open Todo file'
+  nnoremap 'gb'(utils.qfbuffers) 'Quickfix: List buffers'
   nnoremap 'gn'(function()
     local nu = vim.wo[vim.api.nvim_get_current_win()].number
     return '<cmd>setlocal ' .. (nu and 'no' or '') .. 'nu<cr>'

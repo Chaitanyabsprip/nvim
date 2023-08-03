@@ -24,7 +24,6 @@ local setup_keymaps = function()
   nnoremap ';c'(builtin.git_status) 'Telescope: git changes'
   nnoremap '<leader><space>'(builtin.fd) 'Telescope: File Finder'
   nnoremap '<leader>n'(find_notes) 'Telescope: Find notes'
-  nnoremap 'gb' '<cmd>Telescope buffers previewer=false theme=dropdown initial_mode=normal<CR>' 'Telescope Buffers'
   nnoremap 'go'(builtin.oldfiles) 'Telescope: oldfiles'
   nnoremap 'gW'(builtin.grep_string) 'Telescope: grep word under cursor'
   vnoremap 'gw'(function() search_visual_selection() end) 'Telescope: grep visual selection'
@@ -37,7 +36,7 @@ telescope = {
     branch = '0.1.x',
     dependencies = { 'nvim-lua/plenary.nvim' },
     cmd = { 'Telescope' },
-    keys = { '<leader><leader>', 'gb', 'gw' },
+    keys = { '<leader><leader>', 'gw' },
     config = function(_, opts) require('plugins.explorer.telescope').setup(opts) end,
     opts = function()
       local actions = require 'telescope.actions'

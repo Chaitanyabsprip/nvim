@@ -1,3 +1,4 @@
+---@diagnostic disable: no-unknown
 local M = {}
 
 function M.debounce(ms, fn)
@@ -95,6 +96,19 @@ function M.cowboy()
       end
     end, { expr = true, silent = true })
   end
+end
+
+function M.qfbuffers()
+  ---@type {bufnr: number, lnum: number, hidden:boolean, changed:boolean, changedtick: number}[]
+  local buffers = vim.fn.getbufinfo { buflisted = 1 }
+  local qfbufs = {}
+  for _, buf in ipairs(buffers) do
+    local lnum, col = unpack(vim.api.nvim_buf_get_mark(buf.bufnr, '"'))
+    table.insert(qfbufs, { bufnr = buf.bufnr, lnum = lnum, col = col })
+  end
+  vim.fn.setqflist(qfbufs, 'r')
+  vim.g.qf_source = 'buffer'
+  vim.cmd.copen()
 end
 
 return M
