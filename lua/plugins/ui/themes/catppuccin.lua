@@ -1,9 +1,12 @@
+---@diagnostic disable: no-unknown
 local config = require 'config.ui'
 local utils = require 'utils'
+
 ---@class Colorscheme
 local catppuccin = {}
+local name = 'catppuccin'
 
-vim.g.lualine_theme = 'catppuccin'
+vim.g.lualine_theme = name
 
 catppuccin.highlight = function(c)
   return {
@@ -48,8 +51,9 @@ end
 
 catppuccin.spec = {
   'catppuccin/nvim',
-  name = 'catppuccin',
-  lazy = false,
+  name = name,
+  lazy = config.theme ~= name,
+  priority = 1000,
   opts = {
     flavor = 'mocha',
     term_colors = true,

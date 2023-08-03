@@ -1,3 +1,4 @@
+vim.opt.background = 'dark'
 return {
   theme = 'tokyonight',
   transparent = false,

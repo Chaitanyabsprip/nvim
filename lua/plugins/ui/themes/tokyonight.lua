@@ -3,12 +3,14 @@ local config = require 'config.ui'
 ---@field spec LazyPluginSpec
 ---@field set function
 local tokyonight = {}
+local name = 'tokyonight'
 
-vim.g.lualine_theme = 'tokyonight'
+vim.g.lualine_theme = name
 
 tokyonight.spec = {
   'folke/tokyonight.nvim',
-  lazy = false,
+  lazy = config.theme ~= name,
+  priority = 1000,
   opts = {
     style = 'night',
     transparent = config.transparent,

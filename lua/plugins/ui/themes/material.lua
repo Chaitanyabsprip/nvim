@@ -1,28 +1,28 @@
 local config = require 'config.ui'
+
 ---@class Colorscheme
 local material = {}
+local name = 'material'
 
 vim.g.lualine_theme = 'material-stealth'
 
 material.spec = {
   'marko-cerovac/material.nvim',
-  lazy = false,
+  lazy = config.theme ~= name,
   priority = 1000,
   opts = function()
     vim.g.material_style = 'deep ocean'
+    ---@diagnostic disable-next-line: no-unknown
     local colors = require 'material.colors'
     return {
       contrast = {
-        terminal = true, -- Enable contrast for the built-in terminal
-        sidebars = true, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
-        floating_windows = true, -- Enable contrast for floating windows
-        non_current_windows = true, -- Enable contrasted background for non-current windows
+        terminal = true,
+        sidebars = true,
+        floating_windows = true,
+        non_current_windows = true,
       },
       disable = { background = config.transparent },
-      styles = { -- Give comments style such as bold, italic, underline etc.
-        comments = { italic = true },
-        -- strings = { bold = true },
-      },
+      styles = { comments = { italic = true } },
       plugins = {
         'dap',
         'dashboard',
@@ -36,6 +36,7 @@ material.spec = {
         'telescope',
       },
       custom_highlights = {
+        ---@diagnostic disable-next-line: no-unknown
         NotifyBackground = { bg = colors.editor.bg, fg = colors.editor.fg },
         CursorLine = { bg = '#1a1c25' },
         LeapBackdrop = { fg = '#545c7e' },

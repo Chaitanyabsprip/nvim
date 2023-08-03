@@ -1,6 +1,7 @@
 local config = require 'config.ui'
 ---@class Colorscheme
 local rosepine = {}
+local name = 'rosepine'
 
 vim.g.lualine_theme = 'rose-pine'
 
@@ -58,7 +59,8 @@ rosepine.highlight = {
 rosepine.spec = {
   'rose-pine/neovim',
   name = 'rose-pine',
-  lazy = false,
+  lazy = config.theme ~= name,
+  priority = 1000,
   opts = {
     dark_variant = 'main',
     disable_background = config.transparent,
