@@ -3,7 +3,38 @@ local debugger = {}
 debugger.dap = {
   spec = {
     'mfussenegger/nvim-dap',
-    config = function() require('plugins.lsp.debugger').dap.setup() end,
+    config = function()
+      local icons = { bookmark = '', bug = '' } --   '󰠭'
+      local dap = require 'dap'
+      local sign = vim.fn.sign_define
+      sign(
+        'DapBreakpointCondition',
+        { text = '●', texthl = 'DapBreakpointCondition', linehl = '', numhl = '' }
+      )
+      sign('DapLogPoint', { text = '◆', texthl = 'DapLogPoint', linehl = '', numhl = '' })
+      sign(
+        'DapBreakpoint',
+        { texthl = 'DapBreakpoint', text = icons.bug, linehl = '', numhl = 'DapBreakpoint' }
+      )
+      sign(
+        'DapStopped',
+        { texthl = 'DapStopped', text = icons.bookmark, linehl = '', numhl = 'DapStopped' }
+      )
+      local ui_ok, dapui = pcall(require, 'dapui')
+      if not ui_ok then return end
+      dap.listeners.before.event_exited['dapui_config'] = function()
+        dapui.close()
+        vim.keymap.del('n', '<leader>K')
+      end
+      dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
+      dap.listeners.after.event_initialized['dapui_config'] = function()
+        dapui.open()
+        local opts = { silent = true, noremap = false }
+        require('hashish').nnoremap '<leader>K' '<cmd>lua require("dap.ui.variables").hover() <cr>'(
+          opts
+        ) 'dap: Show variable value'
+      end
+    end,
     keys = {
       {
         '<leader>b',
@@ -42,38 +73,6 @@ debugger.dap = {
       },
     },
   },
-  setup = function()
-    local icons = { bookmark = '', bug = '' } --   '󰠭'
-    local dap = require 'dap'
-    local sign = vim.fn.sign_define
-    sign(
-      'DapBreakpointCondition',
-      { text = '●', texthl = 'DapBreakpointCondition', linehl = '', numhl = '' }
-    )
-    sign('DapLogPoint', { text = '◆', texthl = 'DapLogPoint', linehl = '', numhl = '' })
-    sign(
-      'DapBreakpoint',
-      { texthl = 'DapBreakpoint', text = icons.bug, linehl = '', numhl = 'DapBreakpoint' }
-    )
-    sign(
-      'DapStopped',
-      { texthl = 'DapStopped', text = icons.bookmark, linehl = '', numhl = 'DapStopped' }
-    )
-    local ui_ok, dapui = pcall(require, 'dapui')
-    if not ui_ok then return end
-    dap.listeners.before.event_exited['dapui_config'] = function()
-      dapui.close()
-      vim.keymap.del('n', '<leader>K')
-    end
-    dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
-    dap.listeners.after.event_initialized['dapui_config'] = function()
-      dapui.open()
-      local opts = { silent = true, noremap = false }
-      require('hashish').nnoremap '<leader>K' '<cmd>lua require("dap.ui.variables").hover() <cr>'(
-        opts
-      ) 'dap: Show variable value'
-    end
-  end,
 }
 
 debugger.ui = {
