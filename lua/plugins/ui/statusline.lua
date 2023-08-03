@@ -1,20 +1,21 @@
 ---@diagnostic disable: undefined-field
 local statusline = {}
+---@type any?{}
+local client_names = {}
 
 local function get_lsp_client(_)
+  local count = #client_names
+  for i = 0, count do
+    ---@diagnostic disable-next-line: no-unknown
+    client_names[i] = nil
+  end
   local msg = 'No Active Lsp'
-  local filetype = vim.api.nvim_get_option_value('filetype', { buf = 0 })
-  local clients = vim.lsp.get_clients()
+  local clients = vim.lsp.get_clients { bufnr = 0 }
   if next(clients) == nil then return msg end
   for _, client in ipairs(clients) do
-    ---@type table
-    local filetypes = client.config.filetypes
-    local client_name = client.name
-    if filetypes and table.contains(filetypes, filetype) and client_name ~= 'null-ls' then
-      return client.name or msg
-    end
+    table.insert(client_names, client.name)
   end
-  return msg
+  return #client_names == 0 and msg or table.concat(client_names, ' | ')
 end
 
 statusline.lualine = {

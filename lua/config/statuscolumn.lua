@@ -55,7 +55,7 @@ local function signcol(win)
   local nosigncolumn = vim.wo[win].signcolumn == 'no' and ''
   local signcolumn = nosigncolumn
     or sign and ('%#' .. (sign.texthl or 'DiagnosticInfo') .. '#' .. sign.text .. '%*')
-    or ' '
+    or '  '
 
   local gsc = package.loaded['gitsigns.config']
   local nogitcolumn = not (gsc and gsc.config and gsc.config.signcolumn) and ''
