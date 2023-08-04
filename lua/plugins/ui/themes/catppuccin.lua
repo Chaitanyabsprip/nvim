@@ -2,13 +2,9 @@
 local config = require 'config.ui'
 local utils = require 'utils'
 
----@class Colorscheme
-local catppuccin = {}
 local name = 'catppuccin'
 
-vim.g.lualine_theme = name
-
-catppuccin.highlight = function(c)
+local function highlight(c)
   return {
     CmpItemKindConstructor = { fg = c.base, bg = c.blue },
     CmpItemKindEvent = { fg = c.base, bg = c.blue },
@@ -49,36 +45,43 @@ catppuccin.highlight = function(c)
   }
 end
 
-catppuccin.spec = {
+---@class Colorscheme: LazyPluginSpec
+---@field set function
+local catppuccin = {
   'catppuccin/nvim',
   name = name,
   lazy = config.theme ~= name,
   priority = 1000,
-  opts = {
-    flavor = 'mocha',
-    term_colors = true,
-    transparent_background = config.transparent,
-    custom_highlights = catppuccin.highlight,
-    integrations = {
-      dap = { enabled = true, enable_ui = true },
-      gitsigns = true,
-      harpoon = true,
-      leap = true,
-      markdown = true,
-      mason = true,
-      mini = true,
-      navic = { enabled = true },
-      neotest = true,
-      noice = true,
-      notify = true,
-      nvimtree = true,
-      semantic_tokens = true,
-      treesitter = true,
-      ts_rainbow = true,
-    },
-  },
+  opts = function()
+    vim.g.lualine_theme = name
+    return {
+      flavor = 'mocha',
+      term_colors = true,
+      transparent_background = config.transparent,
+      custom_highlights = highlight,
+      integrations = {
+        dap = { enabled = true, enable_ui = true },
+        gitsigns = true,
+        harpoon = true,
+        leap = true,
+        markdown = true,
+        mason = true,
+        mini = true,
+        navic = { enabled = true },
+        neotest = true,
+        noice = true,
+        notify = true,
+        nvimtree = true,
+        semantic_tokens = true,
+        treesitter = true,
+        ts_rainbow = true,
+      },
+    }
+  end,
 }
 
-function catppuccin.set() vim.cmd.colorscheme 'catppuccin' end
+function catppuccin.set()
+  if package.loaded['catppuccin'] then vim.cmd.colorscheme 'catppuccin' end
+end
 
 return catppuccin

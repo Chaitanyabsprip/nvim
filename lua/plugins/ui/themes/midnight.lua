@@ -1,15 +1,13 @@
 local config = require 'config.ui'
 
----@class Colorscheme
-local midnight = {}
 local name = 'midnight'
 
-vim.g.lualine_theme = 'auto'
-
-midnight.spec = {
+---@class Colorscheme
+midnight = {
   'dasupradyumna/midnight.nvim',
   lazy = config.theme ~= name,
   priority = 1000,
+  config = function() vim.g.lualine_theme = 'auto' end,
 }
 
 midnight.set = function()

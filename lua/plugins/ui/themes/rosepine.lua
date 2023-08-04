@@ -1,11 +1,7 @@
 local config = require 'config.ui'
----@class Colorscheme
-local rosepine = {}
 local name = 'rosepine'
 
-vim.g.lualine_theme = 'rose-pine'
-
-rosepine.highlight = {
+local highlight = {
   ColorColumn = { bg = '#1c1a30' },
   CmpItemAbbr = { fg = 'subtle' },
   CmpItemAbbrDeprecated = { fg = 'subtle' },
@@ -56,21 +52,24 @@ rosepine.highlight = {
   LeapBackdrop = { fg = '#545c7e' },
 }
 
-rosepine.spec = {
+---@class Colorscheme
+rosepine = {
   'rose-pine/neovim',
   name = 'rose-pine',
   lazy = config.theme ~= name,
   priority = 1000,
-  opts = {
-    dark_variant = 'main',
-    disable_background = config.transparent,
-    highlight_groups = rosepine.highlight,
-  },
+  opts = function()
+    vim.g.lualine_theme = 'rose-pine'
+    return {
+      dark_variant = 'main',
+      disable_background = config.transparent,
+      highlight_groups = highlight,
+    }
+  end,
 }
 
 rosepine.set = function()
-  vim.o.background = 'dark'
-  vim.cmd.colorscheme 'rose-pine'
+  if package.loaded['rose-pine'] then vim.cmd.colorscheme 'rose-pine' end
 end
 
 return rosepine

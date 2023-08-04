@@ -80,6 +80,7 @@ ui.edgy = {
       {
         ft = 'toggleterm',
         size = { height = 0.4 },
+        title = 'Terminal',
         filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == '' end,
       },
       {
@@ -290,7 +291,7 @@ ui.treesitter = {
       'yaml',
     },
     highlight = { enable = true, additional_vim_regex_highlighting = { 'markdown' } },
-    indent = { enable = true, disable = { 'dart' } },
+    indent = { enable = true, disable = { 'dart', 'markdown' } },
     rainbow = { enable = true, max_file_lines = 3000 },
     playground = {
       enable = true,
@@ -357,13 +358,13 @@ ui.win_sep = {
 ui.zen_mode = {
   'folke/zen-mode.nvim',
   cmd = 'ZenMode',
-  opts = { options = { number = false, relativenumber = false } },
+  opts = { options = { statuscolumn = '', number = false, relativenumber = false } },
 }
 
 return {
   ui.animate_movement,
   ui.ansi,
-  ui.colorscheme.spec,
+  ui.colorscheme,
   ui.dressing,
   ui.edgy,
   ui.headlines,

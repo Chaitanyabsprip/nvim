@@ -1,25 +1,22 @@
 local config = require 'config.ui'
 
----@class Colorscheme
-local material = {}
 local name = 'material'
 
-vim.g.lualine_theme = 'material-stealth'
-
-material.spec = {
+---@class Colorscheme
+material = {
   'marko-cerovac/material.nvim',
   lazy = config.theme ~= name,
   priority = 1000,
   opts = function()
-    vim.g.material_style = 'deep ocean'
     ---@diagnostic disable-next-line: no-unknown
     local colors = require 'material.colors'
+    vim.g.material_style = 'deep ocean'
     return {
       contrast = {
         terminal = true,
         sidebars = true,
         floating_windows = true,
-        non_current_windows = true,
+        non_current_windows = false,
       },
       disable = { background = config.transparent },
       styles = { comments = { italic = true } },
