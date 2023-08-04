@@ -39,7 +39,7 @@ statusline.lualine = {
           {
             function() return require('noice').api.status.mode.get() end,
             cond = function()
-              return package.loaded['noice'] and require('noice').api.status.mode.has()
+              return package.loaded['noice'] and require('noice').api.status.mode.has() or ''
             end,
           },
           'filetype',

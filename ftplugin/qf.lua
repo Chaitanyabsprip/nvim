@@ -1,5 +1,6 @@
 vim.cmd 'syntax on'
 vim.o.relativenumber = false
+vim.o.statusline = ''
 local nnoremap = require('hashish').nnoremap
 
 nnoremap '<leader>f'(function()

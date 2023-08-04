@@ -1,6 +1,6 @@
 vim.opt.background = 'dark'
 return {
-  theme = 'material',
+  theme = 'horizon',
   transparent = false,
   hide_eob = true,
   strings = {},
