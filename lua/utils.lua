@@ -69,7 +69,7 @@ function M.get_visual_selection()
   return table.concat(lines, '\n')
 end
 
-function M.cowboy()
+function M.cowboy(disabled_ft)
   ---@type table?
   local id
   local ok = true
@@ -78,6 +78,7 @@ function M.cowboy()
     local timer = assert(vim.loop.new_timer())
     local map = key
     vim.keymap.set('n', key, function()
+      if table.contains(disabled_ft, vim.bo.filetype) then return map end
       if vim.v.count > 0 then count = 0 end
       if count >= 10 then
         ok, id = pcall(vim.notify, 'धीरे भाई धीरे', vim.log.levels.WARM, {
