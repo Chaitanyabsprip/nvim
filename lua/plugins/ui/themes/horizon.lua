@@ -30,10 +30,12 @@ horizon = {
       },
     }
   end,
+  config = function(_, opts)
+    require(name).setup(opts)
+    vim.cmd.colorscheme(name)
+  end,
 }
 
-function horizon.set()
-  if package.loaded['material'] then vim.cmd.colorscheme 'material' end
-end
+function horizon.set() end
 
 return horizon

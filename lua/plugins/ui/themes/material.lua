@@ -3,11 +3,12 @@ local config = require 'config.ui'
 local name = 'material'
 
 ---@class Colorscheme
-material = {
+local material = {
   'marko-cerovac/material.nvim',
   lazy = config.theme ~= name,
   priority = 1000,
   opts = function()
+    vim.g.lualine_theme = name
     ---@diagnostic disable-next-line: no-unknown
     local colors = require 'material.colors'
     vim.g.material_style = 'deep ocean'
@@ -41,10 +42,12 @@ material = {
       },
     }
   end,
+  config = function(_, opts)
+    require('material').setup(opts)
+    vim.cmd.colorscheme 'material'
+  end,
 }
 
-function material.set()
-  if package.loaded['material'] then vim.cmd.colorscheme 'material' end
-end
+function material.set() end
 
 return material

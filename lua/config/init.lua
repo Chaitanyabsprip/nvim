@@ -132,8 +132,6 @@ config.options.setup = function()
 end
 
 function config.lazy()
-  local ui = require 'config.ui'
-  require('plugins.ui.themes.' .. ui.theme).set()
   require('greeter').setup()
   vim.cmd [[filetype plugin indent on]]
 end

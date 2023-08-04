@@ -53,7 +53,7 @@ local highlight = {
 }
 
 ---@class Colorscheme
-rosepine = {
+local rosepine = {
   'rose-pine/neovim',
   name = 'rose-pine',
   lazy = config.theme ~= name,
@@ -66,10 +66,9 @@ rosepine = {
       highlight_groups = highlight,
     }
   end,
+  config = function() vim.cmd.colorscheme 'rose-pine' end,
 }
 
-rosepine.set = function()
-  if package.loaded['rose-pine'] then vim.cmd.colorscheme 'rose-pine' end
-end
+rosepine.set = function() end
 
 return rosepine

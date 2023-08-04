@@ -1,10 +1,8 @@
 local config = require 'config.ui'
 local name = 'tundra'
 
-vim.g.tundra_biome = 'arctic'
-
 ---@class Colorscheme
-tundra = {
+local tundra = {
   'sam4llis/nvim-tundra',
   lazy = config.theme ~= name,
   priority = 1000,
@@ -50,9 +48,12 @@ tundra = {
       },
     }
   end,
+  config = function(_, opts)
+    require('tundra').setup(opts)
+    vim.g.tundra_biome = 'arctic'
+    vim.cmd.colorscheme(name)
+  end,
 }
-tundra.set = function()
-  if package.loaded['nvim-tundra'] then vim.cmd.colorscheme 'tundra' end
-end
+tundra.set = function() end
 
 return tundra

@@ -3,7 +3,6 @@ local config = require 'config.ui'
 local utils = require 'utils'
 
 local name = 'catppuccin'
-
 local function highlight(c)
   return {
     CmpItemKindConstructor = { fg = c.base, bg = c.blue },
@@ -78,10 +77,12 @@ local catppuccin = {
       },
     }
   end,
+  config = function(_, opts)
+    require(name).setup(opts)
+    vim.cmd.colorscheme(name)
+  end,
 }
 
-function catppuccin.set()
-  if package.loaded['catppuccin'] then vim.cmd.colorscheme 'catppuccin' end
-end
+function catppuccin.set() end
 
 return catppuccin

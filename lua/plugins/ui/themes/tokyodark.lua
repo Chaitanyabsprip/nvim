@@ -2,7 +2,7 @@ local config = require 'config.ui'
 local name = 'tokyodark'
 
 ---@class Colorscheme
-tokyodark = {
+local tokyodark = {
   'tiagovla/tokyodark.nvim',
   lazy = config.theme ~= name,
   priority = 1000,
@@ -28,9 +28,11 @@ tokyodark = {
       end, -- extend palette
     }
   end,
+  config = function(_, opts)
+    require('tokyodark').setup(opts)
+    vim.cmd.colorscheme(name)
+  end,
 }
-tokyodark.set = function()
-  if package.loaded['tokyodark'] then vim.cmd.colorscheme 'tokyodark' end
-end
+tokyodark.set = function() end
 
 return tokyodark

@@ -21,33 +21,35 @@ end
 statusline.lualine = {
   'nvim-lualine/lualine.nvim',
   event = 'VeryLazy',
-  opts = {
-    options = {
-      component_separators = { '', '' },
-      globalstatus = true,
-      section_separators = '',
-      theme = vim.g.lualine_theme or 'auto',
-    },
-    sections = {
-      lualine_a = { 'branch' },
-      lualine_b = {},
-      lualine_c = {
-        { get_lsp_client, icon = '', on_click = function() vim.cmd [[LspInfo]] end },
+  opts = function()
+    return {
+      options = {
+        component_separators = { '', '' },
+        globalstatus = true,
+        section_separators = '',
+        theme = vim.g.lualine_theme or 'auto',
       },
-      lualine_x = {
-        {
-          function() return require('noice').api.status.mode.get() end,
-          cond = function()
-            return package.loaded['noice'] and require('noice').api.status.mode.has()
-          end,
+      sections = {
+        lualine_a = { 'branch' },
+        lualine_b = {},
+        lualine_c = {
+          { get_lsp_client, icon = '', on_click = function() vim.cmd [[LspInfo]] end },
         },
-        'filetype',
+        lualine_x = {
+          {
+            function() return require('noice').api.status.mode.get() end,
+            cond = function()
+              return package.loaded['noice'] and require('noice').api.status.mode.has()
+            end,
+          },
+          'filetype',
+        },
+        lualine_y = {},
+        lualine_z = { { 'datetime', style = '%R', icon = '', color = { gui = 'bold' } } },
       },
-      lualine_y = {},
-      lualine_z = { { 'datetime', style = '%R', icon = '', color = { gui = 'bold' } } },
-    },
-    extensions = { 'lazy', 'nvim-dap-ui', 'nvim-tree', 'toggleterm', 'quickfix' },
-  },
+      extensions = { 'lazy', 'nvim-dap-ui', 'nvim-tree', 'toggleterm', 'quickfix' },
+    }
+  end,
 }
 
 statusline = statusline.lualine

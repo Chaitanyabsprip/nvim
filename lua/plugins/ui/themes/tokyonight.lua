@@ -35,7 +35,11 @@ local tokyonight = {
       end,
     }
   end,
+  config = function(_, opts)
+    require('tokyonight').setup(opts)
+    require('tokyonight').load()
+  end,
 }
-tokyonight.set = function() require('tokyonight').load() end
+tokyonight.set = function() end
 
 return tokyonight

@@ -3,12 +3,12 @@ local config = require 'config.ui'
 local name = 'kanagawa'
 
 ---@class Colorscheme
-kanagawa = {
+local kanagawa = {
   'rebelot/kanagawa.nvim',
   lazy = config.theme ~= name,
   priority = 1000,
   opts = function()
-    vim.g.lualine_theme = 'kanagawa'
+    vim.g.lualine_theme = name
     return {
       -- compile = false, -- enable compiling the colorscheme
       -- undercurl = true, -- enable undercurls
@@ -35,10 +35,12 @@ kanagawa = {
       -- },
     }
   end,
+  config = function(_, opts)
+    require(name).setup(opts)
+    vim.cmd.colorscheme(name)
+  end,
 }
 
-kanagawa.set = function()
-  if package.loaded['kanagawa'] then vim.cmd.colorscheme 'kanagawa' end
-end
+kanagawa.set = function() end
 
 return kanagawa
