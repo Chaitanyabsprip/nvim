@@ -43,7 +43,7 @@ keymaps.setup = function()
   vnoremap '<' '<gv' 'Maintain visual selection while decreasing indent'
   vnoremap '>' '>gv' 'Maintain visual selection while increasing indent'
   vnoremap '=' '=gv' 'Maintain visual selection while auto fixing indent'
-  nnoremap '<leader>y' 'gg"+yG' 'Yank whole buffer to system clipboard'
+  nnoremap '<leader>y' '<cmd>%y+<cr>' 'Yank whole buffer to system clipboard'
   nnoremap '<leader>v' 'ggVG' 'Select whole buffer'
   vnoremap 'p' '"_dP' 'Paste inplace without yanking selected text'
   nnoremap '<TAB>' '<cmd>bnext<cr>' 'Focus next buffer'
