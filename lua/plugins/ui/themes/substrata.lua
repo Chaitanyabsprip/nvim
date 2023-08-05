@@ -8,7 +8,6 @@ local substrata = {
   lazy = config.theme ~= name,
   priority = 1000,
   opts = function()
-    vim.g.lualine_theme = name
     return {
       bold_vert_split = false,
       dim_nc_background = false,
