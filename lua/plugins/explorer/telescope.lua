@@ -33,7 +33,7 @@ end
 telescope = {
   spec = {
     'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
+    tag = '0.1.2',
     dependencies = { 'nvim-lua/plenary.nvim' },
     cmd = { 'Telescope' },
     keys = { '<leader><leader>', 'gw' },

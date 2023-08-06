@@ -20,8 +20,8 @@ function config.autocommands()
   })
 
   local restore_fold = augroup 'restore fold state'
-  autocmd('BufWinLeave', { group = restore_fold, pattern = '*.*', command = 'mkview 1' })
-  autocmd('BufWinEnter', { group = restore_fold, pattern = '*.*', command = 'silent! loadview 1' })
+  autocmd('BufWinLeave', { group = restore_fold, pattern = '?*', command = 'mkview 1' })
+  autocmd('BufWinEnter', { group = restore_fold, pattern = '?*', command = 'silent! loadview 1' })
 
   autocmd({ 'FileType' }, {
     group = augroup 'fix_conceal',
@@ -121,19 +121,15 @@ config.options.setup = function()
 
   vim.o.shortmess = 'filnxtToOFIcCs'
   vim.o.whichwrap = ''
-  vim.opt.fillchars = {
-    foldopen = '',
-    foldclose = '',
-    fold = ' ',
-    foldsep = ' ',
-    diff = '╱',
-    eob = ' ',
-  }
+  vim.opt.listchars = { tab = '  ', nbsp = '␣', trail = '•', extends = '⟩', precedes = '⟨' }
+  vim.opt.fillchars =
+    { foldopen = '', foldclose = '', fold = ' ', foldsep = ' ', diff = '╱', eob = ' ' }
 end
 
 function config.lazy()
   require('greeter').setup()
   vim.cmd [[filetype plugin indent on]]
+  require('utils').open_explorer_on_startup()
 end
 
 return config

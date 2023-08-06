@@ -14,7 +14,7 @@ keymaps.setup = function()
   vim.g.mapleader = ' '
 
   local utils = require 'utils'
-  utils.cowboy { 'NvimTree', 'qf', 'help' }
+  utils.cowboy { 'NvimTree', 'qf', 'help', 'noice' }
   nnoremap '<leader>w' '<cmd>up<cr>' 'Save file (only if modified)'
   inoremap 'jk' '<esc>' 'Escape insert mode'
   inoremap 'kj' '<esc>' 'Escape insert mode'
