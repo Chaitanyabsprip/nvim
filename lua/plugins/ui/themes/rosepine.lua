@@ -66,7 +66,10 @@ local rosepine = {
       highlight_groups = highlight,
     }
   end,
-  config = function() vim.cmd.colorscheme 'rose-pine' end,
+  config = function(_, opts)
+    require('rose-pine').setup(opts)
+    vim.cmd.colorscheme 'rose-pine'
+  end,
 }
 
 rosepine.set = function() end

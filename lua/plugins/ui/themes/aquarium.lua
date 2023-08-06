@@ -4,7 +4,7 @@ local name = 'aquarium'
 
 ---@class Colorscheme
 local aquarium = {
-  'FrenyExists/aquarium-vim',
+  'frenzyexists/aquarium-vim',
   lazy = config.theme ~= name,
   priority = 1000,
   config = function()
@@ -14,7 +14,5 @@ local aquarium = {
     vim.cmd.colorscheme(name)
   end,
 }
-
-function aquarium.set() end
 
 return aquarium

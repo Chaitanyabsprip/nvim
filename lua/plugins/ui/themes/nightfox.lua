@@ -66,6 +66,4 @@ local nightfox = {
   end,
 }
 
-function nightfox.set() end
-
 return nightfox
