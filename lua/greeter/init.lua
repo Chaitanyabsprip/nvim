@@ -42,24 +42,32 @@ function M.show()
     { text = string.rep('\n', 5) },
     { text = theme.header .. string.rep('\n', 5), hl_group = 'DashboardHeader' },
     {
-      text = [[
- Find File                    f
-
- Recent Files                 m
-             
- Restore Session              r
-             
- New Note                     n
-             
- Quit                         q
-      ]],
+      text = {
+        ' Find File                    f',
+        '\n',
+        '\n',
+        ' Recent Files                 m',
+        '\n',
+        '\n',
+        ' Restore Session              r',
+        '\n',
+        '\n',
+        ' New Note                     n',
+        '\n',
+        '\n',
+        ' Quit                         q',
+      },
       hl_group = 'DashboardFooter',
     },
     { text = string.rep('\n', 5) },
     {
-      text = '🎉 Neovim loaded ' .. stats.loaded .. ' plugins in ' .. (math.floor(
-        stats.startuptime * 100 + 0.5
-      ) / 100) .. 'ms',
+      text = {
+        '🎉 Neovim loaded ',
+        '' .. stats.loaded .. '',
+        ' plugins in ',
+        '' .. math.floor(stats.startuptime * 100 + 0.5) / 100 .. '',
+        'ms',
+      },
       hl_group = 'DashboardHeader',
     },
   }
@@ -68,7 +76,9 @@ function M.show()
 
   local start = 0
   for _, section in ipairs(sections) do
-    local lines = M.center(section.text)
+    local text = section.text
+    if type(text) == 'table' then text = table.concat(text, '') end
+    local lines = M.center(text)
     vim.api.nvim_buf_set_lines(buf, start, start, false, lines)
     vim.api.nvim_buf_set_extmark(buf, ns, start, 0, {
       end_row = start + #lines,
@@ -94,6 +104,7 @@ function M.show()
 end
 
 function M.center(text)
+  vim.print(text)
   local lines = vim.split(text, '\n')
   local width = 0
   for _, line in ipairs(lines) do
@@ -150,15 +161,8 @@ table.contains = function(table, element)
 end
 
 function M.dont_show()
-  local argv = vim.tbl_filter(function(arg)
-    local embed = arg ~= '--embed'
-    local i = arg ~= '-i'
-    local none = arg ~= 'NONE'
-    local val = embed and i and none
-    return val
-  end, vim.v.argv)
-
-  if (not table.contains(argv, '-i')) and #argv > 1 then return true end
+  local argv = require('utils').getargs()
+  if (not table.contains(argv, '-i')) and #argv > 0 then return true end
 
   local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
   if #lines > 1 or (#lines == 1 and lines[1]:len() > 0) then return true end
