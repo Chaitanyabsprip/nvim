@@ -11,6 +11,7 @@ function qf.buffers()
 
   ---@type QfItem[]
   local buffers = vim.fn.getbufinfo { buflisted = 1 }
+  if #buffers == 0 then vim.notify 'No listed buffers' end
   table.sort(buffers, function(a, b) return a.lastused > b.lastused end)
   local qfbufs = {}
   for _, buf in ipairs(buffers) do
@@ -28,7 +29,7 @@ function qf.toggle_qf()
   for _, info in ipairs(vim.fn.getwininfo()) do
     if info.quickfix == 1 then return vim.cmd 'cclose' end
   end
-  if next(vim.fn.getqflist()) == nil then return print 'qf list empty' end
+  if next(vim.fn.getqflist()) == nil then return vim.notify 'qf list empty' end
   vim.cmd 'copen'
 end
 
@@ -37,7 +38,7 @@ function qf.toggle_ll()
   for _, info in ipairs(vim.fn.getwininfo()) do
     if info.loclist == 1 then return vim.cmd 'lclose' end
   end
-  if next(vim.fn.getloclist(0)) == nil then return print 'loc list empty' end
+  if next(vim.fn.getloclist(0)) == nil then return vim.noitfy 'loc list empty' end
   vim.cmd 'lopen'
 end
 
