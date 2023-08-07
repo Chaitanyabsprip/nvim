@@ -94,6 +94,7 @@ git.gitsigns = {
 git.git_conflict = {
   'akinsho/git-conflict.nvim',
   version = '*',
+  cond = function() return vim.loop.fs_stat '.git' end,
   event = 'BufReadPre',
   cmd = 'GitConflictListQf',
   opts = {
