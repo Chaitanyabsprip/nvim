@@ -104,7 +104,6 @@ function M.show()
 end
 
 function M.center(text)
-  vim.print(text)
   local lines = vim.split(text, '\n')
   local width = 0
   for _, line in ipairs(lines) do
