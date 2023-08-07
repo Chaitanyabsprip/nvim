@@ -11,7 +11,7 @@ function qf.buffers()
 
   ---@type QfItem[]
   local buffers = vim.fn.getbufinfo { buflisted = 1 }
-  if #buffers == 0 then vim.notify 'No listed buffers' end
+  if #buffers == 0 then return vim.notify 'No listed buffers' end
   table.sort(buffers, function(a, b) return a.lastused > b.lastused end)
   local qfbufs = {}
   for _, buf in ipairs(buffers) do
