@@ -60,12 +60,10 @@ completion.cmp = {
 
     return {
       snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end },
-      sources = {
-        { name = 'luasnip' },
-        { name = 'nvim_lsp' },
-        { name = 'buffer' },
-        { name = 'path' },
-      },
+      sources = cmp.config.sources(
+        { { name = 'luasnip' }, { name = 'nvim_lsp' }, { name = 'path' } },
+        { { name = 'buffer' } }
+      ),
       window = {
         completion = {
           border = 'rounded',
