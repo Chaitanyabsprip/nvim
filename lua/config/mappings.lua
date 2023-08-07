@@ -13,8 +13,7 @@ keymaps.setup = function()
   nnoremap '<Space>' '<NOP>' 'Leader key'
   vim.g.mapleader = ' '
 
-  local utils = require 'utils'
-  utils.cowboy { 'NvimTree', 'qf', 'help', 'noice' }
+  require('utils').cowboy { 'NvimTree', 'qf', 'help', 'noice' }
   nnoremap '<leader>w' '<cmd>up<cr>' 'Save file (only if modified)'
   inoremap 'jk' '<esc>' 'Escape insert mode'
   inoremap 'kj' '<esc>' 'Escape insert mode'
@@ -53,7 +52,6 @@ keymaps.setup = function()
   nnoremap 'J' 'mzJ`z' 'Join lines without moving cursor'
   nnoremap '}' '}zzzv' 'Like text object motion } but centers line'
   nnoremap '{' '{zzzv' 'Like text object motion { but centers line'
-  nnoremap 'gq' '<cmd>copen<cr>' 'Open quickfix list'
   nnoremap '<leader>r' ':%s/\\<<c-r><c-w>\\>/<c-r><c-w>/gI<Left><Left><Left>' 'Search and replace, in current buffer, word under cursor'
   vnoremap '<leader>r' '"hy:%s/<C-r>h//gI<left><left><left>' 'Search and replace, in current buffer, selection'
   vnoremap '<leader>s' 'y:%s/<c-r>0/<c-r>0/gI<Left><Left><Left>' 'Search and replace, in current buffer, visual selection'
@@ -63,8 +61,9 @@ keymaps.setup = function()
   nnoremap '<c-k>' '<c-i>' 'Jump forward the jump list'
   map 's' '<NOP>' 'unmap s'
   map 'S' '<NOP>' 'unmap S'
-  nnoremap '<leader>td'('<cmd> e ' .. os.getenv 'HOME' .. '/Projects/Notes/Todo.md<cr>') 'Open Todo file'
-  nnoremap 'gb'(utils.qfbuffers) 'Quickfix: List buffers'
+  nnoremap 'gt'('<cmd> e ' .. os.getenv 'HOME' .. '/Projects/Notes/Todo.md<cr>') 'Open Todo file'
+  local qf = require 'quickfix'
+  nnoremap 'gb'(qf.buffers) 'Quickfix: List buffers'
   nnoremap 'gn'(function()
     local nu = vim.wo[vim.api.nvim_get_current_win()].number
     return '<cmd>setlocal ' .. (nu and 'no' or '') .. 'nu<cr>'

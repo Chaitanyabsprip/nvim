@@ -1,4 +1,3 @@
----@diagnostic disable: no-unknown
 local M = {}
 
 function M.debounce(ms, fn)
@@ -46,6 +45,7 @@ function M.blend(fg, bg, alpha)
   fg = hex_to_rgb(fg)
 
   local blendChannel = function(i)
+    ---@type number
     local ret = (alpha * fg[i] + ((1 - alpha) * bg[i]))
     return math.floor(math.min(math.max(0, ret), 255) + 0.5)
   end
@@ -99,66 +99,8 @@ function M.cowboy(disabled_ft)
   end
 end
 
-function M.qfbuffers()
-  ---@type {bufnr: number, lnum: number, hidden:boolean, changed:boolean, changedtick: number}[]
-  local buffers = vim.fn.getbufinfo { buflisted = 1 }
-  local qfbufs = {}
-  for _, buf in ipairs(buffers) do
-    local lnum, col = unpack(vim.api.nvim_buf_get_mark(buf.bufnr, '"'))
-    table.insert(qfbufs, { bufnr = buf.bufnr, lnum = lnum, col = col })
-  end
-  vim.fn.setqflist(qfbufs, 'r')
-  vim.g.qf_source = 'buffer'
-  M.toggle_qf()
-end
-
-function M.toggle_qf()
-  for _, info in ipairs(vim.fn.getwininfo()) do
-    if info.quickfix == 1 then return vim.cmd 'cclose' end
-  end
-  if next(vim.fn.getqflist()) == nil then return print 'qf list empty' end
-  vim.cmd 'copen'
-end
-
-function M.toggle_ll()
-  for _, info in ipairs(vim.fn.getwininfo()) do
-    if info.loclist == 1 then return vim.cmd 'lclose' end
-  end
-  if next(vim.fn.getloclist(0)) == nil then return print 'loc list empty' end
-  vim.cmd 'lopen'
-end
-
-function M.git_root()
-  local git_path = vim.fn.finddir('.git', '.;')
-  return vim.fn.fnamemodify(git_path, ':h')
-end
-
-function M.delete_qf_entry()
-  local qflist = vim.fn.getqflist()
-  qflist = vim.tbl_filter(function(qfitem) return qfitem.bufnr ~= 0 end, qflist)
-  if #qflist == 0 then return end
-  if #qflist == 1 then
-    M.toggle_qf()
-    vim.cmd.cfirst()
-    return vim.fn.setqflist({}, 'r')
-  end
-  local lnum = vim.fn.line '.'
-  if lnum == nil then return end
-  table.remove(qflist, lnum)
-  vim.fn.setqflist(qflist, 'r')
-  if #qflist == 0 then return M.toggle_qf() end
-  vim.fn.cursor(lnum, 1)
-end
-
-function M.delete_buf_from_qf()
-  local lnum = vim.fn.line '.'
-  local qflist = vim.fn.getqflist()
-  local bufitem = qflist[lnum]
-  local bufnr = bufitem.bufnr
-  vim.cmd.bdelete { count = bufnr }
-end
-
 function M.getargs()
+  ---@diagnostic disable-next-line: no-unknown
   local argv = vim.tbl_filter(function(arg)
     local nvim = arg ~= 'nvim'
     local embed = arg ~= '--embed'
@@ -171,6 +113,7 @@ end
 
 function M.open_explorer_on_startup()
   if vim.fn.argc() < 1 or vim.fn.argc() > 1 then return end
+  ---@type string
   local path = M.getargs()[1]
   local directory = vim.fn.isdirectory(path) == 1
   if not directory then return end
