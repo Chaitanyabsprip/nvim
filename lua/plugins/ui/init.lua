@@ -45,6 +45,7 @@ ui.animate_movement = {
 ui.ansi = {
   'm00qek/baleia.nvim',
   optional = true,
+  cond = function() return vim.loop.fs_stat 'pubspec.yaml' end,
   config = function()
     local baleia = require('baleia').setup {}
     vim.api.nvim_create_user_command(
@@ -260,7 +261,8 @@ ui.noice = {
 
 ui.styler = {
   'folke/styler.nvim',
-  -- ft = 'markdown',
+  enabled = false,
+  ft = 'markdown',
   dependencies = { { 'catppuccin/nvim', name = 'catppuccin', opts = { flavor = 'mocha' } } },
   -- opts = { themes = { markdown = { colorscheme = 'catppuccin', background = 'dark' } } },
 }

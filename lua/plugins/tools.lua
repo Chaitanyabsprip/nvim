@@ -30,7 +30,8 @@ tools.drop = {
   },
 }
 
-tools.fish = { 'dag/vim-fish', ft = 'fish' }
+tools.fish =
+  { 'dag/vim-fish', ft = 'fish', cond = function() return vim.loop.fs_stat 'config.fish' end }
 
 tools.hologram = {
   spec = {
