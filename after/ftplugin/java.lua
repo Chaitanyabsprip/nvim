@@ -6,15 +6,6 @@ local setup = function()
   if not status then return end
   -- Determine OS
   local home = os.getenv 'HOME'
-  -- if vim.fn.has 'mac' == 1 then
-  --   WORKSPACE_PATH = home .. '/workspace/'
-  --   CONFIG = 'mac'
-  -- elseif vim.fn.has 'unix' == 1 then
-  --   WORKSPACE_PATH = home .. '/workspace/'
-  --   CONFIG = 'linux'
-  -- else
-  --   print 'Unsupported system'
-  -- end
 
   -- Find root of project
   local root_markers = { '.git', 'mvnw', 'gradlew', 'pom.xml', 'build.gradle' }
