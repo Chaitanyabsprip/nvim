@@ -47,7 +47,7 @@ statusline.lualine = {
         lualine_y = {},
         lualine_z = { { 'datetime', style = '%R', icon = '', color = { gui = 'bold' } } },
       },
-      extensions = { 'lazy', 'nvim-dap-ui', 'nvim-tree', 'toggleterm', 'quickfix' },
+      extensions = { 'lazy', 'nvim-dap-ui', 'nvim-tree', 'toggleterm', 'c_quickfix' },
     }
   end,
 }

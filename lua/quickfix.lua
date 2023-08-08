@@ -20,7 +20,7 @@ function qf.buffers()
     table.insert(qfbufs, { bufnr = buf.bufnr, lnum = lnum, col = col })
   end
   vim.fn.setqflist(qfbufs, 'r')
-  vim.g.qf_source = 'buffer'
+  vim.g.qf_source = 'buffers'
   qf.toggle_qf()
 end
 
