@@ -11,6 +11,7 @@ function externals.terminal(direction)
     dir = 'git_dir',
     direction = direction,
     float_opts = float_opts,
+    display_name = 'Terminal',
     on_open = function(term)
       vim.cmd 'startinsert!'
       nnoremap 'q' '<cmd>close<cr>' { silent = true, bufnr = term.bufnr } 'Close Terminal Window'
@@ -32,6 +33,7 @@ function externals.gitui()
     close_on_exit = true,
     dir = 'git_dir',
     direction = 'float',
+    display_name = 'GitUI',
     on_open = function(term)
       nnoremap 'q' '<cmd>close<cr>' { silent = true, bufnr = term.bufnr } 'Close Terminal Window'
       vim.api.nvim_del_keymap('t', 'jk')

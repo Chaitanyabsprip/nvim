@@ -53,4 +53,20 @@ statusline.lualine = {
   end,
 }
 
-return statusline.lualine
+statusline.bufferline = {
+  'akinsho/bufferline.nvim',
+  version = '*',
+  dependencies = 'nvim-tree/nvim-web-devicons',
+  opts = function()
+    return {
+      options = {
+        mode = 'tabs',
+        style_preset = require('bufferline').style_preset.minimal,
+        always_show_bufferline = false,
+      },
+    }
+  end,
+  event = { 'VeryLazy' },
+}
+
+return { statusline.lualine, statusline.bufferline }
