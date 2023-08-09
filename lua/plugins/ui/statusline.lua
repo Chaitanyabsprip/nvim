@@ -66,7 +66,7 @@ statusline.bufferline = {
       },
     }
   end,
-  event = { 'VeryLazy' },
+  event = #vim.fn.gettabinfo() > 1 and 'VeryLazy' or 'TabNew',
 }
 
 return { statusline.lualine, statusline.bufferline }
