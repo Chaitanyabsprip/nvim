@@ -73,8 +73,11 @@ lsp.navic = {
   config = function(_, opts)
     local navic = require 'nvim-navic'
     navic.setup(opts)
-    vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
-    require('lsp.capabilities').document_symbols.callback = navic.attach
+    local f = require('lsp.capabilities').document_symbols.callback
+    require('lsp.capabilities').document_symbols.callback = function(c, b)
+      f(c, b)
+      navic.attach(c, b)
+    end
   end,
 }
 

@@ -1,27 +1,36 @@
 ---@diagnostic disable: undefined-field
 local statusline = {}
 
-local function wordcount() return tostring(vim.fn.wordcount().words) .. ' words' end
-
-local function readingtime() return tostring(math.ceil(vim.fn.wordcount().words / 200.0)) .. ' min' end
-local function is_markdown() return vim.bo.filetype == 'markdown' or vim.bo.filetype == 'asciidoc' end
-
-local function get_lsp_client(_)
-  ---@type any?{}
-  local client_names = {}
-  local msg = 'No Active Lsp'
-  local clients = vim.lsp.get_clients { bufnr = 0 }
-  if next(clients) == nil then return msg end
-  for _, client in ipairs(clients) do
-    table.insert(client_names, client.name)
-  end
-  return #client_names == 0 and msg or table.concat(client_names, ' | ')
-end
-
 statusline.lualine = {
   'nvim-lualine/lualine.nvim',
   event = 'VeryLazy',
   opts = function()
+    local function get_lsp_client(_)
+      ---@type any?{}
+      local client_names = {}
+      local msg = 'No Active Lsp'
+      local clients = vim.lsp.get_clients { bufnr = 0 }
+      if next(clients) == nil then return msg end
+      for _, client in ipairs(clients) do
+        table.insert(client_names, client.name)
+      end
+      return #client_names == 0 and msg or table.concat(client_names, ' | ')
+    end
+    local function wordcount() return tostring(vim.fn.wordcount().words) .. ' words' end
+    local function readingtime()
+      return tostring(math.ceil(vim.fn.wordcount().words / 200.0)) .. ' min'
+    end
+    local function is_markdown()
+      return vim.bo.filetype == 'markdown' or vim.bo.filetype == 'asciidoc'
+    end
+    local function navic() return require('nvim-navic').get_location() end
+    local function navic_is_available()
+      return package.loaded['nvim-navic'] and require('nvim-navic').is_available()
+    end
+    local cmd_mode = function() return require('noice').api.status.mode.get() end
+    local show_mode = function()
+      return package.loaded['noice'] and require('noice').api.status.mode.has() or ''
+    end
     return {
       options = {
         component_separators = { '', '' },
@@ -31,19 +40,11 @@ statusline.lualine = {
       },
       sections = {
         lualine_a = { 'branch' },
-        lualine_b = {},
-        lualine_c = {
+        lualine_b = {
           { get_lsp_client, icon = '', on_click = function() vim.cmd [[LspInfo]] end },
         },
-        lualine_x = {
-          {
-            function() return require('noice').api.status.mode.get() end,
-            cond = function()
-              return package.loaded['noice'] and require('noice').api.status.mode.has() or ''
-            end,
-          },
-          'filetype',
-        },
+        lualine_c = { { navic, cond = navic_is_available } },
+        lualine_x = { { cmd_mode, cond = show_mode }, 'filetype' },
         lualine_y = { { wordcount, cond = is_markdown }, { readingtime, cond = is_markdown } },
         lualine_z = { { 'datetime', style = '%R', icon = '', color = { gui = 'bold' } } },
       },
@@ -52,6 +53,4 @@ statusline.lualine = {
   end,
 }
 
-statusline = statusline.lualine
-
-return statusline
+return statusline.lualine
