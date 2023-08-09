@@ -25,6 +25,12 @@ lsp.code_actions = {
   },
 }
 
+lsp.file_operations = {
+  'antosha417/nvim-lsp-file-operations',
+  dependencies = { 'nvim-lua/plenary.nvim', 'nvim-tree/nvim-tree.lua' },
+  opts = {},
+}
+
 lsp.graphql = { 'jparise/vim-graphql', ft = 'graphql' }
 
 lsp.lsp_lines = {
@@ -77,19 +83,21 @@ lsp.refactoring = { 'ThePrimeagen/refactoring.nvim', opts = {} }
 lsp.rename = {
   'smjonas/inc-rename.nvim',
   event = 'LspAttach',
-  config = function()
-    require('inc_rename').setup { preview_empty_name = true }
+  opts = { preview_empty_name = true },
+  config = function(_, opts)
+    require('inc_rename').setup(opts)
     local c = require 'lsp.capabilities'
     local nnoremap = require('hashish').nnoremap
     c.rename.callback = function()
-      local opts = { bufnr = 0, silent = true, expr = true }
-      nnoremap 'gr'(function() return ':IncRename ' .. vim.fn.expand '<cword> ' end)(opts) 'Rename symbol under cursor'
+      local mopts = { bufnr = 0, silent = true, expr = true }
+      nnoremap 'gr'(function() return ':IncRename ' .. vim.fn.expand '<cword> ' end)(mopts) 'Rename symbol under cursor'
     end
   end,
 }
 
 lsp.spec = {
   lsp.code_actions,
+  lsp.file_operations,
   lsp.graphql,
   lsp.lsp_lines,
   lsp.mason,

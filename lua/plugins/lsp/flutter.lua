@@ -35,8 +35,8 @@ end
 M.spec = {
   'akinsho/flutter-tools.nvim',
   cond = function() return vim.loop.fs_stat 'pubspec.yaml' end,
-  event = vim.loop.fs_stat 'pubspec.yaml' and 'VeryLazy' or nil,
-  ft = { 'dart', 'yaml' },
+  event = 'VeryLazy',
+  -- ft = { 'dart', 'yaml' },
   opts = function()
     local get_capabilities = require('plugins.lsp.completion').get_capabilities
     local lspconfig = require 'lspconfig'
