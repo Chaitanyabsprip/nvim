@@ -1,14 +1,14 @@
 ---@diagnostic disable: undefined-field
 local statusline = {}
----@type any?{}
-local client_names = {}
+
+local function wordcount() return tostring(vim.fn.wordcount().words) .. ' words' end
+
+local function readingtime() return tostring(math.ceil(vim.fn.wordcount().words / 200.0)) .. ' min' end
+local function is_markdown() return vim.bo.filetype == 'markdown' or vim.bo.filetype == 'asciidoc' end
 
 local function get_lsp_client(_)
-  local count = #client_names
-  for i = 0, count do
-    ---@diagnostic disable-next-line: no-unknown
-    client_names[i] = nil
-  end
+  ---@type any?{}
+  local client_names = {}
   local msg = 'No Active Lsp'
   local clients = vim.lsp.get_clients { bufnr = 0 }
   if next(clients) == nil then return msg end
@@ -44,7 +44,7 @@ statusline.lualine = {
           },
           'filetype',
         },
-        lualine_y = {},
+        lualine_y = { { wordcount, cond = is_markdown }, { readingtime, cond = is_markdown } },
         lualine_z = { { 'datetime', style = '%R', icon = '', color = { gui = 'bold' } } },
       },
       extensions = { 'lazy', 'nvim-dap-ui', 'nvim-tree', 'toggleterm', 'c_quickfix' },
