@@ -73,7 +73,6 @@ capabilities.document_symbols = {
   name = 'textDocument/documentSymbol',
   callback = function(_, bufnr)
     nnoremap 'gs'(function() lsp.document_symbol() end)(opts(bufnr)) 'View document symbols'
-    nnoremap 'gs'(function() lsp.document_symbol() end)(opts(bufnr)) 'View document symbols'
   end,
 }
 

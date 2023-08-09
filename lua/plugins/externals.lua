@@ -1,16 +1,12 @@
 local externals = {}
 
-function externals.terminal(floating)
-  floating = floating or false
+function externals.terminal(direction)
+  direction = direction or 'horizontal'
   local Terminal = require('toggleterm.terminal').Terminal
   local nnoremap = require('hashish').nnoremap
   local tnoremap = require('hashish').tnoremap
   local float_opts = {}
-  local direction = 'horizontal'
-  if floating then
-    float_opts = { border = 'double' }
-    direction = 'float'
-  end
+  if direction == 'float' then float_opts = { border = 'double' } end
   local opts = {
     dir = 'git_dir',
     direction = direction,
@@ -54,9 +50,15 @@ externals.toggleterm = {
     { '<c-t>', '<cmd>ToggleTerm<cr>', desc = 'Toggle terminal', noremap = true },
     {
       '<leader>tf',
-      function() externals.terminal(true):toggle() end,
+      function() externals.terminal('float'):toggle() end,
       noremap = true,
       desc = 'Toggle floating terminal',
+    },
+    {
+      '<leader>tt',
+      function() externals.terminal('tab'):toggle() end,
+      noremap = true,
+      desc = 'Toggle terminal in new tab',
     },
     {
       '<c-g>',
@@ -70,7 +72,7 @@ externals.toggleterm = {
     open_mapping = [[<c-t>]],
     on_open = function() vim.cmd [[setlocal statuscolumn=]] end,
     on_close = function() end,
-    shade_terminals = true,
+    shade_terminals = false,
     shading_factor = '-30',
     start_in_insert = true,
     persist_size = true,

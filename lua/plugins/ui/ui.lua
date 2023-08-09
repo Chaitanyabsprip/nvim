@@ -78,12 +78,6 @@ ui.edgy = {
   opts = {
     bottom = {
       {
-        ft = 'toggleterm',
-        size = { height = 0.4 },
-        title = 'Terminal',
-        filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == '' end,
-      },
-      {
         ft = 'noice',
         size = { height = 0.4 },
         filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == '' end,
