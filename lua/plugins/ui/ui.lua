@@ -5,7 +5,6 @@ local config = require 'config.ui'
 
 ---@type {spec: LazyPluginSpec, set: function}
 ui.colorscheme = require('plugins.ui.themes.' .. config.theme)
-ui.statusline = require 'plugins.ui.statusline'
 
 ui.animate_movement = {
   'echasnovski/mini.animate',
@@ -119,6 +118,15 @@ ui.headlines = {
   ft = { 'markdown', 'md', 'rmd', 'rst' },
   opts = {
     markdown = {
+      headline_highlights = {
+        'Headline1',
+        'Headline2',
+        'Headline3',
+        'Headline4',
+        'Headline5',
+        'Headline6',
+      },
+      codeblock_highlight = { 'CodeBlock' },
       fat_headline_lower_string = '▀',
       dash_string = '─',
       fat_headlines = true,
@@ -392,7 +400,6 @@ return {
   ui.incline,
   ui.noice,
   ui.styler,
-  ui.statusline,
   ui.treesitter,
   ui.whichkey,
   ui.win_sep,

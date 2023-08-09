@@ -62,6 +62,7 @@ local catppuccin = {
         dap = { enabled = true, enable_ui = true },
         gitsigns = true,
         harpoon = true,
+        headlines = true,
         leap = true,
         markdown = true,
         mason = true,

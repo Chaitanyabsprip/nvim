@@ -44,14 +44,17 @@ plugin.setup = function()
 
   plugin.bootstrap_packer()
 
-  require('lazy').setup({{import = 'plugins'}, {import = 'plugins.lsp'}}, {
-    defaults = { lazy = true },
-    dev = { path = '~/Projects/Languages/Lua' },
-    performance = { rtp = { disabled_plugins = plugin.disabled_builtins } },
-    install = { colorscheme = { 'tokyonight', 'habamax' } },
-    checker = { enabled = true, notify = false },
-    readme = { files = { 'README.md', 'readme.md', 'README.rst', 'readme.rst' } },
-  })
+  require('lazy').setup(
+    { { import = 'plugins' }, { import = 'plugins.lsp' }, { import = 'plugins.ui' } },
+    {
+      defaults = { lazy = true },
+      dev = { path = '~/Projects/Languages/Lua' },
+      performance = { rtp = { disabled_plugins = plugin.disabled_builtins } },
+      install = { colorscheme = { 'tokyonight', 'habamax' } },
+      checker = { enabled = true, notify = false },
+      readme = { files = { 'README.md', 'readme.md', 'README.rst', 'readme.rst' } },
+    }
+  )
 end
 
 return plugin

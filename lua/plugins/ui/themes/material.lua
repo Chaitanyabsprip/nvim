@@ -10,7 +10,6 @@ local material = {
   opts = function()
     vim.g.lualine_theme = name
     ---@diagnostic disable-next-line: no-unknown
-    local colors = require 'material.colors'
     vim.g.material_style = 'deep ocean'
     return {
       contrast = {
@@ -25,24 +24,50 @@ local material = {
         'dap',
         'dashboard',
         'gitsigns',
-        'neogit',
         'mini',
+        'neogit',
         'nvim-cmp',
         'nvim-navic',
         'nvim-tree',
         'nvim-web-devicons',
         'telescope',
       },
-      custom_highlights = {
-        ---@diagnostic disable-next-line: no-unknown
-        NotifyBackground = { bg = colors.editor.bg, fg = colors.editor.fg },
-        CursorLine = { bg = '#1a1c25' },
-        LeapBackdrop = { fg = '#545c7e' },
-        ['@text.reference'] = { fg = 'cyan' },
-      },
     }
   end,
   config = function(_, opts)
+    local colors = require 'material.colors'
+    local utils = require 'utils'
+    opts.custom_highlights = {
+      ---@diagnostic disable-next-line: no-unknown
+      NotifyBackground = { bg = colors.editor.bg, fg = colors.editor.fg },
+      CursorLine = { bg = '#1a1c25' },
+      LeapBackdrop = { fg = '#545c7e' },
+      ['@text.reference'] = { fg = 'cyan' },
+      Headline1 = {
+        bg = colors.backgrounds.cursor_line,
+        fg = utils.blend(colors.main.red, colors.editor.bg, 0.8),
+      },
+      Headline2 = {
+        bg = colors.backgrounds.cursor_line,
+        fg = utils.blend(colors.main.orange, colors.editor.bg, 0.8),
+      },
+      Headline3 = {
+        bg = colors.backgrounds.cursor_line,
+        fg = utils.blend(colors.main.yellow, colors.editor.bg, 0.8),
+      },
+      Headline4 = {
+        bg = colors.backgrounds.cursor_line,
+        fg = utils.blend(colors.main.green, colors.editor.bg, 0.8),
+      },
+      Headline5 = {
+        bg = colors.backgrounds.cursor_line,
+        fg = utils.blend(colors.main.blue, colors.editor.bg, 0.8),
+      },
+      Headline6 = {
+        bg = colors.backgrounds.cursor_line,
+        fg = utils.blend(colors.main.purple, colors.editor.bg, 0.8),
+      },
+    }
     require('material').setup(opts)
     vim.cmd.colorscheme 'material'
   end,
