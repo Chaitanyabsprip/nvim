@@ -105,10 +105,10 @@ editing.matchup = {
 
 editing.miniai = {
   'echasnovski/mini.ai',
-  -- keys = {
-  --   { "a", mode = { "x", "o" } },
-  --   { "i", mode = { "x", "o" } },
-  -- },
+  keys = {
+    { 'a', mode = { 'x', 'o' } },
+    { 'i', mode = { 'x', 'o' } },
+  },
   event = 'BufReadPre',
   dependencies = { 'nvim-treesitter-textobjects' },
   opts = function()
@@ -183,6 +183,31 @@ editing.miniai = {
   end,
 }
 
+editing.spider = {
+  'chrisgrieser/nvim-spider',
+  opts = {},
+  keys = {
+    {
+      'w',
+      "<cmd>lua require('spider').motion('w')<cr>",
+      desc = 'Spider: w',
+      mode = { 'n', 'o', 'x' },
+    },
+    {
+      'e',
+      "<cmd>lua require('spider').motion('e')<cr>",
+      desc = 'Spider: e',
+      mode = { 'n', 'o', 'x' },
+    },
+    {
+      'b',
+      "<cmd>lua require('spider').motion('b')<cr>",
+      desc = 'Spider: b',
+      mode = { 'n', 'o', 'x' },
+    },
+  },
+}
+
 editing.surround = {
   'kylechui/nvim-surround',
   version = '*',
@@ -248,6 +273,7 @@ editing.spec = {
   editing.leap,
   editing.matchparen,
   editing.miniai,
+  -- editing.spider,
   editing.surround,
   editing.ufo,
 }
