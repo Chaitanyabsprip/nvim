@@ -14,6 +14,7 @@ function externals.terminal(direction)
     display_name = 'Terminal',
     on_open = function(term)
       vim.cmd 'startinsert!'
+      vim.opt_local.statuscolumn = ''
       nnoremap 'q' '<cmd>close<cr>' { silent = true, bufnr = term.bufnr } 'Close Terminal Window'
     end,
     on_close = function()
@@ -36,6 +37,7 @@ function externals.gitui()
     display_name = 'GitUI',
     on_open = function(term)
       nnoremap 'q' '<cmd>close<cr>' { silent = true, bufnr = term.bufnr } 'Close Terminal Window'
+      vim.opt_local.statuscolumn = ''
       vim.api.nvim_del_keymap('t', 'jk')
       vim.api.nvim_del_keymap('t', 'kj')
     end,
@@ -72,19 +74,12 @@ externals.toggleterm = {
   opts = {
     size = 22,
     open_mapping = [[<c-t>]],
-    on_open = function() vim.cmd [[setlocal statuscolumn=]] end,
-    on_close = function() end,
     shade_terminals = false,
-    shading_factor = '-30',
     start_in_insert = true,
     persist_size = true,
-    direction = 'horizontal',
     hide_numbers = true,
-    shade_filetypes = {},
     shell = vim.o.shell,
-    float_opts = {
-      highlights = { border = 'Normal', background = 'Normal' },
-    },
+    float_opts = { highlights = { border = 'Normal', background = 'Normal' } },
   },
 }
 
