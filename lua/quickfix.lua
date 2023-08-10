@@ -1,18 +1,30 @@
 local qf = {}
 
+function qf.isloclist() return vim.fn.getloclist(0, { filewinid = 1 }).filewinid ~= 0 end
+
 function qf.buffers()
   ---@class QfItem
   ---@field bufnr number
   ---@field lnum number
   ---@field hidden boolean
-  ---@field  changed boolean
-  ---@field  changedtick number
+  ---@field changed boolean
+  ---@field changedtick number
   ---@field lastused number
 
-  ---@type QfItem[]
+  ---@class BufInfo
+  ---@field bufnr number
+  ---@field lnum number
+  ---@field hidden boolean
+  ---@field changed boolean
+  ---@field changedtick number
+  ---@field lastused number
+  ---@field windows integer[]
+
+  ---@type BufInfo[]
   local buffers = vim.fn.getbufinfo { buflisted = 1 }
   if #buffers == 0 then return vim.notify 'No listed buffers' end
   table.sort(buffers, function(a, b) return a.lastused > b.lastused end)
+  ---@type QfItem[]
   local qfbufs = {}
   for _, buf in ipairs(buffers) do
     ---@type number, number

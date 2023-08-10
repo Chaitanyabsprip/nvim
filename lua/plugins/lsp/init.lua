@@ -29,6 +29,7 @@ lsp.file_operations = {
   'antosha417/nvim-lsp-file-operations',
   dependencies = { 'nvim-lua/plenary.nvim', 'nvim-tree/nvim-tree.lua' },
   opts = {},
+  event = 'LspAttach',
 }
 
 lsp.graphql = { 'jparise/vim-graphql', ft = 'graphql' }
