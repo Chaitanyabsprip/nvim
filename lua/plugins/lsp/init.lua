@@ -37,7 +37,22 @@ lsp.graphql = { 'jparise/vim-graphql', ft = 'graphql' }
 lsp.lsp_lines = {
   url = 'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
   event = 'BufReadPost',
+  enabled = false,
   opts = {},
+}
+
+lsp.diagflow = {
+  'dgagn/diagflow.nvim',
+  event = 'LspAttach',
+  opts = {
+    scope = 'line',
+    show_sign = true,
+    padding_top = 2,
+    format = function(d)
+      vim.print(d)
+      return d.message
+    end,
+  },
 }
 
 lsp.mason = {
@@ -101,9 +116,9 @@ lsp.rename = {
 
 lsp.spec = {
   lsp.code_actions,
+  lsp.diagflow,
   lsp.file_operations,
   lsp.graphql,
-  lsp.lsp_lines,
   lsp.mason,
   lsp.mason_lspconfig,
   lsp.mason_nulls,
