@@ -20,13 +20,41 @@ ui.animate_movement = {
       end, { expr = true })
     end
 
+    local function center_after(rhs)
+      return rhs .. "<cmd>lua MiniAnimate.execute_after('scroll', 'normal! zvzz')<cr>"
+    end
+
     local animate = require 'mini.animate'
+    vim.keymap.set(
+      'n',
+      'n',
+      center_after 'n',
+      { noremap = true, desc = 'Jump to next search and center line' }
+    )
+    vim.keymap.set(
+      'n',
+      'N',
+      center_after 'N',
+      { noremap = true, desc = 'Jump to next search and center line' }
+    )
+    vim.keymap.set(
+      'n',
+      '}',
+      center_after '}',
+      { noremap = true, desc = 'Jump forward over paragraph and center line' }
+    )
+    vim.keymap.set(
+      'n',
+      '{',
+      center_after '{',
+      { noremap = true, desc = 'Jump backwards over paragraph and center line' }
+    )
     return {
       resize = {
-        timing = animate.gen_timing.linear { duration = 100, unit = 'total' },
+        timing = animate.gen_timing.linear { duration = 50, unit = 'total' },
       },
       scroll = {
-        timing = animate.gen_timing.linear { duration = 150, unit = 'total' },
+        timing = animate.gen_timing.linear { duration = 50, unit = 'total' },
         subscroll = animate.gen_subscroll.equal {
           predicate = function(total_scroll)
             if mouse_scrolled then
@@ -399,4 +427,5 @@ return {
   ui.win_sep,
   ui.zen_mode,
   { 'nvim-treesitter/playground', cmd = { 'TSPlaygroundToggle' } },
+  -- { 'Chaitanyabsprip/serendipity.nvim', dev = true, lazy = false },
 }
