@@ -2,6 +2,7 @@ local servers = {}
 
 local lsp = require 'lsp'
 
+---@return table
 local function extend(config)
   local get_capabilities = require('plugins.lsp.completion').get_capabilities
   local def_root = { '.git', '.gitignore', vim.fn.getcwd() }
@@ -119,22 +120,39 @@ function servers.lsp.configs.python(lspconfig)
   lspconfig.pyright.setup(config)
 end
 
+-- function servers.lsp.configs.gopls(lspconfig) lspconfig.gopls.setup(extend { root = { 'go.mod' } }) end
 function servers.lsp.configs.sqlls(lspconfig)
-  local config = extend { root = { '.sqllsrc.json' } }
-  lspconfig.sqlls.setup(config)
+  lspconfig.sqlls.setup(extend { root = { '.sqllsrc.json' } })
 end
-
 function servers.lsp.configs.graphql(lspconfig) lspconfig.graphql.setup(extend {}) end
-
 function servers.lsp.configs.bash(lspconfig) lspconfig.bashls.setup(extend {}) end
-
 function servers.lsp.configs.markdown(lspconfig)
   lspconfig.marksman.setup(extend { root = { '.marksman.toml' } })
 end
 
+servers.go = {
+  'ray-x/go.nvim',
+  dependencies = {
+    'neovim/nvim-lspconfig',
+    'nvim-treesitter/nvim-treesitter',
+  },
+  opts = function()
+    local config = extend { root = { 'go.mod' } }
+    return {
+      lsp_cfg = config,
+      lsp_keymaps = false,
+      lsp_inlay_hints = { enable = false },
+      lsp_on_attach = config.on_attach,
+    }
+  end,
+  cond = function() return vim.loop.fs_stat 'go.mod' end,
+  event = 'VeryLazy',
+  build = ':lua require("go.install").update_all_sync()',
+}
+
 servers.spec = {
   servers.lsp.spec,
-  -- servers.flutter.spec,
+  servers.go,
   servers.__schemastore.spec,
   servers.__neodev.spec,
 }
