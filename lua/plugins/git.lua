@@ -103,6 +103,13 @@ git.git_conflict = {
   },
 }
 
-git.spec = { git.git_conflict, git.gitsigns }
+git.neogit = {
+  'NeogitOrg/neogit',
+  dependencies = { 'nvim-lua/plenary.nvim' },
+  cmd = 'Neogit',
+  opts = {},
+}
+
+git.spec = { git.git_conflict, git.gitsigns, git.neogit }
 
 return git.spec
