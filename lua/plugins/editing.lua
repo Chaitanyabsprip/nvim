@@ -16,7 +16,23 @@ editing.eyeliner = {
     dim = true,
   },
 }
-
+editing.hfcc = {
+  'huggingface/hfcc.nvim',
+  opts = {
+    api_token = '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',
+    model = 'bigcode/starcoder',
+    query_params = {
+      max_new_tokens = 200,
+    },
+  },
+  init = function()
+    vim.api.nvim_create_user_command(
+      'StarCoder',
+      function() require('hfcc.completion').complete() end,
+      {}
+    )
+  end,
+}
 editing.hop = {
   'phaazon/hop.nvim',
   event = 'BufReadPost',
@@ -270,6 +286,7 @@ editing.ufo = {
 editing.spec = {
   editing.comment,
   editing.eyeliner,
+  editing.hfcc,
   editing.leap,
   editing.matchparen,
   editing.miniai,
