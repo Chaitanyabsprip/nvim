@@ -64,7 +64,7 @@ config.options.setup = function()
   vim.o.clipboard = 'unnamedplus'
   vim.o.number = true
   vim.o.numberwidth = 3
-  vim.o.relativenumber = false
+  vim.o.relativenumber = true
   vim.o.cursorline = true
   vim.wo.signcolumn = 'yes'
 
