@@ -44,15 +44,7 @@ lsp.lsp_lines = {
 lsp.diagflow = {
   'dgagn/diagflow.nvim',
   event = 'LspAttach',
-  opts = {
-    scope = 'line',
-    show_sign = true,
-    padding_top = 2,
-    format = function(d)
-      vim.print(d)
-      return d.message
-    end,
-  },
+  opts = { scope = 'line', padding_top = 2 },
 }
 
 lsp.mason = {
