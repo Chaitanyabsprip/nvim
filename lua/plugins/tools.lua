@@ -3,9 +3,10 @@ local tools = {}
 tools.colorizer = {
   'NvChad/nvim-colorizer.lua',
   cmd = { 'ColorizerAttachToBuffer', 'ColorizerToggle' },
+  event = 'BufReadPre',
   opts = {
     filetypes = { '*', '!lazy' },
-    buftype = { '*', '!prompt', '!nofile' },
+    buftypes = { '*', '!prompt', '!nofile' },
     user_default_options = {
       names = false,
       RRGGBBAA = true,
