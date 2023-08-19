@@ -92,7 +92,7 @@ config.options.setup = function()
   vim.o.colorcolumn = '81'
   vim.o.textwidth = 80
   vim.o.conceallevel = 2
-  vim.o.sessionoptions = 'buffers,curdir,winsize,resize,winpos,folds,tabpages'
+  vim.o.sessionoptions = 'buffers,curdir,winsize,resize,winpos,folds,tabpages,globals'
   vim.o.shell = '/usr/bin/env zsh'
   vim.o.updatetime = 1000
 

@@ -3,6 +3,7 @@ local session = {}
 session.auto_session = {
   'rmagatti/auto-session',
   init = function() vim.api.nvim_create_user_command('Continue', 'SessionRestore', { nargs = 0 }) end,
+  dependencies = { { 'tiagovla/scope.nvim' } },
   opts = {
     log_level = 'error',
     auto_session_enable_last_session = false,
@@ -12,6 +13,8 @@ session.auto_session = {
     auto_restore_enabled = false,
     auto_session_suppress_dirs = { os.getenv 'HOME' },
     auto_session_use_git_branch = true,
+    pre_save_cmds = { 'ScopeSaveState' },
+    post_restore_cmds = { 'ScopeLoadState' },
   },
   event = 'BufReadPre',
   cmd = { 'Continue', 'SessionRestore' },

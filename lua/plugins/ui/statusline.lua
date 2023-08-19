@@ -1,7 +1,23 @@
 ---@diagnostic disable: undefined-field
-local statusline = {}
+local M = {}
 
-statusline.lualine = {
+M.bufferline = {
+  'akinsho/bufferline.nvim',
+  version = '*',
+  dependencies = 'nvim-tree/nvim-web-devicons',
+  opts = function()
+    return {
+      options = {
+        mode = 'tabs',
+        style_preset = require('bufferline').style_preset.minimal,
+        always_show_bufferline = false,
+      },
+    }
+  end,
+  event = #vim.fn.gettabinfo() > 1 and 'VeryLazy' or 'TabNew',
+}
+
+M.lualine = {
   'nvim-lualine/lualine.nvim',
   event = 'VeryLazy',
   opts = function()
@@ -53,20 +69,13 @@ statusline.lualine = {
   end,
 }
 
-statusline.bufferline = {
-  'akinsho/bufferline.nvim',
-  version = '*',
-  dependencies = 'nvim-tree/nvim-web-devicons',
-  opts = function()
-    return {
-      options = {
-        mode = 'tabs',
-        style_preset = require('bufferline').style_preset.minimal,
-        always_show_bufferline = false,
-      },
-    }
-  end,
+M.scope = {
+  'tiagovla/scope.nvim',
   event = #vim.fn.gettabinfo() > 1 and 'VeryLazy' or 'TabNew',
+  opts = function()
+    require('telescope').load_extension 'scope'
+    return {}
+  end,
 }
 
-return { statusline.lualine, statusline.bufferline }
+return { M.bufferline, M.lualine, M.scope }

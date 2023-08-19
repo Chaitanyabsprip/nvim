@@ -1,5 +1,35 @@
 local keymaps = {}
 
+local api = vim.api
+
+-- Kill the target buffer (or the current one if 0/nil)
+local function buf_kill(target_buf, should_force)
+  if not should_force and vim.bo.modified then
+    return api.nvim_err_writeln 'Buffer is modified. Force required.'
+  end
+  local command = 'bd'
+  if should_force then command = command .. '!' end
+  if target_buf == 0 or target_buf == nil then target_buf = api.nvim_get_current_buf() end
+  ---@type BufInfo[]
+  local buffers = vim.fn.getbufinfo { buflisted = 1 }
+  if #buffers == 1 then return api.nvim_command(command) end
+  ---@type integer, integer[]
+  local nextbuf, windows
+  for i, buf in ipairs(buffers) do
+    if buf.bufnr == target_buf then
+      windows = buf.windows
+      nextbuf = buffers[(i - 1 + 1) % #buffers + 1].bufnr
+      break
+    end
+  end
+  if nextbuf == nil then nextbuf = vim.api.nvim_create_buf(true, true) end
+  for _, winid in ipairs(windows) do
+    api.nvim_win_set_buf(winid, nextbuf)
+  end
+  vim.print(nextbuf)
+  api.nvim_command(table.concat({ command, target_buf }, ' '))
+end
+
 keymaps.setup = function()
   local hashish = require 'hashish'
   local map = hashish.map
@@ -32,7 +62,7 @@ keymaps.setup = function()
   nnoremap 'gk' '<c-w>k' 'Move to the window on the above'
   vnoremap 'J' ":m '>+1<cr>gv=gv" { silent = true } 'Move selected lines down'
   vnoremap 'K' ":m '<-2<cr>gv=gv" { silent = true } 'Move selected lines up'
-  nnoremap 'X' '<cmd>bd<cr>' 'Close current buffer'
+  nnoremap 'X'(buf_kill) 'Close current buffer'
   nnoremap ')' '<cmd>vertical resize +5<cr>' 'Increase current window height'
   nnoremap '(' '<cmd>vertical resize -5<cr>' 'Decrease current window height'
   nnoremap '+' '<cmd>res +1<cr>' 'Increase current window width'
