@@ -89,14 +89,15 @@ end
 explorer.nvim_tree = {
   'nvim-tree/nvim-tree.lua',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
-  cmd = { 'Explorer' },
+  version = '*',
+  event = 'VeryLazy',
   opts = function()
     vim.api.nvim_create_user_command('Explorer', 'NvimTreeToggle', { nargs = 0 })
     local group = vim.api.nvim_create_augroup('nvim-tree', { clear = true })
     vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
       pattern = 'NvimTree*',
       group = group,
-      callback = function() vim.cmd [[ setlocal statuscolumn= nonu nornu ]] end,
+      callback = function() vim.cmd [[ setlocal statuscolumn= nonu nornu signcolumn=yes ]] end,
     })
     return {
       disable_netrw = true,

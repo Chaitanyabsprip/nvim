@@ -2,7 +2,6 @@ local keymaps = {}
 
 local api = vim.api
 
--- Kill the target buffer (or the current one if 0/nil)
 local function buf_kill(target_buf, should_force)
   if not should_force and vim.bo.modified then
     return api.nvim_err_writeln 'Buffer is modified. Force required.'
