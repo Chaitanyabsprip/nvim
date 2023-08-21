@@ -213,7 +213,6 @@ tools.whichkey = {
 
 tools.spec = {
   tools.colorizer,
-  tools.drop,
   tools.fish,
   tools.neotest,
   tools.obsidian,
