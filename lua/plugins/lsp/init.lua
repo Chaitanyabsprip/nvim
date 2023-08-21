@@ -25,6 +25,12 @@ lsp.code_actions = {
   },
 }
 
+lsp.diagflow = {
+  'dgagn/diagflow.nvim',
+  event = 'LspAttach',
+  opts = { scope = 'line', padding_top = 1 },
+}
+
 lsp.file_operations = {
   'antosha417/nvim-lsp-file-operations',
   dependencies = { 'nvim-lua/plenary.nvim', 'nvim-tree/nvim-tree.lua' },
@@ -39,12 +45,6 @@ lsp.lsp_lines = {
   event = 'BufReadPost',
   enabled = false,
   opts = {},
-}
-
-lsp.diagflow = {
-  'dgagn/diagflow.nvim',
-  event = 'LspAttach',
-  opts = { scope = 'line', padding_top = 2 },
 }
 
 lsp.mason = {
