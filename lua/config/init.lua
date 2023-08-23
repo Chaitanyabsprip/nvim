@@ -66,7 +66,7 @@ config.options.setup = function()
   vim.o.numberwidth = 3
   vim.o.relativenumber = true
   vim.o.cursorline = true
-  vim.wo.signcolumn = 'yes'
+  vim.wo.signcolumn = 'no'
 
   -- indent
   vim.o.autoindent = true
@@ -102,7 +102,7 @@ config.options.setup = function()
   vim.o.laststatus = 3
 
   -- folding
-  vim.g.foldcolumn = true
+  vim.g.foldcolumn = false
   vim.wo.foldmethod = 'expr'
   vim.o.foldlevel = 99
   vim.o.foldlevelstart = 99
