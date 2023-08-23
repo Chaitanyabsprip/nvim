@@ -34,7 +34,6 @@ keymaps.setup = function()
   local map = hashish.map
   local nnoremap = hashish.nnoremap
   local vnoremap = hashish.vnoremap
-  local tnoremap = hashish.tnoremap
   local inoremap = hashish.inoremap
   local xnoremap = hashish.xnoremap
 
@@ -46,8 +45,6 @@ keymaps.setup = function()
   nnoremap '<leader>w' '<cmd>up<cr>' 'Save file (only if modified)'
   inoremap 'jk' '<esc>' 'Escape insert mode'
   inoremap 'kj' '<esc>' 'Escape insert mode'
-  tnoremap 'jk' '<C-\\><C-n>' 'Escape insert mode in terminal'
-  tnoremap 'kj' '<C-\\><C-n>' 'Escape insert mode in terminal'
   nnoremap '<leader>q' '<cmd>q<cr>' 'Close window (:q)'
   nnoremap '<leader>Q' '<cmd>qa<cr>' 'Quit all (:qa)'
   nnoremap '<leader>e' '<cmd>Explorer<cr>' 'Toggle file explorer'
