@@ -8,7 +8,7 @@ local material = {
   lazy = config.theme ~= name,
   priority = 1000,
   opts = function()
-    vim.g.lualine_theme = name
+    vim.g.lualine_theme = 'material-stealth'
     ---@diagnostic disable-next-line: no-unknown
     vim.g.material_style = 'deep ocean'
     return {
