@@ -8,10 +8,26 @@ explorer.better_qf = {
 }
 
 explorer.fuzzy = require 'plugins.explorer.telescope'
+local function harpoon_keys(keys)
+  local mappings = {}
+  for i = 1, 9 do
+    local mapping = {
+      string.format('<a-%d>', i),
+      function() require('harpoon.ui').nav_file(i) end,
+      noremap = true,
+      desc = string.format('Jump to file %d in harpoon', i),
+    }
+    table.insert(mappings, mapping)
+  end
+  for _, obj in ipairs(keys) do
+    table.insert(mappings, obj)
+  end
+  return mappings
+end
 
 explorer.harpoon = {
   'ThePrimeagen/harpoon',
-  keys = {
+  keys = harpoon_keys {
     {
       '<c-b>',
       function() require('harpoon.mark').add_file() end,
