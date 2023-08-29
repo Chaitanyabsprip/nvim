@@ -4,7 +4,6 @@ local ui = {}
 local config = require 'config.ui'
 
 ---@type {spec: LazyPluginSpec, set: function}
-ui.colorscheme = require('plugins.ui.themes.' .. config.theme)
 
 ui.animate_movement = {
   'echasnovski/mini.animate',
@@ -415,7 +414,6 @@ ui.zen_mode = {
 return {
   ui.animate_movement,
   ui.ansi,
-  ui.colorscheme,
   ui.dressing,
   ui.edgy,
   ui.headlines,

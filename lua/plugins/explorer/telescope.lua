@@ -1,5 +1,3 @@
-local telescope = {}
-
 local highlight_overrides = function()
   local hl = vim.api.nvim_set_hl
   hl(0, 'TelescopePromptPrefix', { link = 'diffRemoved' })
@@ -30,57 +28,13 @@ local setup_keymaps = function()
   nnoremap 'gw'(function() builtin.grep_string { search = vim.fn.input { prompt = 'Grep > ' } } end) 'Telescope: grep and filter'
 end
 
-telescope = {
-  spec = {
-    'nvim-telescope/telescope.nvim',
-    tag = '0.1.2',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    cmd = { 'Telescope' },
-    keys = { '<leader><leader>', 'gw' },
-    config = function(_, opts) require('plugins.explorer.telescope').setup(opts) end,
-    opts = function()
-      local actions = require 'telescope.actions'
-      local mappings = {
-        i = {
-          ['<c-j>'] = actions.move_selection_next,
-          ['<c-k>'] = actions.move_selection_previous,
-          ['<c-d>'] = actions.delete_buffer,
-          ['<esc>'] = actions.close,
-        },
-        n = { ['q'] = actions.close, ['<c-c>'] = actions.close, ['dd'] = actions.delete_buffer },
-      }
-
-      return {
-        defaults = {
-          border = nil,
-          borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
-          color_devicons = true,
-          extensions = { file_browser = {} },
-          file_ignore_patterns = {},
-          file_sorter = require('telescope.sorters').get_fuzzy_file,
-          generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
-          initial_mode = 'insert',
-          layout_config = {
-            horizontal = { mirror = false },
-            vertical = { mirror = false },
-            prompt_position = 'top',
-            height = 0.8,
-            width = 0.9,
-          },
-          layout_strategy = 'horizontal',
-          mappings = mappings,
-          path_display = { shorten = { len = 1, exclude = { -1 } } },
-          prompt_prefix = '   ',
-          selection_strategy = 'reset',
-          set_env = { ['COLORTERM'] = 'truecolor' },
-          sorting_strategy = 'ascending',
-          winblend = 0,
-        },
-      }
-    end,
-  },
-
-  setup = function(opts)
+local telescope = {
+  'nvim-telescope/telescope.nvim',
+  tag = '0.1.2',
+  dependencies = { 'nvim-lua/plenary.nvim' },
+  cmd = { 'Telescope' },
+  keys = { '<leader><leader>', 'gw' },
+  config = function(_, opts)
     require('telescope').setup(opts)
     setup_keymaps()
     highlight_overrides()
@@ -89,6 +43,46 @@ telescope = {
     require('semantic_search').setup {
       directory = dir,
       embeddings_path = dir .. '/.embeddings',
+    }
+  end,
+  opts = function()
+    local actions = require 'telescope.actions'
+    local mappings = {
+      i = {
+        ['<c-j>'] = actions.move_selection_next,
+        ['<c-k>'] = actions.move_selection_previous,
+        ['<c-d>'] = actions.delete_buffer,
+        ['<esc>'] = actions.close,
+      },
+      n = { ['q'] = actions.close, ['<c-c>'] = actions.close, ['dd'] = actions.delete_buffer },
+    }
+
+    return {
+      defaults = {
+        border = nil,
+        borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
+        color_devicons = true,
+        extensions = { file_browser = {} },
+        file_ignore_patterns = { '^.git' },
+        file_sorter = require('telescope.sorters').get_fuzzy_file,
+        generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
+        initial_mode = 'insert',
+        layout_config = {
+          horizontal = { mirror = false },
+          vertical = { mirror = false },
+          prompt_position = 'top',
+          height = 0.8,
+          width = 0.9,
+        },
+        layout_strategy = 'horizontal',
+        mappings = mappings,
+        path_display = { shorten = { len = 1, exclude = { -1 } } },
+        prompt_prefix = '   ',
+        selection_strategy = 'reset',
+        set_env = { ['COLORTERM'] = 'truecolor' },
+        sorting_strategy = 'ascending',
+        winblend = 0,
+      },
     }
   end,
 }

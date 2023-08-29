@@ -1,6 +1,7 @@
 local plugin = {}
 
 function plugin.bootstrap_packer()
+  ---@type string
   local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
   if not vim.loop.fs_stat(lazypath) then
     vim.fn.system {
@@ -14,7 +15,6 @@ function plugin.bootstrap_packer()
   end
   vim.opt.runtimepath:prepend(lazypath)
 end
-
 plugin.setup = function()
   plugin.disabled_builtins = {
     '2html_plugin',
@@ -41,20 +41,22 @@ plugin.setup = function()
     'zip',
     'zipPlugin',
   }
-
   plugin.bootstrap_packer()
-
-  require('lazy').setup(
-    { { import = 'plugins' }, { import = 'plugins.lsp' }, { import = 'plugins.ui' } },
-    {
-      defaults = { lazy = true },
-      dev = { path = '~/Projects/Languages/Lua' },
-      performance = { rtp = { disabled_plugins = plugin.disabled_builtins } },
-      install = { colorscheme = { 'tokyonight', 'habamax' } },
-      checker = { enabled = true, notify = false },
-      readme = { files = { 'README.md', 'readme.md', 'README.rst', 'readme.rst' } },
-    }
-  )
+  local config = require 'config.ui'
+  require('lazy').setup({
+    { import = 'plugins' },
+    { import = 'plugins.lsp' },
+    { import = 'plugins.ui' },
+    { import = 'plugins.ui.themes.' .. config.theme },
+    { import = 'plugins.explorer' },
+  }, {
+    defaults = { lazy = true },
+    dev = { path = '~/Projects/Languages/Lua' },
+    performance = { rtp = { disabled_plugins = plugin.disabled_builtins } },
+    install = { colorscheme = { 'tokyonight', 'habamax' } },
+    checker = { enabled = true, notify = false },
+    readme = { files = { 'README.md', 'readme.md', 'README.rst', 'readme.rst' } },
+  })
 end
 
 return plugin

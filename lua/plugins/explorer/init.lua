@@ -7,7 +7,6 @@ explorer.better_qf = {
   opts = {},
 }
 
-explorer.fuzzy = require 'plugins.explorer.telescope'
 local function harpoon_keys(keys)
   local mappings = {}
   for i = 1, 9 do
@@ -214,7 +213,6 @@ explorer.project = {
 
 explorer.spec = {
   explorer.better_qf,
-  explorer.fuzzy.spec,
   explorer.harpoon,
   explorer.nvim_tree,
   explorer.pretty_qf,
