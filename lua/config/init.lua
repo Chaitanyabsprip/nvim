@@ -37,6 +37,15 @@ function config.autocommands()
     pattern = { 'markdown', 'md', 'rmd', 'rst' },
     command = [[%s/\s\+$//]],
   })
+
+  autocmd('BufReadPre', {
+    group = augroup 'syntax-and-filetype',
+    once = true,
+    command = [[
+      syntax on
+      filetype plugin indent on
+    ]],
+  })
 end
 
 config.options = {}
@@ -128,7 +137,6 @@ end
 
 function config.lazy()
   require('greeter').setup()
-  vim.cmd [[filetype plugin indent on]]
   require('utils').open_explorer_on_startup()
 end
 
