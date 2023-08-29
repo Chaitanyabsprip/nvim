@@ -4,7 +4,6 @@ function externals.terminal(direction)
   direction = direction or 'horizontal'
   local Terminal = require('toggleterm.terminal').Terminal
   local nnoremap = require('hashish').nnoremap
-  local tnoremap = require('hashish').tnoremap
   local float_opts = {}
   if direction == 'float' then float_opts = { border = 'double' } end
   local opts = {
@@ -17,10 +16,7 @@ function externals.terminal(direction)
       vim.opt_local.statuscolumn = ''
       nnoremap 'q' '<cmd>close<cr>' { silent = true, bufnr = term.bufnr } 'Close Terminal Window'
     end,
-    on_close = function()
-      tnoremap 'jk' '<C-\\><C-N>' 'jk as escape'
-      tnoremap 'kj' '<C-\\><C-N>' 'kj as escape'
-    end,
+    on_close = function() end,
   }
   return Terminal:new(opts)
 end
@@ -28,7 +24,6 @@ end
 function externals.gitui()
   local Terminal = require('toggleterm.terminal').Terminal
   local nnoremap = require('hashish').nnoremap
-  local tnoremap = require('hashish').tnoremap
   return Terminal:new {
     cmd = 'gitui',
     close_on_exit = true,
@@ -38,12 +33,6 @@ function externals.gitui()
     on_open = function(term)
       nnoremap 'q' '<cmd>close<cr>' { silent = true, bufnr = term.bufnr } 'Close Terminal Window'
       vim.opt_local.statuscolumn = ''
-      vim.api.nvim_del_keymap('t', 'jk')
-      vim.api.nvim_del_keymap('t', 'kj')
-    end,
-    on_close = function()
-      tnoremap 'jk' '<C-\\><C-N>' 'jk as escape'
-      tnoremap 'kj' '<C-\\><C-N>' 'kj as escape'
     end,
   }
 end
