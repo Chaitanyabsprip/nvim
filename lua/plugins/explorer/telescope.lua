@@ -22,7 +22,7 @@ local setup_keymaps = function()
   nnoremap '<leader>thi'(builtin.highlights) 'Telescope: Higlights'
   nnoremap ';b'(builtin.git_branches) 'Telescope: Git Branches'
   nnoremap ';c'(builtin.git_status) 'Telescope: git changes'
-  nnoremap '<leader><space>'(builtin.fd) 'Telescope: File Finder'
+  nnoremap '<leader><space>'(function() builtin.fd { hidden = true } end) 'Telescope: File Finder'
   nnoremap '<leader>n'(find_notes) 'Telescope: Find notes'
   nnoremap 'go'(builtin.oldfiles) 'Telescope: oldfiles'
   nnoremap 'gW'(builtin.grep_string) 'Telescope: grep word under cursor'
