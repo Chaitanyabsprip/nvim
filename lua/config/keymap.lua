@@ -41,11 +41,11 @@ keymaps.setup = function()
   nnoremap '<Space>' '<NOP>' 'Leader key'
   vim.g.mapleader = ' '
 
-  require('utils').cowboy { 'NvimTree', 'qf', 'help', 'noice' }
   nnoremap '<leader>w' '<cmd>up<cr>' 'Save file (only if modified)'
-  inoremap 'jk' '<esc>' 'Escape insert mode'
-  inoremap 'kj' '<esc>' 'Escape insert mode'
+  -- inoremap 'jk' '<esc>' 'Escape insert mode'
+  -- inoremap 'kj' '<esc>' 'Escape insert mode'
   nnoremap '<leader>q' '<cmd>q<cr>' 'Close window (:q)'
+  inoremap '<c-c>' '<esc>' 'To not be annoyed by the <c-c> messages all the time'
   nnoremap '<leader>Q' '<cmd>qa<cr>' 'Quit all (:qa)'
   nnoremap '<leader>e' '<cmd>Explorer<cr>' 'Toggle file explorer'
   nnoremap '_' '^' 'Jump to the start of the line'
@@ -76,6 +76,8 @@ keymaps.setup = function()
   nnoremap 'J' 'mzJ`z' 'Join lines without moving cursor'
   nnoremap '}' '}zzzv' 'Like text object motion } but centers line'
   nnoremap '{' '{zzzv' 'Like text object motion { but centers line'
+  nnoremap '<c-d>' '<c-d>zzzv' 'Like text object motion <c-d> but centers line'
+  nnoremap '<c-u>' '<c-u>zzzv' 'Like text object motion <c-u>{ but centers line'
   nnoremap '<leader>r' ':%s/\\<<c-r><c-w>\\>/<c-r><c-w>/gI<Left><Left><Left>' 'Search and replace, in current buffer, word under cursor'
   vnoremap '<leader>r' '"hy:%s/<C-r>h//gI<left><left><left>' 'Search and replace, in current buffer, selection'
   vnoremap '<leader>s' 'y:%s/<c-r>0/<c-r>0/gI<Left><Left><Left>' 'Search and replace, in current buffer, visual selection'
@@ -96,6 +98,7 @@ keymaps.setup = function()
     local rnu = vim.wo[vim.api.nvim_get_current_win()].relativenumber
     return '<cmd>setlocal ' .. (rnu and 'no' or '') .. 'rnu<cr>'
   end) { expr = true } 'Toggle relative line number'
+  require('utils').cowboy { 'NvimTree', 'qf', 'help', 'noice' }
 end
 
 return keymaps
