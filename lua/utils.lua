@@ -102,7 +102,7 @@ end
 function M.getargs()
   ---@diagnostic disable-next-line: no-unknown
   local argv = vim.tbl_filter(function(arg)
-    local nvim = arg ~= 'nvim'
+    local nvim = arg ~= 'nvim' and arg ~= '/usr/local/bin/nvim'
     local embed = arg ~= '--embed'
     local i = arg ~= '-i'
     local none = arg ~= 'NONE'
