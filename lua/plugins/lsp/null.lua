@@ -1,4 +1,4 @@
-local null_ft = { 'lua', 'fish', 'yaml', 'markdown', 'md', 'rmd', 'rst', 'python' }
+local null_ft = { 'lua', 'fish', 'yaml', 'markdown', 'md', 'rmd', 'rst', 'python', 'sh', 'zsh' }
 return {
   'jose-elias-alvarez/null-ls.nvim',
   ft = null_ft,
@@ -18,11 +18,11 @@ return {
       capabilities = get_capabilities(),
       sources = {
         code_actions.gitsigns,
-        code_actions.ltrs,
         code_actions.refactoring.with(refactoring_opts),
+        code_actions.shellcheck,
         diagnostics.codespell.with { filetypes = { 'markdown' } },
-        diagnostics.ltrs,
         diagnostics.markdownlint,
+        diagnostics.shellcheck,
         diagnostics.yamllint,
         formatting.beautysh,
         formatting.black.with { extra_args = { '--quiet', '-l', '80' } },
@@ -33,7 +33,7 @@ return {
         formatting.fish_indent,
         formatting.isort.with { extra_args = { '--quiet' } },
         formatting.markdownlint,
-        formatting.shfmt,
+        formatting.shfmt.with { filetypes = { 'zsh', 'bash', 'sh' } },
         formatting.stylua,
         hover.dictionary,
       },
