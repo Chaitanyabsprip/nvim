@@ -126,6 +126,9 @@ function servers.lsp.configs.sqlls(lspconfig)
 end
 function servers.lsp.configs.graphql(lspconfig) lspconfig.graphql.setup(extend {}) end
 function servers.lsp.configs.bash(lspconfig) lspconfig.bashls.setup(extend {}) end
+function servers.lsp.configs.ltex(lspconfig)
+  lspconfig.ltex.setup(extend { settings = { ltex = { language = 'en' } } })
+end
 function servers.lsp.configs.markdown(lspconfig)
   lspconfig.marksman.setup(extend { root = { '.marksman.toml' } })
 end
