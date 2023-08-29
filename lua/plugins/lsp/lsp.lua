@@ -40,13 +40,6 @@ lsp.file_operations = {
 
 lsp.graphql = { 'jparise/vim-graphql', ft = 'graphql' }
 
-lsp.lsp_lines = {
-  url = 'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-  event = 'BufReadPost',
-  enabled = false,
-  opts = {},
-}
-
 lsp.mason = {
   'williamboman/mason.nvim',
   dependencies = { 'RubixDev/mason-update-all' },
@@ -74,37 +67,7 @@ lsp.mason_nulls = {
 
 lsp.mason_update = { 'RubixDev/mason-update-all', opts = {} }
 
-lsp.navic = {
-  'SmiteshP/nvim-navic',
-  event = 'LspAttach',
-  opts = { highlight = true, separator = '  ', depth_limit = 6 },
-  config = function(_, opts)
-    local navic = require 'nvim-navic'
-    navic.setup(opts)
-    local f = require('lsp.capabilities').document_symbols.callback
-    require('lsp.capabilities').document_symbols.callback = function(c, b)
-      f(c, b)
-      navic.attach(c, b)
-    end
-  end,
-}
-
 lsp.refactoring = { 'ThePrimeagen/refactoring.nvim', opts = {} }
-
-lsp.rename = {
-  'smjonas/inc-rename.nvim',
-  event = 'LspAttach',
-  opts = { preview_empty_name = true },
-  config = function(_, opts)
-    require('inc_rename').setup(opts)
-    local c = require 'lsp.capabilities'
-    local nnoremap = require('hashish').nnoremap
-    c.rename.callback = function()
-      local mopts = { bufnr = 0, silent = true, expr = true }
-      nnoremap 'gr'(function() return ':IncRename ' .. vim.fn.expand '<cword> ' end)(mopts) 'Rename symbol under cursor'
-    end
-  end,
-}
 
 lsp.spec = {
   lsp.code_actions,
@@ -115,9 +78,7 @@ lsp.spec = {
   lsp.mason_lspconfig,
   lsp.mason_nulls,
   lsp.mason_update,
-  lsp.navic,
   lsp.refactoring,
-  lsp.rename,
 }
 
 return lsp.spec

@@ -66,7 +66,6 @@ explorer.harpoon = {
   },
   opts = { global_settings = { mark_branch = true } },
 }
-
 local function on_attach(bufnr)
   local api = require 'nvim-tree.api'
   local function opts(desc)
@@ -83,12 +82,9 @@ local function on_attach(bufnr)
     if not node then return end
     require('telescope.builtin').live_grep { search_dirs = { node.absolute_path } }
   end
-
   api.config.mappings.default_on_attach(bufnr)
-
   vim.keymap.del('n', ']e', { buffer = bufnr })
   vim.keymap.del('n', '[e', { buffer = bufnr })
-
   vim.keymap.set('n', 'l', api.node.open.edit, opts 'Open')
   vim.keymap.set('n', 'cd', api.tree.change_root_to_node, opts 'CD')
   vim.keymap.set('n', 'v', api.node.open.vertical, opts 'Open: Vertical Split')
@@ -189,34 +185,11 @@ explorer.pretty_qf = {
   opts = {},
 }
 
-explorer.project = {
-  'ahmedkhalf/project.nvim',
-  dependencies = {
-    {
-      'nvim-telescope/telescope.nvim',
-      keys = {
-        {
-          '<c-p>',
-          function() require('telescope').extensions.projects.projects() end,
-          noremap = true,
-          desc = 'Search projects',
-        },
-      },
-    },
-  },
-  event = 'BufReadPre',
-  config = function()
-    require('project_nvim').setup { ignore_lsp = { 'null-ls' } }
-    require('telescope').load_extension 'projects'
-  end,
-}
-
 explorer.spec = {
   explorer.better_qf,
   explorer.harpoon,
   explorer.nvim_tree,
   explorer.pretty_qf,
-  explorer.project,
 }
 
 return explorer.spec

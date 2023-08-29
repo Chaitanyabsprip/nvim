@@ -69,13 +69,4 @@ M.lualine = {
   end,
 }
 
-M.scope = {
-  'tiagovla/scope.nvim',
-  event = #vim.fn.gettabinfo() > 1 and 'VeryLazy' or 'TabNew',
-  opts = function()
-    require('telescope').load_extension 'scope'
-    return {}
-  end,
-}
-
 return { M.bufferline, M.lualine, M.scope }

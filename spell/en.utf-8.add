@@ -87,3 +87,6 @@ async
 SFTP/!
 SFTP
 gRPC
+zsh
+Tmux
+Yocket

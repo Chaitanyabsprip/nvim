@@ -37,6 +37,6 @@ session.persistence = {
   },
 }
 
-session.spec = { session.auto_session }
+session.spec = {}
 
 return session.spec

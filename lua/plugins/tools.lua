@@ -17,102 +17,8 @@ tools.colorizer = {
     },
   },
 }
-
-tools.drop = {
-  'folke/drop.nvim',
-  event = { 'BufReadPre' },
-  ft = { 'greeter' },
-  opts = {
-    theme = 'leaves',
-    interval = 150,
-    max = 90,
-    screensaver = 1000 * 60 * 2,
-    filetypes = { 'greeter' },
-  },
-}
-
 tools.fish =
   { 'dag/vim-fish', ft = 'fish', cond = function() return vim.loop.fs_stat 'config.fish' end }
-
-tools.hologram = {
-  spec = {
-    'edluffy/hologram.nvim',
-    opts = { auto_display = true },
-    ft = { 'markdown', 'md', 'rst', 'rmd' },
-  },
-}
-
-tools.neotest = {
-  'nvim-neotest/neotest',
-  version = '3.*',
-  dependencies = {
-    { 'nvim-lua/plenary.nvim' },
-    { 'nvim-treesitter/nvim-treesitter' },
-    { 'sidlatau/neotest-dart' },
-    { 'nvim-neotest/neotest-go' },
-    { 'antoinemadec/FixCursorHold.nvim' },
-  },
-  opts = function()
-    local nnoremap = require('hashish').nnoremap
-    local neotest_config = vim.api.nvim_create_augroup('NeotestConfig', { clear = true })
-    for _, ft in ipairs { 'output', 'attach', 'summary' } do
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'neotest-' .. ft,
-        group = neotest_config,
-        ---@param opts {buf: integer}
-        callback = function(opts)
-          nnoremap 'q'(function() pcall(vim.api.nvim_win_close, 0, true) end) { buffer = opts.buf }(
-            'Quit ' .. ft
-          )
-        end,
-      })
-    end
-    return {
-      quickfix = { open = false },
-      status = { icons = true, virtual_text = false },
-      adapters = {
-        require 'neotest-dart' { command = 'flutter', use_lsp = false },
-        require 'neotest-go',
-      },
-      icons = {
-        running_animated = {
-          '⠋',
-          '⠙',
-          '⠹',
-          '⠸',
-          '⠼',
-          '⠴',
-          '⠦',
-          '⠧',
-          '⠇',
-          '⠏',
-        },
-      },
-    }
-  end,
-  keys = {
-    { '<leader>tn', function() require('neotest').run.run() end, desc = 'Run nearest test' },
-    { '<leader>tl', function() require('neotest').run.run_last() end, desc = 'Run last test' },
-    {
-      '<leader>ta',
-      function() require('neotest').run.run(vim.fn.expand '%') end,
-      desc = 'Run test for file',
-    },
-    {
-      '<leader>ts',
-      function() require('neotest').summary.toggle() end,
-      desc = 'Toggle tests summary',
-    },
-    {
-      '<leader>to',
-      function()
-        local open_opts = { enter = true }
-        require('neotest').output.open(open_opts)
-      end,
-      desc = 'Toggle tests output',
-    },
-  },
-}
 
 tools.obsidian = {
   'epwalsh/obsidian.nvim',
@@ -203,18 +109,9 @@ tools.startuptime = {
   cmd = 'StartupTime',
 }
 
-tools.whichkey = {
-  'folke/which-key.nvim',
-  config = function()
-    vim.o.timeoutlen = 500
-    require('which-key').setup { plugins = { marks = false, registers = false } }
-  end,
-}
-
 tools.spec = {
   tools.colorizer,
   tools.fish,
-  tools.neotest,
   tools.obsidian,
   tools.peek,
   tools.startuptime,

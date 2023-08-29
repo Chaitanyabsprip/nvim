@@ -4,69 +4,7 @@ local ui = {}
 local config = require 'config.ui'
 
 ---@type {spec: LazyPluginSpec, set: function}
-
-ui.animate_movement = {
-  'echasnovski/mini.animate',
-  event = 'BufReadPre',
-  opts = function()
-    -- don't use animate when scrolling with the mouse
-    local mouse_scrolled = false
-    for _, scroll in ipairs { 'Up', 'Down' } do
-      local key = '<ScrollWheel' .. scroll .. '>'
-      vim.keymap.set({ '', 'i' }, key, function()
-        mouse_scrolled = true
-        return key
-      end, { expr = true })
-    end
-
-    local function center_after(rhs)
-      return rhs .. "<cmd>lua MiniAnimate.execute_after('scroll', 'normal! zvzz')<cr>"
-    end
-
-    local animate = require 'mini.animate'
-    vim.keymap.set(
-      'n',
-      'n',
-      center_after 'n',
-      { noremap = true, desc = 'Jump to next search and center line' }
-    )
-    vim.keymap.set(
-      'n',
-      'N',
-      center_after 'N',
-      { noremap = true, desc = 'Jump to next search and center line' }
-    )
-    vim.keymap.set(
-      'n',
-      '}',
-      center_after '}',
-      { noremap = true, desc = 'Jump forward over paragraph and center line' }
-    )
-    vim.keymap.set(
-      'n',
-      '{',
-      center_after '{',
-      { noremap = true, desc = 'Jump backwards over paragraph and center line' }
-    )
-    return {
-      resize = {
-        timing = animate.gen_timing.linear { duration = 50, unit = 'total' },
-      },
-      scroll = {
-        timing = animate.gen_timing.linear { duration = 50, unit = 'total' },
-        subscroll = animate.gen_subscroll.equal {
-          predicate = function(total_scroll)
-            if mouse_scrolled then
-              mouse_scrolled = false
-              return false
-            end
-            return total_scroll > 1
-          end,
-        },
-      },
-    }
-  end,
-}
+-- ui.colorscheme = require('plugins.ui.themes.' .. config.theme)
 
 ui.ansi = {
   'm00qek/baleia.nvim',
@@ -97,41 +35,6 @@ ui.dressing = {
     end
   end,
   opts = { select = { backend = { 'telescope', 'nui', 'builtin' } } },
-}
-
-ui.edgy = {
-  'folke/edgy.nvim',
-  event = 'BufReadPre',
-  opts = {
-    bottom = {
-      {
-        ft = 'noice',
-        size = { height = 0.4 },
-        filter = function(_, win) return vim.api.nvim_win_get_config(win).relative == '' end,
-      },
-      {
-        ft = 'lazyterm',
-        title = 'LazyTerm',
-        size = { height = 0.4 },
-        filter = function(buf) return not vim.b[buf].lazyterm_cmd end,
-      },
-      { ft = 'qf', title = 'QuickFix' },
-      {
-        ft = 'help',
-        size = { height = 20 },
-        -- don't open help files in edgy that we're editing
-        filter = function(buf) return vim.bo[buf].buftype == 'help' end,
-      },
-      { title = 'Neotest Output', ft = 'neotest-output-panel', size = { height = 15 } },
-    },
-    left = { { title = 'Neotest Summary', ft = 'neotest-summary' } },
-    keys = {
-      ['<c-Right>'] = function(win) win:resize('width', 2) end,
-      ['<c-Left>'] = function(win) win:resize('width', -2) end,
-      ['<c-Up>'] = function(win) win:resize('height', 2) end,
-      ['<c-Down>'] = function(win) win:resize('height', -2) end,
-    },
-  },
 }
 
 ui.headlines = {
@@ -188,9 +91,7 @@ ui.incline = {
       if #labels > 0 then table.insert(labels, { '| ' }) end
       return labels
     end
-
     local colors = require('tokyonight.colors').setup()
-
     return {
       highlight = {
         groups = {
@@ -224,6 +125,7 @@ ui.incline = {
 
 ui.noice = {
   'folke/noice.nvim',
+  enabled = false,
   dependencies = {
     'MunifTanjim/nui.nvim',
     {
@@ -261,7 +163,7 @@ ui.noice = {
       bottom_search = true,
       command_palette = true,
       long_message_to_split = true,
-      inc_rename = true,
+      inc_rename = false,
       lsp_doc_border = true,
     },
     routes = {
@@ -286,14 +188,6 @@ ui.noice = {
       },
     },
   },
-}
-
-ui.styler = {
-  'folke/styler.nvim',
-  enabled = false,
-  ft = 'markdown',
-  dependencies = { { 'catppuccin/nvim', name = 'catppuccin', opts = { flavor = 'mocha' } } },
-  -- opts = { themes = { markdown = { colorscheme = 'catppuccin', background = 'dark' } } },
 }
 
 local load_textobjects = false
@@ -399,12 +293,6 @@ ui.whichkey = {
   end,
 }
 
-ui.win_sep = {
-  'nvim-zh/colorful-winsep.nvim',
-  opts = { no_exec_files = { 'lazy', 'TelescopePrompt', 'mason', 'CompetiTest' } },
-  event = 'WinNew',
-}
-
 ui.zen_mode = {
   'folke/zen-mode.nvim',
   cmd = 'ZenMode',
@@ -412,17 +300,13 @@ ui.zen_mode = {
 }
 
 return {
-  ui.animate_movement,
   ui.ansi,
   ui.dressing,
-  ui.edgy,
   ui.headlines,
   ui.incline,
   ui.noice,
-  ui.styler,
   ui.treesitter,
   ui.whichkey,
-  ui.win_sep,
   ui.zen_mode,
   { 'nvim-treesitter/playground', cmd = { 'TSPlaygroundToggle' } },
   -- { 'Chaitanyabsprip/serendipity.nvim', dev = true, lazy = false },

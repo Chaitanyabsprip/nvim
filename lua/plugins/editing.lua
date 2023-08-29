@@ -22,107 +22,11 @@ editing.eyeliner = {
     dim = true,
   },
 }
-editing.hfcc = {
-  'huggingface/hfcc.nvim',
-  opts = {
-    api_token = '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',
-    model = 'bigcode/starcoder',
-    query_params = {
-      max_new_tokens = 200,
-    },
-  },
-  init = function()
-    vim.api.nvim_create_user_command(
-      'StarCoder',
-      function() require('hfcc.completion').complete() end,
-      {}
-    )
-  end,
-}
-editing.hop = {
-  'phaazon/hop.nvim',
-  event = 'BufReadPost',
-  branch = 'v2',
-  keys = {
-    {
-      's',
-      function() require('hop').hint_char2 { multi_windows = true } end,
-      silent = true,
-      noremap = true,
-      desc = 'Initiate hop with 2 character search',
-      mode = { 'n', 'x' },
-    },
-    {
-      'S',
-      function() require('hop').hint_words { multi_windows = true } end,
-      silent = true,
-      noremap = true,
-      desc = 'Initiate hop to words',
-      mode = { 'n', 'x' },
-    },
-    {
-      'f',
-      function() require('hop').hint_char1 { current_line_only = true } end,
-      silent = true,
-      noremap = true,
-      desc = 'Initiate hop to letters in current line',
-      mode = { 'n', 'x' },
-    },
-  },
-  config = { jump_on_sole_occurrence = true, keys = 'nepoihufxbzyqjkcvlmwdasgrt' },
-}
-
-editing.leap = {
-  'ggandor/leap.nvim',
-  event = 'BufReadPost',
-  keys = {
-    {
-      's',
-      function() require('leap').leap { target_windows = { vim.fn.win_getid() } } end,
-      silent = true,
-      noremap = true,
-      desc = 'Initiate leap with 2 character search',
-      mode = { 'n' },
-    },
-    {
-      'S',
-      function()
-        require('leap').leap {
-          target_windows = vim.tbl_filter(
-            ---@param win number
-            ---@return boolean
-            function(win) return vim.api.nvim_win_get_config(win).focusable end,
-            vim.api.nvim_tabpage_list_wins(0)
-          ),
-        }
-      end,
-      silent = true,
-      noremap = true,
-      desc = 'Initiate leap to words',
-      mode = { 'n' },
-    },
-    -- config = function()
-    --   require('leap').opts.labels =
-    --     { 'n', 'e', 'p', 'o', 'i', 'h', 't', 'r', 's', 'a', 'd', "'", 'l', ',', 'c', 'x', 'u' }
-    -- end,
-  },
-}
 
 editing.matchparen = {
   'monkoose/matchparen.nvim',
   event = 'BufReadPost',
   opts = {},
-}
-
-editing.matchup = {
-  'andymass/vim-matchup',
-  event = 'BufReadPost',
-  enabled = false,
-  init = function() vim.o.matchpairs = '(:),{:},[:],<:>' end,
-  config = function()
-    vim.g.matchup_matchparen_deferred = 1
-    vim.g.matchup_matchparen_offscreen = { method = 'status_manual' }
-  end,
 }
 
 editing.miniai = {
@@ -205,31 +109,6 @@ editing.miniai = {
   end,
 }
 
-editing.spider = {
-  'chrisgrieser/nvim-spider',
-  opts = {},
-  keys = {
-    {
-      'w',
-      "<cmd>lua require('spider').motion('w')<cr>",
-      desc = 'Spider: w',
-      mode = { 'n', 'o', 'x' },
-    },
-    {
-      'e',
-      "<cmd>lua require('spider').motion('e')<cr>",
-      desc = 'Spider: e',
-      mode = { 'n', 'o', 'x' },
-    },
-    {
-      'b',
-      "<cmd>lua require('spider').motion('b')<cr>",
-      desc = 'Spider: b',
-      mode = { 'n', 'o', 'x' },
-    },
-  },
-}
-
 editing.surround = {
   'kylechui/nvim-surround',
   version = '*',
@@ -292,11 +171,8 @@ editing.ufo = {
 editing.spec = {
   editing.comment,
   editing.eyeliner,
-  editing.hfcc,
-  editing.leap,
   editing.matchparen,
   editing.miniai,
-  -- editing.spider,
   editing.surround,
   editing.ufo,
 }
