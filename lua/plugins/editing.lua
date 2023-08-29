@@ -1,6 +1,12 @@
 ---@diagnostic disable: no-unknown
 local editing = {}
 
+editing.bigfiles = {
+  'LunarVim/bigfile.nvim',
+  event = 'BufReadPre',
+  opts = {},
+}
+
 editing.comment = {
   'echasnovski/mini.comment',
   version = '*',
