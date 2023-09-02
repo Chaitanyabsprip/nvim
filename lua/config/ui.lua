@@ -1,7 +1,7 @@
 vim.opt.background = 'dark'
 return {
   theme = 'material',
-  transparent = false,
+  transparent = true,
   hide_eob = true,
   strings = {},
   sidebars = {

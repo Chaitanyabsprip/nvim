@@ -17,13 +17,14 @@ return {
       on_attach = require('lsp').on_attach,
       capabilities = get_capabilities(),
       sources = {
-        code_actions.gitsigns,
+        -- code_actions.gitsigns,
         code_actions.refactoring.with(refactoring_opts),
         code_actions.shellcheck,
         diagnostics.codespell.with { filetypes = { 'markdown' } },
         diagnostics.markdownlint,
         diagnostics.shellcheck,
         diagnostics.yamllint,
+        diagnostics.zsh,
         formatting.beautysh,
         formatting.black.with { extra_args = { '--quiet', '-l', '80' } },
         formatting.deno_fmt.with {
