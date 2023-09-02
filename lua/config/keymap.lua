@@ -87,6 +87,8 @@ keymaps.setup = function()
   nnoremap '<c-k>' '<c-i>' 'Jump forward the jump list'
   map 's' '<NOP>' 'unmap s'
   map 'S' '<NOP>' 'unmap S'
+  local utils = require 'utils'
+  nnoremap '<c-w>z'(utils.toggle_win_zoom()) 'Toggle window zoom'
   nnoremap 'gt'('<cmd> e ' .. os.getenv 'HOME' .. '/Projects/Notes/Todo.md<cr>') 'Open Todo file'
   local qf = require 'quickfix'
   nnoremap 'gb'(qf.buffers) 'Quickfix: List buffers'
@@ -98,7 +100,7 @@ keymaps.setup = function()
     local rnu = vim.wo[vim.api.nvim_get_current_win()].relativenumber
     return '<cmd>setlocal ' .. (rnu and 'no' or '') .. 'rnu<cr>'
   end) { expr = true } 'Toggle relative line number'
-  require('utils').cowboy { 'NvimTree', 'qf', 'help', 'noice' }
+  utils.cowboy { 'NvimTree', 'qf', 'help', 'noice' }
 end
 
 return keymaps

@@ -121,4 +121,19 @@ function M.open_explorer_on_startup()
   vim.cmd 'Explorer'
 end
 
+function M.toggle_win_zoom()
+  vim.opt.winminwidth = 0
+  vim.opt.winminheight = 0
+  return function()
+    if vim.g.zoom then
+      vim.cmd [[wincmd =]]
+      vim.g.zoom = false
+    else
+      vim.cmd [[wincmd _]]
+      vim.cmd [[wincmd |]]
+      vim.g.zoom = true
+    end
+  end
+end
+
 return M
