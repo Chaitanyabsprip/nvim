@@ -38,6 +38,12 @@ function config.autocommands()
     command = [[%s/\s\+$//]],
   })
 
+  autocmd('BufWritePre', {
+    group = augroup 'go_format',
+    pattern = 'go',
+    command = [[GoFmt]],
+  })
+
   autocmd('BufReadPre', {
     group = augroup 'syntax-and-filetype',
     once = true,
