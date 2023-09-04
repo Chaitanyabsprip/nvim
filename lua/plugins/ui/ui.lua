@@ -60,6 +60,7 @@ ui.headlines = {
 }
 
 ui.incline = {
+  enabled = false,
   'b0o/incline.nvim',
   dependencies = {
     { 'folke/tokyonight.nvim', opts = { style = 'night', terminal_colors = true } },
@@ -125,7 +126,6 @@ ui.incline = {
 
 ui.noice = {
   'folke/noice.nvim',
-  enabled = false,
   dependencies = {
     'MunifTanjim/nui.nvim',
     {

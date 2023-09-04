@@ -55,14 +55,15 @@ M.lualine = {
         theme = vim.g.lualine_theme or 'auto',
       },
       sections = {
-        lualine_a = { 'branch' },
-        lualine_b = {
-          { get_lsp_client, icon = '', on_click = function() vim.cmd [[LspInfo]] end },
+        lualine_a = {
+          { 'filetype', icon_only = true, padding = { left = 1, right = 0 } },
+          { 'filename', newfile_status = true, path = 1 },
         },
-        lualine_c = { { navic, cond = navic_is_available } },
-        lualine_x = { { cmd_mode, cond = show_mode }, 'filetype' },
+        lualine_b = { 'diagnostics' },
+        lualine_c = { { navic, cond = navic_is_available }, { get_lsp_client, icon = '' } },
+        lualine_x = { { cmd_mode, cond = show_mode } },
         lualine_y = { { wordcount, cond = is_markdown }, { readingtime, cond = is_markdown } },
-        lualine_z = { { 'datetime', style = '%R', icon = '', color = { gui = 'bold' } } },
+        lualine_z = { 'diff' },
       },
       extensions = { 'lazy', 'nvim-dap-ui', 'nvim-tree', 'toggleterm', 'c_quickfix' },
     }
