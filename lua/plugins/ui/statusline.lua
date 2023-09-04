@@ -65,7 +65,7 @@ M.lualine = {
         lualine_y = { { wordcount, cond = is_markdown }, { readingtime, cond = is_markdown } },
         lualine_z = { 'diff' },
       },
-      extensions = { 'lazy', 'nvim-dap-ui', 'nvim-tree', 'toggleterm', 'c_quickfix' },
+      extensions = { 'lazy', 'nvim-dap-ui', 'nvim-tree', 'c_quickfix' },
     }
   end,
 }

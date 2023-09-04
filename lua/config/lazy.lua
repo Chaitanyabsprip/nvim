@@ -53,7 +53,7 @@ plugin.setup = function()
     defaults = { lazy = true },
     dev = { path = '~/Projects/Languages/Lua' },
     performance = { rtp = { disabled_plugins = plugin.disabled_builtins } },
-    install = { colorscheme = { 'tokyonight', 'habamax' } },
+    install = { colorscheme = { 'habamax' } },
     checker = { enabled = true, notify = false },
     readme = { files = { 'README.md', 'readme.md', 'README.rst', 'readme.rst' } },
   })
