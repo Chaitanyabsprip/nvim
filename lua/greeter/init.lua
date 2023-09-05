@@ -1,8 +1,8 @@
 local M = {}
 local ns = vim.api.nvim_create_namespace 'dashboard'
 local notes_path = os.getenv 'HOME' .. '/Projects/Notes/Transient/'
-local get_note_name = function() return os.date '%Y-%m-%d' .. '.md' end
-local new_note = function() return 'e ' .. notes_path .. get_note_name() end
+-- local get_note_name = function() return os.date '%Y-%m-%d' .. '.md' end
+-- local new_note = function() return 'e ' .. notes_path .. get_note_name() end
 
 function M.setup()
   if not M.dont_show() then
@@ -14,62 +14,92 @@ function M.setup()
   end
 end
 
+-- function M.update_highlights()
+--   local footer_fg = vim.api.nvim_get_hl(0, { name = 'DashboardFooter' }).fg
+--   local header_fg = vim.api.nvim_get_hl(0, { name = 'DashboardHeader' }).fg
+--   vim.api.nvim_set_hl(0, 'DashboardFooter', {fg= require('utils').darken(footer_fg, )})
+-- end
+
 ---@param keymap_opts table<string, string>
 ---@return table<string, string>
 function M.button(keymap_opts)
   if keymap_opts.shortcut then
     local opts = { noremap = true, silent = true, nowait = true }
-    local action = '<cmd>' .. keymap_opts.action .. '<cr>'
+    local action = keymap_opts.action
     vim.api.nvim_buf_set_keymap(0, 'n', keymap_opts.shortcut, action, opts)
   end
   return keymap_opts
 end
 
 function M.show()
-  local theme = require('greeter.config').get_theme()
+  -- local theme = require('greeter.config').get_theme()
 
   local buf = vim.api.nvim_get_current_buf()
   vim.bo[buf].filetype = 'greeter'
   M.set_options()
-  M.button { shortcut = 'f', action = 'Telescope find_files' }
-  M.button { shortcut = 'm', action = 'Telescope oldfiles' }
-  M.button { shortcut = 'r', action = 'Continue' }
-  M.button { shortcut = 'n', action = new_note() }
-  M.button { shortcut = 'q', action = 'quit' }
+  M.button { shortcut = 'f', action = '<cmd>Telescope find_files<cr>' }
+  M.button { shortcut = 'm', action = '<cmd>Telescope oldfiles<cr>' }
+  M.button { shortcut = 'r', action = "'0" }
+  M.button { shortcut = 'q', action = '<cmd>quit<cr>' }
 
   local stats = require('lazy').stats()
   local sections = {
-    { text = string.rep('\n', 5) },
-    { text = theme.header .. string.rep('\n', 5), hl_group = 'DashboardHeader' },
+    { text = string.rep('\n', 18) },
+    -- { text = theme.header .. string.rep('\n', 5), hl_group = 'DashboardHeader' },
     {
       text = {
-        ' Find File                    f',
+        M.center('        NVIM v0.10.0-dev-780+g8afdc1f38        ', 0.47)[1],
         '\n',
+        M.center('                                               ', 0.47)[1],
         '\n',
-        ' Recent Files                 m',
+        M.center('  Nvim is open source and freely distributable ', 0.47)[1],
         '\n',
+        M.center('            https://neovim.io/#chat            ', 0.47)[1],
         '\n',
-        ' Restore Session              r',
+        M.center('                                               ', 0.47)[1],
         '\n',
+        M.center(' type  :help nvim<Enter>       if you are new! ', 0.47)[1],
         '\n',
-        ' New Note                     n',
+        M.center(' type  :checkhealth<Enter>     to optimize Nvim', 0.47)[1],
         '\n',
+        M.center(' type  :q<Enter>               to exit         ', 0.47)[1],
         '\n',
-        ' Quit                         q',
+        M.center(' type  :help<Enter>            for help        ', 0.47)[1],
+        '\n',
+        M.center('                                               ', 0.47)[1],
+        '\n',
+        M.center('type  :help news<Enter> to see changes in v0.10', 0.47)[1],
+        '\n',
+        M.center('                                               ', 0.47)[1],
+        '\n',
+        M.center('            Sponsor Vim development!           ', 0.47)[1],
+        '\n',
+        M.center(' type  :help sponsor<Enter>    for information ', 0.47)[1],
+        '\n',
       },
-      hl_group = 'DashboardFooter',
     },
-    { text = string.rep('\n', 5) },
+    { text = string.rep('\n', 8) },
     {
       text = {
-        '🎉 Neovim loaded ',
+        '   Find File\n',
+        '   Recent Files\n',
+        '   Open Last File\n',
+        '   Quit',
+      },
+      hl_group = 'LspInlayHint',
+    },
+    -- { text = string.rep('\n', 1) },
+    {
+      text = {
+        '  Neovim loaded ',
         '' .. stats.loaded .. '',
         ' plugins in ',
         '' .. math.floor(stats.startuptime * 100 + 0.5) / 100 .. '',
         'ms',
       },
-      hl_group = 'DashboardHeader',
+      hl_group = 'LspInlayHint',
     },
+    -- { text = string.rep('\n', 1) },
   }
 
   vim.bo[buf].modifiable = true
@@ -78,7 +108,8 @@ function M.show()
   for _, section in ipairs(sections) do
     local text = section.text
     if type(text) == 'table' then text = table.concat(text, '') end
-    local lines = M.center(text)
+    -- local lines = M.center(text)
+    local lines = vim.split(text, '\n')
     vim.api.nvim_buf_set_lines(buf, start, start, false, lines)
     vim.api.nvim_buf_set_extmark(buf, ns, start, 0, {
       end_row = start + #lines,
@@ -103,14 +134,14 @@ function M.show()
   })
 end
 
-function M.center(text)
+function M.center(text, offset)
   local lines = vim.split(text, '\n')
   local width = 0
   for _, line in ipairs(lines) do
     width = math.max(width, vim.fn.strwidth(line))
   end
 
-  local delta = math.floor((vim.go.columns - width) / 2 + 0.5)
+  local delta = math.floor((vim.go.columns - width) * (offset or 0.02) + 0.5)
   local left = string.rep(' ', delta)
 
   for l, line in ipairs(lines) do
