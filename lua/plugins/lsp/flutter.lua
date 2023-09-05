@@ -95,7 +95,9 @@ M.spec = {
       lsp = {
         color = lsp_color,
         capabilities = get_capabilities(),
-        on_attach = require('lsp').on_attach,
+        on_attach = function(c, b)
+          vim.defer_fn(function() require('lsp').on_attach(c, b) end, 500)
+        end,
         init_options = init_options,
         root_dir = root_dir,
         settings = settings,

@@ -2,10 +2,8 @@ local lsp = {}
 
 lsp.capabilities = function(_)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
+  -- for nvim-ufo
   capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
-  -- local completionItem = capabilities.textDocument.completion.completionItem
-  -- completionItem.documentationFormat = { 'markdown', 'plaintext' }
-  -- completionItem.workspaceWord = true
   return capabilities
 end
 

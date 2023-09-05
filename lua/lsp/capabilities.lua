@@ -1,3 +1,8 @@
+---@class Capability
+---@field name string
+---@field callback function
+
+---@type table<string,Capability|function>
 local capabilities = {}
 local mappings = require 'hashish'
 local nnoremap = mappings.nnoremap
@@ -154,8 +159,8 @@ capabilities.type_definition = {
 -- module structure:
 --     function(capability_value) - function to call if capability were resolved
 capabilities.resolve = function(client, bufnr)
-  for _, capability in pairs(capabilities) do
-    if _ ~= 'resolve' and client.supports_method(capability.name) then
+  for name, capability in pairs(capabilities) do
+    if name ~= 'resolve' and client.supports_method(capability.name) then
       capability.callback(client, bufnr)
     end
   end
