@@ -20,6 +20,7 @@ return {
         -- code_actions.gitsigns,
         code_actions.refactoring.with(refactoring_opts),
         code_actions.shellcheck,
+        diagnostics.checkmake,
         diagnostics.codespell.with { filetypes = { 'markdown' } },
         diagnostics.markdownlint,
         diagnostics.shellcheck,
