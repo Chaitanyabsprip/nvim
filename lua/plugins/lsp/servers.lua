@@ -140,7 +140,23 @@ servers.go = {
     'nvim-treesitter/nvim-treesitter',
   },
   opts = function()
-    local config = extend { root = { 'go.mod' } }
+    local config = extend {
+      root = { 'go.mod', 'go.work' },
+      settings = {
+        gopls = {
+          analyses = {
+            unusedparams = true,
+            nilness = true,
+            unusedwrite = true,
+            useany = true,
+            unusedvariable = true,
+          },
+          completeUnimported = true,
+          staticcheck = true,
+          usePlaceholders = true,
+        },
+      },
+    }
     return {
       lsp_cfg = config,
       lsp_keymaps = false,
