@@ -49,7 +49,7 @@ function M.show()
 
     {
       text = {
-        M.center('         NVIM v0.10.0-dev-780+g8afdc1f38        ', 0.49)[1],
+        M.center('         NVIM v0.10.0-dev-1f551e068             ', 0.49)[1],
         '\n',
         M.center('                                                ', 0.49)[1],
         '\n',
