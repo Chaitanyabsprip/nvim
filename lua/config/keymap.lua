@@ -41,7 +41,7 @@ keymaps.setup = function()
   nnoremap '<Space>' '<NOP>' 'Leader key'
   vim.g.mapleader = ' '
 
-  nnoremap '<leader>w' '<cmd>up<cr>' 'Save file (only if modified)'
+  -- nnoremap '<leader>w' '<cmd>up<cr>' 'Save file (only if modified)'
   -- inoremap 'jk' '<esc>' 'Escape insert mode'
   -- inoremap 'kj' '<esc>' 'Escape insert mode'
   nnoremap '<leader>q' '<cmd>q<cr>' 'Close window (:q)'
