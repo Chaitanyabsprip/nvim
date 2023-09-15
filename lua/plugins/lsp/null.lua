@@ -28,10 +28,10 @@ return {
         diagnostics.zsh,
         formatting.beautysh,
         formatting.black.with { extra_args = { '--quiet', '-l', '80' } },
-        formatting.deno_fmt.with {
-          filetypes = { 'markdown' },
-          extra_args = { '--prose-wrap="preserve"' },
-        },
+        -- formatting.deno_fmt.with {
+        --   filetypes = { 'markdown' },
+        --   extra_args = { '--prose-wrap="preserve"' },
+        -- },
         formatting.fish_indent,
         formatting.isort.with { extra_args = { '--quiet' } },
         formatting.markdownlint,

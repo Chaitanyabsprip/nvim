@@ -83,26 +83,6 @@ tools.obsidian = {
   end,
 }
 
-tools.peek = {
-  'toppair/peek.nvim',
-  build = 'deno task --quiet build:fast',
-  keys = {
-    {
-      '<leader>op',
-      function()
-        local peek = require 'peek'
-        if peek.is_open() then
-          peek.close()
-        else
-          peek.open()
-        end
-      end,
-      desc = 'Peek (Markdown Preview)',
-    },
-  },
-  opts = { app = 'browser' },
-}
-
 tools.startuptime = {
   'dstein64/vim-startuptime',
   config = function() vim.g.startuptime_tries = 50 end,
