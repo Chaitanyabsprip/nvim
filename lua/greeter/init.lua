@@ -44,12 +44,12 @@ function M.show()
 
   local stats = require('lazy').stats()
   local sections = {
-    { text = string.rep('\n', 16) },
+    { text = string.rep('\n', 18) },
     -- { text = theme.header .. string.rep('\n', 5), hl_group = 'DashboardHeader' },
 
     {
       text = {
-        M.center('         NVIM v0.10.0-dev-1f551e068             ', 0.49)[1],
+        M.center('            NVIM v0.10.0-dev-1f551e068          ', 0.49)[1],
         '\n',
         M.center('                                                ', 0.49)[1],
         '\n',
@@ -79,7 +79,7 @@ function M.show()
         '\n',
       },
     },
-    { text = string.rep('\n', 8) },
+    { text = string.rep('\n', 6) },
     {
       text = {
         '   Find File\n',
