@@ -2,7 +2,6 @@ local lsp = {}
 
 lsp.code_actions = {
   'Chaitanyabsprip/lsp-fastaction.nvim',
-  dev = true,
   opts = {
     hide_cursor = true,
     action_data = {
