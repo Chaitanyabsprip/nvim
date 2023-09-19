@@ -1,8 +1,5 @@
 local M = {}
 local ns = vim.api.nvim_create_namespace 'dashboard'
-local notes_path = os.getenv 'HOME' .. '/Projects/Notes/Transient/'
--- local get_note_name = function() return os.date '%Y-%m-%d' .. '.md' end
--- local new_note = function() return 'e ' .. notes_path .. get_note_name() end
 
 function M.setup()
   if not M.dont_show() then
@@ -13,12 +10,6 @@ function M.setup()
     M.show()
   end
 end
-
--- function M.update_highlights()
---   local footer_fg = vim.api.nvim_get_hl(0, { name = 'DashboardFooter' }).fg
---   local header_fg = vim.api.nvim_get_hl(0, { name = 'DashboardHeader' }).fg
---   vim.api.nvim_set_hl(0, 'DashboardFooter', {fg= require('utils').darken(footer_fg, )})
--- end
 
 ---@param keymap_opts table<string, string>
 ---@return table<string, string>
@@ -32,8 +23,6 @@ function M.button(keymap_opts)
 end
 
 function M.show()
-  -- local theme = require('greeter.config').get_theme()
-
   local buf = vim.api.nvim_get_current_buf()
   vim.bo[buf].filetype = 'greeter'
   M.set_options()
@@ -45,8 +34,6 @@ function M.show()
   local stats = require('lazy').stats()
   local sections = {
     { text = string.rep('\n', 18) },
-    -- { text = theme.header .. string.rep('\n', 5), hl_group = 'DashboardHeader' },
-
     {
       text = {
         M.center('            NVIM v0.10.0-dev-1f551e068          ', 0.49)[1],
@@ -89,7 +76,6 @@ function M.show()
       },
       hl_group = 'LspInlayHint',
     },
-    -- { text = string.rep('\n', 1) },
     {
       text = {
         '  Neovim loaded ',
@@ -100,7 +86,6 @@ function M.show()
       },
       hl_group = 'LspInlayHint',
     },
-    -- { text = string.rep('\n', 1) },
   }
 
   vim.bo[buf].modifiable = true
