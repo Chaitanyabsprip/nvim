@@ -97,7 +97,7 @@ keymaps.setup = function()
     local rnu = vim.wo[vim.api.nvim_get_current_win()].relativenumber
     return '<cmd>setlocal ' .. (rnu and 'no' or '') .. 'rnu<cr>'
   end) { expr = true } 'Toggle relative line number'
-  utils.cowboy { 'NvimTree', 'qf', 'help', 'noice' }
+  utils.cowboy { 'oil', 'qf', 'help', 'noice' }
 end
 
 return keymaps
