@@ -17,6 +17,7 @@ tools.colorizer = {
     },
   },
 }
+
 tools.fish =
   { 'dag/vim-fish', ft = 'fish', cond = function() return vim.loop.fs_stat 'config.fish' end }
 
@@ -81,6 +82,26 @@ tools.obsidian = {
       end,
     }
   end,
+}
+
+tools.peek = {
+  'toppair/peek.nvim',
+  build = 'deno task --quiet build:fast',
+  keys = {
+    {
+      '<leader>op',
+      function()
+        local peek = require 'peek'
+        if peek.is_open() then
+          peek.close()
+        else
+          peek.open()
+        end
+      end,
+      desc = 'Peek (Markdown Preview)',
+    },
+  },
+  opts = { app = 'browser' },
 }
 
 tools.startuptime = {

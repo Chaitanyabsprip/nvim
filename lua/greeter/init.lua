@@ -105,19 +105,6 @@ function M.show()
   end
 
   vim.bo[buf].modifiable = false
-
-  local cursor = vim.go.guicursor
-  vim.api.nvim_set_hl(0, 'HiddenCursor', { blend = 100, nocombine = true })
-  vim.go.guicursor = 'a:HiddenCursor/HiddenCursor'
-
-  vim.api.nvim_create_autocmd('BufWipeout', {
-    buffer = buf,
-    once = true,
-    callback = function()
-      vim.go.guicursor = cursor
-      vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
-    end,
-  })
 end
 
 function M.center(text, offset)

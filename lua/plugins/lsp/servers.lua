@@ -164,7 +164,7 @@ servers.go = {
       lsp_on_attach = config.on_attach,
     }
   end,
-  cond = function() return vim.loop.fs_stat 'go.mod' end,
+  -- cond = function() return vim.loop.fs_stat 'go.mod' end,
   event = 'VeryLazy',
   build = ':lua require("go.install").update_all_sync()',
 }
