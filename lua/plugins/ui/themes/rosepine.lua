@@ -50,6 +50,12 @@ local highlight = {
   NotifyBackground = { bg = 'base' },
   MatchParen = { fg = 'none', bg = 'highlight_med' },
   LeapBackdrop = { fg = '#545c7e' },
+  Headline1 = { fg = 'iris', bg = 'base', bold = true },
+  Headline2 = { fg = 'foam', bg = 'base', bold = true },
+  Headline3 = { fg = 'rose', bg = 'base', bold = true },
+  Headline4 = { fg = 'gold', bg = 'base', bold = true },
+  Headline5 = { fg = 'pine', bg = 'base', bold = true },
+  Headline6 = { fg = 'love', bg = 'base', bold = true },
 }
 
 ---@class Colorscheme
@@ -63,6 +69,7 @@ local rosepine = {
     return {
       dark_variant = 'main',
       disable_background = config.transparent,
+      disable_float_background = true,
       highlight_groups = highlight,
     }
   end,
