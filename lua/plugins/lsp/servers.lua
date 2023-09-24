@@ -7,6 +7,7 @@ local function extend(config)
   local get_capabilities = require('plugins.lsp.completion').get_capabilities
   local def_root = { '.git', '.gitignore', vim.fn.getcwd() }
   local roots = vim.list_extend(def_root, config.root or {})
+  config.root = nil
   local lspconfig = require 'lspconfig'
   local defaults = {
     on_attach = lsp.on_attach,
@@ -139,11 +140,23 @@ servers.go = {
     'neovim/nvim-lspconfig',
     'nvim-treesitter/nvim-treesitter',
   },
+  keys = {
+    { '<leader>gfi', 'GoIfErr', noremap = true, desc = 'Go: Autofill If-err block' },
+    { '<leader>gfs', 'GoFillStruct', noremap = true, desc = 'Go: Autofill Struct with fields' },
+    { '<leader>gfw', 'GoFillSwitch', noremap = true, desc = 'Go: Autofill Switch with cases' },
+    {
+      '<leader>gfp',
+      'GoFixPlurals',
+      noremap = true,
+      desc = 'Go: Auto collate plural params with same type',
+    },
+  },
   opts = function()
     local config = extend {
       root = { 'go.mod', 'go.work' },
       settings = {
         gopls = {
+          -- gofumpt = true,
           analyses = {
             unusedparams = true,
             nilness = true,
@@ -158,14 +171,16 @@ servers.go = {
       },
     }
     return {
-      lsp_cfg = config,
+      gofmt = 'gofumpt',
+      lsp_gofumpt = true,
       lsp_keymaps = false,
       lsp_inlay_hints = { enable = false },
+      lsp_cfg = true,
       lsp_on_attach = config.on_attach,
     }
   end,
-  -- cond = function() return vim.loop.fs_stat 'go.mod' end,
-  event = 'VeryLazy',
+  lazy = false,
+  cond = function() return vim.loop.fs_stat 'go.mod' or vim.loop.fs_stat 'go.work' end,
   build = ':lua require("go.install").update_all_sync()',
 }
 
