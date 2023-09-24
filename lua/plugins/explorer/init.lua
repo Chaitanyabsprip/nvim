@@ -4,7 +4,10 @@ explorer.better_qf = {
   'kevinhwang91/nvim-bqf',
   ft = 'qf',
   dependencies = { 'yorickpeterse/nvim-pqf' },
-  opts = {},
+  opts = {
+    auto_resize_height = true,
+    func_map = { open = 'o', openc = '<cr>' },
+  },
 }
 
 local function harpoon_keys(keys)
