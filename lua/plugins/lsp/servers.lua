@@ -180,7 +180,10 @@ servers.go = {
     }
   end,
   lazy = false,
-  cond = function() return vim.loop.fs_stat 'go.mod' or vim.loop.fs_stat 'go.work' end,
+  cond = function()
+    local stat = vim.loop.fs_stat
+    return stat 'go.mod' or stat 'go.work' or stat '.golang'
+  end,
   build = ':lua require("go.install").update_all_sync()',
 }
 
