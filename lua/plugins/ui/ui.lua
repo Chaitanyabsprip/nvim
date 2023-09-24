@@ -18,23 +18,6 @@ ui.ansi = {
   end,
 }
 
-ui.dressing = {
-  'stevearc/dressing.nvim',
-  init = function()
-    ---@diagnostic disable-next-line: duplicate-set-field
-    vim.ui.select = function(...)
-      require('lazy').load { plugins = { 'dressing.nvim' } }
-      return vim.ui.select(...)
-    end
-    ---@diagnostic disable-next-line: duplicate-set-field
-    vim.ui.input = function(...)
-      require('lazy').load { plugins = { 'dressing.nvim' } }
-      return vim.ui.input(...)
-    end
-  end,
-  opts = { select = { backend = { 'telescope', 'nui', 'builtin' } } },
-}
-
 ui.headlines = {
   'lukas-reineke/headlines.nvim',
   ft = { 'markdown', 'md', 'rmd', 'rst' },
@@ -234,12 +217,10 @@ ui.zen_mode = {
 
 return {
   ui.ansi,
-  ui.dressing,
   ui.headlines,
   ui.noice,
   ui.treesitter,
   ui.whichkey,
   ui.zen_mode,
   { 'nvim-treesitter/playground', cmd = { 'TSPlaygroundToggle' } },
-  -- { 'Chaitanyabsprip/serendipity.nvim', dev = true, lazy = false },
 }
