@@ -79,7 +79,7 @@ explorer.oil = {
       if vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(0), 'filetype') == 'oil' then
         require('oil').close()
       else
-        return require('oil').open_float()
+        return require('oil').open()
       end
     end, { nargs = 0 })
     return {
