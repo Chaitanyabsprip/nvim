@@ -30,13 +30,6 @@ lsp.diagflow = {
   opts = { scope = 'line', padding_top = 1 },
 }
 
-lsp.file_operations = {
-  'antosha417/nvim-lsp-file-operations',
-  dependencies = { 'nvim-lua/plenary.nvim', 'nvim-tree/nvim-tree.lua' },
-  opts = {},
-  event = 'LspAttach',
-}
-
 lsp.graphql = { 'jparise/vim-graphql', ft = 'graphql' }
 
 lsp.mason = {
@@ -71,7 +64,6 @@ lsp.refactoring = { 'ThePrimeagen/refactoring.nvim', opts = {} }
 lsp.spec = {
   lsp.code_actions,
   lsp.diagflow,
-  lsp.file_operations,
   lsp.graphql,
   lsp.mason,
   lsp.mason_lspconfig,

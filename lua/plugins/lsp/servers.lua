@@ -20,9 +20,7 @@ end
 
 -- servers.flutter = require('plugins.lsp.flutter')
 
-servers.__neodev = {
-  spec = { 'folke/neodev.nvim', config = function() require('neodev').setup {} end },
-}
+servers.__neodev = { spec = { 'folke/neodev.nvim', opts = {} } }
 
 servers.lsp = {
   spec = {
