@@ -48,7 +48,13 @@ return {
         'nvim-treesitter/nvim-treesitter',
         opts = { ensure_installed = { 'lua', 'luadoc', 'luap' } },
     },
-    { 'williamboman/mason.nvim', opts = { ensure_installed = { 'stylua' } } },
+    {
+        'williamboman/mason.nvim',
+        opts = function(_, opts)
+            opts.ensure_installed = opts.ensure_installed or {}
+            vim.list_extend(opts.ensure_installed, { 'stylua' })
+        end,
+    },
     {
         'jose-elias-alvarez/null-ls.nvim',
         ft = { 'lua' },

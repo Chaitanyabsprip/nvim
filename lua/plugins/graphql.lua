@@ -8,7 +8,10 @@ return {
     },
     {
         'williamboman/mason.nvim',
-        opts = { ensure_installed = { 'graphql-language-service-cli', 'prettierd' } },
+        opts = function(_, opts)
+            opts.ensure_installed = opts.ensure_installed or {}
+            vim.list_extend(opts.ensure_installed, { 'graphql-language-service-cli', 'prettierd' })
+        end,
     },
     {
         'jose-elias-alvarez/null-ls.nvim',

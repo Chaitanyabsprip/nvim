@@ -23,7 +23,13 @@ return {
     },
     {
         'williamboman/mason.nvim',
-        opts = { ensure_installed = { 'yaml-language-server', 'prettierd', 'yamllint' } },
+        opts = function(_, opts)
+            opts.ensure_installed = opts.ensure_installed or {}
+            vim.list_extend(
+                opts.ensure_installed,
+                { 'yaml-language-server', 'prettierd', 'yamllint' }
+            )
+        end,
     },
     {
         'jose-elias-alvarez/null-ls.nvim',
