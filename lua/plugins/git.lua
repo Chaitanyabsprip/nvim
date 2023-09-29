@@ -103,6 +103,15 @@ git.git_conflict = {
   },
 }
 
-git.spec = { git.git_conflict, git.gitsigns }
+git.spec = {
+  {
+    'nvim-treesitter/nvim-treesitter',
+    opts = {
+      ensure_installed = { 'git_config', 'git_rebase', 'gitattributes', 'gitcommit', 'gitignore' },
+    },
+  },
+  git.git_conflict,
+  git.gitsigns,
+}
 
 return git.spec
