@@ -1,4 +1,4 @@
-local config = require 'config.ui'
+local config = require 'config.theme'
 local name = 'palenightfall'
 
 ---@class Colorscheme

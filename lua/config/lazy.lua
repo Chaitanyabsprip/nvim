@@ -42,7 +42,7 @@ plugin.setup = function()
     'zipPlugin',
   }
   plugin.bootstrap_packer()
-  local config = require 'config.ui'
+  local config = require 'config.theme'
   require('lazy').setup({
     { import = 'plugins' },
     { import = 'plugins.lsp' },

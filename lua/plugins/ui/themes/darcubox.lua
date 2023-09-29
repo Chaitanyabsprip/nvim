@@ -1,5 +1,5 @@
 ---@diagnostic disable: no-unknown
-local config = require 'config.ui'
+local config = require 'config.theme'
 
 local name = 'darcubox'
 
