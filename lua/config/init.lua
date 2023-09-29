@@ -38,7 +38,6 @@ function config.autocommands()
     command = [[%s/\s\+$//]],
   })
 
-
   autocmd('BufReadPre', {
     group = augroup 'syntax-and-filetype',
     once = true,
@@ -83,10 +82,10 @@ config.options.setup = function()
   vim.o.cindent = true
   vim.o.smarttab = true
   vim.o.expandtab = true
-  vim.o.shiftwidth = 2
+  vim.o.shiftwidth = 4
   vim.o.smartindent = true
-  vim.o.softtabstop = 2
-  vim.o.tabstop = 2
+  vim.o.softtabstop = 4
+  vim.o.tabstop = 4
 
   -- use undofile over swapfile
   vim.o.undodir = vim.fn.expand '~/.tmp/undodir'
@@ -97,6 +96,7 @@ config.options.setup = function()
 
   -- disable wrap
   vim.wo.wrap = false
+
   vim.o.cmdheight = 0
   vim.o.scrolloff = 8
   vim.o.colorcolumn = '81'
