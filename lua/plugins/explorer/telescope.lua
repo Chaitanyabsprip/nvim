@@ -33,7 +33,7 @@ local telescope = {
   tag = '0.1.2',
   dependencies = { 'nvim-lua/plenary.nvim' },
   cmd = { 'Telescope' },
-  keys = { '<leader><leader>', 'gw' },
+  keys = { '<leader><leader>', 'gw', 'gW' },
   config = function(_, opts)
     require('telescope').setup(opts)
     setup_keymaps()
