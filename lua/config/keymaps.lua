@@ -1,3 +1,48 @@
+local function toggle_win_zoom()
+  vim.opt.winminwidth = 0
+  vim.opt.winminheight = 0
+  return function()
+    if vim.g.zoom then
+      vim.cmd [[wincmd =]]
+      vim.g.zoom = false
+    else
+      vim.cmd [[wincmd _]]
+      vim.cmd [[wincmd |]]
+      vim.g.zoom = true
+    end
+  end
+end
+
+local function cowboy(disabled_ft)
+  ---@type table?
+  local id
+  local ok = true
+  for _, key in ipairs { 'h', 'j', 'k', 'l', 'w', 'b' } do
+    local count = 0
+    local timer = assert(vim.loop.new_timer())
+    local map = key
+    vim.keymap.set('n', key, function()
+      if table.contains(disabled_ft, vim.bo.filetype) then return map end
+      if vim.v.count > 0 then count = 0 end
+      if count >= 10 then
+        ok, id = pcall(vim.notify, 'धीरे भाई धीरे', vim.log.levels.WARM, {
+          icon = ' 🤠',
+          replace = id,
+          keep = function() return count >= 10 end,
+        })
+        if not ok then
+          id = nil
+          return map
+        end
+      else
+        count = count + 1
+        timer:start(2000, 0, function() count = 0 end)
+        return map
+      end
+    end, { expr = true, silent = true })
+  end
+end
+
 local keymaps = {}
 
 local api = vim.api
@@ -21,11 +66,10 @@ local function buf_kill(target_buf, should_force)
       break
     end
   end
-  if nextbuf == nil then nextbuf = vim.api.nvim_create_buf(true, true) end
+  if nextbuf == nil then nextbuf = api.nvim_create_buf(true, true) end
   for _, winid in ipairs(windows) do
     api.nvim_win_set_buf(winid, nextbuf)
   end
-  vim.print(nextbuf)
   api.nvim_command(table.concat({ command, target_buf }, ' '))
 end
 
@@ -85,19 +129,19 @@ keymaps.setup = function()
   map 's' '<NOP>' 'unmap s'
   map 'S' '<NOP>' 'unmap S'
   local utils = require 'utils'
-  nnoremap '<c-w>z'(utils.toggle_win_zoom()) 'Toggle window zoom'
+  nnoremap '<c-w>z'(toggle_win_zoom()) 'Toggle window zoom'
   nnoremap 'gt'('<cmd> e ' .. os.getenv 'HOME' .. '/Projects/Notes/Todo.md<cr>') 'Open Todo file'
   local qf = require 'quickfix'
   nnoremap 'gb'(qf.buffers) 'Quickfix: List buffers'
   nnoremap 'gn'(function()
-    local nu = vim.wo[vim.api.nvim_get_current_win()].number
+    local nu = vim.wo[api.nvim_get_current_win()].number
     return '<cmd>setlocal ' .. (nu and 'no' or '') .. 'nu<cr>'
   end) { expr = true } 'Toggle line number'
   nnoremap 'gN'(function()
-    local rnu = vim.wo[vim.api.nvim_get_current_win()].relativenumber
+    local rnu = vim.wo[api.nvim_get_current_win()].relativenumber
     return '<cmd>setlocal ' .. (rnu and 'no' or '') .. 'rnu<cr>'
   end) { expr = true } 'Toggle relative line number'
-  utils.cowboy { 'oil', 'qf', 'help', 'noice' }
+  cowboy { 'oil', 'qf', 'help', 'noice' }
 end
 
 return keymaps

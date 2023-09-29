@@ -69,36 +69,6 @@ function M.get_visual_selection()
   return table.concat(lines, '\n')
 end
 
-function M.cowboy(disabled_ft)
-  ---@type table?
-  local id
-  local ok = true
-  for _, key in ipairs { 'h', 'j', 'k', 'l', 'w', 'b' } do
-    local count = 0
-    local timer = assert(vim.loop.new_timer())
-    local map = key
-    vim.keymap.set('n', key, function()
-      if table.contains(disabled_ft, vim.bo.filetype) then return map end
-      if vim.v.count > 0 then count = 0 end
-      if count >= 10 then
-        ok, id = pcall(vim.notify, 'धीरे भाई धीरे', vim.log.levels.WARM, {
-          icon = ' 🤠',
-          replace = id,
-          keep = function() return count >= 10 end,
-        })
-        if not ok then
-          id = nil
-          return map
-        end
-      else
-        count = count + 1
-        timer:start(2000, 0, function() count = 0 end)
-        return map
-      end
-    end, { expr = true, silent = true })
-  end
-end
-
 function M.getargs()
   ---@diagnostic disable-next-line: no-unknown
   local argv = vim.tbl_filter(function(arg)
@@ -121,19 +91,6 @@ function M.open_explorer_on_startup()
   vim.cmd 'Explorer'
 end
 
-function M.toggle_win_zoom()
-  vim.opt.winminwidth = 0
-  vim.opt.winminheight = 0
-  return function()
-    if vim.g.zoom then
-      vim.cmd [[wincmd =]]
-      vim.g.zoom = false
-    else
-      vim.cmd [[wincmd _]]
-      vim.cmd [[wincmd |]]
-      vim.g.zoom = true
-    end
-  end
 end
 
 return M
