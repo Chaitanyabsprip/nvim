@@ -18,9 +18,6 @@ tools.colorizer = {
   },
 }
 
-tools.fish =
-  { 'dag/vim-fish', ft = 'fish', cond = function() return vim.loop.fs_stat 'config.fish' end }
-
 tools.obsidian = {
   'epwalsh/obsidian.nvim',
   cmd = {
@@ -101,7 +98,6 @@ tools.startuptime = {
 
 tools.spec = {
   tools.colorizer,
-  tools.fish,
   tools.obsidian,
   tools.peek,
   tools.startuptime,

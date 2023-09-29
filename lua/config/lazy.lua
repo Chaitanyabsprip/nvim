@@ -15,8 +15,10 @@ function plugin.bootstrap_packer()
   end
   vim.opt.runtimepath:prepend(lazypath)
 end
+
 plugin.setup = function()
-  plugin.disabled_builtins = {
+  plugin.bootstrap_packer()
+  local disabled_builtins = {
     '2html_plugin',
     'getscript',
     'getscriptPlugin',
@@ -41,18 +43,15 @@ plugin.setup = function()
     'zip',
     'zipPlugin',
   }
-  plugin.bootstrap_packer()
   local config = require 'config.theme'
   require('lazy').setup({
     { import = 'plugins' },
-    { import = 'plugins.lsp' },
-    { import = 'plugins.ui' },
     { import = 'plugins.ui.themes.' .. config.theme },
     { import = 'plugins.explorer' },
   }, {
     defaults = { lazy = true },
     dev = { path = '~/Projects/Languages/Lua' },
-    performance = { rtp = { disabled_plugins = plugin.disabled_builtins } },
+    performance = { rtp = { disabled_plugins = disabled_builtins } },
     install = { colorscheme = { 'habamax' } },
     checker = { enabled = true, notify = false },
     readme = { files = { 'README.md', 'readme.md', 'README.rst', 'readme.rst' } },
