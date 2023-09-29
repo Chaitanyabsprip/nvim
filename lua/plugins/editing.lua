@@ -53,7 +53,6 @@ editing.miniai = {
   end,
   config = function(_, opts)
     require('mini.ai').setup(opts)
-
     -- add treesitter jumping
     ---@param capture string
     ---@param start boolean
@@ -64,14 +63,11 @@ editing.miniai = {
         if not parser then
           return vim.notify('No treesitter parser for the current buffer', vim.log.levels.ERROR)
         end
-
         local query = vim.treesitter.query.get(vim.bo.filetype, 'textobjects')
         if not query then
           return vim.notify('No textobjects query for the current buffer', vim.log.levels.ERROR)
         end
-
         local cursor = vim.api.nvim_win_get_cursor(0)
-
         ---@type {[1]:number, [2]:number}[]
         local locs = {}
         for _, tree in ipairs(parser:trees()) do
@@ -89,7 +85,6 @@ editing.miniai = {
         end
         return pcall(vim.api.nvim_win_set_cursor, 0, down and locs[1] or locs[#locs])
       end
-
       local c = capture:sub(1, 1):lower()
       local lhs = (down and ']' or '[') .. (start and c or c:upper())
       local desc = (down and 'Next ' or 'Prev ')
@@ -98,7 +93,6 @@ editing.miniai = {
         .. capture:gsub('%..*', '')
       vim.keymap.set('n', lhs, rhs, { desc = desc })
     end
-
     for _, capture in ipairs { 'function.outer', 'class.outer' } do
       for _, start in ipairs { true, false } do
         for _, down in ipairs { true, false } do
