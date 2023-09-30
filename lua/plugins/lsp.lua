@@ -34,10 +34,6 @@ lsp.diagflow = {
 lsp.mason = {
     'williamboman/mason.nvim',
     dependencies = { 'RubixDev/mason-update-all' },
-    config = function(_, opts)
-        vim.print(opts.ensure_installed)
-        require('mason').setup(opts)
-    end,
     opts = {},
 }
 
@@ -100,7 +96,6 @@ lsp.lspconfig = {
         local lspconfig = require 'lspconfig'
         ---@diagnostic disable-next-line: no-unknown
         for i, server in pairs(opts.servers) do
-            print(i)
             server(lspconfig)
         end
     end,
