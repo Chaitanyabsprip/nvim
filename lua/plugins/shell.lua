@@ -4,7 +4,10 @@ local function bashls(lspconfig) lspconfig.bashls.setup(extend {}) end
 return {
     {
         'nvim-treesitter/nvim-treesitter',
-        opts = { ensure_installed = { 'bash', 'fish', 'ssh_config' } },
+        opts = function(_, opts)
+            opts.ensure_installed = opts.ensure_installed or {}
+            vim.list_extend(opts.ensure_installed, { 'bash', 'fish', 'ssh_config' })
+        end,
     },
     {
         'williamboman/mason.nvim',

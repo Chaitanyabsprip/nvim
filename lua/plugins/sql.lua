@@ -5,7 +5,10 @@ local function sqlls(lspconfig) lspconfig.sqlls.setup(extend { root = { '.sqllsr
 return {
     {
         'nvim-treesitter/nvim-treesitter',
-        opts = { ensure_installed = { 'sql' } },
+        opts = function(_, opts)
+            opts.ensure_installed = opts.ensure_installed or {}
+            vim.list_extend(opts.ensure_installed, { 'sql' })
+        end,
     },
     {
         'williamboman/mason.nvim',

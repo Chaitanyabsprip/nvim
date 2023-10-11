@@ -4,7 +4,10 @@ local function graphqlls(lspconfig) lspconfig.graphql.setup(extend {}) end
 return {
     {
         'nvim-treesitter/nvim-treesitter',
-        opts = { ensure_installed = { 'graphql' } },
+        opts = function(_, opts)
+            opts.ensure_installed = opts.ensure_installed or {}
+            vim.list_extend(opts.ensure_installed, { 'graphql' })
+        end,
     },
     {
         'williamboman/mason.nvim',
