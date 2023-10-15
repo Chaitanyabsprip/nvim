@@ -3,16 +3,16 @@ M.default = 'hydra'
 M.ns = vim.api.nvim_create_namespace 'dashboard'
 
 function M.get_theme(name)
-  name = name or M.default
-  local ret = {
-    name = name,
-    header = M.headers[name],
-  }
-  return ret
+    name = name or M.default
+    local ret = {
+        name = name,
+        header = M.headers[name],
+    }
+    return ret
 end
 
 M.headers = {
-  hydra = [[
+    hydra = [[
   ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆          
    ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦       
          ⠈⢿⣿⣟⠦ ⣾⣿⣿⣷    ⠻⠿⢿⣿⣧⣄     
@@ -25,7 +25,7 @@ M.headers = {
      ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆     
       ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃     
 ]],
-  summer = [[
+    summer = [[
                                _                         
                            ,--.\`-. __                   
                          _,.`. \:/,"  `-._               

@@ -12,8 +12,8 @@ hashish.keys = {}
 ---@param options KeymapOpts|nil
 ---@return nil
 local register_keymap = function(mode, key, command, options)
-  table.insert(hashish.keys, { mode = mode, lhs = key, rhs = command, options = options })
-  return keymap_set(mode, key, command, options)
+    table.insert(hashish.keys, { mode = mode, lhs = key, rhs = command, options = options })
+    return keymap_set(mode, key, command, options)
 end
 
 vim.keymap.set = register_keymap
@@ -21,52 +21,52 @@ vim.keymap.set = register_keymap
 ---@param mode string|string[]
 ---@return function
 hashish.noremap = function(mode)
-  ---@param key string
-  ---@return function
-  return function(key)
-    ---@param command string
+    ---@param key string
     ---@return function
-    return function(command)
-      ---@param options KeymapOpts | string
-      ---@return nil
-      return function(options)
-        if type(options) == 'string' then
-          options = vim.tbl_extend('force', { desc = options }, { noremap = true })
-          return register_keymap(mode, key, command, options)
+    return function(key)
+        ---@param command string
+        ---@return function
+        return function(command)
+            ---@param options KeymapOpts | string
+            ---@return nil
+            return function(options)
+                if type(options) == 'string' then
+                    options = vim.tbl_extend('force', { desc = options }, { noremap = true })
+                    return register_keymap(mode, key, command, options)
+                end
+                options = vim.tbl_extend('force', options, { noremap = true })
+                return hashish.map(mode)(key)(command)(options)
+            end
         end
-        options = vim.tbl_extend('force', options, { noremap = true })
-        return hashish.map(mode)(key)(command)(options)
-      end
     end
-  end
 end
 
 ---@param mode string | string[]
 ---@return function
 hashish.map = function(mode)
-  ---@param key string
-  ---@return function
-  return function(key)
-    ---@param command string
+    ---@param key string
     ---@return function
-    return function(command)
-      ---@param options KeymapOpts | string
-      ---@return nil
-      return function(options)
-        if type(options) == 'string' then
-          options = { desc = options }
-          return register_keymap(mode, key, command, options)
+    return function(key)
+        ---@param command string
+        ---@return function
+        return function(command)
+            ---@param options KeymapOpts | string
+            ---@return nil
+            return function(options)
+                if type(options) == 'string' then
+                    options = { desc = options }
+                    return register_keymap(mode, key, command, options)
+                end
+                return function(description)
+                    ---@type KeymapOpts
+                    options = vim.tbl_extend('force', options, { desc = description })
+                    options.buffer = options.bufnr
+                    options.bufnr = nil
+                    return register_keymap(mode, key, command, options)
+                end
+            end
         end
-        return function(description)
-          ---@type KeymapOpts
-          options = vim.tbl_extend('force', options, { desc = description })
-          options.buffer = options.bufnr
-          options.bufnr = nil
-          return register_keymap(mode, key, command, options)
-        end
-      end
     end
-  end
 end
 
 hashish.nmap = function(key) return hashish.map 'n'(key) end
