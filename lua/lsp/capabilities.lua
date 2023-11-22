@@ -108,7 +108,7 @@ capabilities.implementation = {
 
 capabilities.inlay_hints = {
     name = 'textDocument/inlayHint',
-    callback = function(_, bufnr) vim.lsp.inlay_hint(bufnr, true) end,
+    callback = function(_, bufnr) vim.lsp.inlay_hint.enable(bufnr, true) end,
 }
 
 capabilities.range_formatting = {
