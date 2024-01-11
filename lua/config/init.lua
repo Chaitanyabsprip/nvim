@@ -46,9 +46,15 @@ function config.autocommands()
         group = augroup 'syntax-and-filetype',
         once = true,
         command = [[
-      syntax on
-      filetype plugin indent on
-    ]],
+          syntax on
+          filetype plugin indent on
+        ]],
+    })
+
+    autocmd('CmdlineEnter', {
+        group = augroup 'auto-disable-search-highlight',
+        once = true,
+        callback = function() require('search_highlight').setup() end,
     })
 end
 
