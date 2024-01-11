@@ -105,7 +105,12 @@ lsp.lspconfig = {
 local function extend(config)
     local get_capabilities = require('plugins.completion').get_capabilities
     local def_root = { '.git', '.gitignore', vim.fn.getcwd() }
-    local roots = vim.list_extend(def_root, config.root or {})
+    local roots
+    if config.override_root then
+        roots = config.root
+    else
+        roots = vim.list_extend(def_root, config.root or {})
+    end
     config.root = nil
     local lsp = require 'lsp'
     local lspconfig = require 'lspconfig'

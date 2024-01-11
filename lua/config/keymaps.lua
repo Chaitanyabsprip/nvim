@@ -129,7 +129,6 @@ keymaps.setup = function()
     nnoremap '<c-k>' '<c-i>' 'Jump forward the jump list'
     map 's' '<NOP>' 'unmap s'
     map 'S' '<NOP>' 'unmap S'
-    local utils = require 'utils'
     nnoremap '<c-w>z'(toggle_win_zoom()) 'Toggle window zoom'
     nnoremap 'gt'('<cmd> e ' .. os.getenv 'HOME' .. '/Projects/Notes/Todo.md<cr>') 'Open Todo file'
     local qf = require 'quickfix'
