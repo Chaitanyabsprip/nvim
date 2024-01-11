@@ -57,6 +57,14 @@ function M.darken(hex, amount, bg) return M.blend(hex, bg or M.bg, math.abs(amou
 
 function M.lighten(hex, amount, fg) return M.blend(hex, fg or M.fg, math.abs(amount)) end
 
+function M.tbl_length(T)
+    local count = 0
+    for _ in pairs(T) do
+        count = count + 1
+    end
+    return count
+end
+
 function M.get_visual_selection()
     -- this will exit visual mode
     -- use 'gv' to reselect the text

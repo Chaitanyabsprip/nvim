@@ -5,7 +5,8 @@ local highlight_overrides = function()
 end
 
 local search_visual_selection = function()
-    require('telescope.builtin').grep_string { search = require('utils').get_visual_selection() }
+    local search_term = require('utils').get_visual_selection()
+    require('telescope.builtin').grep_string { search = search_term }
 end
 
 local setup_keymaps = function()
@@ -25,7 +26,7 @@ local setup_keymaps = function()
     nnoremap '<leader>n'(find_notes) 'Telescope: Find notes'
     nnoremap 'go'(builtin.oldfiles) 'Telescope: oldfiles'
     nnoremap 'gW'(builtin.grep_string) 'Telescope: grep word under cursor'
-    vnoremap 'gw'(function() search_visual_selection() end) 'Telescope: grep visual selection'
+    vnoremap 'gw'(search_visual_selection) 'Telescope: grep visual selection'
     nnoremap 'gw'(
         function() builtin.grep_string { search = vim.fn.input { prompt = 'Grep > ' } } end
     ) 'Telescope: grep and filter'
