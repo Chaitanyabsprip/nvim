@@ -5,13 +5,15 @@ local previewers = require 'telescope.previewers'
 local sorters = require 'telescope.sorters'
 local utils = require 'semantic_search.utils'
 
+local proj = '/Users/chaitanyasharma/projects'
+local proot = proj .. '/cartographer'
 local config = {
-    directory = '',
-    embeddings_path = '',
-    host = 'http://127.0.0.1:5000',
+    directory = proj .. '/notes',
+    embeddings_path = proj .. '/notes/.t_embeddings_bin',
+    host = 'http://127.0.0.1:30000',
 }
 
-local function setpid()
+local function getpid()
     local command = 'curl'
     local args = { config.host .. '/info' }
     local resp = utils.execute(command, args)
@@ -21,16 +23,16 @@ end
 
 function M.setup(opts)
     config = vim.tbl_deep_extend('force', config, opts) or config
-    local command = 'python3'
-    local args = { '/Users/chaitanyasharma/projects/notes/semantic_search_engine.py', '--daemon' }
-    local job = utils.exec_async(command, args)
+    local command = proot .. '/.venv/bin/python'
+    local args = { proot .. '/cartographer/cli.py', '-D' }
+    local job = utils.exec_async(command, args, nil, { ['PYTHONPATH'] = proot })
     config.job = job
     local group = vim.api.nvim_create_augroup('semantic_search', { clear = true })
     vim.api.nvim_create_autocmd('VimLeavePre', {
         group = group,
         callback = function()
             local uv = vim.loop
-            local pid = setpid()
+            local pid = getpid()
             if pid then uv.kill(pid, uv.constants.SIGTERM) end
             job:shutdown()
         end,
@@ -61,9 +63,10 @@ end
 function M.search(query)
     query = vim.fn.substitute(query, [[\s\+]], '%20', 'g')
     local command = 'curl'
-    local args = { config.host .. '/search?query=' .. query }
+    local args = { '-S', config.host .. '/search?query=' .. query }
     local job = utils.execute(command, args)
     local json = job:result()[1]
+    vim.print(json)
     return vim.fn.json_decode(json)
 end
 

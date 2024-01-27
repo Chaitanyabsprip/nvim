@@ -44,10 +44,10 @@ local telescope = {
         highlight_overrides()
 
         local dir = '/Users/chaitanyasharma/Projects/Notes'
-        require('semantic_search').setup {
-            directory = dir,
-            embeddings_path = dir .. '/.embeddings',
-        }
+        -- require('semantic_search').setup {
+        --     directory = dir,
+        --     embeddings_path = dir .. '/.embeddings',
+        -- }
     end,
     opts = function()
         local actions = require 'telescope.actions'
