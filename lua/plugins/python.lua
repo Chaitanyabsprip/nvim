@@ -1,6 +1,6 @@
 local extend = require('plugins.lsp').extend
 
-local function pyls(lspconfig)
+local function python(lspconfig)
     local config = extend {
         root = { 'pyproject.toml' },
         settings = {
@@ -13,7 +13,7 @@ local function pyls(lspconfig)
             python = { venvPath = '.', analysis = {} },
         },
     }
-    lspconfig.pylsp.setup(config)
+    lspconfig.pyright.setup(config)
 end
 
 return {
@@ -69,5 +69,5 @@ return {
             })
         end,
     },
-    { 'neovim/nvim-lspconfig', opts = { servers = { pyls = pyls } } },
+    { 'neovim/nvim-lspconfig', opts = { servers = { python = python } } },
 }
