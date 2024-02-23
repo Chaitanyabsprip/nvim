@@ -70,6 +70,7 @@ git.gitsigns = {
         })
         local gs = require 'gitsigns'
         return {
+            signcolumn = true,
             signs = {
                 add = sign(signs.add),
                 change = sign(signs.change),

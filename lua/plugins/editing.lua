@@ -119,7 +119,7 @@ editing.surround = {
 editing.ufo = {
     'kevinhwang91/nvim-ufo',
     event = 'BufReadPost',
-    dependencies = { 'kevinhwang91/promise-async' },
+    dependencies = { 'kevinhwang91/promise-async', 'luukvbaal/statuscol.nvim' },
     config = function(_, opts)
         local nnoremap = require('hashish').nnoremap
         local ufo = require 'ufo'
@@ -167,6 +167,14 @@ editing.ufo = {
         end
         ufo.setup(opts)
     end,
+    -- keys = {
+    --     { 'zc' },
+    --     { 'zo' },
+    --     { 'zC' },
+    --     { 'zO' },
+    --     { 'za' },
+    --     { 'zA' },
+    -- },
     opts = { close_fold_kinds = { 'imports', 'comment' } },
 }
 
