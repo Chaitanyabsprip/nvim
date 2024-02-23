@@ -55,7 +55,7 @@ return {
         -- end,
     },
     {
-        'jose-elias-alvarez/null-ls.nvim',
+        'nvimtools/none-ls.nvim',
         ft = { 'python' },
         opts = function(_, opts)
             opts.sources = opts.sources or {}

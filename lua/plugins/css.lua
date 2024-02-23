@@ -19,7 +19,7 @@ return {
     },
     { 'neovim/nvim-lspconfig', opts = { servers = { cssls = cssls } } },
     {
-        'jose-elias-alvarez/null-ls.nvim',
+        'nvimtools/none-ls.nvim',
         ft = { 'json' },
         opts = function(_, opts)
             opts.sources = opts.sources or {} -- TODO(chaitanya): add formatting and other sources

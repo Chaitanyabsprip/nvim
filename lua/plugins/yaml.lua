@@ -35,7 +35,7 @@ return {
         end,
     },
     {
-        'jose-elias-alvarez/null-ls.nvim',
+        'nvimtools/none-ls.nvim',
         ft = { 'yaml', 'yaml.docker-compose' },
         opts = function(_, opts)
             opts.sources = opts.sources or {}

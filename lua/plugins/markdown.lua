@@ -16,11 +16,14 @@ return {
         'williamboman/mason.nvim',
         opts = function(_, opts)
             opts.ensure_installed = opts.ensure_installed or {}
-            vim.list_extend(opts.ensure_installed, { 'ltex-ls', 'markdownlint', 'marksman' })
+            vim.list_extend(
+                opts.ensure_installed,
+                { 'ltex-ls', 'markdownlint', 'marksman', 'codespell' }
+            )
         end,
     },
     {
-        'jose-elias-alvarez/null-ls.nvim',
+        'nvimtools/none-ls.nvim',
         ft = { 'markdown', 'md', 'rmd', 'rst' },
         opts = function(_, opts)
             opts.sources = opts.sources or {}

@@ -20,7 +20,7 @@ return {
         end,
     },
     {
-        'jose-elias-alvarez/null-ls.nvim',
+        'nvimtools/none-ls.nvim',
         ft = { 'bash', 'fish', 'sh', 'zsh' },
         opts = function(_, opts)
             opts.sources = opts.sources or {}

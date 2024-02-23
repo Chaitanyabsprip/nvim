@@ -47,7 +47,7 @@ return {
         opts = { servers = { html = htmlls, emmet_ls = emmetls, cssls = cssls } },
     },
     {
-        'jose-elias-alvarez/null-ls.nvim',
+        'nvimtools/none-ls.nvim',
         ft = { 'html, css, scss, sass' },
         opts = function(_, opts)
             opts.sources = opts.sources or {}

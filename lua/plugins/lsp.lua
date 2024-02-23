@@ -51,14 +51,11 @@ lsp.mason_lspconfig = {
 
 lsp.mason_nulls = {
     'jay-babu/mason-null-ls.nvim',
-    dependencies = { 'williamboman/mason.nvim', 'jose-elias-alvarez/null-ls.nvim' },
+    dependencies = { 'williamboman/mason.nvim', 'nvimtools/none-ls.nvim' },
     ft = function(_, __) return {} end,
     opts = { automatic_installation = true },
     config = function(plugin, opts)
-        vim.defer_fn(function()
-            vim.print(require('lazy.core.config').plugins)
-            vim.notify(vim.inspect(plugin.ft))
-        end, 500)
+        vim.defer_fn(function() vim.notify(vim.inspect(plugin.ft)) end, 500)
         require('mason-null-ls').setup(opts)
     end,
 }
@@ -66,7 +63,7 @@ lsp.mason_nulls = {
 lsp.mason_update = { 'RubixDev/mason-update-all', opts = {} }
 
 lsp.null = {
-    'jose-elias-alvarez/null-ls.nvim',
+    'nvimtools/none-ls.nvim',
     config = function(_, opts)
         local get_capabilities = require('plugins.completion').get_capabilities
         local builtins = require('null-ls').builtins

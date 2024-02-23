@@ -59,7 +59,7 @@ return {
         end,
     },
     {
-        'jose-elias-alvarez/null-ls.nvim',
+        'nvimtools/none-ls.nvim',
         ft = { 'lua' },
         opts = function(_, opts)
             opts.sources = opts.sources or {}
