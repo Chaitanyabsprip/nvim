@@ -50,7 +50,6 @@ plugin.setup = function()
         { import = 'plugins.explorer' },
     }, {
         defaults = { lazy = true },
-        dev = { path = '~/Projects/Languages/Lua' },
         performance = { rtp = { disabled_plugins = disabled_builtins } },
         install = { colorscheme = { 'habamax' } },
         checker = { enabled = true, notify = false },
