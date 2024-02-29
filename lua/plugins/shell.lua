@@ -13,10 +13,7 @@ return {
         'williamboman/mason.nvim',
         opts = function(_, opts)
             opts.ensure_installed = opts.ensure_installed or {}
-            vim.list_extend(
-                opts.ensure_installed,
-                { 'bash-language-server', 'beautysh', 'shellcheck', 'shfmt' }
-            )
+            vim.list_extend(opts.ensure_installed, { 'bash-language-server', 'shfmt' })
         end,
     },
     {
@@ -27,10 +24,7 @@ return {
             vim.list_extend(opts.sources, {
                 function(builtins)
                     return {
-                        builtins.code_actions.shellcheck,
-                        builtins.diagnostics.shellcheck,
                         builtins.diagnostics.zsh,
-                        builtins.formatting.beautysh,
                         builtins.formatting.fish_indent,
                         builtins.formatting.shfmt.with { filetypes = { 'zsh', 'bash', 'sh' } },
                     }
