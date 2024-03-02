@@ -77,6 +77,7 @@ end
 keymaps.setup = function()
     local hashish = require 'hashish'
     local map = hashish.map
+    local cnoremap = hashish.noremap 'c'
     local nnoremap = hashish.nnoremap
     local vnoremap = hashish.vnoremap
     local inoremap = hashish.inoremap
@@ -127,6 +128,11 @@ keymaps.setup = function()
     nnoremap '<leader>k' '<cmd>cprev<cr>zz' 'Jump to prev result from quickfix'
     nnoremap '<c-j>' '<c-o>' 'Jump back the jump list'
     nnoremap '<c-k>' '<c-i>' 'Jump forward the jump list'
+    cnoremap '<c-a>' '<Home>' 'Jump to the start of the command'
+    cnoremap '<c-f>' '<c-Right>' 'Move cursor one character right'
+    cnoremap '<c-b>' '<c-Left>' 'Move cursor one character left'
+    cnoremap '<c-o>' '<Up>' 'Move cursor one character left'
+    cnoremap '<c-i>' '<Down>' 'Move cursor one character left'
     map 's' '<NOP>' 'unmap s'
     map 'S' '<NOP>' 'unmap S'
     nnoremap '<c-w>z'(toggle_win_zoom()) 'Toggle window zoom'
