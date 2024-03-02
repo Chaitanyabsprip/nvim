@@ -127,6 +127,16 @@ return {
         end,
     },
     { 'Vimjas/vim-python-pep8-indent' },
+    {
+        'linux-cultist/venv-selector.nvim',
+        dependencies = {
+            'neovim/nvim-lspconfig',
+            'nvim-telescope/telescope.nvim',
+            'mfussenegger/nvim-dap-python',
+        },
+        opts = { dap_enabled = true },
+    },
+    {
         'nvimtools/none-ls.nvim',
         ft = { 'python' },
         opts = function(_, opts)
