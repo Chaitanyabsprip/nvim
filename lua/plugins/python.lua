@@ -85,6 +85,7 @@ return {
             vim.list_extend(opts.ensure_installed, {
                 'pyright', -- LSP for python
                 'ruff-lsp', -- linter for python (includes flake8, pep8, etc.)
+                'debugpy', -- debugger
                 'black', -- formatter
                 'isort', -- organize imports
                 'taplo', -- LSP for toml (for pyproject.toml files)
@@ -115,6 +116,16 @@ return {
         -- end,
     },
     {
+        'mfussenegger/nvim-dap-python',
+        dependencies = 'mfussenegger/nvim-dap',
+        config = function()
+            -- uses the debugypy installation by mason
+            local debugpyPythonPath = require('mason-registry')
+                .get_package('debugpy')
+                :get_install_path() .. '/venv/bin/python3'
+            require('dap-python').setup(debugpyPythonPath, {})
+        end,
+    },
     { 'Vimjas/vim-python-pep8-indent' },
         'nvimtools/none-ls.nvim',
         ft = { 'python' },
