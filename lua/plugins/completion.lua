@@ -1,3 +1,4 @@
+---@diagnostic disable: no-unknown
 local completion = {}
 
 ---@class LazyPluginSpec
