@@ -16,19 +16,46 @@ local function python(lspconfig)
     lspconfig.pyright.setup(config)
 end
 
+local function taplo(lspconfig)
+    local config = extend {
+        root = { 'pyproject.toml' },
+    }
+    lspconfig.taplo.setup(config)
+end
+
+local function ruff(lspconfig)
+    local config = extend {
+        settings = { organizeImports = false },
+    }
+    local on_attach = config.on_attach
+    config.on_attach = function(client, ...)
+        client.server_capabilities.hoverProvider = false
+        on_attach(client, ...)
+    end
+end
+
 return {
     {
         'nvim-treesitter/nvim-treesitter',
         opts = function(_, opts)
             opts.ensure_installed = opts.ensure_installed or {}
-            vim.list_extend(opts.ensure_installed, { 'python' })
+            vim.list_extend(opts.ensure_installed, {
+                'python',
+                'toml',
+            })
         end,
     },
     {
         'williamboman/mason.nvim',
         opts = function(_, opts)
             opts.ensure_installed = opts.ensure_installed or {}
-            vim.list_extend(opts.ensure_installed, { 'pyright', 'black', 'isort' })
+            vim.list_extend(opts.ensure_installed, {
+                'pyright', -- LSP for python
+                'ruff-lsp', -- linter for python (includes flake8, pep8, etc.)
+                'black', -- formatter
+                'isort', -- organize imports
+                'taplo', -- LSP for toml (for pyproject.toml files)
+            })
         end,
         -- config = function(_, opts)
         --     require('mason').setup(opts)
@@ -69,5 +96,8 @@ return {
             })
         end,
     },
-    { 'neovim/nvim-lspconfig', opts = { servers = { python = python } } },
+    {
+        'neovim/nvim-lspconfig',
+        opts = { servers = { python = python, ruff = ruff, taplo = taplo } },
+    },
 }
