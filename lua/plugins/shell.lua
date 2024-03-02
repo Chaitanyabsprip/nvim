@@ -1,5 +1,7 @@
 local extend = require('plugins.lsp').extend
-local function bashls(lspconfig) lspconfig.bashls.setup(extend {}) end
+local function bashls(lspconfig)
+    lspconfig.bashls.setup(extend { filetypes = { 'bash', 'zsh', 'sh' } })
+end
 
 return {
     {
