@@ -172,11 +172,22 @@ explorer.pretty_qf = {
     opts = {},
 }
 
+explorer.cartographer = {
+    -- 'Chaitanyabsprip/cartographer',
+    url = '/home/chaitanya/projects/cartographer',
+    dependencies = { 'nvim-telescope/telescope.nvim' },
+    build = 'go build -o bin/cartographer; cp -r cartographer.nvim/lua .',
+    event = 'VeryLazy',
+    opts = { python_path = '/home/chaitanya/projects/cartographer/.venv/bin' },
+    config = function(_, opts) require('cartographer').setup(opts) end,
+}
+
 explorer.spec = {
     explorer.better_qf,
     explorer.harpoon,
     explorer.oil,
     explorer.pretty_qf,
+    explorer.cartographer,
 }
 
 return explorer.spec

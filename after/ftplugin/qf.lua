@@ -2,7 +2,7 @@ vim.cmd 'syntax on'
 vim.opt_local.number = false
 vim.opt_local.relativenumber = false
 vim.opt_local.buflisted = false
-vim.o.statuscolumn = ' '
+vim.o.statuscolumn = ''
 
 local nnoremap = require('hashish').nnoremap
 
