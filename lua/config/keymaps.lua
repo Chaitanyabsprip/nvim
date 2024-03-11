@@ -26,12 +26,11 @@ local function cowboy(disabled_ft)
             if table.contains(disabled_ft, vim.bo.filetype) then return map end
             if vim.v.count > 0 then count = 0 end
             if count >= 10 then
-                ok, id =
-                    pcall(vim.notify, 'धीरे भाई धीरे', vim.log.levels.WARM, {
-                        icon = ' 🤠',
-                        replace = id,
-                        keep = function() return count >= 10 end,
-                    })
+                ok, id = pcall(vim.notify, 'Stop repeating chars', vim.log.levels.WARM, {
+                    icon = ' 󰺛',
+                    replace = id,
+                    keep = function() return count >= 10 end,
+                })
                 if not ok then
                     id = nil
                     return map
