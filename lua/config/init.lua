@@ -145,6 +145,20 @@ config.options.setup = function()
         { tab = '  ', nbsp = '␣', trail = '•', extends = '⟩', precedes = '⟨' }
     vim.opt.fillchars =
         { foldopen = '', foldclose = '', fold = ' ', foldsep = ' ', diff = '╱', eob = ' ' }
+    vim.filetype.add {
+        extension = {
+            conf = 'conf',
+            env = 'dotenv',
+        },
+        filename = {
+            ['.env'] = 'dotenv',
+            ['tsconfig.json'] = 'jsonc',
+            ['.yamlfmt'] = 'yaml',
+        },
+        pattern = {
+            ['%.env%.[%w_.-]+'] = 'dotenv',
+        },
+    }
 end
 
 function config.lazy()
