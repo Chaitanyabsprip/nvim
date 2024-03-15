@@ -120,20 +120,44 @@ editing.ufo = {
     'kevinhwang91/nvim-ufo',
     event = 'BufReadPost',
     dependencies = { 'kevinhwang91/promise-async', 'luukvbaal/statuscol.nvim' },
+    -- keys = {
+    --     { 'zc' },
+    --     { 'zo' },
+    --     { 'zC' },
+    --     { 'zO' },
+    --     { 'za' },
+    --     { 'zA' },
+    -- },
+    keys = {
+        {
+            'zR',
+            function() require('ufo').openAllFolds() end,
+            silent = true,
+            noremap = true,
+            desc = 'Open all folds',
+        },
+        {
+            'zM',
+            function() require('ufo').closeAllFolds() end,
+            silent = true,
+            noremap = true,
+            desc = 'Close all folds',
+        },
+    },
     config = function(_, opts)
         local nnoremap = require('hashish').nnoremap
         local ufo = require 'ufo'
-        nnoremap 'zR'(ufo.openAllFolds) 'Open all folds'
-        nnoremap 'zM'(ufo.closeAllFolds) 'Close all folds'
         ---@type number?
         local fold_win
+        local capabilities = require 'lsp.capabilities'
+        local callback = capabilities.hover.callback
         local hover = function()
             if fold_win and vim.api.nvim_win_is_valid(fold_win) then
                 vim.api.nvim_set_current_win(fold_win)
             end
             fold_win = ufo.peekFoldedLinesUnderCursor()
             if not fold_win then
-                vim.lsp.buf.hover()
+                callback()
             else
                 vim.api.nvim_set_option_value('winhl', 'Normal:Normal', { win = fold_win })
                 vim.api.nvim_set_option_value('winblend', 0, { win = fold_win })
@@ -142,9 +166,7 @@ editing.ufo = {
         require('lsp.capabilities').hover.callback = function(_, bufnr)
             nnoremap 'K'(hover) { bufnr = bufnr, silent = true } 'Show hover info of symbol under cursor'
         end
-        local ftMap = {
-            markdown = 'treesitter',
-        }
+        local ftMap = { markdown = 'treesitter' }
 
         ---@param bufnr number
         ---@return Promise
@@ -167,15 +189,7 @@ editing.ufo = {
         end
         ufo.setup(opts)
     end,
-    -- keys = {
-    --     { 'zc' },
-    --     { 'zo' },
-    --     { 'zC' },
-    --     { 'zO' },
-    --     { 'za' },
-    --     { 'zA' },
-    -- },
-    opts = { close_fold_kinds = { 'imports', 'comment' } },
+    opts = { close_fold_kinds_for_ft = { default = { 'imports', 'comment' } } },
 }
 
 editing.spec = {

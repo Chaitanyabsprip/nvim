@@ -42,12 +42,6 @@ local telescope = {
         require('telescope').setup(opts)
         setup_keymaps()
         highlight_overrides()
-
-        local dir = '/Users/chaitanyasharma/Projects/Notes'
-        -- require('semantic_search').setup {
-        --     directory = dir,
-        --     embeddings_path = dir .. '/.embeddings',
-        -- }
     end,
     opts = function()
         local actions = require 'telescope.actions'
@@ -60,7 +54,6 @@ local telescope = {
             },
             n = { ['q'] = actions.close, ['<c-c>'] = actions.close, ['dd'] = actions.delete_buffer },
         }
-
         return {
             defaults = {
                 border = nil,

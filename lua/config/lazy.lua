@@ -29,6 +29,7 @@ plugin.setup = function()
         'matchit',
         'matchparen',
         'netrw',
+        'shada',
         'netrwFileHandlers',
         'netrwPlugin',
         'netrwSettings',
