@@ -83,11 +83,11 @@ capabilities.document_symbols = {
 
 capabilities.formatting = {
     name = 'textDocument/formatting',
-    callback = function(_, bufnr)
+    callback = function(client, bufnr)
         autocmd('BufWritePre', {
             group = augroup 'auto_format',
             buffer = bufnr,
-            callback = function() lsp.format() end,
+            callback = function() lsp.format { async = false, id = client.id } end,
         })
     end,
 }
