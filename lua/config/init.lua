@@ -1,3 +1,4 @@
+---@diagnostic disable: no-unknown
 local config = {}
 
 function config.autocommands()
@@ -56,6 +57,22 @@ function config.autocommands()
         once = true,
         callback = function() require('search_highlight').setup() end,
     })
+
+    local function update_lead()
+        local lcs = vim.opt_local.listchars:get()
+        local tab = vim.fn.str2list(lcs.tab)
+        local space = vim.fn.str2list(lcs.multispace or lcs.space)
+        local lead = { tab[1] }
+        for i = 1, vim.bo.tabstop - 1 do
+            lead[#lead + 1] = space[i % #space + 1]
+        end
+        vim.opt_local.listchars:append { leadmultispace = vim.fn.list2str(lead) }
+    end
+    autocmd(
+        'OptionSet',
+        { pattern = { 'listchars', 'tabstop', 'filetype' }, callback = update_lead }
+    )
+    autocmd('VimEnter', { callback = update_lead, once = true })
 end
 
 config.options = {}
@@ -141,6 +158,7 @@ config.options.setup = function()
 
     vim.o.shortmess = 'filnxtToOFIcCs'
     vim.o.whichwrap = ''
+    vim.opt.list = true
     vim.opt.listchars =
         { tab = '  ', nbsp = '␣', trail = '•', extends = '⟩', precedes = '⟨' }
     vim.opt.fillchars =
