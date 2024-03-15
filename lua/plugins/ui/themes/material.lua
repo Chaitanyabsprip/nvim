@@ -18,19 +18,24 @@ local material = {
                 floating_windows = true,
                 non_current_windows = false,
             },
-            disable = { background = config.transparent },
+            -- disable = { background = false },
             styles = { comments = { italic = true } },
             plugins = {
                 'dap',
                 'dashboard',
+                'eyeliner',
                 'gitsigns',
+                'harpoon',
                 'mini',
                 'neogit',
+                'neotest',
+                'noice',
                 'nvim-cmp',
                 'nvim-navic',
                 'nvim-tree',
                 'nvim-web-devicons',
                 'telescope',
+                'nvim-notify',
             },
         }
     end,
@@ -39,7 +44,7 @@ local material = {
         local utils = require 'utils'
         opts.custom_highlights = {
             ---@diagnostic disable-next-line: no-unknown
-            NotifyBackground = { bg = colors.editor.bg, fg = colors.editor.fg },
+            -- NotifyBackground = { bg = colors.editor.bg, fg = colors.editor.fg },
             CursorLine = { bg = '#1a1c25' },
             LeapBackdrop = { fg = '#545c7e' },
             ['@text.reference'] = { fg = 'cyan' },

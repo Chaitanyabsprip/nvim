@@ -11,6 +11,7 @@ ui.noice = {
                 max_width = function() return math.floor(vim.o.columns * 0.75) end,
                 render = 'compact',
                 top_down = false,
+                background_colour = '#000000',
             },
         },
     },

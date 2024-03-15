@@ -25,8 +25,6 @@ tools.obsidian = {
         'ObsidianSearch',
         'Today',
         'Yesterday',
-        'Notes',
-        'SearchNotes',
     },
     ft = { 'md', 'markdown', 'rmd', 'rst' },
     keys = {
