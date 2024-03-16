@@ -32,6 +32,7 @@ local function ruff(lspconfig)
         client.server_capabilities.hoverProvider = false
         on_attach(client, ...)
     end
+    lspconfig.ruff_lsp.setup(config)
 end
 
 return {
