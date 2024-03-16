@@ -167,6 +167,7 @@ config.options.setup = function()
         extension = {
             conf = 'conf',
             env = 'dotenv',
+            rasi = 'rasi',
         },
         filename = {
             ['.env'] = 'dotenv',
@@ -175,6 +176,9 @@ config.options.setup = function()
         },
         pattern = {
             ['%.env%.[%w_.-]+'] = 'dotenv',
+            ['.*/waybar/config'] = 'jsonc',
+            ['.*/mako/config'] = 'dosini',
+            ['.*/hypr/.*%.conf'] = 'hyprlang',
         },
     }
 end

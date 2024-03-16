@@ -10,6 +10,85 @@ explorer.better_qf = {
     },
 }
 
+explorer.harpoon2 = {
+    'ThePrimeagen/harpoon',
+    branch = 'harpoon2',
+    event = 'VeryLazy',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    keys = {
+        {
+            '<c-b>',
+            function() require('harpoon'):list():append() end,
+            noremap = true,
+            desc = 'Add file to harpoon',
+        },
+        {
+            '<c-f>',
+            function()
+                local harpoon = require 'harpoon'
+                harpoon.ui:toggle_quick_menu(harpoon:list())
+            end,
+            noremap = true,
+            desc = 'Toggle harpoon marks list',
+        },
+        {
+            '<c-n>',
+            function() require('harpoon'):list():select(1) end,
+            noremap = true,
+            desc = 'Jump to file 1 in harpoon',
+        },
+        {
+            '<c-e>',
+            function() require('harpoon'):list():select(2) end,
+            noremap = true,
+            desc = 'Jump to file 2 in harpoon',
+        },
+        {
+            '<c-o>',
+            function() require('harpoon'):list():select(3) end,
+            noremap = true,
+            desc = 'Jump to file 3 in harpoon',
+        },
+        {
+            '<c-s>',
+            function() require('harpoon'):list():select(4) end,
+            noremap = true,
+            desc = 'Jump to file 4 in harpoon',
+        },
+    },
+    config = function()
+        local harpoon = require 'harpoon'
+        harpoon:setup { settings = { save_on_toggle = true, sync_on_ui_close = true } }
+        harpoon:extend {
+            UI_CREATE = function(cx)
+                vim.keymap.set(
+                    'n',
+                    '<C-v>',
+                    function() harpoon.ui:select_menu_item { vsplit = true } end,
+                    { buffer = cx.bufnr }
+                )
+
+                vim.keymap.set(
+                    'n',
+                    '<C-x>',
+                    function() harpoon.ui:select_menu_item { split = true } end,
+                    { buffer = cx.bufnr }
+                )
+
+                vim.keymap.set(
+                    'n',
+                    '<C-t>',
+                    function() harpoon.ui:select_menu_item { tabedit = true } end,
+                    { buffer = cx.bufnr }
+                )
+            end,
+        }
+        -- -- Toggle previous & next buffers stored within Harpoon list
+        -- vim.keymap.set('n', '<C-S-P>', function() harpoon:list():prev() end)
+        -- vim.keymap.set('n', '<C-S-N>', function() harpoon:list():next() end)
+    end,
+}
+
 explorer.harpoon = {
     'ThePrimeagen/harpoon',
     keys = {
@@ -177,6 +256,7 @@ explorer.cartographer = {
     url = '/home/chaitanya/projects/cartographer',
     dependencies = { 'nvim-telescope/telescope.nvim' },
     build = 'go build -o bin/cartographer; cp -r cartographer.nvim/lua .',
+    enabled = false,
     event = 'VeryLazy',
     opts = { python_path = '/home/chaitanya/projects/cartographer/.venv/bin' },
     config = function(_, opts) require('cartographer').setup(opts) end,
@@ -184,7 +264,7 @@ explorer.cartographer = {
 
 explorer.spec = {
     explorer.better_qf,
-    explorer.harpoon,
+    explorer.harpoon2,
     explorer.oil,
     explorer.pretty_qf,
     explorer.cartographer,
