@@ -121,6 +121,8 @@ keymaps.setup = function()
     nnoremap '{' '{zz' 'Like text object motion { but centers line'
     nnoremap '<c-d>' '12jzz' 'Like text object motion <c-d> but centers line'
     nnoremap '<c-u>' '12kzz' 'Like text object motion <c-u>{ but centers line'
+    vnoremap '<c-d>' '12jzz' 'Like text object motion <c-d> but centers line'
+    vnoremap '<c-u>' '12kzz' 'Like text object motion <c-u>{ but centers line'
     nnoremap '<leader>r' ':%s/\\<<c-r><c-w>\\>/<c-r><c-w>/gI<Left><Left><Left>' 'Search and replace, in current buffer, word under cursor'
     vnoremap '<leader>r' '"hy:%s/<C-r>h//gI<left><left><left>' 'Search and replace, in current buffer, visual selection'
     vnoremap '<leader>s' 'y:%s/<c-r>0/<c-r>0/gI<Left><Left><Left>' 'Search and modify, in current buffer, visual selection'
@@ -147,6 +149,7 @@ keymaps.setup = function()
         local rnu = vim.wo[api.nvim_get_current_win()].relativenumber
         return '<cmd>setlocal ' .. (rnu and 'no' or '') .. 'rnu<cr>'
     end) { expr = true } 'Toggle relative line number'
+    nnoremap 'ge' '?```<cr>jV/```<cr>k!emso<cr>:noh<cr>' 'Run shell code within markdown code snippet'
     cowboy { 'oil', 'qf', 'help', 'noice' }
 end
 
