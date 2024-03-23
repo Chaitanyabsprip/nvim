@@ -75,7 +75,7 @@ completion.cmp = {
             ),
             window = {
                 completion = {
-                    border = 'rounded',
+                    -- border = 'rounded',
                     winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
                 },
                 documentation = {
