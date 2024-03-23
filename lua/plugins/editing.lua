@@ -23,12 +23,6 @@ editing.eyeliner = {
     },
 }
 
-editing.matchparen = {
-    'monkoose/matchparen.nvim',
-    event = 'BufReadPost',
-    opts = {},
-}
-
 editing.surround = {
     'kylechui/nvim-surround',
     version = '*',
@@ -115,7 +109,6 @@ editing.ufo = {
 editing.spec = {
     editing.comment,
     editing.eyeliner,
-    editing.matchparen,
     editing.surround,
     editing.ufo,
 }
