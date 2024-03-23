@@ -4,6 +4,16 @@ local hash = require 'hashish'
 local nnoremap = hash.nnoremap
 local noremap = hash.noremap
 
+local function is_git_repo()
+    local f = io.popen 'git rev-parse --is-inside-work-tree 2>/dev/null'
+    local gitOutput = 'false'
+    if f ~= nil then
+        gitOutput = f:read '*all'
+        f:close()
+    end
+    return gitOutput:match 'true' ~= nil
+end
+
 local function setup_keymaps(bufnr, gs)
     local function nav_hunk(next)
         return function()
@@ -37,7 +47,7 @@ end
 
 git.gitsigns = {
     'lewis6991/gitsigns.nvim',
-    cond = function() return vim.loop.fs_stat '.git' end,
+    cond = is_git_repo,
     event = 'BufReadPre',
     opts = function()
         local signs = { add = 'Add', change = 'Change', delete = 'Delete' }
@@ -95,7 +105,7 @@ git.gitsigns = {
 git.git_conflict = {
     'akinsho/git-conflict.nvim',
     version = '*',
-    cond = function() return vim.loop.fs_stat '.git' end,
+    cond = is_git_repo,
     event = 'BufReadPre',
     cmd = 'GitConflictListQf',
     opts = {
