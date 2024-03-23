@@ -132,6 +132,8 @@ config.options.setup = function()
     vim.o.sessionoptions = 'buffers,curdir,winsize,resize,winpos,folds,tabpages,globals'
     vim.o.shell = '/usr/bin/env zsh'
     vim.o.updatetime = 1000
+    vim.opt.smoothscroll = true
+    vim.opt.showmatch = true
 
     -- split options
     vim.o.splitbelow = true
