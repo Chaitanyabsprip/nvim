@@ -127,51 +127,136 @@ ui.statuscolumn = {
     end,
 }
 
-local load_textobjects = false
-
 ui.treesitter = {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     event = 'BufReadPre',
-    dependencies = {
-        {
-            'nvim-treesitter/nvim-treesitter-textobjects',
-            init = function()
-                -- disable rtp plugin, as we only need its queries for mini.ai
-                -- In case other textobject modules are enabled, we will load them
-                -- once nvim-treesitter is loaded
-                require('lazy.core.loader').disable_rtp_plugin 'nvim-treesitter-textobjects'
-                load_textobjects = true
-            end,
-        },
-    },
-    config = function(_, opts)
-        require('nvim-treesitter.configs').setup(opts)
-        if load_textobjects then
-            -- PERF: no need to load the plugin, if we only need its queries for mini.ai
-            if opts.textobjects then
-                for _, mod in ipairs { 'move', 'select', 'swap', 'lsp_interop' } do
-                    if opts.textobjects[mod] and opts.textobjects[mod].enable then
-                        local Loader = require 'lazy.core.loader'
-                        Loader.disabled_rtp_plugins['nvim-treesitter-textobjects'] = nil
-                        local plugin =
-                            require('lazy.core.config').plugins['nvim-treesitter-textobjects']
-                        require('lazy.core.loader').source_runtime(plugin.dir, 'plugin')
-                        break
-                    end
-                end
-            end
-        end
-    end,
+    config = function(_, opts) require('nvim-treesitter.configs').setup(opts) end,
     opts = {
         ensure_installed = { 'regex', 'vim' },
         highlight = { enable = true, additional_vim_regex_highlighting = false },
-        indent = { enable = true, disable = { 'dart' } },
+        refactor = {
+            highlight_definitions = { enable = true },
+            highlihgt_scope = { enable = true },
+        },
+        indent = { enable = false, disable = { 'dart' } },
+    },
+}
+
+ui.textobjects = {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    event = 'BufReadPre',
+    dependencies = {
+        {
+            'nvim-treesitter/nvim-treesitter',
+            opts = {
+                textobjects = {
+                    move = {
+                        enable = true,
+                        set_jumps = true,
+                        goto_next_start = {
+                            [']p'] = {
+                                query = '@parameter.inner',
+                                desc = 'Jump to start of next parameter',
+                            },
+                            [']f'] = {
+                                query = '@function.outer',
+                                desc = 'Jump to start of next function',
+                            },
+                            [']]'] = {
+                                query = '@class.outer',
+                                desc = 'Jump to start of next class',
+                            },
+                        },
+                        goto_next_end = {
+                            [']F'] = {
+                                query = '@function.outer',
+                                desc = 'Jump to end of next function',
+                            },
+                            [']['] = { query = '@class.outer', desc = 'Jump to end of next class' },
+                        },
+                        goto_previous_start = {
+                            ['[p'] = {
+                                query = '@parameter.inner',
+                                desc = 'Jump to start of previous parameter',
+                            },
+                            ['[f'] = {
+                                query = '@function.outer',
+                                desc = 'Jump to start of previous function',
+                            },
+                            ['[['] = {
+                                query = '@class.outer',
+                                desc = 'Jump to start of previous class',
+                            },
+                        },
+                        goto_previous_end = {
+                            ['[F'] = {
+                                query = '@function.outer',
+                                desc = 'Jump to end of previous function',
+                            },
+                            ['[]'] = {
+                                query = '@class.outer',
+                                desc = 'Jump to end of previous class',
+                            },
+                        },
+                    },
+                    select = {
+                        enable = true,
+                        lookahead = true,
+                        keymaps = {
+                            ['af'] = {
+                                query = '@function.outer',
+                                desc = 'Select outer part of a function',
+                            },
+                            ['if'] = {
+                                query = '@function.inner',
+                                desc = 'Select inner part of a function',
+                            },
+                            ['ac'] = {
+                                query = '@conditional.outer',
+                                desc = 'Select outer part of a conditional',
+                            },
+                            ['ic'] = {
+                                query = '@conditional.inner',
+                                desc = 'Select inner part of a conditional',
+                            },
+
+                            ['aa'] = {
+                                query = '@parameter.outer',
+                                desc = 'Select outer part of a parameter',
+                            },
+                            ['ia'] = {
+                                query = '@parameter.inner',
+                                desc = 'Select inner part of a parameter',
+                            },
+
+                            ['av'] = {
+                                query = '@variable.outer',
+                                desc = 'Select outer part of a variable',
+                            },
+                            ['iv'] = {
+                                query = '@variable.inner',
+                                desc = 'Select inner part of a variable',
+                            },
+                        },
+                    },
+                },
+            },
+        },
     },
 }
 
 ui.treesitter_playground = {
     'nvim-treesitter/playground',
+    keys = {
+        {
+            '<leader>tp',
+            '<cmd>TSPlaygroundToggle<cr>',
+            noremap = true,
+            silent = true,
+            desc = 'Toggle Treesitter Playground',
+        },
+    },
     dependencies = {
         {
             'nvim-treesitter/nvim-treesitter',
@@ -207,5 +292,6 @@ return {
     ui.noice,
     ui.statuscolumn,
     ui.treesitter,
+    ui.textobjects,
     ui.treesitter_playground,
 }

@@ -89,6 +89,7 @@ keymaps.setup = function()
 
     nnoremap '<leader>q' '<cmd>q<cr>' 'Close window (:q)'
     inoremap '<c-c>' '<esc>' 'To not be annoyed by the <c-c> messages all the time'
+    xnoremap '<c-c>' '<esc>' 'To not be annoyed by the <c-c> messages all the time'
     nnoremap '<leader>Q' '<cmd>qa<cr>' 'Quit all (:qa)'
     nnoremap '<leader>e' '<cmd>Explorer<cr>' 'Toggle file explorer'
     nnoremap '_' '^' 'Jump to the start of the line'
