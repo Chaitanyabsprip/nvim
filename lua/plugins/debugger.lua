@@ -81,8 +81,8 @@ debugger.ui = {
         keys = {
             { '<c-h>', function() require('dapui').toggle() end, desc = 'Toggle debugger UI' },
         },
-        dependencies = { 'mfussenegger/nvim-dap', 'm00qek/baleia.nvim' },
         opts = function()
+        dependencies = { 'mfussenegger/nvim-dap', 'm00qek/baleia.nvim', 'nvim-neotest/nvim-nio' },
             -- require 'dap'
             vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
                 group = vim.api.nvim_create_augroup('ansi', { clear = true }),
