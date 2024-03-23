@@ -29,7 +29,7 @@ completion.luasnip = {
 ---@class LazyPluginSpec
 completion.cmp = {
     'hrsh7th/nvim-cmp',
-    event = { 'InsertEnter', 'BufReadPre' },
+    event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
         'saadparwaiz1/cmp_luasnip',
         'hrsh7th/cmp-buffer',
