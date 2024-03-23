@@ -160,7 +160,7 @@ config.options.setup = function()
     vim.o.whichwrap = ''
     vim.opt.list = true
     vim.opt.listchars =
-        { tab = '  ', nbsp = '␣', trail = '•', extends = '⟩', precedes = '⟨' }
+        { tab = '  ', nbsp = '␣', trail = '•', extends = '⟩', precedes = '⟨', eol = '↲' }
     vim.opt.fillchars =
         { foldopen = '', foldclose = '', fold = ' ', foldsep = ' ', diff = '╱', eob = ' ' }
     vim.filetype.add {
