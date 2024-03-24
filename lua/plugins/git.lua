@@ -117,15 +117,16 @@ git.git_conflict = {
 git.spec = {
     {
         'nvim-treesitter/nvim-treesitter',
-        opts = {
-            ensure_installed = {
+        opts = function(_, opts)
+            opts.ensure_installed = opts.ensure_installed or {}
+            vim.list_extend(opts.ensure_installed, {
                 'git_config',
                 'git_rebase',
                 'gitattributes',
                 'gitcommit',
                 'gitignore',
-            },
-        },
+            })
+        end,
     },
     git.git_conflict,
     git.gitsigns,

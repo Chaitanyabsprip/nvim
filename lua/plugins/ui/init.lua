@@ -132,15 +132,19 @@ ui.treesitter = {
     build = ':TSUpdate',
     event = 'BufReadPre',
     config = function(_, opts) require('nvim-treesitter.configs').setup(opts) end,
-    opts = {
-        ensure_installed = { 'regex', 'vim' },
-        highlight = { enable = true, additional_vim_regex_highlighting = false },
-        refactor = {
-            highlight_definitions = { enable = true },
-            highlihgt_scope = { enable = true },
-        },
-        indent = { enable = false, disable = { 'dart' } },
-    },
+    opts = function(_, opts)
+        opts.ensure_installed = opts.ensure_installed or {}
+        local config = {
+            highlight = { enable = true, additional_vim_regex_highlighting = false },
+            refactor = {
+                highlight_definitions = { enable = true },
+                highlihgt_scope = { enable = true },
+            },
+            indent = { enable = false, disable = { 'dart' } },
+        }
+        vim.list_extend(opts.ensure_installed, { 'regex', 'vim' })
+        opts = vim.tbl_deep_extend('force', opts, config)
+    end,
 }
 
 ui.textobjects = {
