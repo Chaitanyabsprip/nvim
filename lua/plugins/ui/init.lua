@@ -244,6 +244,15 @@ ui.textobjects = {
                             },
                         },
                     },
+                    lsp_interop = {
+                        enable = true,
+                        border = 'rounded',
+                        floating_preview_opts = {},
+                        peek_definition_code = {
+                            ['<leader>gd'] = '@function.outer',
+                            ['<leader>gD'] = '@class.outer',
+                        },
+                    },
                 },
             },
         },
