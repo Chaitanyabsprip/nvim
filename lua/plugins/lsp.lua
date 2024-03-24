@@ -34,7 +34,6 @@ lsp.diagflow = {
 lsp.mason = {
     'williamboman/mason.nvim',
     dependencies = { 'RubixDev/mason-update-all' },
-    opts = {},
 }
 
 lsp.mason_dap = {
@@ -78,7 +77,6 @@ lsp.null = {
         }
         require('null-ls').setup(config)
     end,
-    opts = {},
 }
 
 lsp.lspconfig = {
