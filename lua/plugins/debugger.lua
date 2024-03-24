@@ -81,8 +81,8 @@ debugger.ui = {
         keys = {
             { '<c-h>', function() require('dapui').toggle() end, desc = 'Toggle debugger UI' },
         },
-        opts = function()
         dependencies = { 'mfussenegger/nvim-dap', 'm00qek/baleia.nvim', 'nvim-neotest/nvim-nio' },
+        config = function()
             -- require 'dap'
             vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
                 group = vim.api.nvim_create_augroup('ansi', { clear = true }),
@@ -95,28 +95,49 @@ debugger.ui = {
                     end
                 end,
             })
-            return {
-                mappings = {
-                    expand = { '<CR>', '<2-LeftMouse>', 'l' },
-                    open = 'o',
-                    remove = 'd',
-                    edit = 'e',
-                    repl = 'r',
-                    toggle = 't',
+            require('dapui').setup {
+                controls = {
+                    element = 'repl',
+                    enabled = true,
+                    icons = {
+                        disconnect = '',
+                        pause = '',
+                        play = '',
+                        run_last = '',
+                        step_back = '',
+                        step_into = '',
+                        step_out = '',
+                        step_over = '',
+                        terminate = '',
+                    },
                 },
+                element_mappings = {},
+                expand_lines = true,
+                floating = { border = 'single', mappings = { close = { 'q', '<Esc>' } } },
+                force_buffers = true,
+                icons = { collapsed = '', current_frame = '', expanded = '' },
                 layouts = {
                     {
                         elements = {
                             { id = 'scopes', size = 0.25 },
                             { id = 'breakpoints', size = 0.25 },
-                            { id = 'watches', size = 00.25 },
+                            { id = 'watches', size = 0.25 },
                             { id = 'stacks', size = 0.25 },
                         },
-                        size = 40,
                         position = 'right',
+                        size = 40,
                     },
                     { elements = { { id = 'repl', size = 1 } }, size = 16, position = 'bottom' },
                 },
+                mappings = {
+                    edit = 'e',
+                    expand = { '<CR>', '<2-LeftMouse>', 'l' },
+                    open = 'o',
+                    remove = 'd',
+                    repl = 'r',
+                    toggle = 't',
+                },
+                render = { indent = 1, max_value_lines = 100 },
             }
         end,
     },
