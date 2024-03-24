@@ -20,6 +20,7 @@ tools.colorizer = {
 
 tools.obsidian = {
     'epwalsh/obsidian.nvim',
+    enabled = false,
     cmd = {
         'ObsidianNew',
         'ObsidianSearch',
