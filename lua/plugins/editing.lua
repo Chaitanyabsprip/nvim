@@ -63,15 +63,13 @@ editing.ufo = {
         local ufo = require 'ufo'
         ---@type number?
         local fold_win
-        local capabilities = require 'lsp.capabilities'
-        local callback = capabilities.hover.callback
         local hover = function()
             if fold_win and vim.api.nvim_win_is_valid(fold_win) then
                 vim.api.nvim_set_current_win(fold_win)
             end
             fold_win = ufo.peekFoldedLinesUnderCursor()
             if not fold_win then
-                callback()
+                vim.lsp.buf.hover()
             else
                 vim.api.nvim_set_option_value('winhl', 'Normal:Normal', { win = fold_win })
                 vim.api.nvim_set_option_value('winblend', 0, { win = fold_win })
