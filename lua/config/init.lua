@@ -165,6 +165,10 @@ config.options.setup = function()
         { tab = '  ', nbsp = '␣', trail = '•', extends = '⟩', precedes = '⟨', eol = '↲' }
     vim.opt.fillchars =
         { foldopen = '', foldclose = '', fold = ' ', foldsep = ' ', diff = '╱', eob = ' ' }
+    config.filetype()
+end
+
+function config.filetype()
     vim.filetype.add {
         extension = {
             conf = 'conf',
@@ -175,12 +179,24 @@ config.options.setup = function()
             ['.env'] = 'dotenv',
             ['tsconfig.json'] = 'jsonc',
             ['.yamlfmt'] = 'yaml',
+            ['launch.json'] = 'jsonc',
+            Appfile = 'ruby',
+            Brewfile = 'ruby',
+            Fastfile = 'ruby',
+            Gemfile = 'ruby',
+            Pluginfile = 'ruby',
+            Podfile = 'ruby',
         },
         pattern = {
             ['%.env%.[%w_.-]+'] = 'dotenv',
             ['.*/waybar/config'] = 'jsonc',
             ['.*/mako/config'] = 'dosini',
+            ['.*/kitty/*.conf'] = 'bash',
             ['.*/hypr/.*%.conf'] = 'hyprlang',
+            ['.*%.conf'] = 'conf',
+            ['.*%.theme'] = 'conf',
+            ['.*%.gradle'] = 'groovy',
+            ['^.env%..*'] = 'bash',
         },
     }
 end
