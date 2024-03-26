@@ -210,7 +210,7 @@ explorer.pretty_qf = {
 
 explorer.cartographer = {
     -- 'Chaitanyabsprip/cartographer',
-    url = '/home/chaitanya/projects/cartographer',
+    url = os.getenv 'HOME' .. '/projects/cartographer',
     dependencies = { 'nvim-telescope/telescope.nvim' },
     build = 'go build -o bin/cartographer; cp -r cartographer.nvim/lua .',
     enabled = false,
