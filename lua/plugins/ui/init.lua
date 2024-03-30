@@ -144,6 +144,7 @@ ui.treesitter = {
         }
         vim.list_extend(opts.ensure_installed, { 'regex', 'vim', 'make' })
         opts = vim.tbl_deep_extend('force', opts, config)
+        return opts
     end,
 }
 
