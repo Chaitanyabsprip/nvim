@@ -142,7 +142,7 @@ ui.treesitter = {
             },
             indent = { enable = false, disable = { 'dart' } },
         }
-        vim.list_extend(opts.ensure_installed, { 'regex', 'vim' })
+        vim.list_extend(opts.ensure_installed, { 'regex', 'vim', 'make' })
         opts = vim.tbl_deep_extend('force', opts, config)
     end,
 }
