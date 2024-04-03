@@ -4,10 +4,10 @@ local function htmlls(lspconfig)
     local config = extend {
         filetypes = {
             'html',
-            'javascript',
+            -- 'javascript',
             'javascriptreact',
             'javascript.jsx',
-            'typescript',
+            -- 'typescript',
             'typescriptreact',
             'typescript.tsx',
         },
