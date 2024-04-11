@@ -2,7 +2,18 @@ local extend = require('plugins.lsp').extend
 
 local function marksman(lspconfig) lspconfig.marksman.setup(extend { root = { '.marksman.toml' } }) end
 local function ltex(lspconfig)
-    lspconfig.ltex.setup(extend { settings = { ltex = { language = 'en' } } })
+    lspconfig.ltex.setup(extend {
+        settings = { ltex = { language = 'en' } },
+        filetypes = {
+            'gitcommit',
+            'markdown',
+            'org',
+            'plaintex',
+            'rst',
+            'pandoc',
+            'rmd',
+        },
+    })
 end
 return {
     {
