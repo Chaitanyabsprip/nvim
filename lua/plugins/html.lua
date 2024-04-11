@@ -23,38 +23,23 @@ local function emmetls(lspconfig)
     lspconfig.emmet_ls.setup(config)
 end
 
-local function cssls(lspconfig) lspconfig.cssls.setup(extend {}) end
 return {
     {
         'nvim-treesitter/nvim-treesitter',
         opts = function(_, opts)
             opts.ensure_installed = opts.ensure_installed or {}
-            vim.list_extend(opts.ensure_installed, { 'html', 'css' })
+            vim.list_extend(opts.ensure_installed, { 'html' })
         end,
     },
     {
         'williamboman/mason.nvim',
         opts = function(_, opts)
             opts.ensure_installed = opts.ensure_installed or {}
-            vim.list_extend(
-                opts.ensure_installed,
-                { 'prettierd', 'html-lsp', 'css-lsp', 'emmet-ls' }
-            )
+            vim.list_extend(opts.ensure_installed, { 'html-lsp', 'emmet-ls' })
         end,
     },
     {
         'neovim/nvim-lspconfig',
-        opts = { servers = { html = htmlls, emmet_ls = emmetls, cssls = cssls } },
-    },
-    {
-        'nvimtools/none-ls.nvim',
-        ft = { 'html, css, scss, sass' },
-        opts = function(_, opts)
-            opts.sources = opts.sources or {}
-            vim.list_extend(
-                opts.sources,
-                { function(builtins) return { builtins.formatting.prettierd } end }
-            )
-        end,
+        opts = { servers = { html = htmlls, emmet_ls = emmetls } },
     },
 }
