@@ -18,7 +18,7 @@ explorer.harpoon2 = {
     keys = {
         {
             '<c-b>',
-            function() require('harpoon'):list():append() end,
+            function() require('harpoon'):list():add() end,
             noremap = true,
             desc = 'Add file to harpoon',
         },
