@@ -18,58 +18,6 @@ tools.colorizer = {
     },
 }
 
-tools.obsidian = {
-    'epwalsh/obsidian.nvim',
-    enabled = false,
-    cmd = {
-        'ObsidianNew',
-        'ObsidianSearch',
-        'Today',
-        'Yesterday',
-    },
-    ft = { 'md', 'markdown', 'rmd', 'rst' },
-    keys = {
-        {
-            'gf',
-            function()
-                return require('obsidian').util.cursor_on_markdown_link()
-                        and '<cmd>ObsidianFollowLink<CR>'
-                    or 'gf'
-            end,
-            expr = true,
-            desc = 'Notes: Open link or file under cursor',
-        },
-    },
-    opts = function()
-        local command = vim.api.nvim_create_user_command
-        command('Today', 'ObsidianToday', {})
-        command('Yesterday', 'ObsidianYesterday', {})
-        command('SearchNotes', 'ObsidianSemanticSearch', {})
-        command('Notes', 'ObsidianSemanticSearch', {})
-        return {
-            dir = '~/Projects/Notes',
-            -- Optional, if you keep notes in a specific subdirectory of your vault.
-            notes_subdir = 'transient',
-            completion = {
-                nvim_cmp = true,
-                min_chars = 2,
-                new_notes_location = 'notes_subdir',
-            },
-            daily_notes = {
-                folder = 'transient',
-                date_format = '%Y-%m-%d',
-            },
-            mappings = {},
-            -- Optional, alternatively you can customize the frontmatter data.
-            follow_url_func = function(url) vim.fn.jobstart { 'open', url } end,
-            use_advanced_uri = true,
-            open_app_foreground = true,
-            finder = 'telescope.nvim',
-            disable_frontmatter = true,
-        }
-    end,
-}
-
 tools.peek = {
     'toppair/peek.nvim',
     build = 'deno task --quiet build:fast',
@@ -161,7 +109,6 @@ tools.hurl = {
 
 tools.spec = {
     tools.colorizer,
-    tools.obsidian,
     tools.peek,
     tools.rest,
     tools.startuptime,
