@@ -59,10 +59,9 @@ local telescope = {
                 border = nil,
                 borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
                 color_devicons = true,
-                extensions = { file_browser = {} },
                 file_ignore_patterns = { '^.git' },
                 file_sorter = require('telescope.sorters').get_fuzzy_file,
-                generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
+                -- generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
                 initial_mode = 'insert',
                 layout_config = {
                     horizontal = { mirror = false },
