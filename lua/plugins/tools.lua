@@ -48,11 +48,14 @@ tools.rest = {
     'rest-nvim/rest.nvim',
     ft = 'http',
     event = 'VeryLazy',
+    version = '2.*',
+    enabled = false,
     dependencies = {
         {
             'vhyrro/luarocks.nvim',
             priority = 1000,
             config = true,
+            lazy = false,
         },
         {
             'nvim-treesitter/nvim-treesitter',
