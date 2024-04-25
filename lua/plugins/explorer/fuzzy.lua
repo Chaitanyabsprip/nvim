@@ -34,8 +34,12 @@ end
 
 local telescope = {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.2',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    -- tag = '0.1.2',
+    branch = '0.1.x',
+    dependencies = {
+        'nvim-lua/plenary.nvim',
+        { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    },
     cmd = { 'Telescope' },
     keys = { '<leader><leader>', 'gw', 'gW' },
     config = function(_, opts)
@@ -60,13 +64,21 @@ local telescope = {
                 borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
                 color_devicons = true,
                 file_ignore_patterns = { '^.git' },
-                file_sorter = require('telescope.sorters').get_fuzzy_file,
+                -- file_sorter = require('telescope.sorters').get_fuzzy_file,
                 -- generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
+                extensions = {
+                    fzf = {
+                        fuzzy = true, -- false will only do exact matching
+                        override_generic_sorter = true, -- override the generic sorter
+                        override_file_sorter = true, -- override the file sorter
+                        case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
+                    },
+                },
                 initial_mode = 'insert',
                 layout_config = {
                     horizontal = { mirror = false },
                     vertical = { mirror = false },
-                    prompt_position = 'top',
+                    prompt_position = 'bottom',
                     height = 0.8,
                     width = 0.9,
                 },
@@ -76,7 +88,6 @@ local telescope = {
                 prompt_prefix = '   ',
                 selection_strategy = 'reset',
                 set_env = { ['COLORTERM'] = 'truecolor' },
-                sorting_strategy = 'ascending',
                 winblend = 0,
             },
         }
