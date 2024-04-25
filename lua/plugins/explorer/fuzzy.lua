@@ -1,7 +1,7 @@
 ---@diagnostic disable: no-unknown
 local highlight_overrides = function()
-    local hl = vim.api.nvim_set_hl
-    hl(0, 'TelescopePromptPrefix', { link = 'diffRemoved' })
+    -- local hl = vim.api.nvim_set_hl
+    -- hl(0, 'TelescopePromptPrefix', { link = 'diffRemoved' })
 end
 
 local search_visual_selection = function()
@@ -60,8 +60,18 @@ local telescope = {
         }
         return {
             defaults = {
-                border = nil,
-                borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
+                border = {
+                    prompt = { 1, 1, 1, 1 },
+                    results = { 1, 1, 1, 1 },
+                    preview = { 1, 1, 1, 1 },
+                },
+                borderchars = {
+                    prompt = { ' ', ' ', '─', '│', '│', ' ', '─', '╰' },
+                    results = { '─', ' ', ' ', '│', '╭', '─', ' ', '│' },
+                    preview = { '─', '│', '─', '│', '┬', '╮', '╯', '┴' },
+                },
+                -- border = 'rounded',
+                -- borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
                 color_devicons = true,
                 file_ignore_patterns = { '^.git' },
                 -- file_sorter = require('telescope.sorters').get_fuzzy_file,
@@ -85,7 +95,8 @@ local telescope = {
                 layout_strategy = 'horizontal',
                 mappings = mappings,
                 path_display = { shorten = { len = 1, exclude = { -1 } } },
-                prompt_prefix = '   ',
+                prompt_prefix = '▍',
+                selection_caret = '▍',
                 selection_strategy = 'reset',
                 set_env = { ['COLORTERM'] = 'truecolor' },
                 winblend = 0,
