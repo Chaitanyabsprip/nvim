@@ -56,6 +56,7 @@ local highlight = {
     Headline4 = { fg = 'gold', bg = 'base', bold = true },
     Headline5 = { fg = 'pine', bg = 'base', bold = true },
     Headline6 = { fg = 'love', bg = 'base', bold = true },
+    LspInlayHint = { fg = 'highlight_med', bg = 'base', blend = 0 },
 }
 
 ---@class Colorscheme
