@@ -1,13 +1,7 @@
 local config = require 'config.theme'
 local name = 'rosepine'
 
----@type string
-local base
-if config.transparent then
-    base = 'none'
-else
-    base = '#0f111a'
-end
+local base = '#0f111a'
 local border = '#403d52'
 local highlight = {
     ColorColumn = { bg = '#1c1a30' },
@@ -64,7 +58,7 @@ local highlight = {
     Headline4 = { fg = 'gold', bg = 'base', bold = true },
     Headline5 = { fg = 'pine', bg = 'base', bold = true },
     Headline6 = { fg = 'love', bg = 'base', bold = true },
-    LspInlayHint = { fg = 'highlight_med', bg = 'none', blend = 0 },
+    LspInlayHint = { fg = 'highlight_med', bg = 'base', blend = 0 },
 }
 
 ---@class Colorscheme
@@ -81,8 +75,8 @@ local rosepine = {
             disable_float_background = true,
             highlight_groups = highlight,
             before_highlight = function(group, highlights, palette)
-                if group == 'LspInlayHint' then highlights.blend = nil end
                 if highlights.bg == palette.base then highlights.bg = base end
+                if group == 'LspInlayHint' then highlights.blend = nil end
             end,
         }
     end,
