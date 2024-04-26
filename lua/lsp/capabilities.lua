@@ -108,7 +108,13 @@ capabilities.implementation = {
 
 capabilities.inlay_hints = {
     name = 'textDocument/inlayHint',
-    callback = function(_, bufnr) vim.lsp.inlay_hint.enable(true, { bufnr = bufnr }) end,
+    callback = function(_, bufnr)
+        local function toggle_inlay_hints()
+            local ihint = vim.lsp.inlay_hint
+            ihint.enable(not ihint.is_enabled(bufnr), { bufnr = bufnr })
+        end
+        nnoremap '<leader>ti'(toggle_inlay_hints)(opts(bufnr)) 'Toggle inlay hints'
+    end,
 }
 
 capabilities.range_formatting = {
