@@ -1,7 +1,7 @@
 vim.opt.background = 'dark'
 return {
     theme = 'rosepine',
-    transparent = true,
+    transparent = false,
     hide_eob = true,
     strings = {},
     sidebars = {
