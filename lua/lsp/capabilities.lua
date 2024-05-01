@@ -95,7 +95,6 @@ capabilities.formatting = {
 capabilities.hover = {
     name = 'textDocument/hover',
     callback = function(_, bufnr)
-        nnoremap 'K'(lsp.hover)(opts(bufnr)) 'Show hover info of symbol under cursor'
     end,
 }
 

@@ -7,13 +7,6 @@ editing.bigfiles = {
     opts = {},
 }
 
-editing.comment = {
-    'echasnovski/mini.comment',
-    version = '*',
-    event = { 'BufReadPost' },
-    opts = {},
-}
-
 editing.eyeliner = {
     'jinh0/eyeliner.nvim',
     event = 'BufReadPre',
@@ -105,7 +98,6 @@ editing.ufo = {
 }
 
 editing.spec = {
-    editing.comment,
     editing.eyeliner,
     editing.surround,
     editing.ufo,
