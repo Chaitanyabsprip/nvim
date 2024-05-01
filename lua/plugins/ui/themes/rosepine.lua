@@ -59,6 +59,7 @@ local highlight = {
     TelescopePreviewTitle = { fg = 'base', bg = 'iris' },
     TelescopePromptTitle = { fg = 'base', bg = 'love' },
     TelescopeResultsTitle = { fg = 'base', bg = 'foam' },
+    NonText = { fg = 'highlight_low' },
     NotifyBackground = { bg = 'base' },
     NotifyDEBUGBorder = make_border(),
     NotifyERRORBorder = make_border 'love',
