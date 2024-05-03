@@ -116,7 +116,7 @@ return {
                 function(builtins)
                     return {
                         builtins.formatting.golines.with {
-                            extra_args = { '--max-len=80', '--base-formatter=gofumpt' },
+                            extra_args = { '--max-len=100', '--base-formatter=gofumpt' },
                         },
                     }
                 end,
