@@ -1,75 +1,155 @@
-local golang = {}
 local extend = require('plugins.lsp').extend
 
-golang.treesitter = {
-    'nvim-treesitter/nvim-treesitter',
-    opts = function(_, opts)
-        opts.ensure_installed = opts.ensure_installed or {}
-        vim.list_extend(opts.ensure_installed, { 'go', 'gomod', 'gowork', 'gotmpl' })
-    end,
-}
-
-golang.plugin = {
-    'ray-x/go.nvim',
-    dependencies = {
-        'neovim/nvim-lspconfig',
-        'nvim-treesitter/nvim-treesitter',
-    },
-    keys = {
-        { '<leader>gfi', '<cmd>GoIfErr<cr>', noremap = true, desc = 'Go: Autofill If-err block' },
-        {
-            '<leader>gfs',
-            '<cmd>GoFillStruct<cr>',
-            noremap = true,
-            desc = 'Go: Autofill Struct with fields',
+return {
+    {
+        'jeniasaigak/goplay.nvim',
+        opts = {
+            -- a name of the directory under GOPATH/src where the
+            -- playground will be saved
+            playgroundDirName = 'playground',
+            -- a name of the directory under GOPATH/src where the temporary playground will be
+            -- saved. This option is used when you need to execute a file
+            tempPlaygroundDirName = 'tmp_playground',
         },
-        {
-            '<leader>gfw',
-            '<cmd>GoFillSwitch<cr>',
-            noremap = true,
-            desc = 'Go: Autofill Switch with cases',
-        },
-        {
-            '<leader>gfp',
-            'GoFixPlurals',
-            noremap = true,
-            desc = 'Go: Auto collate plural params with same type',
+        cmd = { 'GPOpen', 'GPToggle', 'GPClear' },
+        keys = {
+            { '<leader>gpo', '<cmd>GPOpen<cr>', noremap = true, silent = true },
+            { '<leader>gpt', '<cmd>GPToggle<cr>', noremap = true, silent = true },
+            { '<leader>gpe', '<cmd>GPExec<cr>', noremap = true, silent = true },
+            { '<leader>gpf', '<cmd>GPExecFile<cr>', noremap = true, silent = true },
         },
     },
-    opts = function()
-        local config = extend {
-            root = { 'go.mod', 'go.work' },
-            settings = {
-                gopls = {
-                    -- gofumpt = true,
-                    analyses = {
-                        unusedparams = true,
-                        nilness = true,
-                        unusedwrite = true,
-                        useany = true,
-                        unusedvariable = true,
+    {
+        'ray-x/go.nvim',
+        dependencies = {
+            'ray-x/guihua.lua',
+            'neovim/nvim-lspconfig',
+            'nvim-treesitter/nvim-treesitter',
+        },
+        lazy = false,
+        cond = function()
+            local stat = vim.loop.fs_stat
+            return stat 'go.mod' or stat 'go.work' or stat '.golang'
+        end,
+        build = ':lua require("go.install").update_all_sync()',
+        keys = {
+            {
+                '<leader>gfi',
+                '<cmd>GoIfErr<cr>',
+                noremap = true,
+                desc = 'Go: Autofill If-err block',
+            },
+            {
+                '<leader>gfs',
+                '<cmd>GoFillStruct<cr>',
+                noremap = true,
+                desc = 'Go: Autofill Struct with fields',
+            },
+            {
+                '<leader>gfw',
+                '<cmd>GoFillSwitch<cr>',
+                noremap = true,
+                desc = 'Go: Autofill Switch with cases',
+            },
+            {
+                '<leader>gfp',
+                'GoFixPlurals',
+                noremap = true,
+                desc = 'Go: Auto collate plural params with same type',
+            },
+        },
+        config = function()
+            local capabilities = require 'lsp.capabilities'
+            local ogcb = capabilities.formatting.callback
+            vim.schedule(function() capabilities.formatting.callback = ogcb end)
+            capabilities.formatting.callback = function(bufnr, _)
+                vim.api.nvim_create_autocmd('BufWritePre', {
+                    group = vim.api.nvim_create_augroup('auto_format', { clear = true }),
+                    buffer = bufnr,
+                    callback = function() require('go.format').goimports() end,
+                })
+            end
+            local config = extend {
+                root = { 'go.mod', 'go.work' },
+                settings = {
+                    gopls = {
+                        gofumpt = true,
+                        analyses = {
+                            unusedparams = true,
+                            nilness = true,
+                            unusedwrite = true,
+                            useany = true,
+                            unusedvariable = true,
+                        },
+                        completeUnimported = true,
+                        staticcheck = true,
+                        usePlaceholders = true,
                     },
-                    completeUnimported = true,
-                    staticcheck = true,
-                    usePlaceholders = true,
+                },
+            }
+            require('go').setup {
+                dap_debug_keymap = false,
+                dap_debug_ui = false,
+                dap_debug_vt = false,
+                gofmt = 'gofumpt',
+                goimports = 'goimports',
+                lsp_gofumpt = true,
+                lsp_keymaps = false,
+                lsp_inlay_hints = { enable = false },
+                lsp_cfg = config,
+                lsp_on_attach = config.on_attach,
+                luasnip = true,
+            }
+            local nullls = require 'null-ls'
+            nullls.register(require('go.null_ls').gotest())
+            nullls.register(require('go.null_ls').gotest_action())
+            nullls.register(require('go.null_ls').golangci_lint())
+        end,
+    },
+    {
+        'nvimtools/none-ls.nvim',
+        ft = { 'json' },
+        opts = function(_, opts)
+            opts.sources = opts.sources or {}
+            vim.list_extend(opts.sources, {
+                function(builtins) return { builtins.diagnostics.revive } end,
+                function(builtins)
+                    return {
+                        builtins.formatting.golines.with {
+                            extra_args = { '--max-len=80', '--base-formatter=gofumpt' },
+                        },
+                    }
+                end,
+            })
+        end,
+    },
+    {
+        'williamboman/mason.nvim',
+        opts = function(_, opts)
+            opts.ensure_installed = opts.ensure_installed or {}
+            vim.list_extend(opts.ensure_installed, { 'revive' })
+        end,
+    },
+    {
+        'nvim-neotest/neotest',
+        dependencies = {
+            'nvim-neotest/neotest-go',
+        },
+        opts = {
+            adapters = {
+                ['neotest-go'] = {
+                    -- Here we can set options for neotest-go, e.g.
+                    -- args = { "-tags=integration" }
+                    recursive_run = true,
                 },
             },
-        }
-        return {
-            gofmt = 'gofumpt',
-            lsp_gofumpt = true,
-            lsp_keymaps = false,
-            lsp_inlay_hints = { enable = false },
-            lsp_cfg = true,
-            lsp_on_attach = config.on_attach,
-        }
-    end,
-    lazy = false,
-    cond = function()
-        local stat = vim.loop.fs_stat
-        return stat 'go.mod' or stat 'go.work' or stat '.golang'
-    end,
-    build = ':lua require("go.install").update_all_sync()',
+        },
+    },
+    {
+        'nvim-treesitter/nvim-treesitter',
+        opts = function(_, opts)
+            opts.ensure_installed = opts.ensure_installed or {}
+            vim.list_extend(opts.ensure_installed, { 'go', 'gomod', 'gowork', 'gotmpl' })
+        end,
+    },
 }
-golang.spec = { golang.plugin }
-return golang.spec
