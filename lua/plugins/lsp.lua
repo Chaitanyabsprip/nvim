@@ -90,7 +90,7 @@ lsp.lspconfig = {
     config = function(_, opts)
         local lspconfig = require 'lspconfig'
         ---@diagnostic disable-next-line: no-unknown
-        for i, server in pairs(opts.servers) do
+        for _, server in pairs(opts.servers) do
             server(lspconfig)
         end
     end,

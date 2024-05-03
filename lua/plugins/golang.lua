@@ -110,8 +110,9 @@ return {
         'nvimtools/none-ls.nvim',
         ft = { 'json' },
         opts = function(_, opts)
-            opts.sources = opts.sources or {}
-            vim.list_extend(opts.sources, {
+            require('config.lazy').extend_opts_list(
+                opts,
+                'sources',
                 function(builtins) return { builtins.diagnostics.revive } end,
                 function(builtins)
                     return {
@@ -119,15 +120,14 @@ return {
                             extra_args = { '--max-len=100', '--base-formatter=gofumpt' },
                         },
                     }
-                end,
-            })
+                end
+            )
         end,
     },
     {
         'williamboman/mason.nvim',
         opts = function(_, opts)
-            opts.ensure_installed = opts.ensure_installed or {}
-            vim.list_extend(opts.ensure_installed, { 'revive' })
+            require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'revive')
         end,
     },
     {
@@ -148,8 +148,14 @@ return {
     {
         'nvim-treesitter/nvim-treesitter',
         opts = function(_, opts)
-            opts.ensure_installed = opts.ensure_installed or {}
-            vim.list_extend(opts.ensure_installed, { 'go', 'gomod', 'gowork', 'gotmpl' })
+            require('config.lazy').extend_opts_list(
+                opts,
+                'ensure_installed',
+                'go',
+                'gomod',
+                'gowork',
+                'gotmpl'
+            )
         end,
     },
 }

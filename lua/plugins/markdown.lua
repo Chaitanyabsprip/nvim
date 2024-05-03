@@ -19,17 +19,24 @@ return {
     {
         'nvim-treesitter/nvim-treesitter',
         opts = function(_, opts)
-            opts.ensure_installed = opts.ensure_installed or {}
-            vim.list_extend(opts.ensure_installed, { 'markdown', 'markdown_inline' })
+            require('config.lazy').extend_opts_list(
+                opts,
+                'ensure_installed',
+                'markdown',
+                'markdown_inline'
+            )
         end,
     },
     {
         'williamboman/mason.nvim',
         opts = function(_, opts)
-            opts.ensure_installed = opts.ensure_installed or {}
-            vim.list_extend(
-                opts.ensure_installed,
-                { 'ltex-ls', 'markdownlint', 'marksman', 'codespell' }
+            require('config.lazy').extend_opts_list(
+                opts,
+                'ensure_installed',
+                'ltex-ls',
+                'markdownlint',
+                'marksman',
+                'codespell'
             )
         end,
     },
@@ -37,8 +44,9 @@ return {
         'nvimtools/none-ls.nvim',
         ft = { 'markdown', 'md', 'rmd', 'rst' },
         opts = function(_, opts)
-            opts.sources = opts.sources or {}
-            vim.list_extend(opts.sources, {
+            require('config.lazy').extend_opts_list(
+                opts,
+                'sources',
                 function(builtins)
                     return {
                         builtins.formatting.markdownlint,
@@ -46,8 +54,8 @@ return {
                         builtins.diagnostics.codespell.with { filetypes = { 'markdown' } },
                         builtins.hover.dictionary,
                     }
-                end,
-            })
+                end
+            )
         end,
     },
     { 'neovim/nvim-lspconfig', opts = { servers = { marksman = marksman, ltex = ltex } } },

@@ -8,17 +8,25 @@ return {
     {
         'nvim-treesitter/nvim-treesitter',
         opts = function(_, opts)
-            opts.ensure_installed = opts.ensure_installed or {}
-            vim.list_extend(opts.ensure_installed, { 'bash', 'fish', 'ssh_config' })
+            require('config.lazy').extend_opts_list(
+                opts,
+                'ensure_installed',
+                'bash',
+                'fish',
+                'ssh_config'
+            )
         end,
     },
     {
         'williamboman/mason.nvim',
         opts = function(_, opts)
-            opts.ensure_installed = opts.ensure_installed or {}
-            vim.list_extend(
-                opts.ensure_installed,
-                { 'bash-language-server', 'shfmt', 'shellcheck', 'awk-language-server' }
+            require('config.lazy').extend_opts_list(
+                opts,
+                'ensure_installed',
+                'bash-language-server',
+                'shfmt',
+                'shellcheck',
+                'awk-language-server'
             )
         end,
     },
@@ -26,16 +34,17 @@ return {
         'nvimtools/none-ls.nvim',
         ft = { 'bash', 'fish', 'sh', 'zsh' },
         opts = function(_, opts)
-            opts.sources = opts.sources or {}
-            vim.list_extend(opts.sources, {
+            require('config.lazy').extend_opts_list(
+                opts,
+                'sources',
                 function(builtins)
                     return {
                         builtins.diagnostics.zsh,
                         builtins.formatting.fish_indent,
                         builtins.formatting.shfmt.with { filetypes = { 'zsh', 'bash', 'sh' } },
                     }
-                end,
-            })
+                end
+            )
         end,
     },
     { 'neovim/nvim-lspconfig', opts = { servers = { bashls = bashls, awkls = awkls } } },

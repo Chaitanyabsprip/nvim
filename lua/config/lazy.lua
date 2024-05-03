@@ -57,4 +57,10 @@ plugin.setup = function()
     })
 end
 
+function plugin.extend_opts_list(opts, key, ...)
+    opts[key] = opts[key] or {}
+    vim.list_extend(opts[key], { ... })
+    return opts[key]
+end
+
 return plugin

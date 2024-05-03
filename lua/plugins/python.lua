@@ -39,29 +39,31 @@ return {
     {
         'nvim-treesitter/nvim-treesitter',
         opts = function(_, opts)
-            opts.ensure_installed = opts.ensure_installed or {}
-            vim.list_extend(opts.ensure_installed, {
+            require('config.lazy').extend_opts_list(
+                opts,
+                'ensure_installed',
                 'python',
                 'toml',
                 'rst',
                 'ninja',
                 'markdown',
-                'markdown_inline',
-            })
+                'markdown_inline'
+            )
         end,
     },
     {
         'williamboman/mason.nvim',
         opts = function(_, opts)
-            opts.ensure_installed = opts.ensure_installed or {}
-            vim.list_extend(opts.ensure_installed, {
+            require('config.lazy').extend_opts_list(
+                opts,
+                'ensure_installed',
                 'pyright', -- LSP for python
                 'ruff-lsp', -- linter for python (includes flake8, pep8, etc.)
                 'debugpy', -- debugger
                 'black', -- formatter
                 'isort', -- organize imports
-                'taplo', -- LSP for toml (for pyproject.toml files)
-            })
+                'taplo' -- LSP for toml (for pyproject.toml files)
+            )
         end,
         -- config = function(_, opts)
         --     require('mason').setup(opts)
@@ -112,15 +114,16 @@ return {
         'nvimtools/none-ls.nvim',
         ft = { 'python' },
         opts = function(_, opts)
-            opts.sources = opts.sources or {}
-            vim.list_extend(opts.sources, {
+            require('config.lazy').extend_opts_list(
+                opts,
+                'sources',
                 function(builtins)
                     return {
                         builtins.formatting.black.with { extra_args = { '--quiet', '-l', '80' } },
                         builtins.formatting.isort.with { extra_args = { '--quiet' } },
                     }
-                end,
-            })
+                end
+            )
         end,
     },
     {
