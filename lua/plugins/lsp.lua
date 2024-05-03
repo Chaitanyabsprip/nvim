@@ -96,7 +96,7 @@ lsp.lspconfig = {
     end,
 }
 
----@return table
+---@return LspConfig
 local function extend(config)
     local get_capabilities = require('plugins.completion').get_capabilities
     local def_root = { '.git', '.gitignore', vim.fn.getcwd() }
@@ -107,10 +107,10 @@ local function extend(config)
         roots = vim.list_extend(def_root, config.root or {})
     end
     config.root = nil
-    local lsp = require 'lsp'
+    local l = require 'lsp'
     local lspconfig = require 'lspconfig'
     local defaults = {
-        on_attach = lsp.on_attach,
+        on_attach = l.on_attach,
         capabilities = get_capabilities(),
         root_dir = lspconfig.util.root_pattern(unpack(roots)),
     }

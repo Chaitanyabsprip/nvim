@@ -9,3 +9,8 @@ vim = require 'vim.fn'
 vim.lsp = require 'vim.lsp'
 vim.treesitter = require 'vim.treesitter'
 vim.highlight = require 'vim.highlight'
+
+---@class LspConfig
+---@field capabilities  lsp.ClientCapabilities
+---@field on_attach  vim.lsp.client.on_attach_cb
+---@field root_dir function
