@@ -100,10 +100,10 @@ return {
                 lsp_on_attach = config.on_attach,
                 luasnip = true,
             }
-            local nullls = require 'null-ls'
-            nullls.register(require('go.null_ls').gotest())
-            nullls.register(require('go.null_ls').gotest_action())
-            nullls.register(require('go.null_ls').golangci_lint())
+            -- local nullls = require 'null-ls'
+            -- nullls.register(require('go.null_ls').gotest())
+            -- nullls.register(require('go.null_ls').gotest_action())
+            -- nullls.register(require('go.null_ls').golangci_lint())
         end,
     },
     {
