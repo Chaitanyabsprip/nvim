@@ -7,6 +7,7 @@ local function awkls(lspconfig) lspconfig.awk_ls.setup(extend {}) end
 return {
     {
         'nvim-treesitter/nvim-treesitter',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
@@ -19,6 +20,7 @@ return {
     },
     {
         'williamboman/mason.nvim',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
@@ -33,6 +35,7 @@ return {
     {
         'nvimtools/none-ls.nvim',
         ft = { 'bash', 'fish', 'sh', 'zsh' },
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
@@ -47,6 +50,10 @@ return {
             )
         end,
     },
-    { 'neovim/nvim-lspconfig', opts = { servers = { bashls = bashls, awkls = awkls } } },
+    {
+        'neovim/nvim-lspconfig',
+        optional = true,
+        opts = { servers = { bashls = bashls, awkls = awkls } },
+    },
     { 'dag/vim-fish', ft = 'fish', cond = function() return vim.loop.fs_stat 'config.fish' end },
 }

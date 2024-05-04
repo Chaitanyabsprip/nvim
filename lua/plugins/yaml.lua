@@ -19,12 +19,14 @@ end
 return {
     {
         'nvim-treesitter/nvim-treesitter',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'yaml')
         end,
     },
     {
         'williamboman/mason.nvim',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
@@ -38,6 +40,7 @@ return {
     {
         'nvimtools/none-ls.nvim',
         ft = { 'yaml', 'yaml.docker-compose' },
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
@@ -48,5 +51,5 @@ return {
             )
         end,
     },
-    { 'neovim/nvim-lspconfig', opts = { servers = { yamlls = yamlls } } },
+    { 'neovim/nvim-lspconfig', optional = true, opts = { servers = { yamlls = yamlls } } },
 }

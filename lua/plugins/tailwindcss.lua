@@ -5,6 +5,7 @@ local function tailwindcssls(lspconfig) lspconfig.tailwindcss.setup(extend {}) e
 return {
     {
         'williamboman/mason.nvim',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
@@ -13,5 +14,9 @@ return {
             )
         end,
     },
-    { 'neovim/nvim-lspconfig', opts = { servers = { tailwindcssls = tailwindcssls } } },
+    {
+        'neovim/nvim-lspconfig',
+        optional = true,
+        opts = { servers = { tailwindcssls = tailwindcssls } },
+    },
 }

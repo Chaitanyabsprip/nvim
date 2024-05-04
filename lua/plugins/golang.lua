@@ -108,7 +108,8 @@ return {
     },
     {
         'nvimtools/none-ls.nvim',
-        ft = { 'json' },
+        ft = { 'go' },
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
@@ -126,27 +127,22 @@ return {
     },
     {
         'williamboman/mason.nvim',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'revive')
         end,
     },
     {
         'nvim-neotest/neotest',
+        optional = true,
         dependencies = {
             'nvim-neotest/neotest-go',
         },
-        opts = {
-            adapters = {
-                ['neotest-go'] = {
-                    -- Here we can set options for neotest-go, e.g.
-                    -- args = { "-tags=integration" }
-                    recursive_run = true,
-                },
-            },
-        },
+        opts = { adapters = { ['neotest-go'] = { recursive_run = true } } },
     },
     {
         'nvim-treesitter/nvim-treesitter',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,

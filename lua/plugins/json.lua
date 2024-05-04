@@ -15,12 +15,14 @@ end
 return {
     {
         'nvim-treesitter/nvim-treesitter',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'json')
         end,
     },
     {
         'williamboman/mason.nvim',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
@@ -30,9 +32,10 @@ return {
             )
         end,
     },
-    { 'neovim/nvim-lspconfig', opts = { servers = { jsonls = jsonls } } },
+    { 'neovim/nvim-lspconfig', optional = true, opts = { servers = { jsonls = jsonls } } },
     {
         'nvimtools/none-ls.nvim',
+        optional = true,
         ft = { 'json' },
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(

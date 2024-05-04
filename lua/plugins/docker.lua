@@ -5,12 +5,14 @@ local function dockerls(lspconfig) lspconfig.dockerls.setup(extend { root = { '.
 return {
     {
         'nvim-treesitter/nvim-treesitter',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'dockerfile')
         end,
     },
     {
         'williamboman/mason.nvim',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,

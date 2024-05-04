@@ -18,6 +18,7 @@ end
 return {
     {
         'nvim-treesitter/nvim-treesitter',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
@@ -29,6 +30,7 @@ return {
     },
     {
         'williamboman/mason.nvim',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
@@ -42,6 +44,7 @@ return {
     },
     {
         'nvimtools/none-ls.nvim',
+        optional = true,
         ft = { 'markdown', 'md', 'rmd', 'rst' },
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
@@ -58,7 +61,11 @@ return {
             )
         end,
     },
-    { 'neovim/nvim-lspconfig', opts = { servers = { marksman = marksman, ltex = ltex } } },
+    {
+        'neovim/nvim-lspconfig',
+        optional = true,
+        opts = { servers = { marksman = marksman, ltex = ltex } },
+    },
     {
         'lukas-reineke/headlines.nvim',
         ft = { 'markdown', 'md', 'rmd', 'rst' },

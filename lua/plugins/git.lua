@@ -117,6 +117,7 @@ git.git_conflict = {
 git.spec = {
     {
         'nvim-treesitter/nvim-treesitter',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,

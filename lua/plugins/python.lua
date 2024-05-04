@@ -38,6 +38,7 @@ end
 return {
     {
         'nvim-treesitter/nvim-treesitter',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
@@ -53,6 +54,7 @@ return {
     },
     {
         'williamboman/mason.nvim',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
@@ -113,6 +115,7 @@ return {
     {
         'nvimtools/none-ls.nvim',
         ft = { 'python' },
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
@@ -128,6 +131,7 @@ return {
     },
     {
         'neovim/nvim-lspconfig',
+        optional = true,
         opts = { servers = { python = python, ruff = ruff, taplo = taplo } },
     },
 }

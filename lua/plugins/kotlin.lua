@@ -10,12 +10,14 @@ return {
     { 'udalov/kotlin-vim' },
     {
         'nvim-treesitter/nvim-treesitter',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'kotlin')
         end,
     },
     {
         'williamboman/mason.nvim',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
@@ -26,6 +28,7 @@ return {
     },
     {
         'neovim/nvim-lspconfig',
+        optional = true,
         opts = { servers = { kotlin_language_server = kotlin_language_server } },
     },
 }

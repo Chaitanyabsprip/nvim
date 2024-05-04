@@ -46,6 +46,7 @@ end
 return {
     {
         'nvim-treesitter/nvim-treesitter',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
@@ -58,6 +59,7 @@ return {
     },
     {
         'williamboman/mason.nvim',
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'stylua')
         end,
@@ -65,6 +67,7 @@ return {
     {
         'nvimtools/none-ls.nvim',
         ft = { 'lua' },
+        optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
