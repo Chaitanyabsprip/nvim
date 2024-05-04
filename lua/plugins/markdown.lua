@@ -53,7 +53,9 @@ return {
                 function(builtins)
                     return {
                         builtins.formatting.markdownlint,
-                        builtins.diagnostics.markdownlint,
+                        builtins.diagnostics.markdownlint.with {
+                            extra_args = { '--disable', 'MD024' },
+                        },
                         builtins.diagnostics.codespell.with { filetypes = { 'markdown' } },
                         builtins.hover.dictionary,
                     }
