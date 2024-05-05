@@ -1,11 +1,5 @@
 ; extends
 
-; (assignment
-;     left: (identifier) @_id
-;     right: (goRawString (String) @injection.content)
-;     (#match? @_id "py")
-;     (#set! injection.language "python"))
-
 ((short_var_declaration
     left: (expression_list
             (identifier) @_var)
