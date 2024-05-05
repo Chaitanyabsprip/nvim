@@ -151,7 +151,7 @@ keymaps.setup = function()
         return '<cmd>setlocal ' .. (rnu and 'no' or '') .. 'rnu<cr>'
     end) { expr = true } 'Toggle relative line number'
     nnoremap 'ge' '?```<cr>jV/```<cr>k!emso<cr>:noh<cr>' 'Run shell code within markdown code snippet'
-    cowboy { 'oil', 'qf', 'help', 'noice', 'lazy' }
+    cowboy { 'oil', 'qf', 'help', 'noice', 'lazy', 'tsplayground' }
 end
 
 -- " " Copy to clipboard
