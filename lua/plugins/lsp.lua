@@ -25,12 +25,6 @@ lsp.code_actions = {
     },
 }
 
-lsp.diagflow = {
-    'dgagn/diagflow.nvim',
-    event = 'LspAttach',
-    opts = { scope = 'line', padding_top = 1 },
-}
-
 lsp.mason = {
     'williamboman/mason.nvim',
     dependencies = { 'RubixDev/mason-update-all' },
@@ -117,7 +111,6 @@ end
 lsp.spec = {
     extend = extend,
     lsp.code_actions,
-    lsp.diagflow,
     lsp.mason,
     lsp.mason_lspconfig,
     lsp.mason_nulls,
