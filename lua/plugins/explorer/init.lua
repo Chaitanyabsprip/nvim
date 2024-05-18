@@ -104,7 +104,7 @@ explorer.oil = {
     cmd = { 'Oil', 'Explorer' },
     opts = function()
         vim.api.nvim_create_user_command('Explorer', function()
-            if vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(0), 'filetype') == 'oil' then
+            if vim.bo[vim.api.nvim_win_get_buf(0)].filetype == 'oil' then
                 require('oil').close()
             else
                 return require('oil').open()
