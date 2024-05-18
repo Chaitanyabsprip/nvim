@@ -45,6 +45,7 @@ local function setup_keymaps(bufnr, gs)
     noremap { 'o', 'x' } 'ih' ':<C-U>Gitsigns select_hunk<CR>' { bufnr = bufnr } 'Git: Select hunk'
 end
 
+---@type LazyPluginSpec
 git.gitsigns = {
     'lewis6991/gitsigns.nvim',
     cond = is_git_repo,
@@ -102,6 +103,7 @@ git.gitsigns = {
     end,
 }
 
+---@type LazyPluginSpec
 git.git_conflict = {
     'akinsho/git-conflict.nvim',
     version = '*',
@@ -115,6 +117,7 @@ git.git_conflict = {
 }
 
 git.spec = {
+    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,

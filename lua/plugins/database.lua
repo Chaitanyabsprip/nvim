@@ -1,4 +1,5 @@
 return {
+    ---@type LazyPluginSpec
     {
         'kndndrj/nvim-dbee',
         dependencies = {

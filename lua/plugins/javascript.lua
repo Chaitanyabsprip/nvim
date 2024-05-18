@@ -3,6 +3,7 @@ local extend = require('plugins.lsp').extend
 local function tsserverls(lspconfig) lspconfig.tsserver.setup(extend {}) end
 
 return {
+    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,
@@ -16,6 +17,7 @@ return {
             )
         end,
     },
+    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         optional = true,
@@ -28,7 +30,13 @@ return {
             )
         end,
     },
-    { 'neovim/nvim-lspconfig', optional = true, opts = { servers = { tsserverls = tsserverls } } },
+    ---@type LazyPluginSpec
+    {
+        'neovim/nvim-lspconfig',
+        optional = true,
+        opts = { servers = { tsserverls = tsserverls } },
+    },
+    ---@type LazyPluginSpec
     {
         'nvimtools/none-ls.nvim',
         optional = true,

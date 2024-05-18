@@ -44,6 +44,7 @@ local function lua_ls(lspconfig)
     lspconfig.lua_ls.setup(config)
 end
 return {
+    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,
@@ -57,6 +58,7 @@ return {
             )
         end,
     },
+    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         optional = true,
@@ -64,6 +66,7 @@ return {
             require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'stylua')
         end,
     },
+    ---@type LazyPluginSpec
     {
         'nvimtools/none-ls.nvim',
         ft = { 'lua' },
@@ -76,5 +79,6 @@ return {
             )
         end,
     },
+    ---@type LazyPluginSpec
     { 'neovim/nvim-lspconfig', opts = { servers = { lua_ls = lua_ls } } },
 }

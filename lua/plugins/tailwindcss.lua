@@ -3,6 +3,7 @@ local extend = require('plugins.lsp').extend
 local function tailwindcssls(lspconfig) lspconfig.tailwindcss.setup(extend {}) end
 
 return {
+    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         optional = true,
@@ -14,6 +15,7 @@ return {
             )
         end,
     },
+    ---@type LazyPluginSpec
     {
         'neovim/nvim-lspconfig',
         optional = true,

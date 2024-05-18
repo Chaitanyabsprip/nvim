@@ -7,7 +7,9 @@ local function kotlin_language_server(lspconfig)
 end
 
 return {
+    ---@type LazyPluginSpec
     { 'udalov/kotlin-vim' },
+    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,
@@ -15,6 +17,7 @@ return {
             require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'kotlin')
         end,
     },
+    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         optional = true,
@@ -26,6 +29,7 @@ return {
             )
         end,
     },
+    ---@type LazyPluginSpec
     {
         'neovim/nvim-lspconfig',
         optional = true,

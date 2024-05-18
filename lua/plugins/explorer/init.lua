@@ -1,5 +1,6 @@
 local explorer = {}
 
+---@type LazyPluginSpec
 explorer.better_qf = {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
@@ -10,6 +11,7 @@ explorer.better_qf = {
     },
 }
 
+---@type LazyPluginSpec
 explorer.harpoon2 = {
     'ThePrimeagen/harpoon',
     branch = 'harpoon2',
@@ -89,6 +91,7 @@ explorer.harpoon2 = {
     end,
 }
 
+---@type LazyPluginSpec
 explorer.oil = {
     'stevearc/oil.nvim',
     lazy = (function()
@@ -147,8 +150,8 @@ explorer.oil = {
             use_default_keymaps = false, -- Set to false to disable all of the above keymaps
             view_options = {
                 show_hidden = true, -- Show files and directories that start with "."
-                is_hidden_file = function(name, bufnr) return vim.startswith(name, '.') end,
-                is_always_hidden = function(name, bufnr) return false end,
+                is_hidden_file = function(name, _) return vim.startswith(name, '.') end,
+                is_always_hidden = function(_, _) return false end,
                 sort = { { 'type', 'asc' }, { 'name', 'asc' } }, -- see :help oil-columns to see sortable cols
             },
             float = {
@@ -202,12 +205,14 @@ explorer.oil = {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
 }
 
+---@type LazyPluginSpec
 explorer.pretty_qf = {
     'yorickpeterse/nvim-pqf',
     event = 'Filetype qf',
     opts = {},
 }
 
+---@type LazyPluginSpec
 explorer.cartographer = {
     -- 'Chaitanyabsprip/cartographer',
     url = os.getenv 'HOME' .. '/projects/cartographer',

@@ -17,6 +17,7 @@ local function yamlls(lspconfig)
 end
 
 return {
+    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,
@@ -24,6 +25,7 @@ return {
             require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'yaml')
         end,
     },
+    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         optional = true,
@@ -37,6 +39,7 @@ return {
             )
         end,
     },
+    ---@type LazyPluginSpec
     {
         'nvimtools/none-ls.nvim',
         ft = { 'yaml', 'yaml.docker-compose' },
@@ -51,5 +54,10 @@ return {
             )
         end,
     },
-    { 'neovim/nvim-lspconfig', optional = true, opts = { servers = { yamlls = yamlls } } },
+    ---@type LazyPluginSpec
+    {
+        'neovim/nvim-lspconfig',
+        optional = true,
+        opts = { servers = { yamlls = yamlls } },
+    },
 }

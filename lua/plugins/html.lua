@@ -24,6 +24,7 @@ local function emmetls(lspconfig)
 end
 
 return {
+    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,
@@ -31,6 +32,7 @@ return {
             require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'html')
         end,
     },
+    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         optional = true,
@@ -43,6 +45,7 @@ return {
             )
         end,
     },
+    ---@type LazyPluginSpec
     {
         'neovim/nvim-lspconfig',
         optional = true,

@@ -1,8 +1,5 @@
 ---@diagnostic disable: no-unknown
-local highlight_overrides = function()
-    -- local hl = vim.api.nvim_set_hl
-    -- hl(0, 'TelescopePromptPrefix', { link = 'diffRemoved' })
-end
+local highlight_overrides = function() end
 
 local search_visual_selection = function()
     local search_term = require('utils').get_visual_selection()
@@ -32,9 +29,9 @@ local setup_keymaps = function()
     ) 'Telescope: grep and filter'
 end
 
+---@type LazyPluginSpec
 local telescope = {
     'nvim-telescope/telescope.nvim',
-    -- tag = '0.1.2',
     branch = '0.1.x',
     dependencies = {
         'nvim-lua/plenary.nvim',

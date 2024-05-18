@@ -32,9 +32,10 @@ local function integrate_telescope()
     )
 end
 
+---@type LazyPluginSpec
 M.spec = {
     'akinsho/flutter-tools.nvim',
-    cond = function() return vim.loop.fs_stat 'pubspec.yaml' end,
+    cond = function() return vim.loop.fs_stat 'pubspec.yaml' ~= nil end,
     event = 'VeryLazy',
     -- ft = { 'dart', 'yaml' },
     opts = function()

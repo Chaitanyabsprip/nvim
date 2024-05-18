@@ -5,6 +5,7 @@ end
 local function awkls(lspconfig) lspconfig.awk_ls.setup(extend {}) end
 
 return {
+    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,
@@ -18,6 +19,7 @@ return {
             )
         end,
     },
+    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         optional = true,
@@ -32,6 +34,7 @@ return {
             )
         end,
     },
+    ---@type LazyPluginSpec
     {
         'nvimtools/none-ls.nvim',
         ft = { 'bash', 'fish', 'sh', 'zsh' },
@@ -50,10 +53,16 @@ return {
             )
         end,
     },
+    ---@type LazyPluginSpec
     {
         'neovim/nvim-lspconfig',
         optional = true,
         opts = { servers = { bashls = bashls, awkls = awkls } },
     },
-    { 'dag/vim-fish', ft = 'fish', cond = function() return vim.loop.fs_stat 'config.fish' end },
+    ---@type LazyPluginSpec
+    {
+        'dag/vim-fish',
+        ft = 'fish',
+        cond = function() return vim.loop.fs_stat 'config.fish' end,
+    },
 }

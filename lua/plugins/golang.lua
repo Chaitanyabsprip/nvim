@@ -1,6 +1,7 @@
 local extend = require('plugins.lsp').extend
 
 return {
+    ---@type LazyPluginSpec
     {
         'jeniasaigak/goplay.nvim',
         opts = {
@@ -19,6 +20,7 @@ return {
             { '<leader>gpf', '<cmd>GPExecFile<cr>', noremap = true, silent = true },
         },
     },
+    ---@type LazyPluginSpec
     {
         'ray-x/go.nvim',
         dependencies = {
@@ -106,6 +108,7 @@ return {
             -- nullls.register(require('go.null_ls').golangci_lint())
         end,
     },
+    ---@type LazyPluginSpec
     {
         'nvimtools/none-ls.nvim',
         ft = { 'go' },
@@ -125,6 +128,7 @@ return {
             )
         end,
     },
+    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         optional = true,
@@ -132,6 +136,7 @@ return {
             require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'revive')
         end,
     },
+    ---@type LazyPluginSpec
     {
         'nvim-neotest/neotest',
         optional = true,
@@ -140,6 +145,7 @@ return {
         },
         opts = { adapters = { ['neotest-go'] = { recursive_run = true } } },
     },
+    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,

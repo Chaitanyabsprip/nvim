@@ -1,5 +1,6 @@
 ---@diagnostic disable: no-unknown
 return {
+    ---@type LazyPluginSpec
     {
         'nvim-neotest/neotest',
         dependencies = {

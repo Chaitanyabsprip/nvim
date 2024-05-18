@@ -1,5 +1,6 @@
 local ui = {}
 
+---@type LazyPluginSpec
 ui.noice = {
     'folke/noice.nvim',
     dependencies = {
@@ -67,6 +68,7 @@ ui.noice = {
     },
 }
 
+---@type LazyPluginSpec
 ui.statuscolumn = {
     'luukvbaal/statuscol.nvim',
     event = 'VeryLazy',
@@ -127,6 +129,7 @@ ui.statuscolumn = {
     end,
 }
 
+---@type LazyPluginSpec
 ui.treesitter = {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
@@ -148,6 +151,7 @@ ui.treesitter = {
     end,
 }
 
+---@type LazyPluginSpec
 ui.textobjects = {
     'nvim-treesitter/nvim-treesitter-textobjects',
     event = 'BufReadPre',
@@ -260,6 +264,7 @@ ui.textobjects = {
     },
 }
 
+---@type LazyPluginSpec
 ui.treesitter_playground = {
     'nvim-treesitter/playground',
     keys = {

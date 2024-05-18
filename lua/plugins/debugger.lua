@@ -1,6 +1,7 @@
 local debugger = {}
 
 debugger.dap = {
+    ---@type LazyPluginSpec
     spec = {
         'mfussenegger/nvim-dap',
         config = function()
@@ -76,6 +77,7 @@ debugger.dap = {
 }
 
 debugger.ui = {
+    ---@type LazyPluginSpec
     spec = {
         'rcarriga/nvim-dap-ui',
         keys = {

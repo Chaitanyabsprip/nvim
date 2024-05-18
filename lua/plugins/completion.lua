@@ -1,7 +1,7 @@
 ---@diagnostic disable: no-unknown
 local completion = {}
 
----@class LazyPluginSpec
+---@type LazyPluginSpec
 completion.luasnip = {
     'L3MON4D3/LuaSnip',
     build = 'make install_jsregexp',
@@ -26,7 +26,7 @@ completion.luasnip = {
     end,
 }
 
----@class LazyPluginSpec
+---@type LazyPluginSpec
 completion.cmp = {
     'hrsh7th/nvim-cmp',
     event = { 'InsertEnter', 'CmdlineEnter' },

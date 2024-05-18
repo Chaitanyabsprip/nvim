@@ -16,6 +16,7 @@ local function htmxls(lspconfig)
 end
 
 return {
+    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,
@@ -23,6 +24,7 @@ return {
             require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'html')
         end,
     },
+    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         optional = true,
@@ -30,6 +32,7 @@ return {
             require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'htmx-lsp')
         end,
     },
+    ---@type LazyPluginSpec
     {
         'neovim/nvim-lspconfig',
         optional = true,

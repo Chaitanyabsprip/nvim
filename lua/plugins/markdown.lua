@@ -16,6 +16,7 @@ local function ltex(lspconfig)
     })
 end
 return {
+    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,
@@ -28,6 +29,7 @@ return {
             )
         end,
     },
+    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         optional = true,
@@ -42,6 +44,7 @@ return {
             )
         end,
     },
+    ---@type LazyPluginSpec
     {
         'nvimtools/none-ls.nvim',
         optional = true,
@@ -63,11 +66,13 @@ return {
             )
         end,
     },
+    ---@type LazyPluginSpec
     {
         'neovim/nvim-lspconfig',
         optional = true,
         opts = { servers = { marksman = marksman, ltex = ltex } },
     },
+    ---@type LazyPluginSpec
     {
         'lukas-reineke/headlines.nvim',
         ft = { 'markdown', 'md', 'rmd', 'rst' },

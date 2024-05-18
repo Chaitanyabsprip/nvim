@@ -1,6 +1,7 @@
 ---@diagnostic disable: no-unknown
 local lsp = {}
 
+---@type LazyPluginSpec
 lsp.code_actions = {
     'Chaitanyabsprip/lsp-fastaction.nvim',
     opts = {
@@ -25,31 +26,37 @@ lsp.code_actions = {
     },
 }
 
+---@type LazyPluginSpec
 lsp.mason = {
     'williamboman/mason.nvim',
     dependencies = { 'RubixDev/mason-update-all' },
 }
 
+---@type LazyPluginSpec
 lsp.mason_dap = {
     'jay-babu/mason-nvim-dap.nvim',
     dependencies = { 'williamboman/mason.nvim' },
     opts = {},
 }
 
+---@type LazyPluginSpec
 lsp.mason_lspconfig = {
     'williamboman/mason-lspconfig.nvim',
     dependencies = { 'williamboman/mason.nvim' },
     opts = { automatic_installation = true },
 }
 
+---@type LazyPluginSpec
 lsp.mason_nulls = {
     'jay-babu/mason-null-ls.nvim',
     dependencies = { 'williamboman/mason.nvim' },
     opts = { ensure_installed = nil, automatic_installation = true },
 }
 
+---@type LazyPluginSpec
 lsp.mason_update = { 'RubixDev/mason-update-all', opts = {} }
 
+---@type LazyPluginSpec
 lsp.null = {
     'nvimtools/none-ls.nvim',
     dependencies = { 'jay-babu/mason-null-ls.nvim' },
@@ -69,6 +76,7 @@ lsp.null = {
     end,
 }
 
+---@type LazyPluginSpec
 lsp.lspconfig = {
     'neovim/nvim-lspconfig',
     event = { 'BufReadPre', 'BufNewFile' },

@@ -1,5 +1,6 @@
 local tools = {}
 
+---@type LazyPluginSpec
 tools.colorizer = {
     'NvChad/nvim-colorizer.lua',
     cmd = { 'ColorizerAttachToBuffer', 'ColorizerToggle' },
@@ -18,6 +19,7 @@ tools.colorizer = {
     },
 }
 
+---@type LazyPluginSpec
 tools.peek = {
     'toppair/peek.nvim',
     build = 'deno task --quiet build:fast',
@@ -38,12 +40,14 @@ tools.peek = {
     opts = { app = 'browser' },
 }
 
+---@type LazyPluginSpec
 tools.startuptime = {
     'dstein64/vim-startuptime',
     config = function() vim.g.startuptime_tries = 50 end,
     cmd = 'StartupTime',
 }
 
+---@type LazyPluginSpec
 tools.rest = {
     'rest-nvim/rest.nvim',
     ft = 'http',
@@ -76,6 +80,7 @@ tools.rest = {
     end,
 }
 
+---@type LazyPluginSpec
 tools.hurl = {
     'jellydn/hurl.nvim',
     dependencies = {
