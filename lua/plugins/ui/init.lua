@@ -8,18 +8,33 @@ ui.noice = {
         {
             'rcarriga/nvim-notify',
             opts = {
-                max_height = function() return math.floor(vim.o.lines * 0.75) end,
-                max_width = function() return math.floor(vim.o.columns * 0.75) end,
+                max_height = function() return math.floor(vim.o.lines * 0.35) end,
+                max_width = function() return math.floor(vim.o.columns * 0.35) end,
                 render = 'compact',
-                top_down = false,
-                background_colour = '#000000',
+                background_colour = '#0f111a',
             },
+        },
+        {
+            'nvim-treesitter/nvim-treesitter',
+            opts = function(_, opts)
+                require('config.lazy').extend_opts_list(
+                    opts,
+                    'bash',
+                    'lua',
+                    'markdown',
+                    'markdown_inline',
+                    'regex',
+                    'vim'
+                )
+            end,
         },
     },
     event = 'VeryLazy',
     opts = {
         cmdline = {
+            view = 'cmdline',
             format = {
+                cmdline = { icon = '▍' },
                 substitute = {
                     pattern = '^:%%?s/',
                     icon = ' ',
@@ -36,6 +51,7 @@ ui.noice = {
                 ['cmp.entry.get_documentation'] = true,
             },
             message = { view = 'mini' },
+            hover = { opts = { win_options = { winhighlight = { Normal = 'NormalFloat' } } } },
         },
         presets = {
             bottom_search = true,
@@ -53,8 +69,8 @@ ui.noice = {
         views = {
             notify = { win_options = { winblend = 0 } },
             mini = {
-                align = 'message-center',
-                position = { col = '50%' },
+                -- align = 'message-center',
+                -- position = { col = '50%' },
                 win_options = { winhighlight = {}, winblend = 0 },
             },
             popup = { position = { row = '23', col = '50%' } },

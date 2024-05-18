@@ -45,6 +45,7 @@ local highlight = {
     CmpItemKindUnit = { fg = 'base', bg = 'pine' },
     CmpItemKindValue = { fg = 'base', bg = 'rose' },
     CmpItemKindVariable = { fg = 'base', bg = 'foam' },
+    FloatBorder = { fg = border, bg = 'base' },
     StatusLine = { fg = 'highlight_med', bg = hlt },
     TelescopeBorder = { fg = border, bg = 'base' },
     TelescopeNormal = { bg = 'base', fg = 'muted' },
