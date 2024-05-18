@@ -7,6 +7,7 @@ local function get_qf_diagnostics(bufnr, severity)
     return d.toqflist(d.get(bufnr, { severity = severity }))
 end
 
+---@param qf_item QfItem
 local function jump_to_location(qf_item)
     local api = vim.api
     local bufnr = qf_item.bufnr
@@ -19,12 +20,14 @@ local function jump_to_location(qf_item)
 end
 
 local function set_list(items, scope, action)
-    action = action or ' '
+    action = action or ''
+    ---@type {title: string, items: QfItem[]}
+    local what = { title = scope .. ' Diagnostics', items = items }
     if scope == 'Document' then
-        vim.fn.setloclist(0, {}, action, { title = scope .. ' Diagnostics', items = items })
+        vim.fn.setloclist(0, {}, action, what)
         vim.api.nvim_command 'botright lopen'
     else
-        vim.fn.setqflist({}, action, { title = scope .. ' Diagnostics', items = items })
+        vim.fn.setqflist({}, action, what)
         vim.api.nvim_command 'botright copen'
     end
 end
@@ -33,8 +36,12 @@ local function get_diagnostics(bufnr, severity)
     return function()
         local items = get_qf_diagnostics(bufnr, severity)
         local scope = bufnr and 'Document' or 'Workspace'
+        local severity_name = (severity and (vim.diagnostic.severity[severity] .. ' ') or ''):lower()
         if #items == 0 then
-            return vim.notify('No diagnostics found in the ' .. scope, vim.log.levels.INFO)
+            return vim.notify(
+                'No ' .. severity_name .. 'diagnostics found in the ' .. scope,
+                vim.log.levels.INFO
+            )
         end
         if #items == 1 then return jump_to_location(items[1]) end
         vim.g.qf_source = 'diagnostics'
