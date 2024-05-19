@@ -96,10 +96,10 @@ keymaps.setup = function()
     xnoremap '_' '^' 'Jump to the start of the line'
     nnoremap '&' 'g_' 'Jump to the end of the line'
     xnoremap '&' 'g_' 'Jump to the end of the line'
-    nnoremap 'gh' '<c-w>h' 'Move to the window on the left'
-    nnoremap 'gl' '<c-w>l' 'Move to the window on the right'
-    nnoremap 'gj' '<c-w>j' 'Move to the window on the below'
-    nnoremap 'gk' '<c-w>k' 'Move to the window on the above'
+    -- nnoremap '<c-h>' '<c-w>h' 'Move to the window on the left'
+    -- nnoremap '<c-l>' '<c-w>l' 'Move to the window on the right'
+    -- nnoremap '<c-j>' '<c-w>j' 'Move to the window on the below'
+    -- nnoremap '<c-k>' '<c-w>k' 'Move to the window on the above'
     vnoremap 'J' ":m '>+1<cr>gv=gv" { silent = true } 'Move selected lines down'
     vnoremap 'K' ":m '<-2<cr>gv=gv" { silent = true } 'Move selected lines up'
     nnoremap 'X'(buf_kill) 'Close current buffer'
@@ -127,10 +127,10 @@ keymaps.setup = function()
     nnoremap '<leader>r' ':%s/\\<<c-r><c-w>\\>/<c-r><c-w>/gI<Left><Left><Left>' 'Search and replace, in current buffer, word under cursor'
     vnoremap '<leader>r' '"hy:%s/<C-r>h//gI<left><left><left>' 'Search and replace, in current buffer, visual selection'
     vnoremap '<leader>s' 'y:%s/<c-r>0/<c-r>0/gI<Left><Left><Left>' 'Search and modify, in current buffer, visual selection'
-    nnoremap '<leader>j' '<cmd>cnext<cr>zz' 'Jump to next result from quickfix'
-    nnoremap '<leader>k' '<cmd>cprev<cr>zz' 'Jump to prev result from quickfix'
-    nnoremap '<c-j>' '<c-o>' 'Jump back the jump list'
-    nnoremap '<c-k>' '<c-i>' 'Jump forward the jump list'
+    nnoremap 'gn' '<cmd>cnext<cr>zz' 'Jump to next result from quickfix'
+    nnoremap 'gp' '<cmd>cprev<cr>zz' 'Jump to prev result from quickfix'
+    nnoremap 'gj' '<c-o>' 'Jump back the jump list'
+    nnoremap 'gk' '<c-i>' 'Jump forward the jump list'
     cnoremap '<c-a>' '<Home>' 'Jump to the start of the command'
     cnoremap '<c-f>' '<c-Right>' 'Move cursor one character right'
     cnoremap '<c-b>' '<c-Left>' 'Move cursor one character left'
@@ -142,11 +142,11 @@ keymaps.setup = function()
     nnoremap 'gz'(toggle_win_zoom()) 'Toggle window zoom'
     local qf = require 'quickfix'
     nnoremap 'gb'(qf.buffers) 'Quickfix: List buffers'
-    nnoremap 'gn'(function()
+    nnoremap 'gtn'(function()
         local nu = vim.wo[api.nvim_get_current_win()].number
         return '<cmd>setlocal ' .. (nu and 'no' or '') .. 'nu<cr>'
     end) { expr = true } 'Toggle line number'
-    nnoremap 'gN'(function()
+    nnoremap 'gtN'(function()
         local rnu = vim.wo[api.nvim_get_current_win()].relativenumber
         return '<cmd>setlocal ' .. (rnu and 'no' or '') .. 'rnu<cr>'
     end) { expr = true } 'Toggle relative line number'

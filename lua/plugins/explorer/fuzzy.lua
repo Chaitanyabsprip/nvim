@@ -13,14 +13,14 @@ local setup_keymaps = function()
     local builtin = require 'telescope.builtin'
     local themes = require 'telescope.themes'
     local ivy = themes.get_ivy { layout_config = { height = 12 } }
-    local find_notes = function() builtin.fd { cwd = os.getenv 'HOME' .. '/Projects/Notes' } end
+    local find_notes = function() builtin.fd { cwd = os.getenv 'NOTESPATH' } end
     nnoremap '<leader>tht'(function() builtin.help_tags(ivy) end) 'Telescope: Help tags'
     nnoremap '<leader>thk'(function() builtin.keymaps(ivy) end) 'Telescope: Keymaps'
     nnoremap '<leader>thi'(builtin.highlights) 'Telescope: Higlights'
     nnoremap ';b'(builtin.git_branches) 'Telescope: Git Branches'
     nnoremap ';c'(builtin.git_status) 'Telescope: git changes'
     nnoremap '<leader><space>'(function() builtin.fd { hidden = true } end) 'Telescope: File Finder'
-    nnoremap '<leader>n'(find_notes) 'Telescope: Find notes'
+    nnoremap '<leader>fn'(find_notes) 'Telescope: Find notes'
     nnoremap 'go'(builtin.oldfiles) 'Telescope: oldfiles'
     nnoremap 'gW'(builtin.grep_string) 'Telescope: grep word under cursor'
     vnoremap 'gw'(search_visual_selection) 'Telescope: grep visual selection'
