@@ -57,9 +57,22 @@ plugin.setup = function()
     })
 end
 
+local function dedupe_list(list)
+    local seen = {}
+    local deduped = {}
+    for _, item in ipairs(list) do
+        if not seen[item] then
+            seen[item] = true
+            table.insert(deduped, item)
+        end
+    end
+    return deduped
+end
+
 function plugin.extend_opts_list(opts, key, ...)
     opts[key] = opts[key] or {}
     vim.list_extend(opts[key], { ... })
+    opts[key] = dedupe_list(opts[key])
     return opts[key]
 end
 
