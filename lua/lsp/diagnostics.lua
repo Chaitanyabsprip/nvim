@@ -20,7 +20,7 @@ local function jump_to_location(qf_item)
 end
 
 local function set_list(items, scope, action)
-    action = action or ''
+    action = action or ' '
     ---@type {title: string, items: QfItem[]}
     local what = { title = scope .. ' Diagnostics', items = items }
     if scope == 'Document' then
