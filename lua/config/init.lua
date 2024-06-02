@@ -96,6 +96,7 @@ config.options.setup = function()
     vim.go.grepprg = 'rg --vimgrep --no-heading --smart-case'
     vim.go.grepformat = '%f:%l:%c:%m'
 
+    vim.o.modeline = false
     vim.opt.termguicolors = true
     vim.o.clipboard = 'unnamedplus'
     vim.o.number = true
