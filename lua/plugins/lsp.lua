@@ -43,7 +43,7 @@ lsp.mason_dap = {
 lsp.mason_lspconfig = {
     'williamboman/mason-lspconfig.nvim',
     dependencies = { 'williamboman/mason.nvim' },
-    opts = { automatic_installation = true },
+    opts = { automatic_installation = false },
 }
 
 ---@type LazyPluginSpec
@@ -76,13 +76,70 @@ lsp.null = {
     end,
 }
 
+local function resolve_package(pkg_name)
+    local Optional = require 'mason-core.optional'
+    local registry = require 'mason-registry'
+
+    return Optional.of_nilable(pkg_name):map(function(package_name)
+        local ok, pkg = pcall(registry.get_package, package_name)
+        if ok then return pkg end
+    end)
+end
+
+function install(pkg, version)
+    vim.notify(('installing %s'):format(pkg.name), vim.log.levels.INFO)
+    return pkg:install({ version = version }):once(
+        'closed',
+        vim.schedule_wrap(function()
+            if pkg:is_installed() then
+                vim.notify(('%s was successfully installed'):format(pkg.name))
+            else
+                vim.notify(
+                    ('failed to install %s. Installation logs are available in :Mason and :MasonLog'):format(
+                        pkg.name
+                    ),
+                    vim.log.levels.ERROR
+                )
+            end
+        end)
+    )
+end
+
+local function mason_ensure_installed(opts)
+    for _, installable in ipairs(opts.ensure_installed) do
+        if installable then
+            local Package = require 'mason-core.package'
+            local Optional = require 'mason-core.optional'
+            local server_name, version = Package.Parse(installable)
+            local errmsg = 'Server %q is not a valid entry in ensure_installed.'
+            resolve_package(server_name)
+                :if_present(
+                    ---@param pkg Package
+                    function(pkg)
+                        if not pkg:is_installed() then install(pkg, version) end
+                    end
+                )
+                :if_not_present(
+                    function() vim.notify((errmsg):format(server_name), vim.log.levels.WARN) end
+                )
+        end
+    end
+end
+
 ---@type LazyPluginSpec
 lsp.lspconfig = {
     'neovim/nvim-lspconfig',
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
         { 'folke/neodev.nvim', opts = {} },
-        'williamboman/mason.nvim',
+        {
+            'williamboman/mason.nvim',
+            opts = { PATH = 'skip' },
+            config = function(_, opts)
+                require('mason').setup(opts)
+                mason_ensure_installed(opts)
+            end,
+        },
         'williamboman/mason-lspconfig.nvim',
     },
     config = function(_, opts)
