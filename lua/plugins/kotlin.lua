@@ -25,7 +25,7 @@ return {
             require('config.lazy').extend_opts_list(
                 opts,
                 'ensure_installed',
-                'kotlin_language_server'
+                'kotlin-language-server'
             )
         end,
     },
