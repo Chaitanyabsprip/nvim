@@ -133,7 +133,7 @@ return {
         'williamboman/mason.nvim',
         optional = true,
         opts = function(_, opts)
-            require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'revive')
+            require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'revive', 'gopls')
         end,
     },
     ---@type LazyPluginSpec
