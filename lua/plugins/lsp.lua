@@ -152,21 +152,21 @@ lsp.lspconfig = {
 }
 
 ---@return LspConfig
+---@param config LspConfig
 local function extend(config)
-    local get_capabilities = require('plugins.completion').get_capabilities
     local def_root = { '.git', '.gitignore', vim.fn.getcwd() }
     local roots
-    if config.override_root then
+    if config['override_root'] then
         roots = config.root
     else
         roots = vim.list_extend(def_root, config.root or {})
     end
-    config.root = nil
+    config['root'] = nil
     local l = require 'lsp'
     local lspconfig = require 'lspconfig'
     local defaults = {
         on_attach = l.on_attach,
-        capabilities = get_capabilities(),
+        capabilities = require('plugins.completion').get_capabilities(),
         root_dir = lspconfig.util.root_pattern(unpack(roots)),
     }
     local updated_config = vim.tbl_deep_extend('force', config, defaults)

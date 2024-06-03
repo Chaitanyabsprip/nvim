@@ -11,9 +11,11 @@ vim.treesitter = require 'vim.treesitter'
 vim.highlight = require 'vim.highlight'
 
 ---@class LspConfig
----@field capabilities  lsp.ClientCapabilities
----@field on_attach  vim.lsp.client.on_attach_cb
----@field root_dir function
+---@field capabilities?  lsp.ClientCapabilities
+---@field on_attach?  vim.lsp.client.on_attach_cb
+---@field root_dir? function
+---@field cmd? string[]
+---@field filetypes? string[]
 
 ---@class QfItem
 ---@field bufnr integer number of buffer that has the file name, use bufname() to get the name
