@@ -42,7 +42,9 @@ return {
     ---@type LazyPluginSpec
     {
         'nvimtools/none-ls.nvim',
-        ft = { 'yaml', 'yaml.docker-compose' },
+        ft = function(_, filetypes)
+            return vim.list_extend(filetypes, { 'yaml', 'yaml.docker-compose' })
+        end,
         optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(

@@ -29,6 +29,6 @@ return {
     {
         'nvimtools/none-ls.nvim',
         optional = true,
-        ft = { 'css', 'scss' },
+        ft = function(_, filetypes) return vim.list_extend(filetypes, { 'css', 'scss' }) end,
     },
 }

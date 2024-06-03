@@ -48,7 +48,9 @@ return {
     {
         'nvimtools/none-ls.nvim',
         optional = true,
-        ft = { 'markdown', 'md', 'rmd', 'rst' },
+        ft = function(_, filetypes)
+            return vim.list_extend(filetypes, { 'markdown', 'md', 'rmd', 'rst' })
+        end,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,

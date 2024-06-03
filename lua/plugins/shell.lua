@@ -37,7 +37,9 @@ return {
     ---@type LazyPluginSpec
     {
         'nvimtools/none-ls.nvim',
-        ft = { 'bash', 'fish', 'sh', 'zsh' },
+        ft = function(_, filetypes)
+            return vim.list_extend(filetypes, { 'bash', 'fish', 'sh', 'zsh' })
+        end,
         optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(

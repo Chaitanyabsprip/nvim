@@ -69,7 +69,7 @@ return {
     ---@type LazyPluginSpec
     {
         'nvimtools/none-ls.nvim',
-        ft = { 'lua' },
+        ft = function(_, filetypes) return vim.list_extend(filetypes, { 'lua' }) end,
         optional = true,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(

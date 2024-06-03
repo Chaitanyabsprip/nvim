@@ -40,7 +40,9 @@ return {
     {
         'nvimtools/none-ls.nvim',
         optional = true,
-        ft = { 'json' },
+        ft = function(_, filetypes)
+            return vim.list_extend(filetypes, { 'javascript', 'typescript' })
+        end,
         opts = function(_, opts)
             require('config.lazy').extend_opts_list(
                 opts,
