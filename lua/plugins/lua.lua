@@ -63,7 +63,12 @@ return {
         'williamboman/mason.nvim',
         optional = true,
         opts = function(_, opts)
-            require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'stylua')
+            require('config.lazy').extend_opts_list(
+                opts,
+                'ensure_installed',
+                'stylua',
+                'lua-language-server'
+            )
         end,
     },
     ---@type LazyPluginSpec
