@@ -166,6 +166,7 @@ config.options.setup = function()
         { tab = '| ', nbsp = '␣', trail = '•', extends = '⟩', precedes = '⟨', eol = '↲' }
     vim.opt.fillchars =
         { foldopen = '', foldclose = '', fold = ' ', foldsep = ' ', diff = '╱', eob = ' ' }
+    vim.opt.showcmdloc = 'statusline'
     config.filetype()
 end
 
