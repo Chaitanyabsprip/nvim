@@ -1,6 +1,6 @@
 local extend = require('plugins.lsp').extend
 
-local function tailwindcssls(lspconfig) lspconfig.tailwindcss.setup(extend {}) end
+local function tailwindcssls(lspconfig) lspconfig.tailwindcss.setup(extend { autostart = false }) end
 
 return {
     ---@type LazyPluginSpec
