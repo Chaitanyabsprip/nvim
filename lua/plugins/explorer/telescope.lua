@@ -30,7 +30,7 @@ local setup_keymaps = function()
 end
 
 ---@type LazyPluginSpec
-local telescope = {
+return {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
     dependencies = {
@@ -101,5 +101,3 @@ local telescope = {
         }
     end,
 }
-
-return telescope
