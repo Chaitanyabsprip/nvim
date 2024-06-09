@@ -1,6 +1,7 @@
 local extend = require('plugins.lsp').extend
 
 local function marksman(lspconfig) lspconfig.marksman.setup(extend { root = { '.marksman.toml' } }) end
+local function typos(lspconfig) lspconfig.typos_lsp.setup(extend {}) end
 local function ltex(lspconfig)
     lspconfig.ltex.setup(extend {
         settings = { ltex = { language = 'en' } },
@@ -38,9 +39,9 @@ return {
                 opts,
                 'ensure_installed',
                 'ltex-ls',
+                'typos-lsp',
                 'markdownlint',
-                'marksman',
-                'codespell'
+                'marksman'
             )
         end,
     },
@@ -61,7 +62,6 @@ return {
                         builtins.diagnostics.markdownlint.with {
                             extra_args = { '--disable', 'MD024' },
                         },
-                        builtins.diagnostics.codespell.with { filetypes = { 'markdown' } },
                         builtins.hover.dictionary,
                     }
                 end
@@ -72,7 +72,7 @@ return {
     {
         'neovim/nvim-lspconfig',
         optional = true,
-        opts = { servers = { marksman = marksman, ltex = ltex } },
+        opts = { servers = { marksman = marksman, ltex = ltex, typos = typos } },
     },
     ---@type LazyPluginSpec
     {
