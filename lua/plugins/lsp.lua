@@ -129,7 +129,7 @@ end
 ---@type LazyPluginSpec
 lsp.lspconfig = {
     'neovim/nvim-lspconfig',
-    event = { 'BufReadPre', 'BufNewFile' },
+    event = { 'User BufReadPreNotOil', 'BufNewFile' },
     dependencies = {
         { 'folke/neodev.nvim', opts = {} },
         {

@@ -24,6 +24,13 @@ function config.autocommands()
         end,
     })
 
+    autocmd('BufReadPre', {
+        callback = function()
+            if vim.bo.filetype == 'oil' then return end
+            vim.api.nvim_exec_autocmds('User', { pattern = 'BufReadPreNotOil', modeline = false })
+        end,
+    })
+
     local restore_fold = augroup 'restore fold state'
     autocmd('BufWinLeave', { group = restore_fold, pattern = '?*', command = 'mkview 1' })
     autocmd('BufWinEnter', { group = restore_fold, pattern = '?*', command = 'silent! loadview 1' })
