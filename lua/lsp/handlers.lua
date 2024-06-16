@@ -1,16 +1,13 @@
 local handlers = {}
 
 handlers.diagnostic = function()
+    local severity = vim.diagnostic.severity
     local signs = {
-        { name = 'DiagnosticSignError', text = '' },
-        { name = 'DiagnosticSignWarn', text = '' },
-        { name = 'DiagnosticSignHint', text = '' },
-        { name = 'DiagnosticSignInfo', text = '' },
+        [severity.ERROR] = '',
+        [severity.WARN] = '',
+        [severity.HINT] = '',
+        [severity.INFO] = '',
     }
-
-    for _, sign in ipairs(signs) do
-        vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
-    end
 
     return {
         name = 'textDocument/publishDiagnostics',
@@ -18,7 +15,7 @@ handlers.diagnostic = function()
         callback = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
             virtual_text = false,
             underline = true,
-            signs = { active = signs },
+            signs = { text = signs },
             update_in_insert = false,
             source = true,
             severity_sort = true,
