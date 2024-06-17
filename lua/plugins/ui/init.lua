@@ -30,6 +30,7 @@ ui.noice = {
         },
     },
     event = 'VeryLazy',
+    ---@type NoiceConfig
     opts = {
         cmdline = {
             view = 'cmdline',
@@ -41,6 +42,7 @@ ui.noice = {
                     ft = 'regex',
                     opts = { border = { text = { top = ' sub (old/new/) ' } } },
                 },
+                input = { view = 'cmdline_input', icon = '█' },
             },
         },
         messages = { view_search = 'mini' },
@@ -76,9 +78,11 @@ ui.noice = {
             popup = { position = { row = '23', col = '50%' } },
             popupmenu = { position = { row = '23', col = '50%' } },
             cmdline_popup = {
-                border = { style = 'none', padding = { 1, 1 } },
-                position = { row = '23', col = '50%' },
-                win_options = { winhighlight = { Normal = 'NormalFloat' } },
+                view = 'cmdline',
+                position = { row = '100%', col = 0 },
+                size = { height = 'auto', width = '100%' },
+                border = { style = { '', '', '', '', '', '', '', '' } },
+                text = nil,
             },
         },
     },

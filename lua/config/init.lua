@@ -14,7 +14,7 @@ function config.autocommands()
     })
 
     autocmd('TextYankPost', {
-        group = augroup 'higlight_yank',
+        group = augroup 'highlight_yank',
         callback = function()
             require('vim.highlight').on_yank {
                 higroup = 'Substitute',
