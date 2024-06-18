@@ -65,6 +65,17 @@ function config.autocommands()
         callback = function() require('search_highlight').setup() end,
     })
 
+    autocmd('LspAttach', {
+        group = augroup 'list-lsp-capabilities',
+        callback = function()
+            vim.api.nvim_create_user_command(
+                'LspCapabilities',
+                require('lsp').getLspCapabilities,
+                {}
+            )
+        end,
+    })
+
     local function update_lead()
         local lcs = vim.opt_local.listchars:get()
         local tab = vim.fn.str2list(lcs.tab)
