@@ -54,6 +54,15 @@ ui.noice = {
             },
             message = { view = 'mini' },
             hover = { opts = { win_options = { winhighlight = { Normal = 'NormalFloat' } } } },
+            signature = {
+                enabled = true,
+                auto_open = {
+                    enabled = true,
+                    trigger = true,
+                    luasnip = true,
+                    throttle = 50,
+                },
+            },
         },
         presets = {
             bottom_search = true,
