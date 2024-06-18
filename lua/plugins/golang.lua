@@ -1,7 +1,7 @@
 local extend = require('plugins.lsp').extend
 
+---@type LazyPluginSpec[]
 return {
-    ---@type LazyPluginSpec
     {
         'jeniasaigak/goplay.nvim',
         opts = {
@@ -20,7 +20,6 @@ return {
             { '<leader>gpf', '<cmd>GPExecFile<cr>', noremap = true, silent = true },
         },
     },
-    ---@type LazyPluginSpec
     {
         'ray-x/go.nvim',
         dependencies = {
@@ -108,7 +107,6 @@ return {
             -- nullls.register(require('go.null_ls').golangci_lint())
         end,
     },
-    ---@type LazyPluginSpec
     {
         'nvimtools/none-ls.nvim',
         ft = function(_, filetypes) return vim.list_extend(filetypes, { 'go' }) end,
@@ -128,15 +126,19 @@ return {
             )
         end,
     },
-    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         optional = true,
         opts = function(_, opts)
-            require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'revive', 'gopls')
+            require('config.lazy').extend_opts_list(
+                opts,
+                'ensure_installed',
+                'revive',
+                'gopls',
+                'delve'
+            )
         end,
     },
-    ---@type LazyPluginSpec
     {
         'nvim-neotest/neotest',
         optional = true,
@@ -145,7 +147,6 @@ return {
         },
         opts = { adapters = { ['neotest-go'] = { recursive_run = true } } },
     },
-    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,
@@ -160,4 +161,44 @@ return {
             )
         end,
     },
+    {
+        'leoluz/nvim-dap-go',
+        dependencies = { 'mfussenegger/nvim-dap' },
+        ft = 'go',
+        config = function() require('dap-go').setup() end,
+    },
+    -- {
+    --     'mfussenegger/nvim-dap',
+    --     opts = {
+    --         adapters = {
+    --             delve = {
+    --                 type = 'server',
+    --                 port = '${port}',
+    --                 executable = { command = 'dlv', args = { 'dap', '-l', '127.0.0.1:${port}' } },
+    --             },
+    --         },
+    --         configurations = {
+    --             {
+    --                 type = 'delve',
+    --                 name = 'Debug',
+    --                 request = 'launch',
+    --                 program = '${file}',
+    --             },
+    --             {
+    --                 type = 'delve',
+    --                 name = 'Debug test',
+    --                 request = 'launch',
+    --                 mode = 'test',
+    --                 program = '${file}',
+    --             },
+    --             {
+    --                 type = 'delve',
+    --                 name = 'Debug test (go.mod)',
+    --                 request = 'launch',
+    --                 mode = 'test',
+    --                 program = './${relativeFileDirname}',
+    --             },
+    --         },
+    --     },
+    -- },
 }

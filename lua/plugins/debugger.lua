@@ -4,7 +4,7 @@ debugger.dap = {
     ---@type LazyPluginSpec
     spec = {
         'mfussenegger/nvim-dap',
-        config = function()
+        config = function(_, opts)
             local icons = { bookmark = '', bug = '' } --   '󰠭'
             local dap = require 'dap'
             local sign = vim.fn.sign_define
@@ -21,6 +21,16 @@ debugger.dap = {
                 'DapStopped',
                 { texthl = 'DapStopped', text = icons.bookmark, linehl = '', numhl = 'DapStopped' }
             )
+
+            ---@diagnostic disable-next-line: no-unknown
+            for name, adapter in pairs(opts.adapters or {}) do
+                dap.adapters[name] = adapter
+            end
+            ---@diagnostic disable-next-line: no-unknown
+            for name, configuration in pairs(opts.configurations or {}) do
+                dap.configurations[name] = configuration
+            end
+
             local ui_ok, dapui = pcall(require, 'dapui')
             if not ui_ok then return end
             dap.listeners.before.event_exited['dapui_config'] = function()
@@ -30,9 +40,9 @@ debugger.dap = {
             dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
             dap.listeners.after.event_initialized['dapui_config'] = function()
                 dapui.open()
-                local opts = { silent = true, noremap = false }
+                local kopts = { silent = true, noremap = false }
                 require('hashish').nnoremap '<leader>K' '<cmd>lua require("dap.ui.variables").hover() <cr>'(
-                    opts
+                    kopts
                 ) 'dap: Show variable value'
             end
         end,
@@ -81,7 +91,7 @@ debugger.ui = {
     spec = {
         'rcarriga/nvim-dap-ui',
         keys = {
-            { '<c-h>', function() require('dapui').toggle() end, desc = 'Toggle debugger UI' },
+            { '<leader>du', function() require('dapui').toggle() end, desc = 'Toggle debugger UI' },
         },
         dependencies = { 'mfussenegger/nvim-dap', 'm00qek/baleia.nvim', 'nvim-neotest/nvim-nio' },
         config = function()
