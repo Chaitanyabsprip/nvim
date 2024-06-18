@@ -139,7 +139,9 @@ capabilities.rename = {
 
 capabilities.signature_help = {
     name = 'textDocument/signatureHelp',
-    callback = function() end,
+    callback = function()
+        vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { desc = 'Show signature help' })
+    end,
 }
 
 capabilities.symbol = {
