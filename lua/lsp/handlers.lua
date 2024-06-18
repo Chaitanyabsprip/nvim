@@ -1,3 +1,4 @@
+---@type table<string, fun(): {name: string, enabled: boolean, callback: function}?>
 local handlers = {}
 
 handlers.diagnostic = function()
@@ -12,24 +13,22 @@ handlers.diagnostic = function()
     return {
         name = 'textDocument/publishDiagnostics',
         enabled = true,
-        callback = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-            virtual_text = false,
-            underline = true,
-            signs = { text = signs },
-            update_in_insert = false,
-            source = true,
-            severity_sort = true,
-            float = {
-                focusable = false,
-                style = 'minimal',
-                border = 'rounded',
-                source = true,
-                header = 'Diagnostics',
-                prefix = function(diagnostic, i, _)
-                    return ' ' .. i .. '. ' .. diagnostic.source .. ': '
-                end,
-            },
-        }),
+        callback = function(err, result, ctx, config)
+            vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
+            vim.diagnostic.config {
+                underline = true,
+                virtual_text = false,
+                signs = { text = signs },
+                float = {
+                    border = 'single',
+                    source = true,
+                    header = 'Diagnostics',
+                    severity_sort = true,
+                },
+                update_in_insert = false,
+                severity_sort = true,
+            }
+        end,
     }
 end
 
@@ -72,6 +71,7 @@ handlers.resolve = function()
     for _, factory in pairs(handlers) do
         if _ ~= 'resolve' then
             local handler = factory()
+            if handler == nil then return end
             if handler.enabled then vim.lsp.handlers[handler.name] = handler.callback end
         end
     end
