@@ -26,7 +26,8 @@ capabilities.code_action = {
 
 capabilities.code_lens = {
     name = 'textDocument/codeLens',
-    callback = function(_, bufnr)
+    callback = function(client, bufnr)
+        if client.name ==  "null-ls" then return end
         autocmd({ 'BufEnter', 'InsertLeave', 'BufWritePost', 'CursorHold' }, {
             group = augroup 'lsp_codelens_refresh',
             buffer = bufnr,
