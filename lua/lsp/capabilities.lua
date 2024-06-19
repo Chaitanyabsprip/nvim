@@ -1,6 +1,6 @@
 ---@class Capability
 ---@field name string
----@field callback function
+---@field callback fun(client: vim.lsp.Client,bufnr: integer)
 
 ---@type table<string,Capability|function>
 local capabilities = {}
