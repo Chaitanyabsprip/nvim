@@ -26,12 +26,11 @@ capabilities.code_action = {
 
 capabilities.code_lens = {
     name = 'textDocument/codeLens',
-    callback = function(client, bufnr)
-        if client.name == 'null-ls' then return end
+    callback = function(_, bufnr)
         autocmd({ 'BufEnter', 'InsertLeave', 'BufWritePost', 'CursorHold' }, {
             group = augroup 'lsp_codelens_refresh',
             buffer = bufnr,
-            callback = function() vim.lsp.codelens.refresh() end,
+            callback = function() vim.lsp.codelens.refresh { bufnr = bufnr } end,
         })
     end,
 }
