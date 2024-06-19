@@ -51,15 +51,6 @@ git.gitsigns = {
     cond = is_git_repo,
     event = 'BufReadPre',
     opts = function()
-        local signs = { add = 'Add', change = 'Change', delete = 'Delete' }
-        ---@param sign string
-        ---@param text string|nil
-        ---@return table<string, string>
-        local sign = function(sign, text)
-            text = text or '▍'
-            local hl = 'GitSigns' .. sign
-            return { text = text, hl = hl, numhl = hl .. 'Nr', linehl = hl .. 'Ln' }
-        end
         local group = vim.api.nvim_create_augroup('cgitsigns', { clear = true })
         vim.api.nvim_create_autocmd('Filetype', {
             group = group,
@@ -83,12 +74,12 @@ git.gitsigns = {
         return {
             signcolumn = true,
             signs = {
-                add = sign(signs.add),
-                change = sign(signs.change),
-                delete = sign(signs.delete, '_'),
-                topdelete = sign(signs.delete, '‾'),
-                changedelete = sign(signs.change),
-                untracked = sign(signs.add, '▘'),
+                add = { text = '▍' },
+                change = { text = '▍' },
+                delete = { text = '_' },
+                topdelete = { text = '‾' },
+                changedelete = { text = '▍' },
+                untracked = { text = '▘' },
             },
             on_attach = function(bufnr) setup_keymaps(bufnr, gs) end,
             current_line_blame = true,
@@ -98,7 +89,7 @@ git.gitsigns = {
                 virt_text = true,
                 virt_text_pos = 'eol',
             },
-            current_line_blame_formatter_opts = { relative_time = true },
+            current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
         }
     end,
 }
