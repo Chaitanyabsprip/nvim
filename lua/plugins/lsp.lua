@@ -86,7 +86,7 @@ local function resolve_package(pkg_name)
     end)
 end
 
-function install(pkg, version)
+local function install(pkg, version)
     vim.notify(('installing %s'):format(pkg.name), vim.log.levels.INFO)
     return pkg:install({ version = version }):once(
         'closed',
@@ -109,7 +109,6 @@ local function mason_ensure_installed(opts)
     for _, installable in ipairs(opts.ensure_installed) do
         if installable then
             local Package = require 'mason-core.package'
-            local Optional = require 'mason-core.optional'
             local server_name, version = Package.Parse(installable)
             local errmsg = 'Server %q is not a valid entry in ensure_installed.'
             resolve_package(server_name)
