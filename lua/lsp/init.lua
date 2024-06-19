@@ -1,6 +1,6 @@
 local lsp = {}
 
-lsp.getLspCapabilities = function()
+lsp.listLspCapabilities = function()
     local curBuf = vim.api.nvim_get_current_buf()
     local clients = vim.lsp.get_clients { bufnr = curBuf }
 

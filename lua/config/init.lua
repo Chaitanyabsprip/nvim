@@ -70,7 +70,7 @@ function config.autocommands()
         callback = function()
             vim.api.nvim_create_user_command(
                 'LspCapabilities',
-                require('lsp').getLspCapabilities,
+                require('lsp').listLspCapabilities,
                 {}
             )
         end,
