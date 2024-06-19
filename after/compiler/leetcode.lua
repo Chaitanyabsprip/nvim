@@ -32,7 +32,7 @@ vim.api.nvim_create_user_command('Run', function()
     local window, _ = popup.open()
 
     local channel = vim.api.nvim_open_term(popup.buffer, {})
-    vim.api.nvim_win_set_option(window, 'number', false)
+    vim.wo[window].number = true
     local task = Task:new {
         './' .. stem,
         skip_validation = true,
