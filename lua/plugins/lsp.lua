@@ -40,23 +40,6 @@ lsp.mason_dap = {
 }
 
 ---@type LazyPluginSpec
-lsp.mason_lspconfig = {
-    'williamboman/mason-lspconfig.nvim',
-    dependencies = { 'williamboman/mason.nvim' },
-    opts = { automatic_installation = false },
-}
-
----@type LazyPluginSpec
-lsp.mason_nulls = {
-    'jay-babu/mason-null-ls.nvim',
-    dependencies = { 'williamboman/mason.nvim' },
-    opts = { ensure_installed = nil, automatic_installation = true },
-}
-
----@type LazyPluginSpec
-lsp.mason_update = { 'RubixDev/mason-update-all', opts = {} }
-
----@type LazyPluginSpec
 lsp.null = {
     'nvimtools/none-ls.nvim',
     dependencies = { 'jay-babu/mason-null-ls.nvim' },
@@ -176,9 +159,6 @@ lsp.spec = {
     extend = extend,
     lsp.code_actions,
     lsp.mason,
-    lsp.mason_lspconfig,
-    lsp.mason_nulls,
-    lsp.mason_update,
     lsp.null,
     lsp.lspconfig,
 }
