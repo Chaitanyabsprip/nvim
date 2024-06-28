@@ -167,38 +167,4 @@ return {
         ft = 'go',
         config = function() require('dap-go').setup() end,
     },
-    -- {
-    --     'mfussenegger/nvim-dap',
-    --     opts = {
-    --         adapters = {
-    --             delve = {
-    --                 type = 'server',
-    --                 port = '${port}',
-    --                 executable = { command = 'dlv', args = { 'dap', '-l', '127.0.0.1:${port}' } },
-    --             },
-    --         },
-    --         configurations = {
-    --             {
-    --                 type = 'delve',
-    --                 name = 'Debug',
-    --                 request = 'launch',
-    --                 program = '${file}',
-    --             },
-    --             {
-    --                 type = 'delve',
-    --                 name = 'Debug test',
-    --                 request = 'launch',
-    --                 mode = 'test',
-    --                 program = '${file}',
-    --             },
-    --             {
-    --                 type = 'delve',
-    --                 name = 'Debug test (go.mod)',
-    --                 request = 'launch',
-    --                 mode = 'test',
-    --                 program = './${relativeFileDirname}',
-    --             },
-    --         },
-    --     },
-    -- },
 }
