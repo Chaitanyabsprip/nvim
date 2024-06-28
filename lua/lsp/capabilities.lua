@@ -111,7 +111,7 @@ capabilities.inlay_hints = {
             local ihint = vim.lsp.inlay_hint
             ihint.enable(not ihint.is_enabled { bufnr = bufnr }, { bufnr = bufnr })
         end
-        nnoremap '<leader>ti'(toggle_inlay_hints)(opts(bufnr)) 'Toggle inlay hints'
+        nnoremap 'gti'(toggle_inlay_hints)(opts(bufnr)) 'Toggle inlay hints'
     end,
 }
 
