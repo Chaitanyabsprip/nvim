@@ -2,8 +2,8 @@ local extend = require('plugins.lsp').extend
 
 local function tsserverls(lspconfig) lspconfig.tsserver.setup(extend {}) end
 
+---@type LazyPluginSpec[]
 return {
-    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,
@@ -17,7 +17,6 @@ return {
             )
         end,
     },
-    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         optional = true,
@@ -26,17 +25,16 @@ return {
                 opts,
                 'ensure_installed',
                 'typescript-language-server',
-                'prettierd'
+                'prettierd',
+                'js-debug-adapter'
             )
         end,
     },
-    ---@type LazyPluginSpec
     {
         'neovim/nvim-lspconfig',
         optional = true,
         opts = { servers = { tsserverls = tsserverls } },
     },
-    ---@type LazyPluginSpec
     {
         'nvimtools/none-ls.nvim',
         optional = true,
@@ -50,5 +48,38 @@ return {
                 function(builtins) return { builtins.formatting.prettierd } end
             )
         end,
+    },
+    {
+        'pmizio/typescript-tools.nvim',
+        dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+        opts = {},
+        enabled = false,
+    },
+    {
+        'mfussenegger/nvim-dap',
+        opts = {
+            adapters = {
+                ['pwa-node'] = {
+                    type = 'server',
+                    host = 'localhost',
+                    port = '${port}',
+                    executable = {
+                        command = 'js-debug-adapter',
+                        args = { '${port}' },
+                    },
+                },
+            },
+            configurations = {
+                javascript = {
+                    {
+                        type = 'pwa-node',
+                        request = 'launch',
+                        name = 'Launch file',
+                        program = '${file}',
+                        cwd = '${workspaceFolder}',
+                    },
+                },
+            },
+        },
     },
 }
