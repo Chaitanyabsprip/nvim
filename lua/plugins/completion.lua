@@ -170,6 +170,24 @@ return {
             )
         end,
     },
+    -- {
+    --     'Exafunction/codeium.nvim',
+    --     dependencies = {
+    --         'nvim-lua/plenary.nvim',
+    --         'hrsh7th/nvim-cmp',
+    --     },
+    --     event = 'BufEnter',
+    --     opts = {
+    --         enable_chat = true,
+    --     },
+    --     config = function(_, opts)
+    --         require('codeium').setup(opts)
+    --         local cmp = require 'cmp'
+    --         local config = cmp.get_config()
+    --         table.insert(config.sources, { name = 'codeium' })
+    --         cmp.setup(config)
+    --     end,
+    -- },
     get_capabilities = function()
         local cmp_lsp = require 'cmp_nvim_lsp'
         local capabilities = require('lsp').capabilities()
