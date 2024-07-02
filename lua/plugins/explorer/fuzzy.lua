@@ -16,7 +16,7 @@ local setup_keymaps = function()
     local find_notes = function() builtin.fd { cwd = os.getenv 'NOTESPATH' } end
     nnoremap '<leader>tht'(function() builtin.help_tags(ivy) end) 'Telescope: Help tags'
     nnoremap '<leader>thk'(function() builtin.keymaps(ivy) end) 'Telescope: Keymaps'
-    nnoremap '<leader>thi'(builtin.highlights) 'Telescope: Higlights'
+    nnoremap '<leader>thi'(builtin.highlights) 'Telescope: Highlights'
     nnoremap ';b'(builtin.git_branches) 'Telescope: Git Branches'
     nnoremap ';c'(builtin.git_status) 'Telescope: git changes'
     nnoremap '<leader><space>'(function() builtin.fd { hidden = true } end) 'Telescope: File Finder'
@@ -38,7 +38,7 @@ local telescope = {
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     },
     cmd = { 'Telescope' },
-    keys = { '<leader><leader>', 'gw', 'gW' },
+    keys = { '<leader><leader>', 'gw', 'gW', 'go' },
     config = function(_, opts)
         require('telescope').setup(opts)
         setup_keymaps()
@@ -67,8 +67,6 @@ local telescope = {
                     results = { '─', ' ', ' ', '│', '╭', '─', ' ', '│' },
                     preview = { '─', '│', '─', '│', '┬', '╮', '╯', '┴' },
                 },
-                -- border = 'rounded',
-                -- borderchars = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
                 color_devicons = true,
                 file_ignore_patterns = { '^.git' },
                 -- file_sorter = require('telescope.sorters').get_fuzzy_file,
