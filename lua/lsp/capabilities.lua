@@ -27,7 +27,8 @@ capabilities.code_action = {
 capabilities.code_lens = {
     name = 'textDocument/codeLens',
     callback = function(_, bufnr)
-        autocmd({ 'BufEnter', 'InsertLeave', 'BufWritePost', 'CursorHold' }, {
+        nnoremap '<leader>l'(vim.lsp.codelens.run)(opts(bufnr)) 'Run codelens on current line'
+        autocmd({ 'BufEnter', 'InsertLeave', 'CursorHold' }, {
             group = augroup 'lsp_codelens_refresh',
             buffer = bufnr,
             callback = function() vim.lsp.codelens.refresh { bufnr = bufnr } end,
