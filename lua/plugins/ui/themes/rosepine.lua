@@ -60,6 +60,7 @@ local highlight = {
     TelescopePreviewTitle = { fg = 'base', bg = 'iris' },
     TelescopePromptTitle = { fg = 'base', bg = 'love' },
     TelescopeResultsTitle = { fg = 'base', bg = 'foam' },
+    FzfLuaPreviewBorder = { link = 'TelescopeBorder' },
     NonText = { fg = 'highlight_low' },
     NotifyBackground = { bg = 'base' },
     NotifyDEBUGBorder = make_border(),
