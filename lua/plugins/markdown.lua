@@ -2,20 +2,7 @@ local extend = require('plugins.lsp').extend
 
 local function marksman(lspconfig) lspconfig.marksman.setup(extend { root = { '.marksman.toml' } }) end
 local function typos(lspconfig) lspconfig.typos_lsp.setup(extend {}) end
-local function ltex(lspconfig)
-    lspconfig.ltex.setup(extend {
-        settings = { ltex = { language = 'en' } },
-        filetypes = {
-            'gitcommit',
-            'markdown',
-            'org',
-            'plaintex',
-            'rst',
-            'pandoc',
-            'rmd',
-        },
-    })
-end
+local function oxide(lspconfig) lspconfig.markdown_oxide.setup(extend {}) end
 return {
     ---@type LazyPluginSpec
     {
@@ -41,6 +28,7 @@ return {
                 'ltex-ls',
                 'typos-lsp',
                 'markdownlint',
+                'markdown-oxide',
                 'marksman'
             )
         end,
@@ -72,7 +60,7 @@ return {
     {
         'neovim/nvim-lspconfig',
         optional = true,
-        opts = { servers = { marksman = marksman, ltex = ltex, typos = typos } },
+        opts = { servers = { marksman = marksman, typos = typos, oxide = oxide } },
     },
     ---@type LazyPluginSpec
     {
