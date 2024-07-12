@@ -17,8 +17,8 @@ local lsp = vim.lsp.buf
 capabilities.code_action = {
     name = 'textDocument/codeAction',
     callback = function(_, bufnr)
-        nnoremap '<leader>a'(require('lsp-fastaction').code_action)(opts(bufnr)) 'Show code actions for the current cursor position'
-        vnoremap '<leader>a' '<esc><cmd>lua require("lsp-fastaction").range_code_action()<cr>'(
+        nnoremap '<leader>a'(require('fastaction').code_action)(opts(bufnr)) 'Show code actions for the current cursor position'
+        vnoremap '<leader>a' '<esc><cmd>lua require("fastaction").range_code_action()<cr>'(
             opts(bufnr)
         ) 'Show code actions for the current selection range'
     end,

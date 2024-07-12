@@ -1,63 +1,4 @@
 ---@diagnostic disable: no-unknown
-local lsp = {}
-
----@type LazyPluginSpec
-lsp.code_actions = {
-    'Chaitanyabsprip/lsp-fastaction.nvim',
-    opts = {
-        hide_cursor = true,
-        action_data = {
-            dart = {
-                { order = 1, pattern = 'import library', key = 'i' },
-                { order = 1, pattern = 'organize imports', key = 'o' },
-                { order = 1, pattern = 'relative imports everywhere', key = 'l' },
-                { order = 2, pattern = 'sort member', key = 's' },
-                { order = 2, pattern = 'wrap with widget', key = 'w' },
-                { order = 3, pattern = 'extract widget', key = 'x' },
-                { order = 4, pattern = 'column', key = 'c' },
-                { order = 4, pattern = 'extract method', key = 'e' },
-                { order = 4, pattern = 'padding', key = 'p' },
-                { order = 4, pattern = 'remove', key = 'r' },
-                { order = 4, pattern = 'wrap with padding', key = 'p' },
-                { order = 5, pattern = 'add', key = 'a' },
-                { order = 5, pattern = 'extract local', key = 'v' },
-            },
-        },
-    },
-}
-
----@type LazyPluginSpec
-lsp.mason = {
-    'williamboman/mason.nvim',
-    dependencies = { 'RubixDev/mason-update-all' },
-}
-
----@type LazyPluginSpec
-lsp.mason_dap = {
-    'jay-babu/mason-nvim-dap.nvim',
-    dependencies = { 'williamboman/mason.nvim' },
-    opts = {},
-}
-
----@type LazyPluginSpec
-lsp.null = {
-    'nvimtools/none-ls.nvim',
-    dependencies = { 'jay-babu/mason-null-ls.nvim' },
-    config = function(_, opts)
-        local get_capabilities = require('plugins.completion').get_capabilities
-        local builtins = require('null-ls').builtins
-        local sources = {}
-        for _, source_fn in pairs(opts.sources) do
-            vim.list_extend(sources, source_fn(builtins))
-        end
-        local config = {
-            on_attach = require('lsp').on_attach,
-            capabilities = get_capabilities(),
-            sources = sources,
-        }
-        require('null-ls').setup(config)
-    end,
-}
 
 local function resolve_package(pkg_name)
     local Optional = require 'mason-core.optional'
@@ -108,31 +49,6 @@ local function mason_ensure_installed(opts)
     end
 end
 
----@type LazyPluginSpec
-lsp.lspconfig = {
-    'neovim/nvim-lspconfig',
-    event = { 'User BufReadPreNotOil', 'BufNewFile' },
-    dependencies = {
-        { 'folke/neodev.nvim', opts = {} },
-        {
-            'williamboman/mason.nvim',
-            opts = { PATH = 'skip' },
-            config = function(_, opts)
-                require('mason').setup(opts)
-                mason_ensure_installed(opts)
-            end,
-        },
-        'williamboman/mason-lspconfig.nvim',
-    },
-    config = function(_, opts)
-        local lspconfig = require 'lspconfig'
-        ---@diagnostic disable-next-line: no-unknown
-        for _, server in pairs(opts.servers) do
-            server(lspconfig)
-        end
-    end,
-}
-
 ---@return LspConfig
 ---@param config LspConfig
 local function extend(config)
@@ -155,12 +71,78 @@ local function extend(config)
     return updated_config
 end
 
-lsp.spec = {
+---@type LazySpec[]
+return {
     extend = extend,
-    lsp.code_actions,
-    lsp.mason,
-    lsp.null,
-    lsp.lspconfig,
+    {
+        dir = '/home/chaitanya/projects/fastaction.nvim',
+        ---@type FastActionConfig
+        opts = {
+            priority = {
+                dart = {
+                    { order = 1, pattern = 'import library', key = 'i' },
+                    { order = 1, pattern = 'organize imports', key = 'o' },
+                    { order = 1, pattern = 'relative imports everywhere', key = 'l' },
+                    { order = 2, pattern = 'sort member', key = 's' },
+                    { order = 2, pattern = 'wrap with widget', key = 'w' },
+                    { order = 3, pattern = 'extract widget', key = 'x' },
+                    { order = 4, pattern = 'column', key = 'c' },
+                    { order = 4, pattern = 'extract method', key = 'e' },
+                    { order = 4, pattern = 'padding', key = 'p' },
+                    { order = 4, pattern = 'remove', key = 'r' },
+                    { order = 4, pattern = 'wrap with padding', key = 'p' },
+                    { order = 5, pattern = 'add', key = 'a' },
+                    { order = 5, pattern = 'extract local', key = 'v' },
+                },
+            },
+        },
+        lazy = false,
+        -- event = 'VeryLazy',
+        config = function(_, opts)
+            require('fastaction').setup(opts)
+            vim.ui.select = require('fastaction').select
+        end,
+    },
+    { 'williamboman/mason.nvim' },
+    {
+        'nvimtools/none-ls.nvim',
+        dependencies = { 'jay-babu/mason-null-ls.nvim' },
+        config = function(_, opts)
+            local get_capabilities = require('plugins.completion').get_capabilities
+            local builtins = require('null-ls').builtins
+            local sources = {}
+            for _, source_fn in pairs(opts.sources) do
+                vim.list_extend(sources, source_fn(builtins))
+            end
+            local config = {
+                on_attach = require('lsp').on_attach,
+                capabilities = get_capabilities(),
+                sources = sources,
+            }
+            require('null-ls').setup(config)
+        end,
+    },
+    {
+        'neovim/nvim-lspconfig',
+        event = { 'User BufReadPreNotOil', 'BufNewFile' },
+        dependencies = {
+            { 'folke/neodev.nvim', opts = {} },
+            {
+                'williamboman/mason.nvim',
+                opts = { PATH = 'skip' },
+                config = function(_, opts)
+                    require('mason').setup(opts)
+                    mason_ensure_installed(opts)
+                end,
+            },
+            'williamboman/mason-lspconfig.nvim',
+        },
+        config = function(_, opts)
+            local lspconfig = require 'lspconfig'
+            ---@diagnostic disable-next-line: no-unknown
+            for _, server in pairs(opts.servers) do
+                server(lspconfig)
+            end
+        end,
+    },
 }
-
-return lsp.spec
