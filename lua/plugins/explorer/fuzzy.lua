@@ -44,6 +44,7 @@ local telescope = {
         setup_keymaps()
         highlight_overrides()
     end,
+    enabled = false,
     opts = function()
         local actions = require 'telescope.actions'
         local mappings = {
