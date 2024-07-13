@@ -1,5 +1,3 @@
-local git = {}
-
 local hash = require 'hashish'
 local nnoremap = hash.nnoremap
 local noremap = hash.noremap
@@ -45,69 +43,7 @@ local function setup_keymaps(bufnr, gs)
     noremap { 'o', 'x' } 'ih' ':<C-U>Gitsigns select_hunk<CR>' { bufnr = bufnr } 'Git: Select hunk'
 end
 
----@type LazyPluginSpec
-git.gitsigns = {
-    'lewis6991/gitsigns.nvim',
-    cond = is_git_repo,
-    event = 'BufReadPre',
-    opts = function()
-        local group = vim.api.nvim_create_augroup('cgitsigns', { clear = true })
-        vim.api.nvim_create_autocmd('Filetype', {
-            group = group,
-            pattern = 'qf',
-            ---@param event {buf: integer}
-            callback = function(event)
-                local source = vim.g.qf_source
-                local target = (source == 'git-0' and 0) or (source == 'git-all' and 'all')
-                if target then
-                    nnoremap 's'(
-                        '<cr><cmd>cclose<cr><cmd>Gitsigns stage_hunk<cr><cmd>sleep 100m<cr><cmd>Gitsigns setqflist '
-                            .. target
-                            .. '<cr>'
-                    ) {
-                        bufnr = event.buf,
-                    } 'Git: Stage hunk from qf'
-                end
-            end,
-        })
-        local gs = require 'gitsigns'
-        return {
-            signcolumn = true,
-            signs = {
-                add = { text = '▍' },
-                change = { text = '▍' },
-                delete = { text = '_' },
-                topdelete = { text = '‾' },
-                changedelete = { text = '▍' },
-                untracked = { text = '▘' },
-            },
-            on_attach = function(bufnr) setup_keymaps(bufnr, gs) end,
-            current_line_blame = true,
-            current_line_blame_opts = {
-                delay = 700,
-                ignore_whitespace = false,
-                virt_text = true,
-                virt_text_pos = 'eol',
-            },
-            current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
-        }
-    end,
-}
-
----@type LazyPluginSpec
-git.git_conflict = {
-    'akinsho/git-conflict.nvim',
-    version = '*',
-    cond = is_git_repo,
-    event = 'BufReadPre',
-    cmd = 'GitConflictListQf',
-    opts = {
-        disable_diagnostics = true,
-        highlights = { incoming = 'DiffText', current = 'DiffAdd' },
-    },
-}
-
-git.spec = {
+return {
     ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
@@ -124,8 +60,73 @@ git.spec = {
             )
         end,
     },
-    git.git_conflict,
-    git.gitsigns,
+    {
+        'akinsho/git-conflict.nvim',
+        version = '*',
+        cond = is_git_repo,
+        event = 'BufReadPre',
+        cmd = 'GitConflictListQf',
+        opts = {
+            disable_diagnostics = true,
+            highlights = { incoming = 'DiffText', current = 'DiffAdd' },
+        },
+    },
+    {
+        'lewis6991/gitsigns.nvim',
+        cond = is_git_repo,
+        event = 'BufReadPre',
+        opts = function()
+            local group = vim.api.nvim_create_augroup('cgitsigns', { clear = true })
+            vim.api.nvim_create_autocmd('Filetype', {
+                group = group,
+                pattern = 'qf',
+                ---@param event {buf: integer}
+                callback = function(event)
+                    local source = vim.g.qf_source
+                    local target = (source == 'git-0' and 0) or (source == 'git-all' and 'all')
+                    if target then
+                        nnoremap 's'(
+                            '<cr><cmd>cclose<cr><cmd>Gitsigns stage_hunk<cr><cmd>sleep 100m<cr><cmd>Gitsigns setqflist '
+                                .. target
+                                .. '<cr>'
+                        ) {
+                            bufnr = event.buf,
+                        } 'Git: Stage hunk from qf'
+                    end
+                end,
+            })
+            local gs = require 'gitsigns'
+            return {
+                signcolumn = true,
+                signs = {
+                    add = { text = '▍' },
+                    change = { text = '▍' },
+                    delete = { text = '_' },
+                    topdelete = { text = '‾' },
+                    changedelete = { text = '▍' },
+                    untracked = { text = '▘' },
+                },
+                on_attach = function(bufnr) setup_keymaps(bufnr, gs) end,
+                current_line_blame = true,
+                current_line_blame_opts = {
+                    delay = 700,
+                    ignore_whitespace = false,
+                    virt_text = true,
+                    virt_text_pos = 'eol',
+                },
+                current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
+            }
+        end,
+    },
+    {
+        'nvimtools/none-ls.nvim',
+        optional = true,
+        opts = function(_, opts)
+            require('config.lazy').extend_opts_list(
+                opts,
+                'sources',
+                function(builtins) return { builtins.code_actions.gitsigns } end
+            )
+        end,
+    },
 }
-
-return git.spec
