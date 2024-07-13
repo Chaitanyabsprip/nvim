@@ -78,6 +78,7 @@ return {
         dir = '/home/chaitanya/projects/fastaction.nvim',
         ---@type FastActionConfig
         opts = {
+            register_ui_select = true,
             priority = {
                 dart = {
                     { order = 1, pattern = 'import library', key = 'i' },
@@ -97,11 +98,7 @@ return {
             },
         },
         lazy = false,
-        -- event = 'VeryLazy',
-        config = function(_, opts)
-            require('fastaction').setup(opts)
-            vim.ui.select = require('fastaction').select
-        end,
+        event = 'VeryLazy',
     },
     { 'williamboman/mason.nvim' },
     {
