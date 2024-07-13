@@ -41,3 +41,22 @@ vim.highlight = require 'vim.highlight'
 -- ---@field lastused number
 
 ---@class BufInfo: vim.fn.getbufinfo.ret.item
+
+---@class KeymapOpts
+---@field noremap? boolean
+---@field desc? string
+---@field silent? boolean
+---@field expr? boolean
+---@field nowait? boolean
+---@field bufnr? integer
+---@field buffer? integer
+
+---@alias SetModeFunc fun(mode: string | string[]): SetKeyFunc
+
+---@alias SetKeyFunc fun(key: string): SetCommandFunc
+
+---@alias SetCommandFunc fun(command: string | function): SetOptionsFunc
+
+---@alias SetOptionsFunc fun(options: KeymapOpts | string): SetDescriptionFunc | nil
+
+---@alias SetDescriptionFunc fun(description: string)
