@@ -15,12 +15,13 @@ function m.create_mapper(noremap)
                         return vim.keymap.set(mode, key, command, opts)
                     end
                     return function(description)
+                        local buffer = options.bufnr or options.buffer
                         options.bufnr = nil
                         ---@type vim.keymap.set.Opts
                         local opts = vim.tbl_extend(
                             'force',
                             options,
-                            { desc = description, buffer = options.bufnr }
+                            { desc = description, buffer = buffer }
                         )
                         return vim.keymap.set(mode, key, command, opts)
                     end
