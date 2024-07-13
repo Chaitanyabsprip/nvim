@@ -17,4 +17,4 @@ nnoremap 'dd'(function()
     local qf = require 'quickfix'
     qf.delete_buf_from_qf()
     qf.delete_qf_entry()
-end) { noremap = true, bufnr = 0 } 'Delete current entry from quickfix list'
+end) { noremap = true, buffer = 0 } 'Delete current entry from quickfix list'
