@@ -1,7 +1,3 @@
-local hash = require 'hashish'
-local nnoremap = hash.nnoremap
-local noremap = hash.noremap
-
 local function is_git_repo()
     local f = io.popen 'git rev-parse --is-inside-work-tree 2>/dev/null'
     local gitOutput = 'false'
@@ -12,7 +8,7 @@ local function is_git_repo()
     return gitOutput:match 'true' ~= nil
 end
 
-local function setup_keymaps(bufnr, gs)
+local function setup_keymaps(buffer, gs)
     local function nav_hunk(next)
         return function()
             if vim.wo.diff then return next and ']h' or '[h' end
@@ -26,21 +22,83 @@ local function setup_keymaps(bufnr, gs)
             gs.setqflist(target)
         end
     end
-    nnoremap ']h'(nav_hunk(true)) { expr = true, bufnr = bufnr } 'Git: Jump to next hunk'
-    nnoremap '[h'(nav_hunk(false)) { expr = true, bufnr = bufnr } 'Git: Jump to prev hunk'
-    noremap { 'n', 'v' } ';s' '<cmd>Gitsigns stage_hunk<cr>' { bufnr = bufnr } 'Git: Stage hunk'
-    noremap { 'n', 'v' } ';r' '<cmd>Gitsigns reset_hunk<cr>' { bufnr = bufnr } 'Git: Reset hunk'
-    nnoremap ';S' '<cmd>Gitsigns stage_buffer<cr>' { bufnr = bufnr } 'Git: Stage buffer'
-    nnoremap ';u' '<cmd>Gitsigns undo_stage_hunk<cr>' { bufnr = bufnr } 'Git: Undo stage hunk'
-    nnoremap ';d' '<cmd>Gitsigns diffthis<cr>' { bufnr = bufnr } 'Git: Diff changes in file'
-    nnoremap ';D' '<cmd>Gitsigns diffthis ~<cr>' { bufnr = bufnr } 'Git: Diff changes in file against previous commit'
-    nnoremap ';p' '<cmd>Gitsigns preview_hunk_inline<cr>' { bufnr = bufnr } 'Git: Preview hunk inline'
-    nnoremap ';P' '<cmd>Gitsigns preview_hunk<cr>' { bufnr = bufnr } 'Git: Preview hunk hover'
-    nnoremap ';td' '<cmd>Gitsigns toggle_deleted<cr>' { bufnr = bufnr } 'Git: Toggle view deletion changes'
-    nnoremap ';tw' '<cmd>Gitsigns toggle_word_diff<cr>' { bufnr = bufnr } 'Git: Toggle view word diff'
-    nnoremap ';Q'(setqflist 'all') { bufnr = bufnr } 'Git: show hunks in quickfix'
-    nnoremap ';q'(setqflist(0)) { bufnr = bufnr } 'Git: show buffer hunks in quickfix'
-    noremap { 'o', 'x' } 'ih' ':<C-U>Gitsigns select_hunk<CR>' { bufnr = bufnr } 'Git: Select hunk'
+    vim.keymap.set('n', ']h', nav_hunk(true), {
+        expr = true,
+        buffer = buffer,
+        noremap = true,
+        desc = 'Git: Jump to next hunk',
+    })
+    vim.keymap.set('n', '[h', nav_hunk(false), {
+        expr = true,
+        buffer = buffer,
+        noremap = true,
+        desc = 'Git: Jump to prev hunk',
+    })
+    vim.keymap.set({ 'n', 'v' }, ';s', '<cmd>Gitsigns stage_hunk<cr>', {
+        buffer = buffer,
+        noremap = true,
+        desc = 'Git: Stage hunk',
+    })
+    vim.keymap.set({ 'n', 'v' }, ';r', '<cmd>Gitsigns reset_hunk<cr>', {
+        buffer = buffer,
+        noremap = true,
+        desc = 'Git: Reset hunk',
+    })
+    vim.keymap.set('n', ';S', '<cmd>Gitsigns stage_buffer<cr>', {
+        buffer = buffer,
+        noremap = true,
+        desc = 'Git: Stage buffer',
+    })
+    vim.keymap.set('n', ';u', '<cmd>Gitsigns undo_stage_hunk<cr>', {
+        buffer = buffer,
+        noremap = true,
+        desc = 'Git: Undo stage hunk',
+    })
+    vim.keymap.set('n', ';d', '<cmd>Gitsigns diffthis<cr>', {
+        buffer = buffer,
+        noremap = true,
+        desc = 'Git: Diff changes in file',
+    })
+    vim.keymap.set('n', ';D', '<cmd>Gitsigns diffthis ~<cr>', {
+        buffer = buffer,
+        noremap = true,
+        desc = 'Git: Diff changes in file against previous commit',
+    })
+    vim.keymap.set('n', ';q', setqflist 'all', {
+        buffer = buffer,
+        noremap = true,
+        desc = 'Git: show hunks in quickfix',
+    })
+    vim.keymap.set('n', ';Q', setqflist(0), {
+        buffer = buffer,
+        noremap = true,
+        desc = 'Git: show buffer hunks in quickfix',
+    })
+    vim.keymap.set('n', ';p', '<cmd>Gitsigns preview_hunk_inline<cr>', {
+        buffer = buffer,
+        noremap = true,
+        desc = 'Git: Show preview hunk inline',
+    })
+    vim.keymap.set('n', ';P', '<cmd>Gitsigns preview_hunk<cr>', {
+        buffer = buffer,
+        noremap = true,
+        desc = 'Git: Show preview hunk hover',
+    })
+    vim.keymap.set('n', ';td', '<cmd>Gitsigns toggle_deleted<cr>', {
+        buffer = buffer,
+        noremap = true,
+        desc = 'Git: Toggle view deletion changes',
+    })
+    vim.keymap.set('n', ';tw', '<cmd>Gitsigns toggle_word_diff<cr>', {
+        buffer = buffer,
+        noremap = true,
+        desc = 'Git: Toggle view word diff',
+    })
+    vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', {
+        buffer = buffer,
+        noremap = true,
+        desc = 'Git: Select hunk',
+    })
 end
 
 return {
@@ -85,13 +143,14 @@ return {
                     local source = vim.g.qf_source
                     local target = (source == 'git-0' and 0) or (source == 'git-all' and 'all')
                     if target then
-                        nnoremap 's'(
+                        vim.keymap.set(
+                            'n',
+                            's',
                             '<cr><cmd>cclose<cr><cmd>Gitsigns stage_hunk<cr><cmd>sleep 100m<cr><cmd>Gitsigns setqflist '
                                 .. target
-                                .. '<cr>'
-                        ) {
-                            bufnr = event.buf,
-                        } 'Git: Stage hunk from qf'
+                                .. '<cr>',
+                            { buffer = event.buf, desc = 'Git: Stage hunk from qf' }
+                        )
                     end
                 end,
             })
@@ -106,7 +165,7 @@ return {
                     changedelete = { text = '▍' },
                     untracked = { text = '▘' },
                 },
-                on_attach = function(bufnr) setup_keymaps(bufnr, gs) end,
+                on_attach = function(buffer) setup_keymaps(buffer, gs) end,
                 current_line_blame = true,
                 current_line_blame_opts = {
                     delay = 700,
