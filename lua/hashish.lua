@@ -1,81 +1,52 @@
-local hashish = {}
+---@diagnostic enable:spell-check
+local M = {}
+local m = {}
 
----@alias KeymapOpts {noremap: boolean, desc:string, silent:boolean, expr: boolean, bufnr: integer | nil, buffer: integer | nil}
-
-local keymap_set = vim.keymap.set
-
-hashish.keys = {}
-
----@param mode string|table
----@param key string
----@param command string|function
----@param options KeymapOpts|nil
----@return nil
-local register_keymap = function(mode, key, command, options)
-    table.insert(hashish.keys, { mode = mode, lhs = key, rhs = command, options = options })
-    return keymap_set(mode, key, command, options)
-end
-
-vim.keymap.set = register_keymap
-
----@param mode string|string[]
----@return function
-hashish.noremap = function(mode)
-    ---@param key string
-    ---@return function
-    return function(key)
-        ---@param command string
-        ---@return function
-        return function(command)
-            ---@param options KeymapOpts | string
-            ---@return nil
-            return function(options)
-                if type(options) == 'string' then
-                    options = vim.tbl_extend('force', { desc = options }, { noremap = true })
-                    return register_keymap(mode, key, command, options)
-                end
-                options = vim.tbl_extend('force', options, { noremap = true })
-                return hashish.map(mode)(key)(command)(options)
-            end
-        end
-    end
-end
-
----@param mode string | string[]
----@return function
-hashish.map = function(mode)
-    ---@param key string
-    ---@return function
-    return function(key)
-        ---@param command string
-        ---@return function
-        return function(command)
-            ---@param options KeymapOpts | string
-            ---@return nil
-            return function(options)
-                if type(options) == 'string' then
-                    options = { desc = options }
-                    return register_keymap(mode, key, command, options)
-                end
-                return function(description)
-                    ---@type KeymapOpts
-                    options = vim.tbl_extend('force', options, { desc = description })
-                    options.buffer = options.bufnr
-                    options.bufnr = nil
-                    return register_keymap(mode, key, command, options)
+---@param noremap boolean
+---@return SetModeFunc
+function m.create_mapper(noremap)
+    return function(mode)
+        return function(key)
+            return function(command)
+                ---@param options KeymapOpts | string
+                return function(options)
+                    if type(options) == 'string' then
+                        local opts = { desc = options, noremap = noremap }
+                        return vim.keymap.set(mode, key, command, opts)
+                    end
+                    return function(description)
+                        options.bufnr = nil
+                        ---@type vim.keymap.set.Opts
+                        local opts = vim.tbl_extend(
+                            'force',
+                            options,
+                            { desc = description, buffer = options.bufnr }
+                        )
+                        return vim.keymap.set(mode, key, command, opts)
+                    end
                 end
             end
         end
     end
 end
 
-hashish.nmap = function(key) return hashish.map 'n'(key) end
-hashish.vmap = function(key) return hashish.map 'v'(key) end
-hashish.nnoremap = function(key) return hashish.noremap 'n'(key) end
-hashish.vnoremap = function(key) return hashish.noremap 'v'(key) end
-hashish.tnoremap = function(key) return hashish.noremap 't'(key) end
-hashish.xnoremap = function(key) return hashish.noremap 'x'(key) end
-hashish.inoremap = function(key) return hashish.noremap 'i'(key) end
-hashish.onoremap = function(key) return hashish.noremap 'o'(key) end
+function m.mode_mapper(mode, noremap)
+    return function(key) return m.create_mapper(noremap)(mode)(key) end
+end
 
-return hashish
+M.map = m.create_mapper(false)
+M.nmap = m.mode_mapper('n', false)
+M.vmap = m.mode_mapper('v', false)
+M.tmap = m.mode_mapper('t', false)
+M.xmap = m.mode_mapper('x', false)
+M.imap = m.mode_mapper('i', false)
+M.omap = m.mode_mapper('o', false)
+M.noremap = m.create_mapper(true)
+M.nnoremap = m.mode_mapper('n', true)
+M.vnoremap = m.mode_mapper('v', true)
+M.tnoremap = m.mode_mapper('t', true)
+M.xnoremap = m.mode_mapper('x', true)
+M.inoremap = m.mode_mapper('i', true)
+M.onoremap = m.mode_mapper('o', true)
+
+return M
