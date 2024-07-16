@@ -38,7 +38,6 @@ local telescope = {
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     },
     cmd = { 'Telescope' },
-    keys = { '<leader><leader>', 'gw', 'gW', 'go' },
     config = function(_, opts)
         require('telescope').setup(opts)
         -- setup_keymaps()
