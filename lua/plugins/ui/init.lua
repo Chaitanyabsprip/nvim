@@ -334,4 +334,8 @@ return {
         },
         cmd = { 'TSPlaygroundToggle' },
     },
+    {
+        'nvim-treesitter/nvim-treesitter-context',
+        event = 'BufReadPost',
+    },
 }

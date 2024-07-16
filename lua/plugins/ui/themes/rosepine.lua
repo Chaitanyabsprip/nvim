@@ -2,6 +2,7 @@ local config = require 'config.theme'
 local name = 'rosepine'
 
 local base = '#0f111a'
+local base_alt = '#161927'
 local border = '#403d52'
 local hlt = '#131521'
 local function make_border(fg)
@@ -60,6 +61,8 @@ local highlight = {
     TelescopePreviewTitle = { fg = 'base', bg = 'iris' },
     TelescopePromptTitle = { fg = 'base', bg = 'love' },
     TelescopeResultsTitle = { fg = 'base', bg = 'foam' },
+    TreesitterContext = { bg = base_alt },
+    TreesitterContextLineNumber = { bg = base_alt },
     FzfLuaPreviewBorder = { link = 'TelescopeBorder' },
     NonText = { fg = 'highlight_low' },
     NotifyBackground = { bg = 'base' },
