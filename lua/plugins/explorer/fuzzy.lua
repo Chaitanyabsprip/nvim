@@ -1,33 +1,33 @@
 ---@diagnostic disable: no-unknown
-local highlight_overrides = function() end
-
-local search_visual_selection = function()
-    local search_term = require('utils').get_visual_selection()
-    require('telescope.builtin').grep_string { search = search_term }
-end
-
-local setup_keymaps = function()
-    local hashish = require 'hashish'
-    local nnoremap = hashish.nnoremap
-    local vnoremap = hashish.vnoremap
-    local builtin = require 'telescope.builtin'
-    local themes = require 'telescope.themes'
-    local ivy = themes.get_ivy { layout_config = { height = 12 } }
-    local find_notes = function() builtin.fd { cwd = os.getenv 'NOTESPATH' } end
-    nnoremap '<leader>tht'(function() builtin.help_tags(ivy) end) 'Telescope: Help tags'
-    nnoremap '<leader>thk'(function() builtin.keymaps(ivy) end) 'Telescope: Keymaps'
-    nnoremap '<leader>thi'(builtin.highlights) 'Telescope: Highlights'
-    nnoremap ';b'(builtin.git_branches) 'Telescope: Git Branches'
-    nnoremap ';c'(builtin.git_status) 'Telescope: git changes'
-    nnoremap '<leader><space>'(function() builtin.fd { hidden = true } end) 'Telescope: File Finder'
-    nnoremap '<leader>fn'(find_notes) 'Telescope: Find notes'
-    nnoremap 'go'(builtin.oldfiles) 'Telescope: oldfiles'
-    nnoremap 'gW'(builtin.grep_string) 'Telescope: grep word under cursor'
-    vnoremap 'gw'(search_visual_selection) 'Telescope: grep visual selection'
-    nnoremap 'gw'(
-        function() builtin.grep_string { search = vim.fn.input { prompt = 'Grep > ' } } end
-    ) 'Telescope: grep and filter'
-end
+-- local highlight_overrides = function() end
+--
+-- local search_visual_selection = function()
+--     local search_term = require('utils').get_visual_selection()
+--     require('telescope.builtin').grep_string { search = search_term }
+-- end
+--
+-- local setup_keymaps = function()
+--     local hashish = require 'hashish'
+--     local nnoremap = hashish.nnoremap
+--     local vnoremap = hashish.vnoremap
+--     local builtin = require 'telescope.builtin'
+--     local themes = require 'telescope.themes'
+--     local ivy = themes.get_ivy { layout_config = { height = 12 } }
+--     local find_notes = function() builtin.fd { cwd = os.getenv 'NOTESPATH' } end
+--     nnoremap '<leader>tht'(function() builtin.help_tags(ivy) end) 'Telescope: Help tags'
+--     nnoremap '<leader>thk'(function() builtin.keymaps(ivy) end) 'Telescope: Keymaps'
+--     nnoremap '<leader>thi'(builtin.highlights) 'Telescope: Highlights'
+--     nnoremap ';b'(builtin.git_branches) 'Telescope: Git Branches'
+--     nnoremap ';c'(builtin.git_status) 'Telescope: git changes'
+--     nnoremap '<leader><space>'(function() builtin.fd { hidden = true } end) 'Telescope: File Finder'
+--     nnoremap '<leader>fn'(find_notes) 'Telescope: Find notes'
+--     nnoremap 'go'(builtin.oldfiles) 'Telescope: oldfiles'
+--     nnoremap 'gW'(builtin.grep_string) 'Telescope: grep word under cursor'
+--     vnoremap 'gw'(search_visual_selection) 'Telescope: grep visual selection'
+--     nnoremap 'gw'(
+--         function() builtin.grep_string { search = vim.fn.input { prompt = 'Grep > ' } } end
+--     ) 'Telescope: grep and filter'
+-- end
 
 ---@type LazyPluginSpec
 local telescope = {
@@ -41,10 +41,9 @@ local telescope = {
     keys = { '<leader><leader>', 'gw', 'gW', 'go' },
     config = function(_, opts)
         require('telescope').setup(opts)
-        setup_keymaps()
-        highlight_overrides()
+        -- setup_keymaps()
+        -- highlight_overrides()
     end,
-    enabled = false,
     opts = function()
         local actions = require 'telescope.actions'
         local mappings = {
