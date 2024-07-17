@@ -96,13 +96,8 @@ keymaps.setup = function()
     xnoremap '_' '^' 'Jump to the start of the line'
     nnoremap '&' 'g_' 'Jump to the end of the line'
     xnoremap '&' 'g_' 'Jump to the end of the line'
-    -- nnoremap '<c-h>' '<c-w>h' 'Move to the window on the left'
-    -- nnoremap '<c-l>' '<c-w>l' 'Move to the window on the right'
-    -- nnoremap '<c-j>' '<c-w>j' 'Move to the window on the below'
-    -- nnoremap '<c-k>' '<c-w>k' 'Move to the window on the above'
     vnoremap 'J' ":m '>+1<cr>gv=gv" { silent = true } 'Move selected lines down'
     vnoremap 'K' ":m '<-2<cr>gv=gv" { silent = true } 'Move selected lines up'
-    nnoremap 'X'(buf_kill) 'Close current buffer'
     nnoremap ')' '<cmd>vertical resize +5<cr>' 'Increase current window height'
     nnoremap '(' '<cmd>vertical resize -5<cr>' 'Decrease current window height'
     nnoremap '+' '<cmd>res +1<cr>' 'Increase current window width'
@@ -138,10 +133,14 @@ keymaps.setup = function()
     cnoremap '<c-i>' '<Down>' 'Move cursor one character left'
     map 's' '<NOP>' 'unmap s'
     map 'S' '<NOP>' 'unmap S'
-    nnoremap '<c-w>z'(toggle_win_zoom()) 'Toggle window zoom'
-    nnoremap 'gz'(toggle_win_zoom()) 'Toggle window zoom'
-    local qf = require 'quickfix'
-    nnoremap 'gb'(qf.buffers) 'Quickfix: List buffers'
+end
+
+function keymaps.lazy()
+    local hashish = require 'hashish'
+    local nnoremap = hashish.nnoremap
+    local vnoremap = hashish.vnoremap
+    cowboy { 'oil', 'qf', 'help', 'noice', 'lazy', 'tsplayground' }
+    nnoremap 'X'(buf_kill) 'Close current buffer'
     nnoremap 'gtn'(function()
         local nu = vim.wo[api.nvim_get_current_win()].number
         return '<cmd>setlocal ' .. (nu and 'no' or '') .. 'nu<cr>'
@@ -150,9 +149,14 @@ keymaps.setup = function()
         local rnu = vim.wo[api.nvim_get_current_win()].relativenumber
         return '<cmd>setlocal ' .. (rnu and 'no' or '') .. 'rnu<cr>'
     end) { expr = true } 'Toggle relative line number'
+    nnoremap '<c-w>z'(toggle_win_zoom()) 'Toggle window zoom'
+    nnoremap 'gz'(toggle_win_zoom()) 'Toggle window zoom'
+
+    local qf = require 'quickfix'
+    nnoremap 'gb'(qf.buffers) 'Quickfix: List buffers'
     nnoremap 'ge' '?```<cr>jV/```<cr>k!emso<cr>:noh<cr>' 'Run shell code within markdown code snippet'
     vnoremap 'ge' 'dO```sh<esc>o```<esc>kp' 'Run visually selected shell code'
-    cowboy { 'oil', 'qf', 'help', 'noice', 'lazy', 'tsplayground' }
+    nnoremap ',,' '<cmd>lua require("alternate").gotoAltBuffer()<cr>' 'Switch to Alternate buffer'
 end
 
 -- " " Copy to clipboard
