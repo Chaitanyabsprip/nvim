@@ -17,7 +17,6 @@
   "fzf-lua": { "branch": "main", "commit": "f3e630cdbd5da1a8252d970f90aa85626593affd" },
   "git-conflict.nvim": { "branch": "main", "commit": "bfd9fe6fba9a161fc199771d85996236a0d0faad" },
   "gitsigns.nvim": { "branch": "main", "commit": "562dc47189ad3c8696dbf460d38603a74d544849" },
-  "go.nvim": { "branch": "master", "commit": "033344ddfa3cd5cfd55037903264b2bb86691619" },
   "goplay.nvim": { "branch": "main", "commit": "5d6b25b3089a91bf2fef41525d7104cf1cb4c1e4" },
   "guihua.lua": { "branch": "master", "commit": "225db770e36aae6a1e9e3a65578095c8eb4038d3" },
   "harpoon": { "branch": "harpoon2", "commit": "0378a6c428a0bed6a2781d459d7943843f374bce" },
