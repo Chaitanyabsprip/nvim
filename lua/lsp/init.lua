@@ -32,9 +32,6 @@ lsp.capabilities = function(_)
 end
 
 lsp.on_attach = function(client, bufnr)
-    vim.keymap.del('n', 'grr')
-    vim.keymap.del('n', 'gra')
-    vim.keymap.del('n', 'grn')
     require('lsp.diagnostics').on_attach(client, bufnr)
     require('lsp.capabilities').resolve(client, bufnr)
     require('lsp.handlers').resolve()

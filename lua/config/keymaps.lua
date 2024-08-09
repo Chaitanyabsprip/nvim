@@ -157,6 +157,10 @@ function keymaps.lazy()
     nnoremap 'ge' '?```<cr>jV/```<cr>k!emso<cr>:noh<cr>' 'Run shell code within markdown code snippet'
     vnoremap 'ge' 'dO```sh<esc>o```<esc>kp' 'Run visually selected shell code'
     nnoremap ',,' '<cmd>lua require("alternate").gotoAltBuffer()<cr>' 'Switch to Alternate buffer'
+
+    vim.keymap.del('n', 'grr')
+    vim.keymap.del({ 'x', 'n' }, 'gra')
+    vim.keymap.del('n', 'grn')
 end
 
 -- " " Copy to clipboard
