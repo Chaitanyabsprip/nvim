@@ -212,7 +212,7 @@ function config.filetype()
             ['.*/waybar/config'] = 'jsonc',
             ['.*/mako/config'] = 'dosini',
             ['.*/git/config'] = 'git_config',
-            ['.*/kitty/*.conf'] = 'bash',
+            ['.*/kitty/*.conf'] = 'kitty',
             ['.*/hypr/.*%.conf'] = 'hyprlang',
             ['.*/dockerfiles/.*'] = 'dockerfile',
             ['.*%.conf'] = 'conf',

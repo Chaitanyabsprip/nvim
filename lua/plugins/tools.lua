@@ -128,6 +128,10 @@ tools.spec = {
             { '<c-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
         },
     },
+    {
+        'fladson/vim-kitty',
+        lazy = false,
+    },
 }
 
 return tools.spec
