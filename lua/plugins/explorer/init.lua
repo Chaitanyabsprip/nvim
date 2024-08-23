@@ -3,10 +3,7 @@ return {
     {
         'kevinhwang91/nvim-bqf',
         ft = 'qf',
-        dependencies = {
-            'yorickpeterse/nvim-pqf',
-            { 'junegunn/fzf', build = function() vim.fn['fzf#install']() end },
-        },
+        dependencies = { 'yorickpeterse/nvim-pqf' },
         opts = {
             auto_resize_height = true,
             func_map = { open = 'o', openc = '<cr>' },
