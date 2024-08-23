@@ -97,7 +97,6 @@ return {
                 },
             },
         },
-        lazy = false,
         event = 'VeryLazy',
     },
     { 'williamboman/mason.nvim' },
