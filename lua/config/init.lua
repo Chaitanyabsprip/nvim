@@ -166,6 +166,7 @@ config.options.setup = function()
     vim.o.foldlevelstart = 99
 
     -- vim.o.statuscolumn = [[%!v:lua.require'config.statuscolumn'.status_column()]]
+    vim.go.tabline = [[%!v:lua.require'config.tabline'.tabline()]]
 
     -- search
     vim.o.hlsearch = false
@@ -225,6 +226,7 @@ end
 
 function config.lazy()
     require('greeter').setup()
+    require('config.tabline').setup()
     -- require('utils').open_explorer_on_startup()
 end
 
