@@ -11,14 +11,12 @@ end
 function M.tabline()
     local tabline = ''
     for tab = 1, vim.fn.tabpagenr '$' do
-        -- select the highlighting
         if tab == vim.fn.tabpagenr() then
             tabline = tabline .. '%#TabLineSel#'
         else
             tabline = tabline .. '%#TabLine#'
         end
 
-        -- set the tab page number (for mouse clicks)
         tabline = tabline .. '%' .. tab .. 'T'
 
         local win = vim.fn.tabpagewinnr(tab)
@@ -28,7 +26,6 @@ function M.tabline()
     end
     tabline = tabline .. '%#TabLineFill#%T'
 
-    -- right-align the label to close the current tab page
     if vim.fn.tabpagenr '$' > 1 then tabline = tabline .. '%=%#TabLine#%999X ✕ ' end
     return tabline
 end
