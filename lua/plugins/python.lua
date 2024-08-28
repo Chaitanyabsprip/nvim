@@ -35,8 +35,8 @@ local function ruff(lspconfig)
     lspconfig.ruff_lsp.setup(config)
 end
 
+---@type LazySpec[]
 return {
-    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,
@@ -53,7 +53,6 @@ return {
             )
         end,
     },
-    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         optional = true,
@@ -93,7 +92,6 @@ return {
         --     end)
         -- end,
     },
-    ---@type LazyPluginSpec
     {
         'mfussenegger/nvim-dap-python',
         dependencies = 'mfussenegger/nvim-dap',
@@ -105,9 +103,7 @@ return {
             require('dap-python').setup(debugpyPythonPath, {})
         end,
     },
-    ---@type LazyPluginSpec
     { 'Vimjas/vim-python-pep8-indent' },
-    ---@type LazyPluginSpec
     {
         'linux-cultist/venv-selector.nvim',
         dependencies = {
@@ -117,7 +113,6 @@ return {
         },
         opts = { dap_enabled = true },
     },
-    ---@type LazyPluginSpec
     {
         'nvimtools/none-ls.nvim',
         ft = function(_, filetypes) return vim.list_extend(filetypes, { 'python' }) end,
@@ -135,7 +130,6 @@ return {
             )
         end,
     },
-    ---@type LazyPluginSpec
     {
         'neovim/nvim-lspconfig',
         optional = true,
