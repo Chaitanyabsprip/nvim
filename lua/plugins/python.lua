@@ -30,9 +30,10 @@ local function ruff(lspconfig)
         settings = { organizeImports = false },
     }
     local on_attach = config.on_attach
+    ---@param client vim.lsp.Client
     config.on_attach = function(client, ...)
-        client.server_capabilities.hoverProvider = false
-        on_attach(client, ...)
+        if client.name == 'ruff_lsp' then client.server_capabilities.hoverProvider = false end
+        if on_attach ~= nil then on_attach(client, ...) end
     end
     lspconfig.ruff_lsp.setup(config)
 end
