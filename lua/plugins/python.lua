@@ -9,7 +9,7 @@ local function basedpyright(lspconfig)
                     autoImportCompletions = true,
                     autoSearchPaths = true,
                     diagnosticMode = 'workspace',
-                    typeCheckingMode = 'all',
+                    typeCheckingMode = 'standard',
                 },
             },
             python = { venvPath = '.' },
