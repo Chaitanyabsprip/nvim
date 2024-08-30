@@ -47,8 +47,8 @@ return {
                 'sources',
                 function(builtins)
                     return {
-                        vim.fn.executable('zsh') and builtins.diagnostics.zsh,
-                        vim.fn.executable('fish_indent') and builtins.formatting.fish_indent,
+                        vim.fn.executable 'zsh' and builtins.diagnostics.zsh,
+                        vim.fn.executable 'fish_indent' and builtins.formatting.fish_indent,
                         builtins.formatting.shfmt.with { filetypes = { 'zsh', 'bash', 'sh' } },
                     }
                 end
