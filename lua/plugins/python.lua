@@ -1,19 +1,21 @@
 local extend = require('plugins.lsp').extend
 
-local function python(lspconfig)
+local function basedpyright(lspconfig)
     local config = extend {
-        root = { 'pyproject.toml' },
+        root = { 'pyproject.toml', 'pyrightconfig.json' },
         settings = {
-            pylsp = {
-                plugins = {
-                    rope_autoimport = { enabled = true },
-                    rope_completion = { enabled = true },
+            basedpyright = {
+                analysis = {
+                    autoImportCompletions = true,
+                    autoSearchPaths = true,
+                    diagnosticMode = 'workspace',
+                    typeCheckingMode = 'all',
                 },
             },
-            python = { venvPath = '.', analysis = {} },
+            python = { venvPath = '.' },
         },
     }
-    lspconfig.pyright.setup(config)
+    lspconfig.basedpyright.setup(config)
 end
 
 local function taplo(lspconfig)
@@ -133,6 +135,6 @@ return {
     {
         'neovim/nvim-lspconfig',
         optional = true,
-        opts = { servers = { python = python, ruff = ruff, taplo = taplo } },
+        opts = { servers = { basedpyright = basedpyright, ruff = ruff, taplo = taplo } },
     },
 }
