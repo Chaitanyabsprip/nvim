@@ -1,8 +1,8 @@
 local config = require 'config.theme'
 local name = 'tokyodark'
 
----@class Colorscheme
-local tokyodark = {
+---@type LazySpec
+return {
     'tiagovla/tokyodark.nvim',
     lazy = config.theme ~= name,
     priority = 1000,
@@ -33,6 +33,3 @@ local tokyodark = {
         vim.cmd.colorscheme(name)
     end,
 }
-tokyodark.set = function() end
-
-return tokyodark

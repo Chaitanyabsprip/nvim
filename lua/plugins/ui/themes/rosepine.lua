@@ -82,8 +82,8 @@ local highlight = {
     LspInlayHint = { fg = 'overlay', bg = 'base', blend = 0 },
 }
 
----@class Colorscheme
-local rosepine = {
+---@type LazySpec
+return {
     'rose-pine/neovim',
     name = 'rose-pine',
     lazy = config.theme ~= name,
@@ -106,7 +106,3 @@ local rosepine = {
         vim.cmd.colorscheme 'rose-pine'
     end,
 }
-
-rosepine.set = function() end
-
-return rosepine

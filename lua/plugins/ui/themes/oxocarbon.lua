@@ -2,8 +2,8 @@ local config = require 'config.theme'
 
 local name = 'oxocarbon'
 
----@class Colorscheme
-local oxocarbon = {
+---@type LazySpec
+return {
     'nyoom-engineering/oxocarbon.nvim',
     lazy = config.theme ~= name,
     priority = 1000,
@@ -12,7 +12,3 @@ local oxocarbon = {
         vim.cmd.colorscheme(name)
     end,
 }
-
-oxocarbon.set = function() end
-
-return oxocarbon

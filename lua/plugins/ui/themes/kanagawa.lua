@@ -2,8 +2,8 @@ local config = require 'config.theme'
 
 local name = 'kanagawa'
 
----@class Colorscheme
-local kanagawa = {
+---@type LazySpec
+return {
     'rebelot/kanagawa.nvim',
     lazy = config.theme ~= name,
     priority = 1000,
@@ -40,7 +40,3 @@ local kanagawa = {
         vim.cmd.colorscheme(name)
     end,
 }
-
-kanagawa.set = function() end
-
-return kanagawa

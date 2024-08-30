@@ -2,8 +2,8 @@ local config = require 'config.theme'
 
 local name = 'poimandres'
 
----@class Colorscheme
-local poimandres = {
+---@type LazySpec
+return {
     'olivercederborg/poimandres.nvim',
     lazy = config.theme ~= name,
     priority = 1000,
@@ -19,7 +19,3 @@ local poimandres = {
     end,
     config = function() vim.cmd.colorscheme(name) end,
 }
-
-poimandres.set = function() end
-
-return poimandres

@@ -2,8 +2,8 @@ local config = require 'config.theme'
 
 local name = 'aquarium'
 
----@class Colorscheme
-local aquarium = {
+---@type LazySpec
+return {
     'frenzyexists/aquarium-vim',
     lazy = config.theme ~= name,
     priority = 1000,
@@ -14,5 +14,3 @@ local aquarium = {
         vim.cmd.colorscheme(name)
     end,
 }
-
-return aquarium

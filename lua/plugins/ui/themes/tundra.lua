@@ -1,8 +1,8 @@
 local config = require 'config.theme'
 local name = 'tundra'
 
----@class Colorscheme
-local tundra = {
+---@type LazySpec
+return {
     'sam4llis/nvim-tundra',
     lazy = config.theme ~= name,
     priority = 1000,
@@ -54,6 +54,3 @@ local tundra = {
         vim.cmd.colorscheme(name)
     end,
 }
-tundra.set = function() end
-
-return tundra

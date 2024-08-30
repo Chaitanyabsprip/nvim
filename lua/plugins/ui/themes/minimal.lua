@@ -2,8 +2,8 @@ local config = require 'config.theme'
 
 local name = 'minimal'
 
----@class Colorscheme
-local minimal = {
+---@type LazySpec
+return {
     'Yazeed1s/minimal.nvim',
     lazy = config.theme ~= name,
     priority = 1000,
@@ -17,7 +17,3 @@ local minimal = {
         vim.cmd.colorscheme(name)
     end,
 }
-
-function minimal.set() end
-
-return minimal

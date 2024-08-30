@@ -2,8 +2,8 @@ local config = require 'config.theme'
 
 local name = 'moonlight'
 
----@class Colorscheme
-local moonlight = {
+---@type LazySpec
+return {
     'shaunsingh/moonlight.nvim',
     lazy = config.theme ~= name,
     priority = 1000,
@@ -20,7 +20,3 @@ local moonlight = {
         require(name).set()
     end,
 }
-
-function moonlight.set() end
-
-return moonlight

@@ -3,8 +3,8 @@ local config = require 'config.theme'
 
 local name = 'darcubox'
 
----@class Colorscheme: LazyPluginSpec
-local darcubox = {
+---@type LazySpec
+return {
     'dotsilas/darcubox-nvim',
     lazy = config.theme ~= name,
     priority = 1000,
@@ -17,5 +17,3 @@ local darcubox = {
         vim.cmd.colorscheme(name)
     end,
 }
-
-return darcubox

@@ -2,8 +2,8 @@ local config = require 'config.theme'
 
 local name = 'nightfox'
 
----@class Colorscheme
-local nightfox = {
+---@type LazySpec
+return {
     'EdenEast/nightfox.nvim',
     lazy = config.theme ~= name,
     priority = 1000,
@@ -65,5 +65,3 @@ local nightfox = {
         require(name).set()
     end,
 }
-
-return nightfox

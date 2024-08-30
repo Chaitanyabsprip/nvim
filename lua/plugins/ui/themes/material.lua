@@ -2,8 +2,8 @@ local config = require 'config.theme'
 
 local name = 'material'
 
----@class Colorscheme
-local material = {
+---@type LazySpec
+return {
     'marko-cerovac/material.nvim',
     lazy = config.theme ~= name,
     priority = 1000,
@@ -77,7 +77,3 @@ local material = {
         vim.cmd.colorscheme 'material'
     end,
 }
-
-function material.set() end
-
-return material

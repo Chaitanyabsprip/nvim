@@ -1,8 +1,8 @@
 local config = require 'config.theme'
 local name = 'palenightfall'
 
----@class Colorscheme
-local rosepine = {
+---@type LazySpec
+return {
     'JoosepAlviste/palenightfall.nvim',
     lazy = config.theme ~= name,
     priority = 1000,
@@ -12,7 +12,3 @@ local rosepine = {
         vim.cmd.colorscheme(name)
     end,
 }
-
-rosepine.set = function() end
-
-return rosepine

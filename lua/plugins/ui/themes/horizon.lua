@@ -2,8 +2,8 @@ local config = require 'config.theme'
 
 local name = 'horizon'
 
----@class Colorscheme
-horizon = {
+---@type LazySpec
+return {
     'akinsho/horizon.nvim',
     version = '*',
     lazy = config.theme ~= name,
@@ -35,7 +35,3 @@ horizon = {
         vim.cmd.colorscheme(name)
     end,
 }
-
-function horizon.set() end
-
-return horizon

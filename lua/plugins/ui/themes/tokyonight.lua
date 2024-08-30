@@ -1,8 +1,8 @@
 local config = require 'config.theme'
 local name = 'tokyonight'
 
----@class Colorscheme
-local tokyonight = {
+---@type LazySpec
+return {
     'folke/tokyonight.nvim',
     lazy = config.theme ~= name,
     priority = 1000,
@@ -40,6 +40,3 @@ local tokyonight = {
         require('tokyonight').load()
     end,
 }
-tokyonight.set = function() end
-
-return tokyonight

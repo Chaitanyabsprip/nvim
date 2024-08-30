@@ -1,8 +1,8 @@
 local config = require 'config.theme'
 local name = 'ayu'
 
----@class Colorscheme
-local rosepine = {
+---@type LazySpec
+return {
     'Shatur/neovim-ayu',
     lazy = config.theme ~= name,
     priority = 1000,
@@ -15,7 +15,3 @@ local rosepine = {
         vim.cmd.colorscheme(name)
     end,
 }
-
-rosepine.set = function() end
-
-return rosepine

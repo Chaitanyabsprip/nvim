@@ -2,8 +2,8 @@ local config = require 'config.theme'
 
 local name = 'substrata'
 
----@class Colorscheme
-local substrata = {
+---@type LazySpec
+return {
     'kvrohit/substrata.nvim',
     lazy = config.theme ~= name,
     priority = 1000,
@@ -27,7 +27,3 @@ local substrata = {
         vim.cmd.colorscheme(name)
     end,
 }
-
-substrata.set = function() end
-
-return substrata

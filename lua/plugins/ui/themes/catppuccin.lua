@@ -44,9 +44,8 @@ local function highlight(c)
     }
 end
 
----@class Colorscheme: LazyPluginSpec
----@field set function
-local catppuccin = {
+---@type LazySpec
+return {
     'catppuccin/nvim',
     name = name,
     lazy = config.theme ~= name,
@@ -83,7 +82,3 @@ local catppuccin = {
         vim.cmd.colorscheme(name)
     end,
 }
-
-function catppuccin.set() end
-
-return catppuccin
