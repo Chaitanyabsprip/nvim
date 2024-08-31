@@ -160,13 +160,16 @@ return {
                     override = function(conf)
                         local HEIGHT_RATIO = 0.9
                         local WIDTH_RATIO = 0.3
+                        ---@type number
                         local screen_w = vim.opt.columns:get()
+                        ---@type number
                         local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
                         local window_w = screen_w * WIDTH_RATIO
                         local window_h = screen_h * HEIGHT_RATIO
                         local window_w_int = math.floor(window_w)
                         local window_h_int = math.floor(window_h)
                         local center_x = (screen_w - window_w - (screen_w * 0.03))
+                        ---@type number
                         local center_y = ((vim.opt.lines:get() - window_h) / 2)
                             - vim.opt.cmdheight:get()
                         conf.row = center_y
