@@ -63,7 +63,7 @@ return {
             require('config.lazy').extend_opts_list(
                 opts,
                 'ensure_installed',
-                'pyright', -- LSP for python
+                'basedpyright', -- LSP for python
                 'ruff-lsp', -- linter for python (includes flake8, pep8, etc.)
                 'debugpy', -- debugger
                 'black', -- formatter
