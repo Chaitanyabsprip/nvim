@@ -95,6 +95,7 @@ return {
             disable_background = config.transparent,
             disable_float_background = true,
             highlight_groups = highlight,
+            styles = { italic = false },
             before_highlight = function(group, highlights, palette)
                 if highlights.bg == palette.base then highlights.bg = base end
                 if group == 'LspInlayHint' then highlights.blend = nil end
