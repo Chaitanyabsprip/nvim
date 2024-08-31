@@ -30,5 +30,17 @@ return {
         'nvimtools/none-ls.nvim',
         optional = true,
         ft = function(_, filetypes) return vim.list_extend(filetypes, { 'css', 'scss' }) end,
+        opts = function(_, opts)
+            require('config.lazy').extend_opts_list(
+                opts,
+                'sources',
+                ---@param builtins NullBuiltin
+                function(builtins)
+                    return {
+                        builtins.formatting.prettierd.with { filetypes = { 'css', 'scss' } },
+                    }
+                end
+            )
+        end,
     },
 }

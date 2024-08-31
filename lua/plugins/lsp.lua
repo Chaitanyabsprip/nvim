@@ -106,8 +106,11 @@ return {
         config = function(_, opts)
             local get_capabilities = require('plugins.completion').get_capabilities
             local builtins = require('null-ls').builtins
+            ---@type NullSource[]
             local sources = {}
-            for _, source_fn in pairs(opts.sources) do
+            ---@type NullSource[]
+            local optSources = opts.sources
+            for _, source_fn in pairs(optSources) do
                 vim.list_extend(sources, source_fn(builtins))
             end
             local config = {

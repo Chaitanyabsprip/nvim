@@ -50,8 +50,12 @@ return {
             require('config.lazy').extend_opts_list(
                 opts,
                 'sources',
+                ---@param builtins NullBuiltin
                 function(builtins)
-                    return { builtins.diagnostics.yamllint, builtins.formatting.prettierd }
+                    return {
+                        builtins.diagnostics.yamllint,
+                        builtins.formatting.prettierd.with { filetypes = { 'yaml' } },
+                    }
                 end
             )
         end,

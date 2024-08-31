@@ -115,9 +115,10 @@ return {
             require('config.lazy').extend_opts_list(
                 opts,
                 'sources',
-                function(builtins) return { builtins.diagnostics.revive } end,
+                ---@param builtins NullBuiltin
                 function(builtins)
                     return {
+                        builtins.diagnostics.revive,
                         builtins.formatting.golines.with {
                             extra_args = { '--max-len=100', '--base-formatter=gofumpt' },
                         },

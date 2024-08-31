@@ -23,8 +23,8 @@ local function emmetls(lspconfig)
     lspconfig.emmet_ls.setup(config)
 end
 
+---@type LazyPluginSpec[]
 return {
-    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,
@@ -32,7 +32,6 @@ return {
             require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'html')
         end,
     },
-    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         optional = true,
@@ -45,10 +44,28 @@ return {
             )
         end,
     },
-    ---@type LazyPluginSpec
     {
         'neovim/nvim-lspconfig',
         optional = true,
         opts = { servers = { html = htmlls, emmet_ls = emmetls } },
+    },
+    {
+        'nvimtools/none-ls.nvim',
+        optional = true,
+        ft = function(_, filetypes) return vim.list_extend(filetypes, { 'html', 'htmlangular' }) end,
+        opts = function(_, opts)
+            require('config.lazy').extend_opts_list(
+                opts,
+                'sources',
+                ---@param builtins NullBuiltin
+                function(builtins)
+                    return {
+                        builtins.formatting.prettierd.with {
+                            filetypes = { 'html', 'htmlangular' },
+                        },
+                    }
+                end
+            )
+        end,
     },
 }

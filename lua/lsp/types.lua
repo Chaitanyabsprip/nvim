@@ -60,3 +60,15 @@ vim.highlight = require 'vim.highlight'
 ---@alias SetOptionsFunc fun(options: KeymapOpts | string): SetDescriptionFunc | nil
 
 ---@alias SetDescriptionFunc fun(description: string)
+
+---@class NullBuiltin
+---@field code_actions table
+---@field completion table
+---@field diagnostics table
+---@field formatting table
+---@field hover table
+
+---@class NullSource contains a null-ls source and its options in with field
+---@field with table
+
+---@alias NullSourceFn function(builtins: NullBuiltin): NullSource[]

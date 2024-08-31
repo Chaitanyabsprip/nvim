@@ -45,6 +45,7 @@ return {
             require('config.lazy').extend_opts_list(
                 opts,
                 'sources',
+                ---@param builtins NullBuiltin
                 function(builtins)
                     return {
                         vim.fn.executable 'zsh' and builtins.diagnostics.zsh,

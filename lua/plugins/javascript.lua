@@ -45,7 +45,19 @@ return {
             require('config.lazy').extend_opts_list(
                 opts,
                 'sources',
-                function(builtins) return { builtins.formatting.prettierd } end
+                ---@param builtins NullBuiltin
+                function(builtins)
+                    return {
+                        builtins.formatting.prettierd.with {
+                            filetypes = {
+                                'javascript',
+                                'typescript',
+                                'javascriptreact',
+                                'typescriptreact',
+                            },
+                        },
+                    }
+                end
             )
         end,
     },
