@@ -79,14 +79,9 @@ keymaps.setup = function()
     local utils = require 'utils'
     local hashish = require 'hashish'
     local map = hashish.map
-    local cnoremap = hashish.noremap 'c'
-    local nnoremap = hashish.nnoremap
-    local vnoremap = hashish.vnoremap
-    local inoremap = hashish.inoremap
-    local xnoremap = hashish.xnoremap
 
     -- Leader bindings
-    nnoremap '<Space>' '<NOP>' 'Leader key'
+    keymap.set('n', '<Space>', '<NOP>', { noremap = true, silent = true })
     vim.g.mapleader = ' '
 
     keymap.set('n', '<leader>q', '<cmd>q<cr>', {
@@ -305,20 +300,23 @@ keymaps.setup = function()
         silent = true,
     })
     keymap.set('n', 'gw', function()
-        vim.ui.input({ prompt = '▍ ' }, vim.cmd.grep)
-        vim.cmd.copen()
+        vim.ui.input(
+            { prompt = '▍ ' },
+            function(input) vim.cmd([[silent grep! ]] .. utils.rg_escape(input)) end
+        )
+        vim.cmd [[copen 12]]
     end, { desc = 'Grep query and populate quickfix', noremap = true, silent = true })
     keymap.set('n', 'gW', function()
-        vim.cmd.grep(utils.rg_escape(vim.fn.expand '<cword>'))
-        vim.cmd.copen()
+        vim.cmd([[silent grep! ]] .. utils.rg_escape(vim.fn.expand '<cword>'))
+        vim.cmd [[copen 12]]
     end, { desc = 'Grep query and populate quickfix', noremap = true, silent = true })
     keymap.set('v', 'gw', function()
         local selection, _ = utils.get_visual_selection()
-        vim.cmd.grep(selection)
-        vim.cmd.copen()
+        vim.cmd([[silent grep! ]] .. utils.rg_escape(selection))
+        vim.cmd [[copen 12]]
     end, { noremap = true, silent = true })
-    map 's' '<NOP>' 'unmap s'
-    map 'S' '<NOP>' 'unmap S'
+    keymap.set('', 's', '<NOP>', { desc = 'unmap s', noremap = true, silent = true })
+    keymap.set('', 'S', '<NOP>', { desc = 'unmap S', noremap = true, silent = true })
 end
 
 function keymaps.lazy()
