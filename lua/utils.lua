@@ -78,8 +78,6 @@ function M.get_visual_selection()
             -- visual line doesn't provide columns
             cscol, cecol = 0, 999
         end
-        -- exit visual mode
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', true)
     else
         -- otherwise, use the last known visual position
         _, csrow, cscol, _ = unpack(vim.fn.getpos "'<")
@@ -93,8 +91,7 @@ function M.get_visual_selection()
         cscol, cecol = cecol, cscol
     end
     local lines = vim.fn.getline(csrow, cerow)
-    -- local n = cerow-csrow+1
-    local n = M.tbl_length(lines)
+    local n = #lines
     if n <= 0 then return '' end
     lines[n] = string.sub(lines[n], 1, cecol)
     lines[1] = string.sub(lines[1], cscol)
