@@ -14,4 +14,5 @@ vim.api.nvim_create_autocmd('User', {
         keymaps.lazy()
     end,
 })
+
 -- vim.lsp.set_log_level 'debug'
