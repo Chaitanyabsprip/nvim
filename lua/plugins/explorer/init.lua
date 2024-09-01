@@ -3,7 +3,7 @@ return {
     {
         'kevinhwang91/nvim-bqf',
         ft = 'qf',
-        dependencies = { 'yorickpeterse/nvim-pqf' },
+        dependencies = { 'yorickpeterse/nvim-pqf', { 'junegunn/fzf', build = './install --bin' } },
         opts = {
             auto_resize_height = true,
             func_map = { open = 'o', openc = '<cr>' },
