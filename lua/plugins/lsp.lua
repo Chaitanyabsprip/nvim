@@ -80,9 +80,12 @@ return {
         opts = {
             register_ui_select = true,
             priority = {
-                dart = {
-                    { order = 1, pattern = 'import library', key = 'i' },
+                default = {
                     { order = 1, pattern = 'organize imports', key = 'o' },
+                    { order = 1, pattern = 'import library', key = 'i' },
+                    { order = 1, pattern = 'fix all', key = 'f' },
+                },
+                dart = {
                     { order = 1, pattern = 'relative imports everywhere', key = 'l' },
                     { order = 2, pattern = 'sort member', key = 's' },
                     { order = 2, pattern = 'wrap with widget', key = 'w' },
