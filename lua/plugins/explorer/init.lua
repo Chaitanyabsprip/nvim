@@ -136,7 +136,7 @@ return {
                     ['<C-p>'] = 'actions.preview',
                     ['<C-c>'] = 'actions.close',
                     ['q'] = 'actions.close',
-                    ['<C-l>'] = 'actions.refresh',
+                    ['<leader>r'] = 'actions.refresh',
                     ['H'] = 'actions.parent',
                     ['_'] = 'actions.open_cwd',
                     ['`'] = 'actions.cd',
