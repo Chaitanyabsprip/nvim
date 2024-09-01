@@ -61,7 +61,7 @@ function qf.delete_buf_from_qf()
     local qflist = vim.fn.getqflist()
     local bufitem = qflist[lnum]
     local bufnr = bufitem.bufnr
-    vim.cmd.bdelete { count = bufnr }
+    if bufnr ~= nil then vim.cmd.bdelete { count = bufnr } end
 end
 
 return qf
