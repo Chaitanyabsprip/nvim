@@ -137,7 +137,7 @@ keymaps.setup = function()
 end
 
 function keymaps.lazy()
-    cowboy { 'oil', 'qf', 'help', 'noice', 'lazy', 'tsplayground' }
+    cowboy { 'oil', 'qf', 'help', 'noice', 'lazy' }
     keymap.set('n', 'X', buf_kill, { desc = 'Close current buffer', noremap = true })
     keymap.set('n', 'gtn', function()
         local nu = vim.wo[api.nvim_get_current_win()].number
