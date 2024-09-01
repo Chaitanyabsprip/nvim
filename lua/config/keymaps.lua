@@ -76,10 +76,6 @@ local function buf_kill(target_buf, should_force)
 end
 
 keymaps.setup = function()
-    local utils = require 'utils'
-    local hashish = require 'hashish'
-    local map = hashish.map
-
     -- Leader bindings
     keymap.set('n', '<Space>', '<NOP>', { noremap = true, silent = true })
     vim.g.mapleader = ' '
@@ -99,6 +95,10 @@ keymaps.setup = function()
         noremap = true,
         silent = true,
     })
+end
+
+function keymaps.lazy()
+    local utils = require 'utils'
     keymap.set('n', '<leader>e', '<cmd>Explorer<cr>', {
         desc = 'Toggle file explorer',
         noremap = true,
@@ -320,9 +320,7 @@ keymaps.setup = function()
     end, { noremap = true, silent = true })
     keymap.set('', 's', '<NOP>', { desc = 'unmap s', noremap = true, silent = true })
     keymap.set('', 'S', '<NOP>', { desc = 'unmap S', noremap = true, silent = true })
-end
 
-function keymaps.lazy()
     cowboy { 'oil', 'qf', 'help', 'noice', 'lazy' }
     keymap.set('n', 'X', buf_kill, { desc = 'Close current buffer', noremap = true })
     keymap.set('n', 'gtn', function()
