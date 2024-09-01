@@ -135,7 +135,7 @@ return {
     { 'natebosch/dartlang-snippets', ft = 'dart' },
     {
         'Exafunction/codeium.vim',
-        event = 'BufEnter',
+        event = 'BufReadPost',
         config = function()
             vim.g.codeium_no_map_tab = 1
             vim.keymap.set(
