@@ -9,7 +9,7 @@ local function basedpyright(lspconfig)
                     autoImportCompletions = true,
                     autoSearchPaths = true,
                     diagnosticMode = 'workspace',
-                    typeCheckingMode = 'standard',
+                    typeCheckingMode = 'standard', -- standard, strict, all, off, basic
                 },
             },
             python = { venvPath = '.' },
@@ -20,15 +20,29 @@ end
 
 local function ruff(lspconfig)
     local config = extend {
-        settings = { organizeImports = false },
+        init_options = {
+            settings = {
+                configurationPreferences = 'filesystemFirst',
+                lineLength = 80, -- configure using editorconfig
+                fixAll = true,
+                organizeImports = true,
+                showSyntaxErrors = true,
+                codeAction = {
+                    disableRuleComment = { enable = true },
+                    fixViolation = { enable = true },
+                },
+                lint = { enable = true, select = { 'I', 'AIR', 'PLW', 'PlR' }, preview = false },
+                format = { preview = false },
+            },
+        },
     }
     local on_attach = config.on_attach
     ---@param client vim.lsp.Client
     config.on_attach = function(client, ...)
-        if client.name == 'ruff_lsp' then client.server_capabilities.hoverProvider = false end
+        if client.name == 'ruff' then client.server_capabilities.hoverProvider = false end
         if on_attach ~= nil then on_attach(client, ...) end
     end
-    lspconfig.ruff_lsp.setup(config)
+    lspconfig.ruff.setup(config)
 end
 
 ---@type LazySpec[]
@@ -57,7 +71,7 @@ return {
                 opts,
                 'ensure_installed',
                 'basedpyright', -- LSP for python
-                'ruff-lsp', -- linter for python (includes flake8, pep8, etc.)
+                'ruff', -- linter for python (includes flake8, pep8, etc.)
                 'debugpy', -- debugger
                 'black', -- formatter
                 'isort', -- organize imports
