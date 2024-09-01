@@ -122,10 +122,19 @@ return {
                     concealcursor = 'nvic',
                 },
                 delete_to_trash = false,
-                skip_confirm_for_simple_edits = false, -- Skip the confirmation popup for simple operations
-                trash_command = 'trash', -- Change this to customize the command used when deleting to trash
+                skip_confirm_for_simple_edits = true, -- Skip the confirmation popup for simple operations
                 -- Selecting a new/moved/renamed file or directory will prompt you to save changes first
                 prompt_save_on_select_new_entry = true,
+                constrain_cursor = 'editable',
+                watch_for_changes = true,
+                use_default_keymaps = false, -- Set to false to disable all of the above keymaps
+                view_options = {
+                    show_hidden = true, -- Show files and directories that start with "."
+                    is_hidden_file = function(name, _) return vim.startswith(name, '.') end,
+                    is_always_hidden = function(_, _) return false end,
+                    sort = { { 'type', 'asc' }, { 'name', 'asc' } }, -- see :help oil-columns to see sortable cols
+                    natural_order = false,
+                },
                 keymaps = { -- See :help oil-actions for a list of all available actions
                     ['g?'] = 'actions.show_help',
                     ['<CR>'] = 'actions.select',
@@ -143,13 +152,6 @@ return {
                     ['~'] = 'actions.tcd',
                     ['gs'] = 'actions.change_sort',
                     ['g.'] = 'actions.toggle_hidden',
-                },
-                use_default_keymaps = false, -- Set to false to disable all of the above keymaps
-                view_options = {
-                    show_hidden = true, -- Show files and directories that start with "."
-                    is_hidden_file = function(name, _) return vim.startswith(name, '.') end,
-                    is_always_hidden = function(_, _) return false end,
-                    sort = { { 'type', 'asc' }, { 'name', 'asc' } }, -- see :help oil-columns to see sortable cols
                 },
                 float = {
                     padding = 1,
