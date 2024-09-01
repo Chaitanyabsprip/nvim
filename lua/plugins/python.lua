@@ -18,13 +18,6 @@ local function basedpyright(lspconfig)
     lspconfig.basedpyright.setup(config)
 end
 
-local function taplo(lspconfig)
-    local config = extend {
-        root = { 'pyproject.toml' },
-    }
-    lspconfig.taplo.setup(config)
-end
-
 local function ruff(lspconfig)
     local config = extend {
         settings = { organizeImports = false },
@@ -136,6 +129,6 @@ return {
     {
         'neovim/nvim-lspconfig',
         optional = true,
-        opts = { servers = { basedpyright = basedpyright, ruff = ruff, taplo = taplo } },
+        opts = { servers = { basedpyright = basedpyright, ruff = ruff } },
     },
 }
