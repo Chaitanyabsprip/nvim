@@ -244,7 +244,7 @@ capabilities.signature_help = {
     name = 'textDocument/signatureHelp',
     callback = function(_, bufnr)
         vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, {
-            bufnr = bufnr,
+            buffer = bufnr,
             noremap = true,
             silent = true,
             desc = 'Show signature help',
