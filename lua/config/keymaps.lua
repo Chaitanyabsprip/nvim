@@ -133,15 +133,19 @@ keymaps.setup = function()
     cnoremap '<c-b>' '<c-Left>' 'Move cursor one character left'
     cnoremap '<c-o>' '<Up>' 'Move cursor one character left'
     cnoremap '<c-i>' '<Down>' 'Move cursor one character left'
-    nnoremap 'gw'(function()
+    keymap.set('n', 'gw', function()
         vim.ui.input({ prompt = '▍ ' }, vim.cmd.grep)
         vim.cmd.copen()
-    end) 'Grep query and populate quickfix'
-    nnoremap 'gW'(function()
+    end, { desc = 'Grep query and populate quickfix', noremap = true, silent = true })
+    keymap.set('n', 'gW', function()
         vim.cmd.grep(utils.rg_escape(vim.fn.expand '<cword>'))
         vim.cmd.copen()
-    end) 'Grep query and populate quickfix'
-    keymap.set('v', 'gw', function() end, { noremap = true, silent = true })
+    end, { desc = 'Grep query and populate quickfix', noremap = true, silent = true })
+    keymap.set('v', 'gw', function()
+        local selection, _ = utils.get_visual_selection()
+        vim.cmd.grep(selection)
+        vim.cmd.copen()
+    end, { noremap = true, silent = true })
     map 's' '<NOP>' 'unmap s'
     map 'S' '<NOP>' 'unmap S'
 end
