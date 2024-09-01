@@ -40,10 +40,12 @@ debugger.dap = {
             dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
             dap.listeners.after.event_initialized['dapui_config'] = function()
                 dapui.open()
-                local kopts = { silent = true, noremap = false }
-                require('hashish').nnoremap '<leader>K' '<cmd>lua require("dap.ui.variables").hover() <cr>'(
-                    kopts
-                ) 'dap: Show variable value'
+                vim.keymap.set('n', '<leader>K', require('dap.ui.variables').hover, {
+                    buffer = 0,
+                    desc = 'dap: Show variable value',
+                    noremap = true,
+                    silent = true,
+                })
             end
         end,
         keys = {

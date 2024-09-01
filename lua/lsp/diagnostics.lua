@@ -50,8 +50,6 @@ local function get_diagnostics(bufnr, severity)
 end
 
 function diagnostics.on_attach(_, bufnr)
-    local nnoremap = require('hashish').nnoremap
-    local opts = { silent = true, bufnr = bufnr }
     local workspace_errors = get_diagnostics(nil, vim.diagnostic.severity.ERROR)
     local workspace_warnings = get_diagnostics(nil, vim.diagnostic.severity.WARN)
     local workspace_infos = get_diagnostics(nil, vim.diagnostic.severity.INFO)
@@ -60,19 +58,84 @@ function diagnostics.on_attach(_, bufnr)
     local document_warnings = get_diagnostics(bufnr, vim.diagnostic.severity.WARN)
     local document_infos = get_diagnostics(bufnr, vim.diagnostic.severity.INFO)
     local document_hints = get_diagnostics(bufnr, vim.diagnostic.severity.HINT)
-    nnoremap ',D'(get_diagnostics())(opts) 'Enlist all workspace diagnostics in quickfix'
-    nnoremap ',d'(get_diagnostics(bufnr))(opts) 'Enlist all document diagnostics in quickfix'
-    nnoremap ',E'(workspace_errors)(opts) 'Enlist workspace error diagnostics in quickfix'
-    nnoremap ',W'(workspace_warnings)(opts) 'Enlist workspace warning diagnostics in quickfix'
-    nnoremap ',I'(workspace_infos)(opts) 'Enlist workspace info diagnostics in quickfix'
-    nnoremap ',H'(workspace_hints)(opts) 'Enlist workspace hint diagnostics in quickfix'
-    nnoremap ',e'(document_errors)(opts) 'Enlist document error diagnostics in quickfix'
-    nnoremap ',w'(document_warnings)(opts) 'Enlist document warning diagnostics in quickfix'
-    nnoremap ',i'(document_infos)(opts) 'Enlist document info diagnostics in quickfix'
-    nnoremap ',h'(document_hints)(opts) 'Enlist document hint diagnostics in quickfix'
-    nnoremap ',l'(vim.diagnostic.open_float)(opts) 'Show current line diagnostics in a floating window'
-    nnoremap ',n' '<cmd>lua vim.diagnostic.goto_next()<cr>'(opts) 'Go to the next diagnostic'
-    nnoremap ',p' '<cmd>lua vim.diagnostic.goto_prev()<cr>'(opts) 'Go to the previous diagnostic'
+    vim.keymap.set('n', ',D', (get_diagnostics()), {
+        buffer = bufnr,
+        desc = 'Enlist all workspace diagnostics in quickfix',
+        noremap = true,
+        silent = true,
+    })
+    vim.keymap.set('n', ',d', (get_diagnostics(bufnr)), {
+        buffer = bufnr,
+        desc = 'Enlist all document diagnostics in quickfix',
+        noremap = true,
+        silent = true,
+    })
+    vim.keymap.set('n', ',E', workspace_errors, {
+        buffer = bufnr,
+        desc = 'Enlist workspace error diagnostics in quickfix',
+        noremap = true,
+        silent = true,
+    })
+    vim.keymap.set('n', ',W', workspace_warnings, {
+        buffer = bufnr,
+        desc = 'Enlist workspace warning diagnostics in quickfix',
+        noremap = true,
+        silent = true,
+    })
+    vim.keymap.set('n', ',I', workspace_infos, {
+        buffer = bufnr,
+        desc = 'Enlist workspace info diagnostics in quickfix',
+        noremap = true,
+        silent = true,
+    })
+    vim.keymap.set('n', ',H', workspace_hints, {
+        buffer = bufnr,
+        desc = 'Enlist workspace hint diagnostics in quickfix',
+        noremap = true,
+        silent = true,
+    })
+    vim.keymap.set('n', ',e', document_errors, {
+        buffer = bufnr,
+        desc = 'Enlist document error diagnostics in quickfix',
+        noremap = true,
+        silent = true,
+    })
+    vim.keymap.set('n', ',w', document_warnings, {
+        buffer = bufnr,
+        desc = 'Enlist document warning diagnostics in quickfix',
+        noremap = true,
+        silent = true,
+    })
+    vim.keymap.set('n', ',i', document_infos, {
+        buffer = bufnr,
+        desc = 'Enlist document info diagnostics in quickfix',
+        noremap = true,
+        silent = true,
+    })
+    vim.keymap.set('n', ',h', document_hints, {
+        buffer = bufnr,
+        desc = 'Enlist document hint diagnostics in quickfix',
+        noremap = true,
+        silent = true,
+    })
+    vim.keymap.set('n', ',l', vim.diagnostic.open_float, {
+        buffer = bufnr,
+        desc = 'Show current line diagnostics in a floating window',
+        noremap = true,
+        silent = true,
+    })
+    vim.keymap.set('n', ',n', '<cmd>lua vim.diagnostic.goto_next() <cr>', {
+        buffer = bufnr,
+        desc = 'Go to the next diagnostic',
+        noremap = true,
+        silent = true,
+    })
+    vim.keymap.set('n', ',p', '<cmd>lua vim.diagnostic.goto_prev() <cr>', {
+        buffer = bufnr,
+        desc = 'Go to the previous diagnostic',
+        noremap = true,
+        silent = true,
+    })
 
     local group = vim.api.nvim_create_augroup('update_diagnostics', { clear = true })
     vim.api.nvim_create_autocmd('DiagnosticChanged', {

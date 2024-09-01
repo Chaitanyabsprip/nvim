@@ -33,14 +33,6 @@ editing.ufo = {
     'kevinhwang91/nvim-ufo',
     event = 'BufReadPost',
     dependencies = { 'kevinhwang91/promise-async', 'luukvbaal/statuscol.nvim' },
-    -- keys = {
-    --     { 'zc' },
-    --     { 'zo' },
-    --     { 'zC' },
-    --     { 'zO' },
-    --     { 'za' },
-    --     { 'zA' },
-    -- },
     keys = {
         {
             'zR',
@@ -58,7 +50,6 @@ editing.ufo = {
         },
     },
     config = function(_, opts)
-        local nnoremap = require('hashish').nnoremap
         local ufo = require 'ufo'
         ---@type number?
         local fold_win
@@ -75,7 +66,12 @@ editing.ufo = {
             end
         end
         require('lsp.capabilities').hover.callback = function(_, bufnr)
-            nnoremap 'K'(hover) { bufnr = bufnr, silent = true } 'Show hover info of symbol under cursor'
+            vim.keymap.set('n', 'K', hover, {
+                buffer = bufnr,
+                desc = 'Show hover info of symbol under cursor',
+                noremap = true,
+                silent = true,
+            })
         end
         local ftMap = { markdown = 'treesitter' }
 

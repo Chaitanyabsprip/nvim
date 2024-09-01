@@ -47,6 +47,7 @@ end
 local keymaps = {}
 
 local api = vim.api
+local keymap = vim.keymap
 
 local function buf_kill(target_buf, should_force)
     if not should_force and vim.bo.modified then
@@ -136,31 +137,37 @@ keymaps.setup = function()
 end
 
 function keymaps.lazy()
-    local hashish = require 'hashish'
-    local nnoremap = hashish.nnoremap
-    local vnoremap = hashish.vnoremap
     cowboy { 'oil', 'qf', 'help', 'noice', 'lazy', 'tsplayground' }
-    nnoremap 'X'(buf_kill) 'Close current buffer'
-    nnoremap 'gtn'(function()
+    keymap.set('n', 'X', buf_kill, { desc = 'Close current buffer', noremap = true })
+    keymap.set('n', 'gtn', function()
         local nu = vim.wo[api.nvim_get_current_win()].number
         return '<cmd>setlocal ' .. (nu and 'no' or '') .. 'nu<cr>'
-    end) { expr = true } 'Toggle line number'
-    nnoremap 'gtN'(function()
+    end, { desc = 'Toggle line number', expr = true, noremap = true })
+    keymap.set('n', 'gtN', function()
         local rnu = vim.wo[api.nvim_get_current_win()].relativenumber
         return '<cmd>setlocal ' .. (rnu and 'no' or '') .. 'rnu<cr>'
-    end) { expr = true } 'Toggle relative line number'
-    nnoremap '<c-w>z'(toggle_win_zoom()) 'Toggle window zoom'
-    nnoremap 'gz'(toggle_win_zoom()) 'Toggle window zoom'
+    end, { expr = true, desc = 'Toggle relative line number', noremap = true })
+    keymap.set('n', '<c-w>z', toggle_win_zoom(), { desc = 'Toggle window zoom', noremap = true })
+    keymap.set('n', '<leader>z', toggle_win_zoom(), { desc = 'Toggle window zoom', noremap = true })
 
     local qf = require 'quickfix'
-    nnoremap 'gb'(qf.buffers) 'Quickfix: List buffers'
-    nnoremap 'ge' '?```<cr>jV/```<cr>k!emso<cr>:noh<cr>' 'Run shell code within markdown code snippet'
-    vnoremap 'ge' 'dO```sh<esc>o```<esc>kp' 'Run visually selected shell code'
-    nnoremap ',,' '<cmd>lua require("alternate").gotoAltBuffer()<cr>' 'Switch to Alternate buffer'
+    keymap.set('n', 'gb', qf.buffers, { desc = 'Quickfix: List buffers', noremap = true })
+    keymap.set('n', 'ge', '?```<cr>jV/```<cr>k!emso<cr>:noh<cr>', {
+        desc = 'Run shell code within markdown code snipper',
+        noremap = true,
+    })
+    keymap.set('v', 'ge', 'dO```sh<esc>o```<esc>kpkw', {
+        desc = 'Wrap selection in code block',
+        noremap = true,
+    })
+    keymap.set('n', ',,', require('alternate').gotoAltBuffer, {
+        desc = 'Switch to Alternate buffer',
+        noremap = true,
+    })
 
-    vim.keymap.del('n', 'grr')
-    vim.keymap.del({ 'x', 'n' }, 'gra')
-    vim.keymap.del('n', 'grn')
+    keymap.del('n', 'grr')
+    keymap.del({ 'x', 'n' }, 'gra')
+    keymap.del('n', 'grn')
 end
 
 -- " " Copy to clipboard
