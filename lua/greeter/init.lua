@@ -36,7 +36,7 @@ function M.show()
         { text = string.rep('\n', 18) },
         {
             text = {
-                M.center('            NVIM v0.10.0-dev-1f551e068          ', 0.49)[1],
+                M.center('            NVIM v0.11.0-dev-b0c336e            ', 0.49)[1],
                 '\n',
                 M.center('                                                ', 0.49)[1],
                 '\n',
