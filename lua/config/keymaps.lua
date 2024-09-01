@@ -76,6 +76,7 @@ local function buf_kill(target_buf, should_force)
 end
 
 keymaps.setup = function()
+    local utils = require 'utils'
     local hashish = require 'hashish'
     local map = hashish.map
     local cnoremap = hashish.noremap 'c'
@@ -132,6 +133,15 @@ keymaps.setup = function()
     cnoremap '<c-b>' '<c-Left>' 'Move cursor one character left'
     cnoremap '<c-o>' '<Up>' 'Move cursor one character left'
     cnoremap '<c-i>' '<Down>' 'Move cursor one character left'
+    nnoremap 'gw'(function()
+        vim.ui.input({ prompt = '▍ ' }, vim.cmd.grep)
+        vim.cmd.copen()
+    end) 'Grep query and populate quickfix'
+    nnoremap 'gW'(function()
+        vim.cmd.grep(utils.rg_escape(vim.fn.expand '<cword>'))
+        vim.cmd.copen()
+    end) 'Grep query and populate quickfix'
+    keymap.set('v', 'gw', function() end, { noremap = true, silent = true })
     map 's' '<NOP>' 'unmap s'
     map 'S' '<NOP>' 'unmap S'
 end

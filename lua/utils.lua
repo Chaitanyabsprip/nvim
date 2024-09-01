@@ -139,4 +139,21 @@ function M.open_explorer_on_startup()
     vim.cmd 'Explorer'
 end
 
+---@param str string
+---@return string
+function M.rg_escape(str)
+    if not str then return str end
+    -- [(~'"\/$?'`*&&||;[]<>)]
+    -- escape "\~$?*|[()^-."
+    local ret = str
+        :gsub('[\\~$?*|{\\[()^%-%.%+]', function(x) return '\\' .. x end)
+        -- Escape newline (#1203) at the end so we
+        -- don't end up escaping the backslash twice
+        :gsub(
+            '\n',
+            '\\n'
+        )
+    return ret
+end
+
 return M
