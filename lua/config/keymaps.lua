@@ -162,7 +162,7 @@ function keymaps.lazy()
         return '<cmd>setlocal ' .. (rnu and 'no' or '') .. 'rnu<cr>'
     end, { expr = true, desc = 'Toggle relative line number', noremap = true })
     keymap.set('n', '<c-w>z', toggle_win_zoom(), { desc = 'Toggle window zoom', noremap = true })
-    keymap.set('n', '<leader>z', toggle_win_zoom(), { desc = 'Toggle window zoom', noremap = true })
+    keymap.set('n', 'gz', toggle_win_zoom(), { desc = 'Toggle window zoom', noremap = true })
 
     local qf = require 'quickfix'
     keymap.set('n', 'gb', qf.buffers, { desc = 'Quickfix: List buffers', noremap = true })
