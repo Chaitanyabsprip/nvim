@@ -15,6 +15,8 @@ editing.eyeliner = {
     opts = {
         highlight_on_key = true,
         dim = true,
+        disabled_filetypes = { 'fastaction_popup' },
+        disabled_buftypes = { 'nofile', 'prompt' },
     },
 }
 
