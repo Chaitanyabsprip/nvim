@@ -108,6 +108,12 @@ return {
                     horizontal = 'right:50%',
                 },
             },
+            keymap = {
+                fzf = {
+                    true,
+                    ['ctrl-q'] = 'select-all+accept',
+                },
+            },
             fzf_opts = { ['--layout'] = 'default' },
             files = {
                 previewer = 'bat',
