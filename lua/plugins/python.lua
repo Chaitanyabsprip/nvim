@@ -72,10 +72,7 @@ return {
                 'ensure_installed',
                 'basedpyright', -- LSP for python
                 'ruff', -- linter for python (includes flake8, pep8, etc.)
-                'debugpy', -- debugger
-                'black', -- formatter
-                'isort', -- organize imports
-                'taplo' -- LSP for toml (for pyproject.toml files)
+                'debugpy' -- debugger
             )
         end,
         -- config = function(_, opts)
@@ -122,23 +119,6 @@ return {
             'mfussenegger/nvim-dap-python',
         },
         opts = { dap_enabled = true },
-    },
-    {
-        'nvimtools/none-ls.nvim',
-        ft = function(_, filetypes) return vim.list_extend(filetypes, { 'python' }) end,
-        optional = true,
-        opts = function(_, opts)
-            require('config.lazy').extend_opts_list(
-                opts,
-                'sources',
-                function(builtins)
-                    return {
-                        builtins.formatting.black.with { extra_args = { '--quiet', '-l', '80' } },
-                        builtins.formatting.isort.with { extra_args = { '--quiet' } },
-                    }
-                end
-            )
-        end,
     },
     {
         'neovim/nvim-lspconfig',
