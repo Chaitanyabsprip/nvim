@@ -115,9 +115,7 @@ capabilities.formatting = {
             callback = function()
                 lsp.format {
                     async = false,
-                    formatting_options = {
-                        tabSize = vim.api.nvim_buf_get_option(bufnr, 'tabstop'),
-                    },
+                    formatting_options = { tabSize = vim.bo[bufnr].tabstop },
                     id = client.id,
                 }
             end,
