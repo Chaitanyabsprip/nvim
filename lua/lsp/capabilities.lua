@@ -4,30 +4,39 @@
 
 ---@type table<string,Capability|function>
 local capabilities = {}
-local mappings = require 'hashish'
-local nnoremap = mappings.nnoremap
-local vnoremap = mappings.vnoremap
 local augroup = function(group) vim.api.nvim_create_augroup(group, { clear = true }) end
 local autocmd = function(event, opts)
     if not opts.disable then vim.api.nvim_create_autocmd(event, opts) end
 end
-local opts = function(bufnr) return { bufnr = bufnr, silent = true } end
 local lsp = vim.lsp.buf
 
 capabilities.code_action = {
     name = 'textDocument/codeAction',
     callback = function(_, bufnr)
-        nnoremap '<leader>a'(require('fastaction').code_action)(opts(bufnr)) 'Show code actions for the current cursor position'
-        vnoremap '<leader>a' '<esc><cmd>lua require("fastaction").range_code_action()<cr>'(
-            opts(bufnr)
-        ) 'Show code actions for the current selection range'
+        vim.keymap.set('n', '<leader>a', require('fastaction').code_action, {
+            buffer = bufnr,
+            desc = 'Show code actions for the current cursor position',
+            noremap = true,
+            silent = true,
+        })
+        vim.keymap.set('v', '<leader>a', require('fastaction').range_code_action, {
+            buffer = bufnr,
+            desc = 'Show code actions for the current range selection',
+            noremap = true,
+            silent = true,
+        })
     end,
 }
 
 capabilities.code_lens = {
     name = 'textDocument/codeLens',
     callback = function(_, bufnr)
-        nnoremap '<leader>l'(vim.lsp.codelens.run)(opts(bufnr)) 'Run codelens on current line'
+        vim.keymap.set('n', '<leader>l', vim.lsp.codelens.run, {
+            buffer = bufnr,
+            desc = 'Run codelens on current line',
+            noremap = true,
+            silent = true,
+        })
         autocmd({ 'BufEnter', 'InsertLeave', 'CursorHold' }, {
             group = augroup 'lsp_codelens_refresh',
             buffer = bufnr,
@@ -39,14 +48,24 @@ capabilities.code_lens = {
 capabilities.declaration = {
     name = 'textDocument/declaration',
     callback = function(_, bufnr)
-        nnoremap 'gD'(lsp.declaration)(opts(bufnr)) 'Go to declaration of symbol under cursor'
+        vim.keymap.set('n', 'gD', lsp.declaration, {
+            buffer = bufnr,
+            desc = 'Go to declaration of symbol under cursor',
+            noremap = true,
+            silent = true,
+        })
     end,
 }
 
 capabilities.definition = {
     name = 'textDocument/definition',
     callback = function(_, bufnr)
-        nnoremap 'gd'(lsp.definition)(opts(bufnr)) 'Go to definition of symbol under cursor'
+        vim.keymap.set('n', 'gd', lsp.definition, {
+            buffer = bufnr,
+            desc = 'Go to definition of symbol under cursor',
+            noremap = true,
+            silent = true,
+        })
     end,
 }
 
@@ -78,7 +97,12 @@ capabilities.document_highlight = {
 capabilities.document_symbols = {
     name = 'textDocument/documentSymbol',
     callback = function(_, bufnr)
-        nnoremap 'gs'(function() lsp.document_symbol() end)(opts(bufnr)) 'View document symbols'
+        vim.keymap.set('n', 'gs', lsp.document_symbol, {
+            buffer = bufnr,
+            desc = 'View document symbols',
+            noremap = true,
+            silent = true,
+        })
     end,
 }
 
@@ -88,7 +112,15 @@ capabilities.formatting = {
         autocmd('BufWritePre', {
             group = augroup 'auto_format',
             buffer = bufnr,
-            callback = function() lsp.format { async = false, id = client.id } end,
+            callback = function()
+                lsp.format {
+                    async = false,
+                    formatting_options = {
+                        tabSize = vim.api.nvim_buf_get_option(bufnr, 'tabstop'),
+                    },
+                    id = client.id,
+                }
+            end,
         })
     end,
 }
@@ -101,7 +133,12 @@ capabilities.hover = {
 capabilities.implementation = {
     name = 'textDocument/implementation',
     callback = function(_, bufnr)
-        nnoremap 'gi'(lsp.implementation)(opts(bufnr)) 'Show implementations of symbol under cursor'
+        vim.keymap.set('n', 'gi', lsp.implementation, {
+            buffer = bufnr,
+            desc = 'Show implementations of symbol under cursor',
+            noremap = true,
+            silent = true,
+        })
     end,
 }
 
@@ -112,7 +149,12 @@ capabilities.inlay_hints = {
             local ihint = vim.lsp.inlay_hint
             ihint.enable(not ihint.is_enabled { bufnr = bufnr }, { bufnr = bufnr })
         end
-        nnoremap 'gti'(toggle_inlay_hints)(opts(bufnr)) 'Toggle inlay hints'
+        vim.keymap.set('n', 'gi', toggle_inlay_hints, {
+            buffer = bufnr,
+            desc = 'Toggle inlay hints',
+            noremap = true,
+            silent = true,
+        })
     end,
 }
 
@@ -134,7 +176,6 @@ local function range_from_selection(bufnr, mode)
         end_col, start_col = start_col, end_col
     elseif end_row < start_row then
         start_row, end_row = end_row, start_row
-        start_col, end_col = end_col, start_col
     end
     if mode == 'V' then
         start_col = 1
@@ -151,7 +192,7 @@ capabilities.range_formatting = {
     name = 'textDocument/rangeFormatting',
     callback = function(_, bufnr)
         vim.keymap.set('v', 'gf', function()
-            vim.lsp.buf.format {
+            lsp.format {
                 range = range_from_selection(bufnr, vim.api.nvim_get_mode().mode),
                 filter = function(client)
                     return client.supports_method 'textDocument/rangeFormatting'
@@ -170,7 +211,12 @@ capabilities.range_formatting = {
 capabilities.references = {
     name = 'textDocument/references',
     callback = function(_, bufnr)
-        nnoremap 'gR'(lsp.references)(opts(bufnr)) 'Find references of symbol under cursor'
+        vim.keymap.set('n', 'gr', lsp.references, {
+            buffer = bufnr,
+            desc = 'Find references of symbol under cursor',
+            noremap = true,
+            silent = true,
+        })
     end,
 }
 
@@ -178,32 +224,60 @@ capabilities.rename = {
     name = 'textDocument/rename',
     callback = function(client, bufnr)
         if client.name == 'dartls' then
-            return nnoremap 'gr' '<cmd>FlutterRename<cr>' { buffer = bufnr } 'Flutter: Rename variable and related imports'
+            vim.keymap.set('n', 'gR', '<cmd>FlutterRename<cr>', {
+                buffer = bufnr,
+                desc = 'Flutter: Rename variable and related imports',
+                noremap = true,
+                silent = true,
+            })
         end
-        nnoremap 'gr'(function() vim.ui.input({ prompt = 'Rename: ' }, lsp.rename) end)(opts(bufnr)) 'Rename symbol under cursor'
+        vim.keymap.set('n', 'gR', lsp.rename, {
+            buffer = bufnr,
+            desc = 'Rename symbol under cursor',
+            noremap = true,
+            silent = true,
+        })
     end,
 }
 
 capabilities.signature_help = {
     name = 'textDocument/signatureHelp',
-    callback = function()
-        vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { desc = 'Show signature help' })
+    callback = function(_, bufnr)
+        vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, {
+            bufnr = bufnr,
+            noremap = true,
+            silent = true,
+            desc = 'Show signature help',
+        })
     end,
 }
 
 capabilities.symbol = {
     name = 'workspace/symbol',
     callback = function(_, bufnr)
-        nnoremap 'gS'(function() lsp.workspace_symbol(vim.fn.input { prompt = '> Search: ' }) end)(
-            opts(bufnr)
-        ) 'View Workspace symbols'
+        vim.keymap.set(
+            'n',
+            'gS',
+            function() lsp.workspace_symbol(vim.fn.input { prompt = '> Search: ' }) end,
+            {
+                buffer = bufnr,
+                desc = 'View Workspace symbols',
+                noremap = true,
+                silent = true,
+            }
+        )
     end,
 }
 
 capabilities.type_definition = {
     name = 'textDocument/typeDefinition',
     callback = function(_, bufnr)
-        nnoremap '<leader>gnd'(lsp.type_definition)(opts(bufnr)) 'Show type definition of symbol under cursor'
+        vim.keymap.set('n', '<leader>gnd', lsp.type_definition, {
+            buffer = bufnr,
+            desc = 'Show type definition of symbol under cursor',
+            noremap = true,
+            silent = true,
+        })
     end,
 }
 
