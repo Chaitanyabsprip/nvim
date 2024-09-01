@@ -300,6 +300,7 @@ keymaps.setup = function()
         silent = true,
     })
     keymap.set('n', 'gw', function()
+        vim.g.qf_source = 'grep'
         vim.ui.input(
             { prompt = '▍ ' },
             function(input) vim.cmd([[silent grep! ]] .. utils.rg_escape(input)) end
@@ -307,11 +308,13 @@ keymaps.setup = function()
         vim.cmd [[copen 12]]
     end, { desc = 'Grep query and populate quickfix', noremap = true, silent = true })
     keymap.set('n', 'gW', function()
+        vim.g.qf_source = 'grep'
         vim.cmd([[silent grep! ]] .. utils.rg_escape(vim.fn.expand '<cword>'))
         vim.cmd [[copen 12]]
     end, { desc = 'Grep query and populate quickfix', noremap = true, silent = true })
     keymap.set('v', 'gw', function()
         local selection, _ = utils.get_visual_selection()
+        vim.g.qf_source = 'grep'
         vim.cmd([[silent grep! ]] .. utils.rg_escape(selection))
         vim.cmd [[copen 12]]
     end, { noremap = true, silent = true })
