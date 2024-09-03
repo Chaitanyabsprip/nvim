@@ -189,9 +189,11 @@ return {
     --     end,
     -- },
     get_capabilities = function()
-        local cmp_lsp = require 'cmp_nvim_lsp'
         local capabilities = require('lsp').capabilities()
-        local cmp_capabilities = cmp_lsp.default_capabilities()
-        return vim.tbl_deep_extend('force', capabilities, cmp_capabilities)
+        local ok, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
+        if ok then
+            return vim.tbl_deep_extend('force', capabilities, cmp_lsp.default_capabilities())
+        end
+        return capabilities
     end,
 }
