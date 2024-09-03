@@ -1,25 +1,3 @@
--- local M = {}
--- local m = {}
--- local augroup = function(group) vim.api.nvim_create_augroup(group, { clear = true }) end
--- local autocmd = function(event, opts)
---     if not opts.disable then vim.api.nvim_create_autocmd(event, opts) end
--- end
---
--- m.buffers = {}
---
--- function M.setup(opts)
---     autocmd('BufLeave', {
---         group = augroup 'alternate',
---         callback = function(event) end,
---     })
---     autocmd('BufEnter', {
---         group = augroup 'alternate',
---         callback = function(event) end,
---     })
--- end
---
--- return M
-
 local M = {}
 local a = vim.api
 --------------------------------------------------------------------------------
