@@ -12,6 +12,7 @@ vim.api.nvim_create_autocmd('User', {
         config.autocommands()
         config.lazy()
         keymaps.lazy()
+        -- require 'completion'
     end,
 })
 
