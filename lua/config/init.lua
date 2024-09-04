@@ -177,7 +177,7 @@ config.options.setup = function()
     vim.o.smartindent = true
 
     -- folding
-    vim.o.foldcolumn = false
+    vim.g.foldcolumn = false -- this is a custom option
     vim.o.foldlevel = 99
     vim.o.foldlevelstart = 99
     vim.o.foldmethod = 'expr'
