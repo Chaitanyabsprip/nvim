@@ -1,4 +1,3 @@
-vim.opt.background = 'dark'
 return {
     theme = 'rosepine',
     transparent = false,

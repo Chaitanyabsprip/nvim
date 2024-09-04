@@ -111,116 +111,97 @@ function config.disable_builtins()
 end
 
 config.options.setup = function()
-    vim.go.grepprg = 'rg --vimgrep --no-heading --smart-case'
-    vim.go.grepformat = '%f:%l:%c:%m'
+    -- moving around, searching and patterns
+    vim.o.startofline = false
+    vim.o.incsearch = true
+    vim.o.ignorecase = true
+    vim.o.smartcase = true
+    vim.o.whichwrap = ''
 
-    vim.o.modeline = false
-    vim.opt.termguicolors = true
-    vim.o.clipboard = 'unnamedplus'
+    -- displaying text
+    vim.o.scroll = 12 -- number of lines to scroll for CTRL-U and CTRL-D
+    vim.o.smoothscroll = false
+    vim.o.scrolloff = 8
+    vim.o.wrap = false
+    vim.opt.fillchars =
+        { foldopen = '', foldclose = '', fold = ' ', foldsep = ' ', diff = '╱', eob = ' ' }
+    vim.o.cmdheight = 0
+    vim.o.lazyredraw = false -- don't redraw while executing macros
+    vim.o.redrawtime = 600 -- timeout for 'hlsearch' and :match highlighting in msec
+    vim.opt.list = true -- show <Tab> as ^I and end-of-line as $
+    vim.opt.listchars =
+        { tab = '| ', nbsp = '␣', trail = '•', extends = '⟩', precedes = '⟨', eol = '↲' }
     vim.o.number = true
-    vim.o.numberwidth = 3
     vim.o.relativenumber = true
-    vim.o.cursorline = true
-    vim.wo.signcolumn = 'yes'
+    vim.o.numberwidth = 3
+    vim.o.conceallevel = 2
 
-    -- indent
-    vim.o.autoindent = true
-    vim.o.cindent = true
-    vim.o.smarttab = true
+    -- syntax, highlighting and spelling
+    vim.o.background = 'dark'
+    vim.o.hlsearch = false
+    vim.o.termguicolors = true
+    vim.o.cursorline = true
+    vim.opt.cursorlineopt = { 'both' }
+    vim.o.colorcolumn = '81'
+
+    -- multiple windows
+    vim.o.laststatus = 3
+    -- vim.o.statuscolumn = [[%!v:lua.require'config.statuscolumn'.status_column()]]
+    vim.o.splitbelow = true
+    vim.o.splitright = true
+
+    -- multiple tab pages
+    vim.go.tabline = [[%!v:lua.require'config.tabline'.tabline()]]
+
+    -- messages and info
+    vim.o.shortmess = 'filnxtToOFIcCs'
+    vim.opt.showcmdloc = 'statusline'
+
+    -- selecting text
+    vim.o.clipboard = 'unnamedplus'
+
+    -- editing text
+    vim.o.undofile = true
+    vim.o.undodir = vim.fn.expand '~/.tmp/undodir'
+    vim.o.textwidth = 80
+    vim.opt.pumheight = 10
+    vim.opt.showmatch = true
+
+    -- tabs and indenting
+    vim.o.tabstop = 8
     vim.o.expandtab = true
-    vim.o.smartindent = true
+    vim.o.smarttab = true
     vim.o.softtabstop = 4
     vim.o.shiftwidth = 4
+    vim.o.autoindent = true
+    vim.o.smartindent = true
 
-    -- use undofile over swapfile
-    vim.o.undodir = vim.fn.expand '~/.tmp/undodir'
-    vim.o.undofile = true
-    vim.o.swapfile = false
+    -- folding
+    vim.o.foldcolumn = false
+    vim.o.foldlevel = 99
+    vim.o.foldlevelstart = 99
+    vim.o.foldmethod = 'expr'
+
+    -- reading and writing files
+    vim.o.modeline = false
     vim.o.backup = false
     vim.o.writebackup = false
 
-    -- disable wrap
-    vim.wo.wrap = false
-
-    vim.o.cmdheight = 0
-    vim.o.scrolloff = 8
-    vim.o.colorcolumn = '81'
-    vim.o.textwidth = 80
-    vim.o.conceallevel = 2
-    vim.o.sessionoptions = 'buffers,curdir,winsize,resize,winpos,folds,tabpages,globals'
-    vim.o.shell = '/usr/bin/env zsh'
+    -- the swap file
+    vim.o.swapfile = false
     vim.o.updatetime = 1000
-    vim.opt.smoothscroll = true
-    vim.opt.showmatch = true
 
-    -- split options
-    vim.o.splitbelow = true
-    vim.o.splitright = true
-    vim.o.laststatus = 3
+    -- executing external commands
+    vim.o.shell = '/usr/bin/env zsh'
 
-    -- folding
-    vim.g.foldcolumn = false
-    vim.wo.foldmethod = 'expr'
-    vim.o.foldlevel = 99
-    vim.o.foldlevelstart = 99
+    -- running make and jumping to errors (quickfix)
+    vim.go.grepprg = 'rg --vimgrep --no-heading --smart-case'
 
-    -- vim.o.statuscolumn = [[%!v:lua.require'config.statuscolumn'.status_column()]]
-    vim.go.tabline = [[%!v:lua.require'config.tabline'.tabline()]]
+    -- various
+    vim.o.sessionoptions = 'buffers,curdir,winsize,resize,winpos,folds,tabpages,globals'
+    vim.wo.signcolumn = 'yes'
 
-    -- search
-    vim.o.hlsearch = false
-    vim.o.incsearch = true
-    vim.o.smartcase = true
-    vim.o.ignorecase = true
-
-    -- autocomplete popup
     vim.opt.pumblend = 10
-    vim.opt.pumheight = 10
-
-    vim.o.shortmess = 'filnxtToOFIcCs'
-    vim.o.whichwrap = ''
-    vim.opt.list = true
-    vim.opt.listchars =
-        { tab = '| ', nbsp = '␣', trail = '•', extends = '⟩', precedes = '⟨', eol = '↲' }
-    vim.opt.fillchars =
-        { foldopen = '', foldclose = '', fold = ' ', foldsep = ' ', diff = '╱', eob = ' ' }
-    vim.opt.showcmdloc = 'statusline'
-    config.filetype()
-end
-
-function config.filetype()
-    vim.filetype.add {
-        extension = {
-            conf = 'conf',
-            env = 'dotenv',
-            rasi = 'rasi',
-        },
-        filename = {
-            ['.env'] = 'dotenv',
-            ['tsconfig.json'] = 'jsonc',
-            ['.yamlfmt'] = 'yaml',
-            ['launch.json'] = 'jsonc',
-            Appfile = 'ruby',
-            Brewfile = 'ruby',
-            Fastfile = 'ruby',
-            Gemfile = 'ruby',
-            Pluginfile = 'ruby',
-            Podfile = 'ruby',
-        },
-        pattern = {
-            ['%.env%.[%w_.-]+'] = 'dotenv',
-            ['.*/waybar/config'] = 'jsonc',
-            ['.*/mako/config'] = 'dosini',
-            ['.*/git/config'] = 'git_config',
-            ['.*/kitty/*.conf'] = 'kitty',
-            ['.*/hypr/.*%.conf'] = 'hyprlang',
-            ['.*/dockerfiles/.*'] = 'dockerfile',
-            ['.*%.conf'] = 'conf',
-            ['.*%.theme'] = 'conf',
-            ['.*%.gradle'] = 'groovy',
-            ['^.env%..*'] = 'bash',
-        },
-    }
 end
 
 function config.lazy()
