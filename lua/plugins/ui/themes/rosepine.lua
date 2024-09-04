@@ -14,6 +14,7 @@ end
 local highlight = {
     ColorColumn = { bg = hlt },
     CursorLine = { bg = hlt },
+    CursorLineNr = { bg = hlt, fg = 'text' },
     Comment = { fg = 'highlight_med', italic = true },
     CmpItemAbbr = { fg = 'subtle' },
     CmpItemAbbrDeprecated = { fg = 'subtle' },
