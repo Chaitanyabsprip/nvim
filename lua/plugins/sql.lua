@@ -1,9 +1,5 @@
-local extend = require('plugins.lsp').extend
-
-local function sqlls(lspconfig) lspconfig.sqlls.setup(extend { root = { '.sqllsrc.json' } }) end
-
+---@type LazySpec[]
 return {
-    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,
@@ -11,18 +7,26 @@ return {
             require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'sql')
         end,
     },
-    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         optional = true,
         opts = function(_, opts)
-            require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'sqlls')
+            require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'sqlfluff')
         end,
     },
-    ---@type LazyPluginSpec
     {
-        'neovim/nvim-lspconfig',
+        'nvimtools/none-ls.nvim',
+        ft = function(_, filetypes) return vim.list_extend(filetypes, { 'sql' }) end,
         optional = true,
-        opts = { servers = { sqlls = sqlls } },
+        opts = function(_, opts)
+            require('config.lazy').extend_opts_list(
+                opts,
+                'sources',
+                ---@param builtins NullBuiltin
+                function(builtins)
+                    return { builtins.diagnostics.sqlfluff, builtins.formatting.sqlfluff }
+                end
+            )
+        end,
     },
 }
