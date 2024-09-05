@@ -3,6 +3,7 @@ return {
     {
         'kristijanhusak/vim-dadbod-completion',
         dependencies = { 'hrsh7th/nvim-cmp' },
+        ft = { 'sql', 'mysql', 'plsql' },
         config = function()
             require('cmp').setup.filetype({ 'sql' }, {
                 sources = {
@@ -15,7 +16,7 @@ return {
     ---@type LazyPluginSpec
     {
         'kristijanhusak/vim-dadbod-ui',
-        dependencies = { 'tpope/vim-dadbod' },
+        dependencies = { 'tpope/vim-dadbod', 'kristijanhusak/vim-dadbod-completion' },
         config = function()
             vim.g.db_ui_use_nerd_fonts = true
             vim.g.db_ui_show_database_icon = true
