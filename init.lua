@@ -2,7 +2,7 @@ local config = require 'config'
 config.disable_builtins()
 vim.g.mapleader = ' '
 require('config.lazy').setup()
-config.options.setup()
+config.setup()
 local keymaps = require 'config.keymaps'
 keymaps.setup()
 vim.api.nvim_create_autocmd('User', {

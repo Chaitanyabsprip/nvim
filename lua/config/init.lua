@@ -93,8 +93,6 @@ function config.autocommands()
     autocmd('VimEnter', { callback = update_lead, once = true })
 end
 
-config.options = {}
-
 function config.disable_builtins()
     vim.cmd [[
     syntax off
@@ -110,7 +108,7 @@ function config.disable_builtins()
     vim.g.loaded_ruby_provider = 0
 end
 
-config.options.setup = function()
+config.setup = function()
     -- moving around, searching and patterns
     vim.o.startofline = false
     vim.o.incsearch = true
