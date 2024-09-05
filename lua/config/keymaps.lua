@@ -75,230 +75,84 @@ local function buf_kill(target_buf, should_force)
     api.nvim_command(table.concat({ command, target_buf }, ' '))
 end
 
+---@param desc string?
+---@return table
+local function opts(desc)
+    if desc == '' then desc = nil end
+    return {
+        desc = desc,
+        noremap = true,
+        silent = true,
+    }
+end
+
 keymaps.setup = function()
     -- Leader bindings
-    keymap.set('n', '<Space>', '<NOP>', { noremap = true, silent = true })
+    keymap.set('n', '<Space>', '<NOP>', opts())
     vim.g.mapleader = ' '
 
-    keymap.set('n', '<leader>q', '<cmd>q<cr>', {
-        desc = 'Close window (:q)',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('i', '<c-c>', '<esc>', {
-        desc = 'To not be annoyed by the <c-c> messages all the time',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('x', '<c-c>', '<esc>', {
-        desc = 'To not be annoyed by the <c-c> messages all the time',
-        noremap = true,
-        silent = true,
-    })
+    keymap.set('n', '<leader>q', '<cmd>q<cr>', opts 'Close window (:q)')
+    keymap.set('i', '<c-c>', '<esc>', opts 'To not be annoyed by the <c-c> messages all the time')
+    keymap.set('x', '<c-c>', '<esc>', opts 'To not be annoyed by the <c-c> messages all the time')
 end
 
 function keymaps.lazy()
     local utils = require 'utils'
-    keymap.set('n', '<leader>e', '<cmd>Explorer<cr>', {
-        desc = 'Toggle file explorer',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', '_', '^', {
-        desc = 'Jump to the start of the line',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('x', '_', '^', {
-        desc = 'Jump to the start of the line',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', '&', 'g_', {
-        desc = 'Jump to the end of the line',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('x', '&', 'g_', {
-        desc = 'Jump to the end of the line',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('v', 'J', ":m '>+1<cr>gv=gv", {
-        desc = 'Move selected lines down',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('v', 'K', ":m '<-2<cr>gv=gv", {
-        desc = 'Move selected lines up',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', ')', '<cmd>vertical resize +5<cr>', {
-        desc = 'Increase current window height',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', '(', '<cmd>vertical resize -5<cr>', {
-        desc = 'Decrease current window height',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', '+', '<cmd>res +1<cr>', {
-        desc = 'Increase current window width',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', '-', '<cmd>res -1<cr>', {
-        desc = 'Decrease current window width',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('v', '<', '<gv', {
-        desc = 'Maintain visual selection while decreasing indent',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('v', '>', '>gv', {
-        desc = 'Maintain visual selection while increasing indent',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('v', '=', '=gv', {
-        desc = 'Maintain visual selection while auto fixing indent',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', '<leader>y', '<cmd>%y+<cr>', {
-        desc = 'Yank whole buffer to system clipboard',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', '<leader>v', 'ggVG', {
-        desc = 'Select whole buffer',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('v', 'p', '"_dP', {
-        desc = 'Paste inplace without yanking selected text',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', '<TAB>', '<cmd>tabnext<cr>', {
-        desc = 'To next tab',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', '<S-TAB>', '<cmd>tabprevious<cr>', {
-        desc = 'To previous tab',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', 'n', 'nzzzv', {
-        desc = 'Jump to next match and center line',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', 'N', 'Nzzzv', {
-        desc = 'Jump to previous match and center line',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', 'J', 'mzJ`z', {
-        desc = 'Join lines without moving cursor',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', '}', '}zz', {
-        desc = 'Like text object motion } but centers line',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', '{', '{zz', {
-        desc = 'Like text object motion { but centers line',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', '<c-d>', '12jzz', {
-        desc = 'Like text object motion <c-d> but centers line',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', '<c-u>', '12kzz', {
-        desc = 'Like text object motion <c-u>{ but centers line',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('v', '<c-d>', '12jzz', {
-        desc = 'Like text object motion <c-d> but centers line',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('v', '<c-u>', '12kzz', {
-        desc = 'Like text object motion <c-u>{ but centers line',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', '<leader>r', ':%s/\\<<c-r><c-w>\\>/<c-r><c-w>/gI<Left><Left><Left>', {
-        desc = 'Search and replace, in current buffer, word under cursor',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('v', '<leader>r', '"hy:%s/<C-r>h//gI<left><left><left>', {
-        desc = 'Search and replace, in current buffer, visual selection',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('v', '<leader>s', 'y:%s/<c-r>0/<c-r>0/gI<Left><Left><Left>', {
-        desc = 'Search and modify, in current buffer, visual selection',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', 'gn', '<cmd>cnext<cr>zz', {
-        desc = 'Jump to next result from quickfix',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', 'gp', '<cmd>cprev<cr>zz', {
-        desc = 'Jump to prev result from quickfix',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', 'gj', '<c-o>', {
-        desc = 'Jump back the jump list',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('n', 'gk', '<c-i>', {
-        desc = 'Jump forward the jump list',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('c', '<c-a>', '<Home>', {
-        desc = 'Jump to the start of the command',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('c', '<c-f>', '<c-Right>', {
-        desc = 'Move cursor one character right',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('c', '<c-b>', '<c-Left>', {
-        desc = 'Move cursor one character left',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('c', '<c-o>', '<Up>', {
-        desc = 'Move cursor one character left',
-        noremap = true,
-        silent = true,
-    })
-    keymap.set('c', '<c-i>', '<Down>', {
-        desc = 'Move cursor one character left',
-        noremap = true,
-        silent = true,
-    })
+    keymap.set('n', '<leader>e', '<cmd>Explorer<cr>', opts 'Toggle file explorer')
+    keymap.set('n', '_', '^', opts 'Jump to the start of the line')
+    keymap.set('x', '_', '^', opts 'Jump to the start of the line')
+    keymap.set('n', '&', 'g_', opts 'Jump to the end of the line')
+    keymap.set('x', '&', 'g_', opts 'Jump to the end of the line')
+    keymap.set('v', 'J', ":m '>+1<cr>gv=gv", opts 'Move selected lines down')
+    keymap.set('v', 'K', ":m '<-2<cr>gv=gv", opts 'Move selected lines up')
+    keymap.set('n', ')', '<cmd>vertical resize +5<cr>', opts 'Increase current window height')
+    keymap.set('n', '(', '<cmd>vertical resize -5<cr>', opts 'Decrease current window height')
+    keymap.set('n', '+', '<cmd>res +1<cr>', opts 'Increase current window width')
+    keymap.set('n', '-', '<cmd>res -1<cr>', opts 'Decrease current window width')
+    keymap.set('v', '<', '<gv', opts 'Maintain visual selection while decreasing indent')
+    keymap.set('v', '>', '>gv', opts 'Maintain visual selection while increasing indent')
+    keymap.set('v', '=', '=gv', opts 'Maintain visual selection while auto fixing indent')
+    keymap.set('n', '<leader>y', '<cmd>%y+<cr>', opts 'Yank whole buffer to system clipboard')
+    keymap.set('n', '<leader>v', 'ggVG', opts 'Select whole buffer')
+    keymap.set('v', 'p', '"_dP', opts 'Paste inplace without yanking selected text')
+    keymap.set('n', '<TAB>', '<cmd>tabnext<cr>', opts 'To next tab')
+    keymap.set('n', '<S-TAB>', '<cmd>tabprevious<cr>', opts 'To previous tab')
+    keymap.set('n', 'n', 'nzzzv', opts 'Jump to next match and center line')
+    keymap.set('n', 'N', 'Nzzzv', opts 'Jump to previous match and center line')
+    keymap.set('n', 'J', 'mzJ`z', opts 'Join lines without moving cursor')
+    keymap.set('n', '}', '}zz', opts 'Like text object motion } but centers line')
+    keymap.set('n', '{', '{zz', opts 'Like text object motion { but centers line')
+    keymap.set('n', '<c-d>', '12jzz', opts 'Like text object motion <c-d> but centers line')
+    keymap.set('n', '<c-u>', '12kzz', opts 'Like text object motion <c-u>{ but centers line')
+    keymap.set('v', '<c-d>', '12jzz', opts 'Like text object motion <c-d> but centers line')
+    keymap.set('v', '<c-u>', '12kzz', opts 'Like text object motion <c-u>{ but centers line')
+    keymap.set(
+        'n',
+        '<leader>r',
+        ':%s/\\<<c-r><c-w>\\>/<c-r><c-w>/gI<Left><Left><Left>',
+        opts 'Search and replace, in current buffer, word under cursor'
+    )
+    keymap.set(
+        'v',
+        '<leader>r',
+        '"hy:%s/<C-r>h//gI<left><left><left>',
+        opts 'Search and replace, in current buffer, visual selection'
+    )
+    keymap.set(
+        'v',
+        '<leader>s',
+        'y:%s/<c-r>0/<c-r>0/gI<Left><Left><Left>',
+        opts 'Search and modify, in current buffer, visual selection'
+    )
+    keymap.set('n', 'gn', '<cmd>cnext<cr>zz', opts 'Jump to next result from quickfix')
+    keymap.set('n', 'gp', '<cmd>cprev<cr>zz', opts 'Jump to prev result from quickfix')
+    keymap.set('n', 'gj', '<c-o>', opts 'Jump back the jump list')
+    keymap.set('n', 'gk', '<c-i>', opts 'Jump forward the jump list')
+    keymap.set('c', '<c-a>', '<Home>', opts 'Jump to the start of the command')
+    keymap.set('c', '<c-f>', '<c-Right>', opts 'Move cursor one character right')
+    keymap.set('c', '<c-b>', '<c-Left>', opts 'Move cursor one character left')
+    keymap.set('c', '<c-o>', '<Up>', opts 'Move cursor one character left')
+    keymap.set('c', '<c-i>', '<Down>', opts 'Move cursor one character left')
     keymap.set('n', 'gw', function()
         vim.g.qf_source = 'grep'
         vim.ui.input(
@@ -306,48 +160,44 @@ function keymaps.lazy()
             function(input) vim.cmd([[silent grep! ]] .. utils.rg_escape(input)) end
         )
         vim.cmd [[copen 12]]
-    end, { desc = 'Grep query and populate quickfix', noremap = true, silent = true })
+    end, opts 'Grep query and populate quickfix')
     keymap.set('n', 'gW', function()
         vim.g.qf_source = 'grep'
         vim.cmd([[silent grep! ]] .. utils.rg_escape(vim.fn.expand '<cword>'))
         vim.cmd [[copen 12]]
-    end, { desc = 'Grep query and populate quickfix', noremap = true, silent = true })
+    end, opts 'Grep query and populate quickfix')
     keymap.set('v', 'gw', function()
         local selection, _ = utils.get_visual_selection()
         vim.g.qf_source = 'grep'
         vim.cmd([[silent grep! ]] .. utils.rg_escape(selection))
         vim.cmd [[copen 12]]
-    end, { noremap = true, silent = true })
-    keymap.set('', 's', '<NOP>', { desc = 'unmap s', noremap = true, silent = true })
-    keymap.set('', 'S', '<NOP>', { desc = 'unmap S', noremap = true, silent = true })
+    end, opts())
+    keymap.set('', 's', '<NOP>', opts 'unmap s')
+    keymap.set('', 'S', '<NOP>', opts 'unmap S')
 
     cowboy { 'oil', 'qf', 'help', 'noice', 'lazy' }
-    keymap.set('n', 'X', buf_kill, { desc = 'Close current buffer', noremap = true })
+    keymap.set('n', 'X', buf_kill, opts 'Close current buffer')
     keymap.set('n', 'gtn', function()
         local nu = vim.wo[api.nvim_get_current_win()].number
         return '<cmd>setlocal ' .. (nu and 'no' or '') .. 'nu<cr>'
-    end, { desc = 'Toggle line number', expr = true, noremap = true })
+    end, opts 'Toggle line number')
     keymap.set('n', 'gtN', function()
         local rnu = vim.wo[api.nvim_get_current_win()].relativenumber
         return '<cmd>setlocal ' .. (rnu and 'no' or '') .. 'rnu<cr>'
-    end, { expr = true, desc = 'Toggle relative line number', noremap = true })
-    keymap.set('n', '<c-w>z', toggle_win_zoom(), { desc = 'Toggle window zoom', noremap = true })
-    keymap.set('n', 'gz', toggle_win_zoom(), { desc = 'Toggle window zoom', noremap = true })
+    end, opts 'Toggle relative line number')
+    keymap.set('n', '<c-w>z', toggle_win_zoom(), opts 'Toggle window zoom')
+    keymap.set('n', 'gz', toggle_win_zoom(), opts 'Toggle window zoom')
 
     local qf = require 'quickfix'
-    keymap.set('n', 'gb', qf.buffers, { desc = 'Quickfix: List buffers', noremap = true })
-    keymap.set('n', 'ge', '?```<cr>jV/```<cr>k!emso<cr>:noh<cr>', {
-        desc = 'Run shell code within markdown code snipper',
-        noremap = true,
-    })
-    keymap.set('v', 'ge', 'dO```sh<esc>o```<esc>kpkw', {
-        desc = 'Wrap selection in code block',
-        noremap = true,
-    })
-    keymap.set('n', ',,', require('alternate').gotoAltBuffer, {
-        desc = 'Switch to Alternate buffer',
-        noremap = true,
-    })
+    keymap.set('n', 'gb', qf.buffers, opts 'Quickfix: List buffers')
+    keymap.set(
+        'n',
+        'ge',
+        '?```<cr>jV/```<cr>k!emso<cr>:noh<cr>',
+        opts 'Run shell code within markdown code snipper'
+    )
+    keymap.set('v', 'ge', 'dO```sh<esc>o```<esc>kpkw', opts 'Wrap selection in code block')
+    keymap.set('n', ',,', require('alternate').gotoAltBuffer, opts 'Switch to Alternate buffer')
 
     keymap.del('n', 'grr')
     keymap.del({ 'x', 'n' }, 'gra')
