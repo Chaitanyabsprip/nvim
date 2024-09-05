@@ -202,6 +202,9 @@ config.options.setup = function()
     vim.wo.signcolumn = 'yes'
 
     vim.opt.pumblend = 10
+
+    -- sql plugin opts
+    vim.g.ftplugin_sql_omni_key = '<c-a>'
 end
 
 function config.lazy()
