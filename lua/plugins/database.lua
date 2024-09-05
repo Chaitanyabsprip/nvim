@@ -46,6 +46,20 @@ return {
                     vim.keymap.set('n', 'J', '<Plug>(DBUI_GotoNextSibling', opts)
                 end,
             })
+
+            vim.g.db_ui_disable_mappings_sql = true
+            vim.api.nvim_create_autocmd('FileType', {
+                pattern = 'sql',
+                callback = function(args)
+                    ---@type integer
+                    local buffer = args.buf
+                    local opts = { buffer = buffer, noremap = true, silent = true }
+                    vim.keymap.set('n', '<leader>W', '<Plug>(DBUI_SaveQuery)', opts)
+                    vim.keymap.set('n', '<leader>E', '<Plug>(DBUI_EditBindParameters)', opts)
+                    vim.keymap.set('n', '<c-s>', '<Plug>(DBUI_ExecuteQuery)', opts)
+                    vim.keymap.set('v', '<c-s>', '<Plug>(DBUI_ExecuteQuery)', opts)
+                end,
+            })
         end,
         cmd = { 'DBUI', 'DBUIToggle', 'DBUIAddConnection', 'DBUIFindBuffer' },
         keys = {
