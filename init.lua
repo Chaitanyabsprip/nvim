@@ -9,7 +9,6 @@ vim.api.nvim_create_autocmd('User', {
     group = vim.api.nvim_create_augroup('init', { clear = true }),
     pattern = 'VeryLazy',
     callback = function()
-        config.autocommands()
         config.lazy()
         keymaps.lazy()
         -- require 'completion'

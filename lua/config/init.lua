@@ -205,7 +205,22 @@ config.setup = function()
     vim.g.ftplugin_sql_omni_key = '<c-a>'
 end
 
+config.commands = function()
+    vim.api.nvim_create_user_command(
+        'Vnew',
+        'vnew | setlocal nobuflisted buftype=nofile bufhidden=wipe noswapfile',
+        {}
+    )
+    vim.api.nvim_create_user_command(
+        'New',
+        'new | setlocal nobuflisted buftype=nofile bufhidden=wipe noswapfile',
+        {}
+    )
+end
+
 function config.lazy()
+    config.autocommands()
+    config.commands()
     require('greeter').setup()
     require('config.tabline').setup()
     -- require('utils').open_explorer_on_startup()
