@@ -10,6 +10,28 @@ local autocmd = function(event, opts)
 end
 local lsp = vim.lsp.buf
 
+---@param opts LspFormat
+local function format(opts)
+    ---@type integer
+    local buf = opts.bufnr
+    if buf == nil then return end
+    local null_ls_sources = require 'null-ls.sources'
+    local ft = vim.bo[buf].filetype
+
+    local has_null_ls = #null_ls_sources.get_available(ft, 'NULL_LS_FORMATTING') > 0
+    ---@type function
+    local filter = opts.filter
+    opts.filter = nil
+    vim.lsp.buf.format(vim.tbl_deep_extend('force', {
+        bufnr = buf,
+        filter = function(client)
+            return (has_null_ls and client.name == 'null-ls')
+                or not has_null_ls
+                or (filter and filter())
+        end,
+    }, opts))
+end
+
 capabilities.code_action = {
     name = 'textDocument/codeAction',
     callback = function(_, bufnr)
@@ -113,10 +135,10 @@ capabilities.formatting = {
             group = augroup 'auto_format',
             buffer = bufnr,
             callback = function()
-                lsp.format {
+                format {
+                    bufnr = bufnr,
                     async = false,
                     formatting_options = { tabSize = vim.bo[bufnr].tabstop },
-                    id = client.id,
                 }
             end,
         })
@@ -190,12 +212,13 @@ capabilities.range_formatting = {
     name = 'textDocument/rangeFormatting',
     callback = function(_, bufnr)
         vim.keymap.set('v', 'gf', function()
-            lsp.format {
+            format {
+                bufnr = bufnr,
                 range = range_from_selection(bufnr, vim.api.nvim_get_mode().mode),
+                formatting_options = { tabSize = vim.bo[bufnr].tabstop },
                 filter = function(client)
                     return client.supports_method 'textDocument/rangeFormatting'
                 end,
-                bufnr = bufnr,
             }
         end, {
             noremap = true,
@@ -290,5 +313,13 @@ capabilities.resolve = function(client, bufnr)
         end
     end
 end
+
+--[[
+A | B | R
+1 | 1 | 1
+1 | 0 | 0
+0 | 1 | 1
+0 | 0 | 1
+--]]
 
 return capabilities

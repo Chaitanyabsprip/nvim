@@ -72,3 +72,42 @@ vim.highlight = require 'vim.highlight'
 ---@field with table
 
 ---@alias NullSourceFn function(builtins: NullBuiltin): NullSource[]
+
+---@class LspFormat
+---Can be used to specify
+---FormattingOptions. Some unspecified options will be
+---automatically derived from the current Nvim options. See
+---https://microsoft.github.io/language-server-protocol/specification/#formattingOptions
+---@field formatting_options? table 
+---default: `1000` Time in
+---milliseconds to block for formatting requests. No effect if
+---async=true.
+---@field timeout_ms? integer 
+---default: current buffer Restrict
+---formatting to the clients attached to the given buffer.
+---@field bufnr? integer 
+---Predicate used to filter clients. Receives a client as
+---argument and must return a boolean. Clients matching the
+---predicate are included. Example: >lua
+---  -- Never request typescript-language-server for formatting
+---  vim.lsp.buf.format {
+---    filter = function(client) return client.name ~= "tsserver" end
+---  }
+---
+---@field filter? fun(client: vim.lsp.Client): boolean?
+---default: false If true the method
+---won't block. Editing the buffer while formatting
+---asynchronous can lead to unexpected changes.
+---@field async? boolean 
+---Restrict formatting to the client with ID
+---(client.id) matching this field.
+---@field id? integer 
+---Restrict formatting to the client with
+---name (client.name) matching this field.
+---@field name? string 
+---default:
+---current selection in visual mode, `nil` in other modes,
+---formatting the full buffer Range to format. Table must
+---contain `start` and `end` keys with {row,col} tuples using
+---(1,0) indexing.
+---@field range? {start:integer[],end:integer[]} 
