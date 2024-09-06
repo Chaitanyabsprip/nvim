@@ -141,15 +141,16 @@ end
 function M.rg_escape(str)
     if not str then return str end
     -- [(~'"\/$?'`*&&||;[]<>)]
-    -- escape "\~$?*|[()^-."
+    -- escape "\~'$?*|[()^-."
     local ret = str
-        :gsub('[\\~$?*|{\\[()^%-%.%+]', function(x) return '\\' .. x end)
+        :gsub("[\\~'$?*|{\\[()^%-%.%+]", function(x) return '\\' .. x end)
         -- Escape newline (#1203) at the end so we
         -- don't end up escaping the backslash twice
         :gsub(
             '\n',
             '\\n'
         )
+    ret = '"' .. ret .. '"'
     return ret
 end
 

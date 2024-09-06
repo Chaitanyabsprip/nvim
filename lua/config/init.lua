@@ -193,7 +193,7 @@ config.setup = function()
     vim.o.shell = '/usr/bin/env zsh'
 
     -- running make and jumping to errors (quickfix)
-    vim.go.grepprg = 'rg --vimgrep --no-heading --smart-case'
+    vim.go.grepprg = 'rg --vimgrep --no-heading --smart-case --multiline'
 
     -- various
     vim.o.sessionoptions = 'buffers,curdir,winsize,resize,winpos,folds,tabpages,globals'
