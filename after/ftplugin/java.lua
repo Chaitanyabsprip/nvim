@@ -1,7 +1,7 @@
 ---@diagnostic disable: unused-function, no-unknown
 ---@diagnostic disable-next-line: unused-local
 local setup = function()
-    vim.cmd [[setlocal shiftwidth=4 softtabstop=4 expandtab tabstop=4]]
+    vim.cmd [[setlocal shiftwidth=4 softtabstop=4]]
     local status, jdtls = pcall(require, 'jdtls')
     if not status then return end
     -- Determine OS

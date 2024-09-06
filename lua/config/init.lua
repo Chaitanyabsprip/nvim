@@ -167,7 +167,7 @@ config.setup = function()
 
     -- tabs and indenting
     vim.o.tabstop = 8
-    vim.o.expandtab = true
+    vim.o.expandtab = false
     vim.o.smarttab = true
     vim.o.softtabstop = 4
     vim.o.shiftwidth = 4
