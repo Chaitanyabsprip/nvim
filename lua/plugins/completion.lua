@@ -5,14 +5,11 @@ return {
         'L3MON4D3/LuaSnip',
         build = 'make install_jsregexp',
         version = '2.*',
-        dependencies = {
-            {
-                'rafamadriz/friendly-snippets',
-                config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
-            },
-        },
+        dependencies = { { 'rafamadriz/friendly-snippets' } },
+        config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
         opts = function()
             local types = require 'luasnip.util.types'
+            vim.opt.runtimepath:append(vim.fn.stdpath 'config' .. '/snippets')
             return {
                 history = true,
                 updateevents = 'TextChanged,TextChangedI',
