@@ -1,7 +1,6 @@
 local extend = require('plugins.lsp').extend
 
 local function marksman(lspconfig) lspconfig.marksman.setup(extend { root = { '.marksman.toml' } }) end
-local function typos(lspconfig) lspconfig.typos_lsp.setup(extend {}) end
 local function oxide(lspconfig) lspconfig.markdown_oxide.setup(extend {}) end
 ---@type LazySpec[]
 return {
@@ -25,7 +24,7 @@ return {
                 opts,
                 'ensure_installed',
                 'ltex-ls',
-                'typos-lsp',
+                'cspell',
                 'markdownlint',
                 'markdown-oxide',
                 'marksman'
@@ -34,11 +33,13 @@ return {
     },
     {
         'nvimtools/none-ls.nvim',
+        dependencies = { { 'davidmh/cspell.nvim' } },
         optional = true,
         ft = function(_, filetypes)
             return vim.list_extend(filetypes, { 'markdown', 'md', 'rmd', 'rst' })
         end,
         opts = function(_, opts)
+            local cspell = require 'cspell'
             require('config.lazy').extend_opts_list(
                 opts,
                 'sources',
@@ -50,6 +51,8 @@ return {
                             extra_args = { '--disable', 'MD024' },
                         },
                         builtins.hover.dictionary,
+                        cspell.diagnostics,
+                        cspell.code_actions,
                     }
                 end
             )
@@ -59,7 +62,7 @@ return {
     {
         'neovim/nvim-lspconfig',
         optional = true,
-        opts = { servers = { marksman = marksman, typos = typos, oxide = oxide } },
+        opts = { servers = { marksman = marksman, oxide = oxide } },
     },
     {
         'lukas-reineke/headlines.nvim',
