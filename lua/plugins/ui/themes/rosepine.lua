@@ -95,6 +95,7 @@ return {
         vim.g.lualine_theme = 'rose-pine'
         return {
             dark_variant = 'main',
+            disable_float_background = true,
             highlight_groups = highlight,
             extend_background_behind_borders = true,
             enable = {
