@@ -1,6 +1,7 @@
 local extend = require('plugins.lsp').extend
 
 local function marksman(lspconfig) lspconfig.marksman.setup(extend { root = { '.marksman.toml' } }) end
+local function typos(lspconfig) lspconfig.typos_lsp.setup(extend {}) end
 local function oxide(lspconfig) lspconfig.markdown_oxide.setup(extend {}) end
 ---@type LazySpec[]
 return {
@@ -24,6 +25,7 @@ return {
                 opts,
                 'ensure_installed',
                 'ltex-ls',
+                'typos-lsp',
                 'cspell',
                 'markdownlint',
                 'markdown-oxide',
@@ -62,7 +64,7 @@ return {
     {
         'neovim/nvim-lspconfig',
         optional = true,
-        opts = { servers = { marksman = marksman, oxide = oxide } },
+        opts = { servers = { marksman = marksman, typos = typos, oxide = oxide } },
     },
     {
         'lukas-reineke/headlines.nvim',
