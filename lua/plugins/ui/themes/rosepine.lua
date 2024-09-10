@@ -16,6 +16,8 @@ local highlight = {
     CursorLine = { bg = hlt },
     CursorLineNr = { bg = hlt, fg = 'text' },
     Comment = { fg = 'highlight_med', italic = true },
+    CurSearch = { fg = 'base', bg = 'leaf', inherit = false },
+    Search = { fg = 'text', bg = 'leaf', blend = 20, inherit = false },
     CmpItemAbbr = { fg = 'subtle' },
     CmpItemAbbrDeprecated = { fg = 'subtle' },
     CmpItemAbbrMatch = { fg = 'iris' },
