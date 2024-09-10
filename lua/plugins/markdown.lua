@@ -51,8 +51,8 @@ return {
                             extra_args = { '--disable', 'MD024' },
                         },
                         builtins.hover.dictionary,
-                        cspell.diagnostics,
-                        cspell.code_actions,
+                        cspell.diagnostics.with { filetypes = { 'markdown', 'md', 'rmd', 'rst' } },
+                        cspell.code_actions.with { filetypes = { 'markdown', 'md', 'rmd', 'rst' } },
                     }
                 end
             )
