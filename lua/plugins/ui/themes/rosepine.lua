@@ -95,10 +95,15 @@ return {
         vim.g.lualine_theme = 'rose-pine'
         return {
             dark_variant = 'main',
-            disable_background = config.transparent,
-            disable_float_background = true,
             highlight_groups = highlight,
-            styles = { italic = true },
+            extend_background_behind_borders = true,
+            enable = {
+                terminal = true,
+                legacy_highlights = true,
+                migrations = true,
+            },
+            styles = { italic = true, transparency = config.transparent },
+            ---@param highlights Highlight
             before_highlight = function(group, highlights, palette)
                 if highlights.bg == palette.base then highlights.bg = base end
                 if group == 'LspInlayHint' then highlights.blend = nil end
