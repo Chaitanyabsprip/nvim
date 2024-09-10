@@ -130,7 +130,7 @@ capabilities.document_symbols = {
 
 capabilities.formatting = {
     name = 'textDocument/formatting',
-    callback = function(client, bufnr)
+    callback = function(_, bufnr)
         autocmd('BufWritePre', {
             group = augroup 'auto_format',
             buffer = bufnr,
