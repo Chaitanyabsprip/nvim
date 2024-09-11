@@ -217,6 +217,7 @@ capabilities.range_formatting = {
                 range = range_from_selection(bufnr, vim.api.nvim_get_mode().mode),
                 formatting_options = { tabSize = vim.bo[bufnr].tabstop },
                 filter = function(client)
+                    if client == nil then return end
                     return client.supports_method 'textDocument/rangeFormatting'
                 end,
             }
