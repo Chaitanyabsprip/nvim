@@ -22,7 +22,6 @@ plugin.setup = function()
         '2html_plugin',
         'getscript',
         'getscriptPlugin',
-        'editorconfig',
         'gzip',
         'logiPat',
         'man',

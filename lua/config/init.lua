@@ -99,8 +99,6 @@ function config.disable_builtins()
     filetype off
   ]]
 
-    vim.g.editorconfig = false
-
     -- Skip some remote provider loading
     -- vim.g.loaded_python3_provider = 0
     -- vim.g.loaded_node_provider = 0
