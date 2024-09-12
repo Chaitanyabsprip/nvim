@@ -119,17 +119,6 @@ return {
         end,
     },
     {
-        'akinsho/git-conflict.nvim',
-        version = '*',
-        cond = is_git_repo,
-        event = 'BufReadPre',
-        cmd = 'GitConflictListQf',
-        opts = {
-            disable_diagnostics = true,
-            highlights = { incoming = 'DiffText', current = 'DiffAdd' },
-        },
-    },
-    {
         'lewis6991/gitsigns.nvim',
         cond = is_git_repo,
         event = 'BufReadPre',
