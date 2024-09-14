@@ -178,6 +178,9 @@ config.setup = function()
     vim.o.foldlevelstart = 99
     vim.o.foldmethod = 'expr'
 
+    -- diff mode
+    vim.opt.diffopt = { 'internal', 'filler', 'closeoff', 'algorithm:histogram' }
+
     -- reading and writing files
     vim.o.modeline = false
     vim.o.backup = false
