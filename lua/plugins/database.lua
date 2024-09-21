@@ -18,10 +18,10 @@ return {
         'kristijanhusak/vim-dadbod-ui',
         dependencies = { 'tpope/vim-dadbod', 'kristijanhusak/vim-dadbod-completion' },
         config = function()
-            vim.g.db_ui_use_nerd_fonts = true
-            vim.g.db_ui_show_database_icon = true
-            vim.g.db_ui_use_nvim_notify = true
-            vim.g.db_ui_disable_mappings_dbui = true
+            vim.g.db_ui_use_nerd_fonts = 1
+            vim.g.db_ui_show_database_icon = 1
+            vim.g.db_ui_use_nvim_notify = 1
+            vim.g.db_ui_disable_mappings_dbui = 1
             vim.api.nvim_create_autocmd('FileType', {
                 pattern = 'dbui',
                 callback = function(args)
