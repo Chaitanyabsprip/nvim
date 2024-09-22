@@ -1,5 +1,5 @@
+---@type LazySpec[]
 return {
-    ---@type LazyPluginSpec
     {
         'kristijanhusak/vim-dadbod-completion',
         dependencies = { 'hrsh7th/nvim-cmp' },
@@ -13,15 +13,15 @@ return {
             })
         end,
     },
-    ---@type LazyPluginSpec
     {
         'kristijanhusak/vim-dadbod-ui',
         dependencies = { 'tpope/vim-dadbod', 'kristijanhusak/vim-dadbod-completion' },
-        config = function()
-            vim.g.db_ui_use_nerd_fonts = 1
-            vim.g.db_ui_show_database_icon = 1
-            vim.g.db_ui_use_nvim_notify = 1
-            vim.g.db_ui_disable_mappings_dbui = 1
+        init = function()
+            vim.g.db_ui_use_nerd_fonts = true
+            vim.g.db_ui_show_database_icon = true
+            vim.g.db_ui_use_nvim_notify = true
+            vim.g.db_ui_execute_on_save = false
+            vim.g.db_ui_disable_mappings_dbui = true
             vim.api.nvim_create_autocmd('FileType', {
                 pattern = 'dbui',
                 callback = function(args)
@@ -46,7 +46,6 @@ return {
                     vim.keymap.set('n', 'J', '<Plug>(DBUI_GotoNextSibling', opts)
                 end,
             })
-
             vim.g.db_ui_disable_mappings_sql = true
             vim.api.nvim_create_autocmd('FileType', {
                 pattern = 'sql',
@@ -72,13 +71,11 @@ return {
             },
         },
     },
-    ---@type LazyPluginSpec
     {
         'tpope/vim-dadbod',
         dependencies = { 'kristijanhusak/vim-dadbod-completion' },
         cmd = 'DB',
     },
-    ---@type LazyPluginSpec
     {
         'kndndrj/nvim-dbee',
         dependencies = { 'MunifTanjim/nui.nvim' },
