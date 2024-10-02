@@ -1,7 +1,5 @@
 local extend = require('plugins.lsp').extend
 
--- local function tsserverls(lspconfig) lspconfig.tsserver.setup(extend {}) end
-
 ---@type LazyPluginSpec[]
 return {
     {
@@ -30,11 +28,6 @@ return {
             )
         end,
     },
-    -- {
-    --     'neovim/nvim-lspconfig',
-    --     optional = true,
-    --     opts = { servers = { tsserverls = tsserverls } },
-    -- },
     {
         'nvimtools/none-ls.nvim',
         optional = true,
