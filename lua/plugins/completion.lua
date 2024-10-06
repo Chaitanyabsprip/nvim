@@ -131,42 +131,86 @@ return {
     { 'Nash0x7E2/awesome-flutter-snippets', ft = { 'dart' } },
     { 'natebosch/dartlang-snippets', ft = 'dart' },
     {
-        'Exafunction/codeium.vim',
-        event = 'BufReadPost',
-        config = function()
-            vim.g.codeium_no_map_tab = 1
-            vim.keymap.set(
-                'i',
-                '<C-a>',
-                function() return vim.fn['codeium#Accept']() end,
-                { expr = true, silent = true }
-            )
-            vim.keymap.set(
-                'i',
+        'monkoose/neocodeium',
+        event = 'VeryLazy',
+        opts = {
+            filetypes = {
+                TelescopePrompt = false,
+                ['dap-repl'] = false,
+            },
+        },
+        keys = {
+            {
+                mode = 'i',
+                '<c-a>',
+                function() require('neocodeium').accept() end,
+                silent = true,
+                noremap = true,
+                desc = 'Codeium accept',
+            },
+            {
+                mode = 'i',
                 '<m-]>',
-                function() return vim.fn['codeium#CycleCompletions'](1) end,
-                { expr = true, silent = true }
-            )
-            vim.keymap.set(
-                'i',
+                function() require('neocodeium').cycle_or_complete(1) end,
+                silent = true,
+                noremap = true,
+                desc = 'Codeium accept',
+            },
+            {
+                mode = 'i',
                 '<m-[>',
-                function() return vim.fn['codeium#CycleCompletions'](-1) end,
-                { expr = true, silent = true }
-            )
-            vim.keymap.set(
-                'i',
-                '<c-]>',
-                function() return vim.fn['codeium#Clear']() end,
-                { expr = true, silent = true }
-            )
-            vim.keymap.set(
-                'i',
+                function() require('neocodeium').cycle_or_complete(-1) end,
+                silent = true,
+                noremap = true,
+                desc = 'Codeium accept',
+            },
+            {
+                mode = 'i',
                 '<m-Bslash>',
-                function() return vim.fn['codeium#Complete']() end,
-                { expr = true, silent = true }
-            )
-        end,
+                function() require('neocodeium').clear() end,
+                silent = true,
+                noremap = true,
+                desc = 'Codeium accept',
+            },
+        },
     },
+    -- {
+    --     'Exafunction/codeium.vim',
+    --     event = 'BufReadPost',
+    --     config = function()
+    --         vim.g.codeium_no_map_tab = 1
+    --         vim.keymap.set(
+    --             'i',
+    --             '<C-a>',
+    --             function() return vim.fn['codeium#Accept']() end,
+    --             { expr = true, silent = true }
+    --         )
+    --         vim.keymap.set(
+    --             'i',
+    --             '<m-]>',
+    --             function() return vim.fn['codeium#CycleCompletions'](1) end,
+    --             { expr = true, silent = true }
+    --         )
+    --         vim.keymap.set(
+    --             'i',
+    --             '<m-[>',
+    --             function() return vim.fn['codeium#CycleCompletions'](-1) end,
+    --             { expr = true, silent = true }
+    --         )
+    --         vim.keymap.set(
+    --             'i',
+    --             '<c-]>',
+    --             function() return vim.fn['codeium#Clear']() end,
+    --             { expr = true, silent = true }
+    --         )
+    --         vim.keymap.set(
+    --             'i',
+    --             '<m-Bslash>',
+    --             function() return vim.fn['codeium#Complete']() end,
+    --             { expr = true, silent = true }
+    --         )
+    --     end,
+    -- },
     -- {
     --     'Exafunction/codeium.nvim',
     --     dependencies = {
