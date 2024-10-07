@@ -179,7 +179,8 @@ config.setup = function()
     vim.o.foldmethod = 'expr'
 
     -- diff mode
-    vim.opt.diffopt = { 'internal', 'filler', 'closeoff', 'algorithm:histogram' }
+    vim.opt.diffopt =
+        { 'internal', 'filler', 'closeoff', 'algorithm:histogram', 'indent-heuristic' }
 
     -- reading and writing files
     vim.o.modeline = false
