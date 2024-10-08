@@ -67,31 +67,19 @@ return {
         opts = { servers = { marksman = marksman, typos = typos, oxide = oxide } },
     },
     {
-        'lukas-reineke/headlines.nvim',
+        'OXY2DEV/markview.nvim',
+        event = 'VeryLazy',
         ft = { 'markdown', 'md', 'rmd', 'rst' },
-        enabled = false,
-        opts = {
-            markdown = {
-                headline_highlights = {
-                    'Headline1',
-                    'Headline2',
-                    'Headline3',
-                    'Headline4',
-                    'Headline5',
-                    'Headline6',
-                },
-                codeblock_highlight = { 'CodeBlock' },
-                fat_headline_lower_string = '▀',
-                dash_string = '─',
-                fat_headlines = true,
-                fat_headline_upper_string = '▃',
-            },
+        opts = {},
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter',
+            'nvim-tree/nvim-web-devicons',
         },
     },
-    {
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {},
-        ft = { 'markdown', 'md', 'rmd', 'rst' },
-        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
-    },
+    -- {
+    --     'MeanderingProgrammer/render-markdown.nvim',
+    --     opts = {},
+    --     ft = { 'markdown', 'md', 'rmd', 'rst' },
+    --     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+    -- },
 }
