@@ -93,7 +93,7 @@ return {
                 dap_debug_ui = false,
                 dap_debug_vt = false,
                 gofmt = 'gofumpt',
-                goimports = 'goimports',
+                goimports = 'golines',
                 lsp_gofumpt = true,
                 lsp_keymaps = false,
                 lsp_inlay_hints = { enable = false },
