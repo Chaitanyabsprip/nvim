@@ -30,7 +30,7 @@ return {
         lazy = false,
         cond = function()
             local stat = vim.loop.fs_stat
-            return stat 'go.mod' or stat 'go.work' or stat '.golang'
+            return stat 'go.mod' ~= nil or stat 'go.work' ~= nil or stat '.golang' ~= nil
         end,
         build = ':lua require("go.install").update_all_sync()',
         keys = {
