@@ -1,10 +1,10 @@
 local config = require 'config.theme'
 local name = 'rosepine'
 
-local base = '#0f111a'
-local base_alt = '#161927'
-local border = '#403d52'
-local hlt = '#131521'
+local base = '#07080d'
+local base_alt = '#0f111a'
+local border = '#161721'
+local hlt = '#0A0C12'
 local function make_border(fg)
     return {
         fg = fg or 'highlight_med',

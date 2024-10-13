@@ -31,7 +31,7 @@ return {
             end,
             on_colors = function(colors)
                 -- colors.border = '#7aa2f7'
-                colors.bg = '#0f111a'
+                colors.bg = '#07080D'
             end,
         }
     end,

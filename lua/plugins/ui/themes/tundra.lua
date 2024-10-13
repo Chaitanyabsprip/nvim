@@ -10,7 +10,7 @@ return {
         vim.g.lualine_theme = name
         return {
             transparent_background = config.transparent,
-            dim_inactive_windows = { enabled = true, color = '#0f111a' },
+            dim_inactive_windows = { enabled = true, color = '#07080D' },
             sidebars = { enabled = true, color = nil },
             editor = { search = {}, substitute = {} },
             syntax = {
@@ -43,7 +43,7 @@ return {
                 textfsm = false,
             },
             overwrite = {
-                colors = { gray = { _900 = '#0f111a' } },
+                colors = { gray = { _900 = '#07080D' } },
                 highlights = { LspInlayHint = { link = 'Comment' } },
             },
         }

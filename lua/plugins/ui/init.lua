@@ -10,7 +10,7 @@ return {
                     max_height = function() return math.floor(vim.o.lines * 0.35) end,
                     max_width = function() return math.floor(vim.o.columns * 0.35) end,
                     render = 'compact',
-                    background_colour = '#0f111a',
+                    background_colour = '#07080D',
                 },
             },
             {

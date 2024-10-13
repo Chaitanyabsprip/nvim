@@ -2,8 +2,8 @@
 ---@diagnostic disable: missing-fields
 local function new_popup()
     local Popup = require 'plenary.popup'
-    vim.api.nvim_set_hl(0, 'RunNormal', { background = '#0F111A' })
-    vim.api.nvim_set_hl(0, 'RunTitle', { background = '#7AB0DF', foreground = '#0F111A' })
+    vim.api.nvim_set_hl(0, 'RunNormal', { background = '#07080D' })
+    vim.api.nvim_set_hl(0, 'RunTitle', { background = '#7AB0DF', foreground = '#07080D' })
     local height = 10
     local width = 60
     local buffer = vim.api.nvim_create_buf(false, false)
