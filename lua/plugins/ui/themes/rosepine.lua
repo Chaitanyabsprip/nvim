@@ -4,7 +4,7 @@ local name = 'rosepine'
 local base = '#07080d'
 local base_alt = '#0f111a'
 local border = '#161721'
-local hlt = '#0A0C12'
+local hlt = '#131521'
 local function make_border(fg)
     return {
         fg = fg or 'highlight_med',
