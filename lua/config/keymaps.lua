@@ -186,14 +186,14 @@ function keymaps.lazy()
         return '<cmd>setlocal ' .. (rnu and 'no' or '') .. 'rnu<cr>'
     end, opts 'Toggle relative line number')
     keymap.set('n', '<c-w>z', toggle_win_zoom(), opts 'Toggle window zoom')
-    keymap.set('n', 'gz', toggle_win_zoom(), opts 'Toggle window zoom')
+    keymap.set('n', 'gz', require('vimscape').toggle_zoom_cb(), opts 'Toggle window zoom')
 
     local qf = require 'quickfix'
     keymap.set('n', 'gb', qf.buffers, opts 'Quickfix: List buffers')
     keymap.set(
         'n',
         'ge',
-        '?```<cr>jV/```<cr>k!emso<cr>:noh<cr>',
+        '?```<cr>jV/```<cr>k!runme<cr>:noh<cr>',
         opts 'Run shell code within markdown code snipper'
     )
     keymap.set('v', 'ge', 'dO```sh<esc>o```<esc>kpkw', opts 'Wrap selection in code block')
