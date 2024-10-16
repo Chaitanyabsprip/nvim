@@ -186,7 +186,7 @@ function keymaps.lazy()
         return '<cmd>setlocal ' .. (rnu and 'no' or '') .. 'rnu<cr>'
     end, opts 'Toggle relative line number')
     keymap.set('n', '<c-w>z', toggle_win_zoom(), opts 'Toggle window zoom')
-    keymap.set('n', 'gz', require('vimscape').toggle_zoom_cb(), opts 'Toggle window zoom')
+    keymap.set('n', 'gz', toggle_win_zoom(), opts 'Toggle window zoom')
 
     local qf = require 'quickfix'
     keymap.set('n', 'gb', qf.buffers, opts 'Quickfix: List buffers')
