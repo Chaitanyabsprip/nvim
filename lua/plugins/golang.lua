@@ -43,9 +43,7 @@ return {
         },
         config = function()
             local capabilities = require 'lsp.capabilities'
-            local ogcb = capabilities.formatting.callback
-            vim.schedule(function() capabilities.formatting.callback = ogcb end)
-            capabilities.formatting.callback = function(bufnr, _)
+            capabilities.formatting.callback = function(_, bufnr)
                 vim.api.nvim_create_autocmd('BufWritePre', {
                     group = vim.api.nvim_create_augroup('auto_format', { clear = true }),
                     buffer = bufnr,
