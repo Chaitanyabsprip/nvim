@@ -3,24 +3,6 @@ local extend = require('plugins.lsp').extend
 ---@type LazyPluginSpec[]
 return {
     {
-        'jeniasaigak/goplay.nvim',
-        opts = {
-            -- a name of the directory under GOPATH/src where the
-            -- playground will be saved
-            playgroundDirName = 'playground',
-            -- a name of the directory under GOPATH/src where the temporary playground will be
-            -- saved. This option is used when you need to execute a file
-            tempPlaygroundDirName = 'tmp_playground',
-        },
-        cmd = { 'GPOpen', 'GPToggle', 'GPClear' },
-        keys = {
-            { '<leader>gpo', '<cmd>GPOpen<cr>', noremap = true, silent = true },
-            { '<leader>gpt', '<cmd>GPToggle<cr>', noremap = true, silent = true },
-            { '<leader>gpe', '<cmd>GPExec<cr>', noremap = true, silent = true },
-            { '<leader>gpf', '<cmd>GPExecFile<cr>', noremap = true, silent = true },
-        },
-    },
-    {
         'ray-x/go.nvim',
         dependencies = {
             'ray-x/guihua.lua',
