@@ -47,7 +47,10 @@ return {
                 vim.api.nvim_create_autocmd('BufWritePre', {
                     group = vim.api.nvim_create_augroup('auto_format', { clear = true }),
                     buffer = bufnr,
-                    callback = function() require('go.format').goimports() end,
+                    callback = function()
+                        require('go.format').gofmt()
+                        require('go.format').goimports()
+                    end,
                 })
             end
             local config = extend {
@@ -97,23 +100,7 @@ return {
                 opts,
                 'sources',
                 ---@param builtins NullBuiltin
-                function(builtins)
-                    return {
-                        builtins.diagnostics.revive,
-                        builtins.formatting.golines.with {
-                            extra_args = {
-                                '--m',
-                                '72',
-                                '--base-formatter',
-                                'gofumpt',
-                                '--chain-split-dots',
-                                '--tab-len',
-                                '8',
-                                '-w',
-                            },
-                        },
-                    }
-                end
+                function(builtins) return { builtins.diagnostics.revive } end
             )
         end,
     },
