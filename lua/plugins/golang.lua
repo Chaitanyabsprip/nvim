@@ -95,6 +95,7 @@ return {
                 gofmt = 'gofumpt',
                 goimports = 'golines',
                 lsp_gofumpt = true,
+                max_line_len = 72,
                 lsp_keymaps = false,
                 lsp_inlay_hints = { enable = false },
                 lsp_cfg = config,

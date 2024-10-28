@@ -159,7 +159,7 @@ config.setup = function()
     -- editing text
     vim.o.undofile = true
     vim.o.undodir = vim.fn.expand '~/.tmp/undodir'
-    vim.o.textwidth = 80
+    vim.o.textwidth = 72
     vim.opt.pumheight = 10
     vim.opt.showmatch = true
 

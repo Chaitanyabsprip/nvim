@@ -182,7 +182,7 @@ return {
                     end,
                 },
                 preview = {
-                    max_width = { 80, 0.6 },
+                    max_width = { 72, 0.6 },
                     min_width = { 40, 0.4 },
                     width = nil,
                     max_height = { 30, 0.9 },

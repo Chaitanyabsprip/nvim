@@ -23,7 +23,7 @@ local function ruff(lspconfig)
         init_options = {
             settings = {
                 configurationPreferences = 'filesystemFirst',
-                lineLength = 80, -- configure using editorconfig
+                lineLength = 72, -- configure using editorconfig
                 fixAll = true,
                 organizeImports = true,
                 showSyntaxErrors = true,
