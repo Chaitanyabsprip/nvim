@@ -101,7 +101,16 @@ return {
                     return {
                         builtins.diagnostics.revive,
                         builtins.formatting.golines.with {
-                            extra_args = { '--max-len=100', '--base-formatter=gofumpt' },
+                            extra_args = {
+                                '--m',
+                                '72',
+                                '--base-formatter',
+                                'gofumpt',
+                                '--chain-split-dots',
+                                '--tab-len',
+                                '8',
+                                '-w',
+                            },
                         },
                     }
                 end
