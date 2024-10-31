@@ -31,7 +31,7 @@ local function ruff(lspconfig)
                     disableRuleComment = { enable = true },
                     fixViolation = { enable = true },
                 },
-                lint = { enable = true, select = { 'I', 'AIR', 'PLW', 'PlR' }, preview = false },
+                lint = { enable = true, select = { 'I', 'AIR', 'PLW', 'PLR' }, preview = false },
                 format = { preview = false },
             },
         },
