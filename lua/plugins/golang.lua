@@ -10,10 +10,28 @@ return {
             'nvim-treesitter/nvim-treesitter',
         },
         lazy = false,
-        cond = function()
-            local stat = vim.loop.fs_stat
-            return stat 'go.mod' ~= nil or stat 'go.work' ~= nil or stat '.golang' ~= nil
-        end,
+        cmd = {
+            'Go',
+            'GoModInit',
+            'GoModTidy',
+            'GoNew',
+            'GoFmt',
+            'GoBuild',
+            'GoAlt',
+            'GoBreakToggle',
+            'GoImpl',
+            'GoRun',
+            'GoInstall',
+            'GoTest',
+            'GoTestFunc',
+            'GoTestCompile',
+            'GoCoverage',
+            'GoCoverageToggle',
+            'GoCoverag',
+            'GoGet',
+            'GoModifyTags',
+        },
+        ft = { 'go', 'gomod', 'gosum', 'gotmpl', 'gohtmltmpl', 'gotexttmpl' },
         build = ':lua require("go.install").update_all_sync()',
         keys = {
             {
