@@ -43,7 +43,9 @@ return {
         },
         config = function()
             local capabilities = require 'lsp.capabilities'
-            capabilities.formatting.callback = function(_, bufnr)
+            local cb = capabilities.formatting.callback
+            capabilities.formatting.callback = function(client, bufnr)
+                if client.name ~= 'gopls' then return cb(client, bufnr) end
                 vim.api.nvim_create_autocmd('BufWritePre', {
                     group = vim.api.nvim_create_augroup('auto_format', { clear = true }),
                     buffer = bufnr,
