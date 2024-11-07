@@ -131,7 +131,22 @@ return {
     { 'Nash0x7E2/awesome-flutter-snippets', ft = { 'dart' } },
     { 'natebosch/dartlang-snippets', ft = 'dart' },
     {
+        'github/copilot.vim',
+        event = 'InsertEnter',
+        lazy = false,
+        config = function()
+            vim.g.copilot_no_tab_map = true
+            vim.keymap.set(
+                'i',
+                '<c-a>',
+                'copilot#Accept("\\<CR>")',
+                { expr = true, replace_keycodes = false }
+            )
+        end,
+    },
+    {
         'monkoose/neocodeium',
+        enabled = false,
         event = 'VeryLazy',
         opts = {
             filetypes = {
