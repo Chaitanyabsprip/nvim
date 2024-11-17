@@ -70,6 +70,10 @@ return {
                     callback = function()
                         require('go.format').gofmt()
                         require('go.format').goimports()
+                        vim.lsp.buf.code_action {
+                            filter = function(action) return action.title == 'Organize Imports' end,
+                            apply = true,
+                        }
                     end,
                 })
             end
@@ -95,8 +99,8 @@ return {
                 dap_debug_keymap = false,
                 dap_debug_ui = false,
                 dap_debug_vt = false,
-                gofmt = 'gofumpt',
-                goimports = 'golines',
+                gofmt = 'golines',
+                goimports = 'gofumpt',
                 lsp_gofumpt = true,
                 max_line_len = 72,
                 lsp_keymaps = false,
