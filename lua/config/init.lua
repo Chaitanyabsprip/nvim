@@ -140,9 +140,11 @@ config.setup = function()
     vim.opt.cursorlineopt = { 'both' }
     vim.o.colorcolumn = '81'
 
+    local rulerformat = '%=%c|%l [%P]'
     -- multiple windows
     vim.o.laststatus = 3
     -- vim.o.statuscolumn = [[%!v:lua.require'config.statuscolumn'.status_column()]]
+    vim.o.statusline = string.format(' %s%s ', '%f', rulerformat)
     vim.o.splitbelow = true
     vim.o.splitright = true
 
@@ -152,6 +154,8 @@ config.setup = function()
     -- messages and info
     vim.o.shortmess = 'filnxtToOFIcCs'
     vim.opt.showcmdloc = 'statusline'
+    vim.o.ruler = true
+    vim.o.rulerformat = rulerformat
 
     -- selecting text
     vim.o.clipboard = 'unnamedplus'
