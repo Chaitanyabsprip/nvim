@@ -131,6 +131,31 @@ return {
     { 'Nash0x7E2/awesome-flutter-snippets', ft = { 'dart' } },
     { 'natebosch/dartlang-snippets', ft = 'dart' },
     {
+        'CopilotC-Nvim/CopilotChat.nvim',
+        branch = 'canary',
+        dependencies = {
+            { 'github/copilot.vim' }, -- or zbirenbaum/copilot.lua
+            { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
+        },
+        build = 'make tiktoken', -- Only on MacOS or Linux
+        opts = {
+            -- See Configuration section for options
+        },
+        cmd = {
+            'CopilotChat',
+            'CopilotChatOpen',
+            'CopilotChatClose',
+            'CopilotChatToggle',
+            'CopilotChatStop',
+            'CopilotChatReset',
+            'CopilotChatSave',
+            'CopilotChatLoad',
+            'CopilotChatDebugInfo',
+            'CopilotChatModels',
+            'CopilotChatAgents',
+        },
+    },
+    {
         'github/copilot.vim',
         event = 'InsertEnter',
         lazy = false,
