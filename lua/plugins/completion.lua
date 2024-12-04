@@ -130,6 +130,7 @@ return {
     { 'Alexisvt/flutter-snippets', ft = { 'dart' } },
     { 'Nash0x7E2/awesome-flutter-snippets', ft = { 'dart' } },
     { 'natebosch/dartlang-snippets', ft = 'dart' },
+    { "justinsgithub/wezterm-types", lazy = true },
     {
         'CopilotC-Nvim/CopilotChat.nvim',
         branch = 'canary',
