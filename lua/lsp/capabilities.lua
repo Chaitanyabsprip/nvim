@@ -35,15 +35,9 @@ end
 capabilities.code_action = {
     name = 'textDocument/codeAction',
     callback = function(_, bufnr)
-        vim.keymap.set('n', '<leader>a', require('fastaction').code_action, {
+        vim.keymap.set({'n', 'v'}, '<leader>a', require('fastaction').code_action, {
             buffer = bufnr,
-            desc = 'Show code actions for the current cursor position',
-            noremap = true,
-            silent = true,
-        })
-        vim.keymap.set('v', '<leader>a', require('fastaction').range_code_action, {
-            buffer = bufnr,
-            desc = 'Show code actions for the current range selection',
+            desc = 'Show code actions for the current cursor position or range selection',
             noremap = true,
             silent = true,
         })
