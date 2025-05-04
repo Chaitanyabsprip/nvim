@@ -78,11 +78,13 @@ return {
         dir = '/home/chaitanya/projects/fastaction.nvim',
         ---@type FastActionConfig
         opts = {
+            brackets = { '', '' },
+            popup = { title = false },
             register_ui_select = true,
             priority = {
                 default = {
-                    { order = 1, pattern = 'organize imports', key = 'o' },
-                    { order = 1, pattern = 'import library', key = 'i' },
+                    { order = 1, pattern = 'organize', key = 'o' },
+                    { order = 1, pattern = 'import', key = 'i' },
                     { order = 1, pattern = 'fix all', key = 'f' },
                 },
                 dart = {
