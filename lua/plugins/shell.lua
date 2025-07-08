@@ -1,8 +1,6 @@
-local extend = require('plugins.lsp').extend
-local function bashls(lspconfig)
-    lspconfig.bashls.setup(extend { filetypes = { 'bash', 'zsh', 'sh' } })
-end
-local function awkls(lspconfig) lspconfig.awk_ls.setup(extend {}) end
+local configure = require('plugins.lsp').configure
+local function bashls() configure('bashls', { filetypes = { 'bash', 'sh', 'zsh' } }) end
+local function awkls() configure('awk_ls', {}) end
 
 return {
     ---@type LazyPluginSpec

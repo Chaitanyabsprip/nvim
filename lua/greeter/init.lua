@@ -173,6 +173,7 @@ function M.dont_show()
     -- - Several buffers are listed (like session with placeholder buffers). That
     --   means unlisted buffers (like from `nvim-tree`) don't affect decision.
     local listed_buffers = vim.tbl_filter(
+        ---@param buf_id number
         function(buf_id) return vim.fn.buflisted(buf_id) == 1 end,
         vim.api.nvim_list_bufs()
     )

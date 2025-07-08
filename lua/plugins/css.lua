@@ -1,6 +1,6 @@
-local extend = require('plugins.lsp').extend
+local configure = require('plugins.lsp').configure
 
-local function cssls(lspconfig) lspconfig.cssls.setup(extend {}) end
+local function cssls() configure('cssls', {}) end
 
 return {
     ---@type LazyPluginSpec

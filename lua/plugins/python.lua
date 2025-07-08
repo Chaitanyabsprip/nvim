@@ -1,7 +1,7 @@
-local extend = require('plugins.lsp').extend
+local configure = require('plugins.lsp').configure
 
-local function basedpyright(lspconfig)
-    local config = extend {
+local function basedpyright()
+    local config = {
         root = { 'pyproject.toml', 'pyrightconfig.json' },
         settings = {
             basedpyright = {
@@ -15,15 +15,16 @@ local function basedpyright(lspconfig)
             python = { venvPath = '.' },
         },
     }
-    lspconfig.basedpyright.setup(config)
+    configure('basedpyright', config)
 end
 
-local function ruff(lspconfig)
-    local config = extend {
+local function ruff()
+    local config = {
+        capabilities = { hoverProvider = false },
         init_options = {
             settings = {
                 configurationPreferences = 'filesystemFirst',
-                lineLength = 72, -- configure using editorconfig
+                lineLength = 80, -- configure using editorconfig
                 fixAll = true,
                 organizeImports = true,
                 showSyntaxErrors = true,
@@ -36,13 +37,7 @@ local function ruff(lspconfig)
             },
         },
     }
-    local on_attach = config.on_attach
-    ---@param client vim.lsp.Client
-    config.on_attach = function(client, ...)
-        if client.name == 'ruff' then client.server_capabilities.hoverProvider = false end
-        if on_attach ~= nil then on_attach(client, ...) end
-    end
-    lspconfig.ruff.setup(config)
+    configure('ruff', config)
 end
 
 ---@type LazySpec[]

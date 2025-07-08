@@ -56,7 +56,9 @@ plugin.setup = function()
     })
 end
 
+---@param list any[]
 local function dedupe_list(list)
+    ---@type table<any, boolean>
     local seen = {}
     local deduped = {}
     for _, item in ipairs(list) do
@@ -68,6 +70,9 @@ local function dedupe_list(list)
     return deduped
 end
 
+---@param opts table<string, any>
+---@param key string
+---@param ... any
 function plugin.extend_opts_list(opts, key, ...)
     opts[key] = opts[key] or {}
     vim.list_extend(opts[key], { ... })

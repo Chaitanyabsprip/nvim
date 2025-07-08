@@ -1,5 +1,3 @@
-local extend = require('plugins.lsp').extend
-
 ---@type LazyPluginSpec[]
 return {
     {

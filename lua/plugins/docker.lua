@@ -1,8 +1,8 @@
-local extend = require('plugins.lsp').extend
+local configure = require('plugins.lsp').configure
 
-local function dockerls(lspconfig)
-    lspconfig.dockerls.setup(extend { root = { '.sqllsrc.json' } })
-    lspconfig.docker_compose_language_service.setup(extend {})
+local function dockerls()
+    configure('dockerls', { root = { '.sqllsrc.json' } })
+    configure('dockerfilels', {})
 end
 
 return {

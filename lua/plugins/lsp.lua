@@ -61,25 +61,30 @@ local function extend(config)
     end
     config['root'] = nil
     local l = require 'lsp'
-    local lspconfig = require 'lspconfig'
     local defaults = {
         on_attach = l.on_attach,
         capabilities = require('plugins.completion').get_capabilities(),
-        root_dir = lspconfig.util.root_pattern(unpack(roots)),
+        root_markers = roots,
     }
-    local updated_config = vim.tbl_deep_extend('force', config, defaults)
+    local updated_config = vim.tbl_deep_extend('force', defaults, config)
     return updated_config
 end
 
 ---@type LazySpec[]
 return {
     extend = extend,
+    configure = function(server, config)
+        config = config or {}
+        vim.lsp.config(server, extend(config))
+        vim.lsp.enable(server)
+    end,
     {
-        dir = '/home/chaitanya/projects/fastaction.nvim',
+        dir = vim.env.HOME .. '/projects/fastaction.nvim',
         ---@type FastActionConfig
         opts = {
             brackets = { '', '' },
             popup = { title = false },
+            dismiss_keys = { '<Esc>', '<C-c>', 'j', 'k', 'q' },
             register_ui_select = true,
             priority = {
                 default = {
@@ -130,7 +135,10 @@ return {
         'neovim/nvim-lspconfig',
         event = { 'User BufReadPreNotOil', 'BufNewFile' },
         dependencies = {
-            { 'folke/neodev.nvim', opts = {} },
+            {
+                'folke/lazydev.nvim',
+                opts = { library = { 'lazy.nvim', vim.env.HOME .. '/projects/fastaction.nvim' } },
+            },
             {
                 'williamboman/mason.nvim',
                 opts = { PATH = 'skip' },

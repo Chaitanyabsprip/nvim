@@ -8,15 +8,21 @@ M.run = function()
 
     local lenses = vim.deepcopy(vim.lsp.codelens.get(bufnr))
 
+    ---@param v lsp.CodeLens
     lenses = vim.tbl_filter(function(v) return v.range.start.line < line end, lenses)
 
     table.sort(lenses, function(a, b) return a.range.start.line < b.range.start.line end)
 
     local _, lens = next(lenses)
 
-    local client_id = next(vim.lsp.buf_get_clients(bufnr))
+    local client_id = next(vim.lsp.get_clients { bufnr = bufnr })
+    if not client_id or not lens then
+        vim.notify('No CodeLens found', vim.log.levels.WARN, { title = 'LSP CodeLens' })
+        return
+    end
     local client = vim.lsp.get_client_by_id(client_id)
-    client.request('workspace/executeCommand', lens.command, function(...)
+    if not client then return end
+    client:request('workspace/executeCommand', lens.command, function(...)
         local result = vim.lsp.handlers['workspace/executeCommand'](...)
         vim.lsp.codelens.refresh()
         return result

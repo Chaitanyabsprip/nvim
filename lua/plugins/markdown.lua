@@ -1,8 +1,8 @@
-local extend = require('plugins.lsp').extend
+local configure = require('plugins.lsp').configure
 
-local function marksman(lspconfig) lspconfig.marksman.setup(extend { root = { '.marksman.toml' } }) end
-local function typos(lspconfig) lspconfig.typos_lsp.setup(extend {}) end
-local function oxide(lspconfig) lspconfig.markdown_oxide.setup(extend {}) end
+local function marksman() configure('marksman', { root = { '.marksman.toml' } }) end
+local function typos() configure('typos_lsp', {}) end
+local function oxide() configure('markdown_oxide', {}) end
 ---@type LazySpec[]
 return {
     {

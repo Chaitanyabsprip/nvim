@@ -1,11 +1,6 @@
-local extend = require('plugins.lsp').extend
+local configure = require('plugins.lsp').configure
 
-local function taplo(lspconfig)
-    local config = extend {
-        root = { 'pyproject.toml' },
-    }
-    lspconfig.taplo.setup(config)
-end
+local function taplo() configure('taplo', { root = { 'pyproject.toml' } }) end
 
 ---@type LazySpec
 return {

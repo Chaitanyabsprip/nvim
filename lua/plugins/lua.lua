@@ -1,11 +1,10 @@
-local extend = require('plugins.lsp').extend
+local configure = require('plugins.lsp').configure
 
-local function lua_ls(lspconfig)
-    local config = extend {
+local function lua_ls()
+    local config = {
         root = { '.stylua' },
         settings = {
             Lua = {
-                workspace = { checkThirdParty = false },
                 completion = {
                     workspaceword = true,
                     showWord = 'Disable',
@@ -30,18 +29,19 @@ local function lua_ls(lspconfig)
                     },
                     unusedLocalExclude = { '_*' },
                 },
+                format = { enable = false },
                 hint = {
                     enable = true,
                     semicolon = 'Disable',
                     arrayIndex = 'Disable',
                 },
-                type = { castNumberToInteger = true },
                 telemetry = { enable = false },
-                format = { enable = false },
+                type = { castNumberToInteger = true, inferParamType = true },
+                workspace = { checkThirdParty = false },
             },
         },
     }
-    lspconfig.lua_ls.setup(config)
+    configure('lua_ls', config)
 end
 return {
     ---@type LazyPluginSpec

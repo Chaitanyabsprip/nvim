@@ -1,5 +1,5 @@
-local extend = require('plugins.lsp').extend
-local function graphqlls(lspconfig) lspconfig.graphql.setup(extend {}) end
+local configure = require('plugins.lsp').configure
+local function graphqlls() configure('graphql', {}) end
 
 return {
     ---@type LazyPluginSpec

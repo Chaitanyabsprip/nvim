@@ -1,8 +1,4 @@
 ---Utility for keymap creation.
----@param lhs string
----@param rhs string|function
----@param opts string|table
----@param mode? string|string[]
 vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -31,7 +27,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         local function pumvisible() return tonumber(vim.fn.pumvisible()) ~= 0 end
 
         -- Enable completion and configure keybindings.
-        if client.supports_method(methods.textDocument_completion) then
+        if client:supports_method(methods.textDocument_completion) then
             vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
 
             -- Use enter to accept completions.

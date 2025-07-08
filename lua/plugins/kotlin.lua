@@ -1,8 +1,9 @@
-local extend = require('plugins.lsp').extend
+local configure = require('plugins.lsp').configure
 
-local function kotlin_language_server(lspconfig)
-    lspconfig.kotlin_language_server.setup(
-        extend { override_root = true, root = { '.git', 'gradlew', vim.fn.getcwd() } }
+local function kotlin_language_server()
+    configure(
+        'kotlin_language_server',
+        { override_root = true, root = { '.git', 'gradlew', vim.fn.getcwd() } }
     )
 end
 

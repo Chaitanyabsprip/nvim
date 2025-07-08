@@ -133,7 +133,8 @@ return {
     {
         'CopilotC-Nvim/CopilotChat.nvim',
         dependencies = {
-            { 'github/copilot.vim' }, -- or zbirenbaum/copilot.lua
+            { 'zbirenbaum/copilot.lua' },
+            -- { 'github/copilot.vim' }, -- or zbirenbaum/copilot.lua
             { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
         },
         build = 'make tiktoken', -- Only on MacOS or Linux
@@ -155,17 +156,22 @@ return {
         },
     },
     {
-        'github/copilot.vim',
+        'zbirenbaum/copilot.lua',
         event = 'InsertEnter',
-        lazy = false,
         config = function()
-            vim.g.copilot_no_tab_map = true
-            vim.keymap.set(
-                'i',
-                '<c-a>',
-                'copilot#Accept("\\<CR>")',
-                { expr = true, replace_keycodes = false }
-            )
+            require('copilot').setup {
+                suggestion = {
+                    auto_trigger = true,
+                    keymap = {
+                        accept = '<C-a>',
+                        accept_word = false,
+                        accept_line = false,
+                        next = '<M-]>',
+                        prev = '<M-[>',
+                        dismiss = '<C-]>',
+                    },
+                },
+            }
         end,
     },
     {
@@ -213,61 +219,6 @@ return {
             },
         },
     },
-    -- {
-    --     'Exafunction/codeium.vim',
-    --     event = 'BufReadPost',
-    --     config = function()
-    --         vim.g.codeium_no_map_tab = 1
-    --         vim.keymap.set(
-    --             'i',
-    --             '<C-a>',
-    --             function() return vim.fn['codeium#Accept']() end,
-    --             { expr = true, silent = true }
-    --         )
-    --         vim.keymap.set(
-    --             'i',
-    --             '<m-]>',
-    --             function() return vim.fn['codeium#CycleCompletions'](1) end,
-    --             { expr = true, silent = true }
-    --         )
-    --         vim.keymap.set(
-    --             'i',
-    --             '<m-[>',
-    --             function() return vim.fn['codeium#CycleCompletions'](-1) end,
-    --             { expr = true, silent = true }
-    --         )
-    --         vim.keymap.set(
-    --             'i',
-    --             '<c-]>',
-    --             function() return vim.fn['codeium#Clear']() end,
-    --             { expr = true, silent = true }
-    --         )
-    --         vim.keymap.set(
-    --             'i',
-    --             '<m-Bslash>',
-    --             function() return vim.fn['codeium#Complete']() end,
-    --             { expr = true, silent = true }
-    --         )
-    --     end,
-    -- },
-    -- {
-    --     'Exafunction/codeium.nvim',
-    --     dependencies = {
-    --         'nvim-lua/plenary.nvim',
-    --         'hrsh7th/nvim-cmp',
-    --     },
-    --     event = 'BufEnter',
-    --     opts = {
-    --         enable_chat = true,
-    --     },
-    --     config = function(_, opts)
-    --         require('codeium').setup(opts)
-    --         local cmp = require 'cmp'
-    --         local config = cmp.get_config()
-    --         table.insert(config.sources, { name = 'codeium' })
-    --         cmp.setup(config)
-    --     end,
-    -- },
     get_capabilities = function()
         local capabilities = require('lsp').capabilities()
         local ok, cmp_lsp = pcall(require, 'cmp_nvim_lsp')

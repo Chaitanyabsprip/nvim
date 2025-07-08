@@ -1,7 +1,7 @@
-local extend = require('plugins.lsp').extend
+local configure = require('plugins.lsp').configure
 
-local function jsonls(lspconfig)
-    local config = extend {
+local function jsonls()
+    local config = {
         settings = { json = { schemas = require('schemastore').json.schemas() } },
         commands = {
             Format = {
@@ -9,7 +9,7 @@ local function jsonls(lspconfig)
             },
         },
     }
-    lspconfig.jsonls.setup(config)
+    configure('jsonls', config)
 end
 
 return {

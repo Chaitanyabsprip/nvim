@@ -26,7 +26,7 @@ local function cowboy(disabled_ft)
             if table.contains(disabled_ft, vim.bo.filetype) then return map end
             if vim.v.count > 0 then count = 0 end
             if count >= 10 then
-                ok, id = pcall(vim.notify, 'Stop repeating chars', vim.log.levels.WARM, {
+                ok, id = pcall(vim.notify, 'Stop repeating chars', vim.log.levels.WARN, {
                     icon = ' 󰺛',
                     replace = id,
                     keep = function() return count >= 10 end,
@@ -51,7 +51,7 @@ local keymap = vim.keymap
 
 local function buf_kill(target_buf, should_force)
     if not should_force and vim.bo.modified then
-        return api.nvim_err_writeln 'Buffer is modified. Force required.'
+        return api.nvim_echo({ { 'Buffer is modified. Force required.' } }, false, { err = true })
     end
     local command = 'bd'
     if should_force then command = command .. '!' end

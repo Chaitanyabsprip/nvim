@@ -1,13 +1,12 @@
 local M = {}
 local a = vim.api
---------------------------------------------------------------------------------
 
 ---@param altBufnr integer
 ---@return boolean
 local function hasAltFile(altBufnr)
     if altBufnr < 0 then return false end
     local valid = a.nvim_buf_is_valid(altBufnr)
-    local nonSpecial = a.nvim_buf_get_option(altBufnr, 'buftype') == ''
+    local nonSpecial = a.nvim_get_option_value('buftype', { buf = altBufnr }) == ''
     local moreThanOneBuffer = #(vim.fn.getbufinfo { buflisted = 1 }) > 1
     local currentBufNotAlt = vim.api.nvim_get_current_buf() ~= altBufnr -- fixes weird rare vim bug
     local altFileExists = vim.loop.fs_stat(a.nvim_buf_get_name(altBufnr)) ~= nil
@@ -37,6 +36,7 @@ function M.altFileStatus(maxDisplayLen)
 
     local altBufNr = vim.fn.bufnr '#' ---@diagnostic disable-line: param-type-mismatch
     local altOld = altOldfile()
+    ---@type string, string
     local name, icon
 
     if hasAltFile(altBufNr) then
@@ -45,7 +45,7 @@ function M.altFileStatus(maxDisplayLen)
         name = altFile ~= '' and altFile or '[No Name]'
         -- icon
         local ext = altFile:match '%w+$'
-        local altBufFt = a.nvim_buf_get_option(altBufNr, 'filetype') ---@diagnostic disable-line: param-type-mismatch
+        local altBufFt = a.nvim_get_option_value('filetype', { buf = altBufNr })
         local ok, devicons = pcall(require, 'nvim-web-devicons')
         icon = ok and devicons.get_icon(altFile, ext or altBufFt) or '#'
 
@@ -92,5 +92,4 @@ function M.gotoAltBuffer()
     end
 end
 
---------------------------------------------------------------------------------
 return M

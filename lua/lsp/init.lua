@@ -6,7 +6,10 @@ lsp.listLspCapabilities = function()
 
     for _, client in pairs(clients) do
         local capAsList = {}
-        for key, value in pairs(client.server_capabilities) do
+        ---@type table<string, lsp.ClientCapabilities>
+        local capabilities =
+            vim.tbl_extend('keep', client.server_capabilities, client.dynamic_capabilities)
+        for key, value in pairs(capabilities) do
             if value and key:find 'Provider' then
                 local capability = key:gsub('Provider$', '')
                 table.insert(capAsList, '- ' .. capability)

@@ -2,7 +2,7 @@
 ---@field name string
 ---@field callback fun(client: vim.lsp.Client,bufnr: integer)
 
----@type table<string,Capability|function>
+---@type table<string,Capability>
 local capabilities = {}
 local augroup = function(group) vim.api.nvim_create_augroup(group, { clear = true }) end
 local autocmd = function(event, opts)
@@ -35,7 +35,7 @@ end
 capabilities.code_action = {
     name = 'textDocument/codeAction',
     callback = function(_, bufnr)
-        vim.keymap.set({'n', 'v'}, '<leader>a', require('fastaction').code_action, {
+        vim.keymap.set({ 'n', 'v' }, '<leader>a', require('fastaction').code_action, {
             buffer = bufnr,
             desc = 'Show code actions for the current cursor position or range selection',
             noremap = true,
@@ -212,7 +212,7 @@ capabilities.range_formatting = {
                 formatting_options = { tabSize = vim.bo[bufnr].tabstop },
                 filter = function(client)
                     if client == nil then return end
-                    return client.supports_method 'textDocument/rangeFormatting'
+                    return client:supports_method 'textDocument/rangeFormatting'
                 end,
             }
         end, {
@@ -297,24 +297,24 @@ capabilities.type_definition = {
     end,
 }
 
+---@type table<string,Capability|function>
+local m = {}
 -- calls function for each capability from a capabilities module if it's resolved
 -- module name: the same as appropriate capability
 -- module structure:
 --     function(capability_value) - function to call if capability were resolved
-capabilities.resolve = function(client, bufnr)
-    for name, capability in pairs(capabilities) do
-        if name ~= 'resolve' and client.supports_method(capability.name) then
-            capability.callback(client, bufnr)
-        end
+---@param client vim.lsp.Client
+---@param bufnr integer
+m.resolve = function(client, bufnr)
+    -- if client.name == 'basedpyright' then vim.print(client.server_capabilities) end
+    for _, capability in pairs(capabilities) do
+        local is_supported = client:supports_method(capability.name, 0)
+        if is_supported then capability.callback(client, bufnr) end
     end
 end
 
---[[
-A | B | R
-1 | 1 | 1
-1 | 0 | 0
-0 | 1 | 1
-0 | 0 | 1
---]]
+for k, v in pairs(capabilities) do
+    m[k] = v
+end
 
-return capabilities
+return m

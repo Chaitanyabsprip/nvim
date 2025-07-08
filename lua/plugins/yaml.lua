@@ -1,7 +1,7 @@
-local extend = require('plugins.lsp').extend
+local configure = require('plugins.lsp').configure
 
 local function yamlls(lspconfig)
-    local config = extend {
+    local config = {
         settings = {
             redhat = { telemetry = false },
             yaml = {
@@ -13,7 +13,7 @@ local function yamlls(lspconfig)
             },
         },
     }
-    lspconfig.yamlls.setup(config)
+    configure('yamlls', config)
 end
 
 return {

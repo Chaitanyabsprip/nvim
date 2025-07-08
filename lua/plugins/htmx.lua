@@ -1,7 +1,7 @@
-local extend = require('plugins.lsp').extend
+local configure = require('plugins.lsp').configure
 
-local function htmxls(lspconfig)
-    local config = extend {
+local function htmxls()
+    local config = {
         filetypes = {
             'html',
             'javascriptreact',
@@ -12,7 +12,7 @@ local function htmxls(lspconfig)
             'gohtmltmpl',
         },
     }
-    lspconfig.htmx.setup(config)
+    configure('htmx', config)
 end
 
 return {

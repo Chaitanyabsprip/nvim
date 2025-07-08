@@ -1,7 +1,7 @@
-local extend = require('plugins.lsp').extend
+local configure = require('plugins.lsp').configure
 
-local function htmlls(lspconfig)
-    local config = extend {
+local function htmlls()
+    local config = {
         filetypes = {
             'html',
             -- 'javascript',
@@ -12,15 +12,15 @@ local function htmlls(lspconfig)
             'typescript.tsx',
         },
     }
-    lspconfig.html.setup(config)
+    configure('html', config)
 end
 
-local function emmetls(lspconfig)
-    local config = extend {
+local function emmetls()
+    local config = {
         -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
         init_options = { html = { options = { ['bem.enabled'] = true } } },
     }
-    lspconfig.emmet_ls.setup(config)
+    configure('emmet_ls', config)
 end
 
 ---@type LazyPluginSpec[]
