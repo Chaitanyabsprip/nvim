@@ -17,7 +17,7 @@ handlers.diagnostic = function()
             vim.lsp.diagnostic.on_publish_diagnostics(...)
             vim.diagnostic.config {
                 underline = true,
-                virtual_lines = false,
+                virtual_lines = true,
                 virtual_text = false,
                 signs = { text = signs },
                 float = {
