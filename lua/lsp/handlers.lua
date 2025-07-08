@@ -13,10 +13,11 @@ handlers.diagnostic = function()
     return {
         name = 'textDocument/publishDiagnostics',
         enabled = true,
-        callback = function(err, result, ctx, config)
-            vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
+        callback = function(...)
+            vim.lsp.diagnostic.on_publish_diagnostics(...)
             vim.diagnostic.config {
                 underline = true,
+                virtual_lines = false,
                 virtual_text = false,
                 signs = { text = signs },
                 float = {
@@ -47,7 +48,7 @@ handlers.hover = function()
     return {
         name = 'textDocument/hover',
         enabled = false,
-        callback = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded', focusable = true }),
+        callback = function() vim.lsp.buf.hover { border = 'rounded', focusable = true } end,
     }
 end
 
@@ -55,10 +56,7 @@ handlers.signature_help = function()
     return {
         name = 'textDocument/signatureHelp',
         enabled = false,
-        callback = vim.lsp.with(
-            vim.lsp.handlers.signature_help,
-            { border = 'rounded', focusable = false }
-        ),
+        callback = function() vim.lsp.buf.signature_help { border = 'rounded', focusable = false } end,
     }
 end
 
