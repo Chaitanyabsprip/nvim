@@ -2,129 +2,65 @@
 ---@type LazyPluginSpec[] | function
 return {
     {
-        'L3MON4D3/LuaSnip',
-        build = 'make install_jsregexp',
-        version = '2.*',
+        'saghen/blink.cmp',
         dependencies = { { 'rafamadriz/friendly-snippets' } },
-        config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
-        opts = function()
-            local types = require 'luasnip.util.types'
-            vim.opt.runtimepath:append(vim.fn.stdpath 'config' .. '/snippets')
-            return {
-                history = true,
-                updateevents = 'TextChanged,TextChangedI',
-                enable_autosnippets = true,
-                ext_opts = {
-                    [types.choiceNode] = { active = { virt_text = { { '●', 'Error' } } } },
-                    [types.insertNode] = { active = { virt_text = { { '●', 'Comment' } } } },
-                },
-            }
-        end,
-    },
-    {
-        'hrsh7th/nvim-cmp',
+        version = '1.*',
         event = { 'InsertEnter', 'CmdlineEnter' },
-        dependencies = {
-            'saadparwaiz1/cmp_luasnip',
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-cmdline',
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-path',
-            'L3MON4D3/LuaSnip',
-            'onsails/lspkind.nvim',
-        },
-        opts = function()
-            local cmp = require 'cmp'
-            local luasnip = require 'luasnip'
-            local lspkind = require 'lspkind'
-            local function has_words_before()
-                local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-                return col ~= 0
-                    and vim.api
-                            .nvim_buf_get_lines(0, line - 1, line, true)[1]
-                            :sub(col, col)
-                            :match '%s'
-                        == nil
-            end
-
-            local cmdline_map_presets = cmp.config.mapping.preset.cmdline()
-            local search_opts = { mapping = cmdline_map_presets, sources = { { name = 'buffer' } } }
-            local cmdline_opt = {
-                mapping = cmdline_map_presets,
-                sources = cmp.config.sources {
-                    { name = 'path' },
-                    { name = 'cmdline' },
-                    { name = 'nvim_lsp' },
-                },
-            }
-
-            cmp.setup.cmdline('/', search_opts)
-            cmp.setup.cmdline(':', cmdline_opt)
-
-            return {
-                snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end },
-                sources = cmp.config.sources(
-                    { { name = 'luasnip' }, { name = 'nvim_lsp' }, { name = 'path' } },
-                    { { name = 'buffer' } }
-                ),
-                window = {
-                    completion = {
-                        winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
-                    },
-                    documentation = {
-                        border = 'rounded',
-                        winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
-                    },
-                },
-                experimental = { ghost_text = { hl_group = 'Comment' } },
-                formatting = {
-                    fields = { 'kind', 'abbr', 'menu' },
-                    format = function(entry, vim_item)
-                        local fmt = lspkind.cmp_format {
-                            mode = 'symbol_text',
-                            maxwidth = 50,
-                            menu = {
-                                buffer = 'Buffer',
-                                nvim_lsp = 'LSP',
-                                luasnip = 'LuaSnip',
-                                nvim_lua = 'Lua',
-                                latex_symbols = 'Latex',
-                                path = 'Path',
+        ---@module 'blink.cmp'
+        ---@type blink.cmp.Config
+        opts = {
+            keymap = { preset = 'default' },
+            appearance = { nerd_font_variant = 'mono' },
+            completion = {
+                documentation = { auto_show = true },
+                menu = {
+                    draw = {
+                        padding = { 0, 1 }, -- padding only on right side
+                        components = {
+                            kind_icon = {
+                                text = function(ctx)
+                                    return ' ' .. ctx.kind_icon .. ctx.icon_gap .. ' '
+                                end,
                             },
-                        }(entry, vim_item)
-                        local strings = vim.split(fmt.kind, '%s', { trimempty = true })
-                        fmt.kind = ' ' .. (strings[1] or '') .. ' '
-                        fmt.menu = '\t\t(' .. (fmt.menu or '') .. ')'
-                        return fmt
-                    end,
+                        },
+                    },
                 },
-                mapping = {
-                    ['<c-y>'] = cmp.mapping.confirm { select = true },
-                    ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
-                    ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
-                    ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-                    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-                    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete {}, { 'i', 'c' }),
-                    ['<C-e>'] = cmp.mapping { i = cmp.mapping.abort(), c = cmp.mapping.close() },
-                    ['<C-d>'] = cmp.mapping(cmp.mapping.open_docs(), { 'i', 'c' }),
-                    ['<Tab>'] = cmp.mapping(function(fallback)
-                        if luasnip.expand_or_jumpable() then
-                            luasnip.expand_or_jump()
-                        elseif has_words_before() then
-                            cmp.complete()
-                        else
-                            fallback()
-                        end
-                    end, { 'i', 's' }),
-                    ['<S-Tab>'] = cmp.mapping(function(fallback)
-                        if luasnip.jumpable(-1) then
-                            luasnip.jump(-1)
-                        else
-                            fallback()
-                        end
-                    end, { 'i', 's' }),
+            },
+            sources = {
+                default = { 'lsp', 'path', 'snippets', 'buffer' },
+                per_filetype = {
+                    sql = { inherit_defaults = true, 'dadbod' },
                 },
-            }
+                providers = {
+                    lsp = { fallbacks = {} }, -- defaults to `{ 'buffer' }`
+                    dadbod = { module = 'vim_dadbod_completion.blink' },
+                },
+            },
+            fuzzy = { implementation = 'prefer_rust_with_warning' },
+            cmdline = {
+                completion = { menu = { auto_show = true } },
+                sources = function()
+                    local type = vim.fn.getcmdtype()
+                    if type == '/' or type == '?' then return { 'buffer' } end
+                    return { 'lsp', 'path', 'cmdline' }
+                end,
+                menu = { auto_show = true },
+            },
+            signature = { enabled = true, window = { show_documentation = true } },
+        },
+        config = function(_, opts)
+            require('blink-cmp').setup(opts)
+            vim.api.nvim_create_autocmd('User', {
+                pattern = 'BlinkCmpMenuOpen',
+                callback = function()
+                    require('copilot.suggestion').dismiss()
+                    vim.b.copilot_suggestion_hidden = true
+                end,
+            })
+            vim.api.nvim_create_autocmd('User', {
+                pattern = 'BlinkCmpMenuClose',
+                callback = function() vim.b.copilot_suggestion_hidden = false end,
+            })
         end,
     },
     { 'Alexisvt/flutter-snippets', ft = { 'dart' } },
@@ -173,51 +109,6 @@ return {
                 },
             }
         end,
-    },
-    {
-        'monkoose/neocodeium',
-        enabled = false,
-        event = 'VeryLazy',
-        opts = {
-            filetypes = {
-                TelescopePrompt = false,
-                ['dap-repl'] = false,
-            },
-        },
-        keys = {
-            {
-                mode = 'i',
-                '<c-a>',
-                function() require('neocodeium').accept() end,
-                silent = true,
-                noremap = true,
-                desc = 'Codeium accept',
-            },
-            {
-                mode = 'i',
-                '<m-]>',
-                function() require('neocodeium').cycle_or_complete(1) end,
-                silent = true,
-                noremap = true,
-                desc = 'Codeium accept',
-            },
-            {
-                mode = 'i',
-                '<m-[>',
-                function() require('neocodeium').cycle_or_complete(-1) end,
-                silent = true,
-                noremap = true,
-                desc = 'Codeium accept',
-            },
-            {
-                mode = 'i',
-                '<m-Bslash>',
-                function() require('neocodeium').clear() end,
-                silent = true,
-                noremap = true,
-                desc = 'Codeium accept',
-            },
-        },
     },
     get_capabilities = function()
         local capabilities = require('lsp').capabilities()
