@@ -1,0 +1,7 @@
+{
+  "__init__": {
+    "prefix": "ci",
+    "body": ["def __init__(self, ${1}):", "\t$2"],
+    "description": "Constructor method in Python class"
+  }
+}
