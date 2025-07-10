@@ -9,7 +9,7 @@ return {
             'neovim/nvim-lspconfig',
             'nvim-treesitter/nvim-treesitter',
         },
-        event = { 'CmdlineEnter' },
+        -- event = { 'CmdlineEnter' },
         cmd = {
             'Go',
             'GoModInit',

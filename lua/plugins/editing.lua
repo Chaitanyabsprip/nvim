@@ -11,7 +11,7 @@ editing.bigfiles = {
 ---@type LazyPluginSpec
 editing.eyeliner = {
     'jinh0/eyeliner.nvim',
-    event = 'BufReadPre',
+    event = 'BufWinEnter',
     opts = {
         highlight_on_key = true,
         dim = true,
@@ -24,7 +24,7 @@ editing.eyeliner = {
 editing.surround = {
     'kylechui/nvim-surround',
     version = '*',
-    event = 'BufReadPre',
+    event = 'BufWinEnter',
     opts = { keymaps = { visual = 's' } },
 }
 

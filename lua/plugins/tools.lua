@@ -4,7 +4,7 @@ tools.spec = {
     {
         'NvChad/nvim-colorizer.lua',
         cmd = { 'ColorizerAttachToBuffer', 'ColorizerToggle' },
-        event = 'BufReadPre',
+        event = 'BufWinEnter',
         opts = {
             filetypes = { '*', '!lazy' },
             buftypes = { '*', '!prompt', '!nofile' },
@@ -130,7 +130,7 @@ tools.spec = {
     },
     {
         'fladson/vim-kitty',
-        lazy = false,
+        ft = 'kitty',
     },
 }
 

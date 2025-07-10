@@ -296,46 +296,14 @@ return {
     },
     {
         'nvim-treesitter/nvim-treesitter-context',
-        event = 'BufReadPost',
-    },
-    {
-        'nanozuki/tabby.nvim',
-        event = 'VeryLazy',
-        dependencies = 'nvim-tree/nvim-web-devicons',
-        opts = function()
-            return {
-                line = function(line)
-                    local theme = {
-                        fill = 'TabLineFill',
-                        head = 'TabLine',
-                        current_tab = 'TabLineSel',
-                        tab = 'TabLine',
-                        win = 'TabLine',
-                        tail = 'TabLine',
-                    }
-                    return {
-                        line.tabs().foreach(function(tab)
-                            local hl = tab.is_current() and theme.current_tab or theme.tab
-                            return {
-                                ' ' .. tab.number(),
-                                tab.name() .. ' ',
-                                hl = hl,
-                                margin = ' ',
-                            }
-                        end),
-                        line.spacer(),
-                        hl = theme.fill,
-                    }
-                end,
-                option = {
-                    tab_name = {
-                        name_fallback = function(t)
-                            local cwd = vim.fn.getcwd(vim.fn.tabpagewinnr(t), t)
-                            return vim.fn.fnamemodify(cwd, ':t')
-                        end,
-                    },
-                },
-            }
-        end,
+        event = 'BufWinEnter',
+        opts = {
+            enable = true,
+            max_lines = 3,
+            trim_scope = 'outer',
+            min_window_height = 18,
+            mode = 'cursor',
+            line_numbers = true,
+        },
     },
 }
