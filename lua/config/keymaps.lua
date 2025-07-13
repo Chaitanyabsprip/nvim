@@ -122,10 +122,10 @@ function keymaps.lazy()
     keymap.set('n', 'J', 'mzJ`z', opts 'Join lines without moving cursor')
     keymap.set('n', '}', '}zz', opts 'Like text object motion } but centers line')
     keymap.set('n', '{', '{zz', opts 'Like text object motion { but centers line')
-    keymap.set('n', '<c-d>', '12jzz', opts 'Like text object motion <c-d> but centers line')
-    keymap.set('n', '<c-u>', '12kzz', opts 'Like text object motion <c-u>{ but centers line')
-    keymap.set('v', '<c-d>', '12jzz', opts 'Like text object motion <c-d> but centers line')
-    keymap.set('v', '<c-u>', '12kzz', opts 'Like text object motion <c-u>{ but centers line')
+    keymap.set('n', '<c-d>', '<c-d>zz', opts 'Like text object motion <c-d> but centers line')
+    keymap.set('n', '<c-u>', '<c-u>zz', opts 'Like text object motion <c-u>{ but centers line')
+    keymap.set('v', '<c-d>', '<c-d>zz', opts 'Like text object motion <c-d> but centers line')
+    keymap.set('v', '<c-u>', '<c-u>zz', opts 'Like text object motion <c-u>{ but centers line')
     keymap.set(
         'n',
         '<leader>r',
