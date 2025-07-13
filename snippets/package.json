@@ -12,7 +12,7 @@
       {
         "language": "typescript",
         "path": "./typescript.json"
-      }
+      },
       {
         "language": "python",
         "path": "./python.json"
