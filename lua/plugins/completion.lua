@@ -96,6 +96,10 @@ return {
         event = 'InsertEnter',
         config = function()
             require('copilot').setup {
+                panel = {
+                    enabled = true,
+                    auto_refresh = true,
+                },
                 suggestion = {
                     auto_trigger = true,
                     keymap = {
@@ -107,6 +111,7 @@ return {
                         dismiss = '<C-]>',
                     },
                 },
+                copilot_model = 'Claude Sonnet 3.7',
             }
         end,
     },
@@ -115,7 +120,6 @@ return {
         build = 'make',
         event = 'VeryLazy',
         version = false, -- Never set this value to "*"! Never!
-        enabled = false,
         dependencies = {
             'nvim-lua/plenary.nvim',
             'MunifTanjim/nui.nvim',
