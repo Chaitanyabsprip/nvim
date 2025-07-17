@@ -12,8 +12,8 @@ local function jsonls()
     configure('jsonls', config)
 end
 
+---@type LazyPluginSpec[]
 return {
-    ---@type LazyPluginSpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,
@@ -21,7 +21,6 @@ return {
             require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'json')
         end,
     },
-    ---@type LazyPluginSpec
     {
         'williamboman/mason.nvim',
         optional = true,
@@ -34,13 +33,11 @@ return {
             )
         end,
     },
-    ---@type LazyPluginSpec
     {
         'neovim/nvim-lspconfig',
         optional = true,
         opts = { servers = { jsonls = jsonls } },
     },
-    ---@type LazyPluginSpec
     {
         'nvimtools/none-ls.nvim',
         optional = true,
@@ -56,6 +53,5 @@ return {
             )
         end,
     },
-    ---@type LazyPluginSpec
     { 'b0o/schemastore.nvim', ft = { 'json' } },
 }
