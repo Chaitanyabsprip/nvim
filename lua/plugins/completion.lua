@@ -44,28 +44,38 @@ return {
                     if type == '/' or type == '?' then return { 'buffer' } end
                     return { 'lsp', 'path', 'cmdline' }
                 end,
-                menu = { auto_show = true },
             },
             signature = { enabled = true, window = { show_documentation = true } },
         },
-        -- config = function(_, opts)
-        --     require('blink-cmp').setup(opts)
-        -- vim.api.nvim_create_autocmd('User', {
-        --     pattern = 'BlinkCmpMenuOpen',
-        --     callback = function()
-        --         require('copilot.suggestion').dismiss()
-        --         vim.b.copilot_suggestion_hidden = true
-        --     end,
-        -- })
-        -- vim.api.nvim_create_autocmd('User', {
-        --     pattern = 'BlinkCmpMenuClose',
-        --     callback = function() vim.b.copilot_suggestion_hidden = false end,
-        -- })
-        -- end,
     },
     { 'Alexisvt/flutter-snippets', ft = { 'dart' } },
     { 'Nash0x7E2/awesome-flutter-snippets', ft = { 'dart' } },
     { 'natebosch/dartlang-snippets', ft = 'dart' },
+    {
+        'copilotlsp-nvim/copilot-lsp',
+        event = 'InsertEnter',
+        config = function()
+            vim.g.copilot_nes_debounce = 500
+            vim.lsp.enable 'copilot_ls'
+            vim.keymap.set('n', '<c-s>', function()
+                -- Try to jump to the start of the suggestion edit.
+                -- If already at the start, then apply the pending suggestion and jump to the end of the edit.
+                local _ = require('copilot-lsp.nes').walk_cursor_start_edit()
+                    or (
+                        require('copilot-lsp.nes').apply_pending_nes()
+                        and require('copilot-lsp.nes').walk_cursor_end_edit()
+                    )
+            end)
+            -- Clear copilot suggestion with Esc if visible, otherwise preserve default Esc behavior
+            vim.keymap.set('n', '<esc>', function()
+                if not require('copilot-lsp.nes').clear() then
+                    _ = ''
+                    -- fallback to other functionality
+                end
+            end, { desc = 'Clear Copilot suggestion or fallback' })
+            require('copilot-lsp').setup {}
+        end,
+    },
     {
         'CopilotC-Nvim/CopilotChat.nvim',
         dependencies = {
@@ -74,8 +84,16 @@ return {
             { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
         },
         build = 'make tiktoken', -- Only on MacOS or Linux
-        opts = {
-            -- See Configuration section for options
+        opts = {},
+        keys = {
+            {
+                '<leader>ac',
+                '<cmd>CopilotChat<cr>',
+                desc = 'Copilot Chat',
+                mode = { 'n', 'v' },
+                noremap = true,
+                silent = true,
+            },
         },
         cmd = {
             'CopilotChat',
@@ -126,16 +144,7 @@ return {
         },
         ---@module 'avante'
         ---@type avante.Config
-        opts = {
-            provider = 'copilot',
-        },
+        opts = { provider = 'copilot' },
     },
-    get_capabilities = function()
-        local capabilities = require('lsp').capabilities()
-        local ok, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
-        if ok then
-            return vim.tbl_deep_extend('force', capabilities, cmp_lsp.default_capabilities())
-        end
-        return capabilities
-    end,
+    get_capabilities = require('lsp').capabilities,
 }
