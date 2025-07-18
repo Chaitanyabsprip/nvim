@@ -19,7 +19,7 @@ vim.filetype.add {
         Podfile = 'ruby',
     },
     pattern = {
-        ['%.env%.[%w_.-]+'] = 'dotenv',
+        ['%.?env[%w_.-]*'] = 'dotenv',
         ['.*/waybar/config'] = 'jsonc',
         ['.*/mako/config'] = 'dosini',
         ['.*/git/config'] = 'git_config',
