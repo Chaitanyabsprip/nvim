@@ -88,7 +88,7 @@ return {
         keys = {
             {
                 '<leader>ac',
-                '<cmd>CopilotChat<cr>',
+                '<cmd>CopilotChatToggle<cr>',
                 desc = 'Copilot Chat',
                 mode = { 'n', 'v' },
                 noremap = true,
