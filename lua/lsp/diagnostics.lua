@@ -1,4 +1,5 @@
 local diagnostics = {}
+local fn = require('f').fn
 
 local function get_qf_diagnostics(bufnr, severity)
     vim.g.d_bufnr = bufnr
@@ -124,13 +125,13 @@ function diagnostics.on_attach(_, bufnr)
         noremap = true,
         silent = true,
     })
-    vim.keymap.set('n', ',n', '<cmd>lua vim.diagnostic.goto_next() <cr>', {
+    vim.keymap.set('n', ',n', fn(vim.diagnostic.jump, { count = 1, float = true }), {
         buffer = bufnr,
         desc = 'Go to the next diagnostic',
         noremap = true,
         silent = true,
     })
-    vim.keymap.set('n', ',p', '<cmd>lua vim.diagnostic.goto_prev() <cr>', {
+    vim.keymap.set('n', ',p', fn(vim.diagnostic.jump, { count = -1, float = true }), {
         buffer = bufnr,
         desc = 'Go to the previous diagnostic',
         noremap = true,
