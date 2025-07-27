@@ -57,7 +57,7 @@ return {
         config = function()
             vim.g.copilot_nes_debounce = 500
             vim.lsp.enable 'copilot_ls'
-            vim.keymap.set('n', '<c-s>', function()
+            vim.keymap.set('n', '<c-c>', function()
                 -- Try to jump to the start of the suggestion edit.
                 -- If already at the start, then apply the pending suggestion and jump to the end of the edit.
                 local _ = require('copilot-lsp.nes').walk_cursor_start_edit()
