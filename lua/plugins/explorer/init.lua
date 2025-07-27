@@ -209,7 +209,7 @@ return {
     },
     {
         -- 'Chaitanyabsprip/cartographer',
-        url = os.getenv 'HOME' .. '/projects/cartographer',
+        url = vim.env.HOME .. '/projects/cartographer',
         dependencies = { 'nvim-telescope/telescope.nvim' },
         build = 'go build -o bin/cartographer; cp -r cartographer.nvim/lua .',
         enabled = false,
