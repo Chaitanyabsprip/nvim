@@ -34,6 +34,8 @@ lsp.capabilities = function(_)
     return capabilities
 end
 
+---@param client vim.lsp.Client
+---@param bufnr number
 lsp.on_attach = function(client, bufnr)
     require('lsp.diagnostics').on_attach(client, bufnr)
     require('lsp.capabilities').resolve(client, bufnr)
