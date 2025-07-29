@@ -141,7 +141,7 @@ capabilities.formatting = {
 
 capabilities.hover = {
     name = 'textDocument/hover',
-    callback = function(_, _) end,
+    callback = function() end,
 }
 
 capabilities.implementation = {
