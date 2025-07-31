@@ -84,7 +84,9 @@ return {
             { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
         },
         build = 'make tiktoken', -- Only on MacOS or Linux
-        opts = {},
+        opts = {
+            copilot_model = 'Claude Sonnet 3.7',
+        },
         keys = {
             {
                 '<leader>ac',
