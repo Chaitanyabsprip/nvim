@@ -2,7 +2,7 @@ local configure = require('plugins.lsp').configure
 
 local function basedpyright()
     local config = {
-        root = { 'pyproject.toml', 'pyrightconfig.json' },
+        root = { 'pyproject.toml', 'pyrightconfig.json', '.venv' },
         settings = {
             basedpyright = {
                 analysis = {
@@ -21,6 +21,7 @@ end
 local function ruff()
     local config = {
         capabilities = { hoverProvider = false },
+        root = { '.venv' },
         init_options = {
             settings = {
                 configurationPreferences = 'filesystemFirst',

@@ -16,9 +16,12 @@ local function htmlls()
 end
 
 local function emmetls()
+    local capabilities = require('plugins.completion').get_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
     local config = {
         -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
         init_options = { html = { options = { ['bem.enabled'] = true } } },
+        capabilities = capabilities,
     }
     configure('emmet_ls', config)
 end

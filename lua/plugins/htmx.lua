@@ -26,14 +26,6 @@ return {
     },
     ---@type LazyPluginSpec
     {
-        'williamboman/mason.nvim',
-        optional = true,
-        opts = function(_, opts)
-            require('config.lazy').extend_opts_list(opts, 'ensure_installed', 'htmx-lsp')
-        end,
-    },
-    ---@type LazyPluginSpec
-    {
         'neovim/nvim-lspconfig',
         optional = true,
         opts = { servers = { htmx = htmxls } },
