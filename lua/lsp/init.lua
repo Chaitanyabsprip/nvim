@@ -39,7 +39,7 @@ end
 lsp.on_attach = function(client, bufnr)
     require('lsp.diagnostics').on_attach(client, bufnr)
     require('lsp.capabilities').resolve(client, bufnr)
-    require('lsp.handlers').resolve()
+    require('lsp.handlers').resolve(client, bufnr)
 end
 
 return lsp

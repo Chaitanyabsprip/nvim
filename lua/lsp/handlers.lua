@@ -1,6 +1,6 @@
----@type table<string, fun(): {name: string, enabled: boolean, callback: function}?>
+---@type table<string, fun(client?: vim.lsp.Client, bufnr?: integer): {name: string, enabled: boolean, callback: function}?>
 local handlers = {}
-
+local m = {}
 handlers.diagnostic = function()
     local severity = vim.diagnostic.severity
     local signs = {
@@ -65,14 +65,13 @@ end
 -- object structure:
 --     name - string, a handler name in `vim.lsp.handlers` object
 --     callback - function, a handler callback
-handlers.resolve = function()
+m.resolve = function(client, bufnr)
     for _, factory in pairs(handlers) do
-        if _ ~= 'resolve' then
-            local handler = factory()
-            if handler == nil then return end
-            if handler.enabled then vim.lsp.handlers[handler.name] = handler.callback end
-        end
+        local handler = factory(client, bufnr)
+        if handler == nil then return end
+        if handler.enabled then vim.lsp.handlers[handler.name] = handler.callback end
     end
 end
 
-return handlers
+m.handlers = handlers
+return m
