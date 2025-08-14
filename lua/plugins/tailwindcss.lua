@@ -25,7 +25,7 @@ return {
         'luckasRanarison/tailwind-tools.nvim',
         name = 'tailwind-tools',
         build = ':UpdateRemotePlugins',
-        lazy = false,
+        ft = { 'css', 'html', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
         dependencies = {
             'nvim-treesitter/nvim-treesitter',
             'nvim-telescope/telescope.nvim',
