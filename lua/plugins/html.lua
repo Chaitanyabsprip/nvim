@@ -4,6 +4,7 @@ local function htmlls()
     local config = {
         filetypes = {
             'html',
+            'astro',
             -- 'javascript',
             'javascriptreact',
             'javascript.jsx',
