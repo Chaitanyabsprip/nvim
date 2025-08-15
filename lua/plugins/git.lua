@@ -170,6 +170,7 @@ return {
         'nvimtools/none-ls.nvim',
         optional = true,
         opts = function(_, opts)
+            if not is_git_repo() then return opts end
             require('config.lazy').extend_opts_list(
                 opts,
                 'sources',
