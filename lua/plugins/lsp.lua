@@ -73,6 +73,8 @@ end
 ---@type LazySpec[]
 return {
     extend = extend,
+    ---@param server string
+    ---@param config LspConfig?
     configure = function(server, config)
         config = config or {}
         vim.lsp.config(server, extend(config))
