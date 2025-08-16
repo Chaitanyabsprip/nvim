@@ -57,7 +57,7 @@ local function extend(config)
     if config['override_root'] then
         roots = config.root
     else
-        roots = vim.list_extend(def_root, config.root or {})
+        roots = vim.list_extend(config.root or {}, def_root)
     end
     config['root'] = nil
     local l = require 'lsp'
