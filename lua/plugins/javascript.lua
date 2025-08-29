@@ -21,7 +21,7 @@ return {
                 opts,
                 'ensure_installed',
                 'typescript-language-server',
-                'prettierd',
+                -- 'prettierd',
                 'js-debug-adapter'
             )
         end,
@@ -42,7 +42,7 @@ return {
                 ---@param builtins NullBuiltin
                 function(builtins)
                     return {
-                        builtins.formatting.prettierd.with {
+                        builtins.formatting.prettier.with {
                             filetypes = {
                                 'javascript',
                                 'typescript',

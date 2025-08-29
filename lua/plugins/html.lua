@@ -64,7 +64,7 @@ return {
                 ---@param builtins NullBuiltin
                 function(builtins)
                     return {
-                        builtins.formatting.prettierd.with {
+                        builtins.formatting.prettier.with {
                             filetypes = { 'html', 'htmlangular' },
                         },
                     }

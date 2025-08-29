@@ -37,7 +37,7 @@ return {
                 ---@param builtins NullBuiltin
                 function(builtins)
                     return {
-                        builtins.formatting.prettierd.with { filetypes = { 'css', 'scss' } },
+                        builtins.formatting.prettier.with { filetypes = { 'css', 'scss' } },
                     }
                 end
             )

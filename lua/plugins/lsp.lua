@@ -139,7 +139,17 @@ return {
         dependencies = {
             {
                 'folke/lazydev.nvim',
-                opts = { library = { 'lazy.nvim', vim.env.HOME .. '/projects/fastaction.nvim' } },
+                optional = true,
+                ft = { 'lua' },
+                opts = {
+                    library = {
+                        { path = vim.env.HOME .. '/projects/fastaction.nvim' },
+                        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+                        { path = 'LazyVim', words = { 'LazyVim' } },
+                        { path = 'snacks.nvim', words = { 'Snacks' } },
+                        { path = 'lazy.nvim', words = { 'LazyVim' } },
+                    },
+                },
             },
             {
                 'williamboman/mason.nvim',

@@ -34,7 +34,7 @@ return {
                 opts,
                 'ensure_installed',
                 'yaml-language-server',
-                'prettierd',
+                -- 'prettier',
                 'yamllint'
             )
         end,
@@ -54,7 +54,7 @@ return {
                 function(builtins)
                     return {
                         builtins.diagnostics.yamllint,
-                        builtins.formatting.prettierd.with { filetypes = { 'yaml' } },
+                        builtins.formatting.prettier.with { filetypes = { 'yaml' } },
                     }
                 end
             )

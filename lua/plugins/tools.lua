@@ -98,7 +98,7 @@ tools.spec = {
             mode = 'split',
             formatters = {
                 json = { 'jq' },
-                html = { 'prettierd', '--format', 'a.html' },
+                html = { 'prettier', '--format', 'a.html' },
             },
         },
         keys = {

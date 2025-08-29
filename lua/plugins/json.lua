@@ -28,8 +28,8 @@ return {
             require('config.lazy').extend_opts_list(
                 opts,
                 'ensure_installed',
-                'json-lsp',
-                'prettierd'
+                -- 'prettierd',
+                'json-lsp'
             )
         end,
     },
@@ -48,7 +48,7 @@ return {
                 'sources',
                 ---@param builtins NullBuiltin
                 function(builtins)
-                    return { builtins.formatting.prettierd.with { filetypes = { 'json', 'jsonc' } } }
+                    return { builtins.formatting.prettier.with { filetypes = { 'json', 'jsonc' } } }
                 end
             )
         end,

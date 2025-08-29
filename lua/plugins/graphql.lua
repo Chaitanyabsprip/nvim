@@ -18,8 +18,8 @@ return {
             require('config.lazy').extend_opts_list(
                 opts,
                 'ensure_installed',
-                'graphql-language-service-cli',
-                'prettierd'
+                -- 'prettierd',
+                'graphql-language-service-cli'
             )
         end,
     },
@@ -34,7 +34,7 @@ return {
                 'sources',
                 ---@param builtins NullBuiltin
                 function(builtins)
-                    return { builtins.formatting.prettierd.with { filetypes = { 'graphql' } } }
+                    return { builtins.formatting.prettier.with { filetypes = { 'graphql' } } }
                 end
             )
         end,

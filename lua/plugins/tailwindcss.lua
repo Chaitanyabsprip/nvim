@@ -22,7 +22,7 @@ return {
     },
     ---@type LazyPluginSpec
     {
-        'luckasRanarison/tailwind-tools.nvim',
+        'Chaitanyabsprip/tailwind-tools.nvim',
         name = 'tailwind-tools',
         build = ':UpdateRemotePlugins',
         ft = {
