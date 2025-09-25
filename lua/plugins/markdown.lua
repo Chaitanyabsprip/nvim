@@ -2,6 +2,7 @@ local configure = require('plugins.lsp').configure
 
 local function marksman() configure('marksman', { root = { '.marksman.toml' } }) end
 local function typos() configure('typos_lsp', {}) end
+-- local function typos() configure('typos_lsp', { cmd = { 'axon', 'typos-lsp' } }) end
 local function oxide() configure('markdown_oxide', {}) end
 ---@type LazySpec[]
 return {

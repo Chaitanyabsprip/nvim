@@ -78,6 +78,7 @@ return {
                 })
             end
             local config = extend {
+                cmd = { 'gopls', '-remote=auto' },
                 root = { 'go.mod', 'go.work' },
                 settings = {
                     gopls = {
