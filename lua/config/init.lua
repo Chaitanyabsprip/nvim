@@ -127,8 +127,8 @@ config.setup = function()
     vim.opt.list = true -- show <Tab> as ^I and end-of-line as $
     vim.opt.listchars =
         { tab = '| ', nbsp = '␣', trail = '•', extends = '⟩', precedes = '⟨', eol = '↲' }
-    vim.o.number = false
-    vim.o.relativenumber = false
+    vim.o.number = true
+    vim.o.relativenumber = true
     vim.o.numberwidth = 3
     vim.o.conceallevel = 2
 
