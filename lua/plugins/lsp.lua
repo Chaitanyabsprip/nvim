@@ -139,7 +139,7 @@ return {
         dependencies = {
             {
                 'folke/lazydev.nvim',
-                optional = true,
+                -- optional = true,
                 ft = { 'lua' },
                 opts = {
                     library = {
