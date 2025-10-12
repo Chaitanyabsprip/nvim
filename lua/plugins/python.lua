@@ -33,7 +33,11 @@ local function ruff()
                     disableRuleComment = { enable = true },
                     fixViolation = { enable = true },
                 },
-                lint = { enable = true, select = { 'I', 'AIR', 'PLW', 'PLR' }, preview = false },
+                lint = {
+                    enable = true,
+                    select = { 'I', 'AIR', 'PLW', 'PLR', 'UP' },
+                    preview = false,
+                },
                 format = { preview = false },
             },
         },
