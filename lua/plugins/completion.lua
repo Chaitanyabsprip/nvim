@@ -116,12 +116,9 @@ return {
         event = 'InsertEnter',
         config = function()
             require('copilot').setup {
-                panel = {
-                    enabled = true,
-                    auto_refresh = true,
-                },
+                panel = { enabled = false, auto_refresh = true },
                 suggestion = {
-                    auto_trigger = true,
+                    auto_trigger = false,
                     keymap = {
                         accept = '<C-a>',
                         accept_word = false,
@@ -138,6 +135,7 @@ return {
     {
         'yetone/avante.nvim',
         build = 'make',
+        enabled = false,
         event = 'VeryLazy',
         version = false, -- Never set this value to "*"! Never!
         dependencies = {

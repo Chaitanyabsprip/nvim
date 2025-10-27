@@ -147,7 +147,7 @@ capabilities.hover = {
 capabilities.implementation = {
     name = 'textDocument/implementation',
     callback = function(_, bufnr)
-        vim.keymap.set('n', 'gi', lsp.implementation, {
+        vim.keymap.set('n', 'gri', lsp.implementation, {
             buffer = bufnr,
             desc = 'Show implementations of symbol under cursor',
             noremap = true,

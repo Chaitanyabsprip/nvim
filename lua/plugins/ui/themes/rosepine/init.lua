@@ -1,4 +1,5 @@
 local config = require 'config.theme'
+local syntax = require 'plugins.ui.themes.rosepine.highlights.syntax'
 local name = 'rosepine'
 
 local base = '#07080d'
@@ -73,6 +74,7 @@ local highlight = {
     TreesitterContext = { bg = base_alt },
     TreesitterContextLineNumber = { bg = base_alt },
     FzfLuaPreviewBorder = { link = 'TelescopeBorder' },
+    Keyword = { link = 'Normal' },
     NonText = { fg = 'highlight_low' },
     NotifyBackground = { bg = 'base' },
     NotifyDEBUGBorder = make_border(),
@@ -90,6 +92,8 @@ local highlight = {
     Headline6 = { fg = 'love', bg = 'base', bold = true },
     LspInlayHint = { fg = 'overlay', bg = 'base', blend = 0 },
 }
+
+highlight = vim.tbl_deep_extend('force', highlight, syntax)
 
 ---@type LazySpec
 return {
