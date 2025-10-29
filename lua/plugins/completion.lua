@@ -89,7 +89,7 @@ return {
         },
         keys = {
             {
-                '<leader>ac',
+                '<leader>cc',
                 '<cmd>CopilotChatToggle<cr>',
                 desc = 'Copilot Chat',
                 mode = { 'n', 'v' },
