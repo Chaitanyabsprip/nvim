@@ -1,6 +1,6 @@
 return {
-    ['@attribute.builtin'] = { bold = false },
     ['@attribute'] = { fg = 'text' },
+    ['@attribute.builtin'] = { bold = false },
     ['@constant.builtin'] = { bold = false },
     ['@function'] = { fg = 'rose' },
     ['@function.builtin'] = { fg = 'text', bold = false },
@@ -25,4 +25,12 @@ return {
     ['@variable.builtin'] = { fg = 'text', bold = false, italic = false },
     ['@variable.member'] = { fg = 'text', bold = false },
     ['@variable.parameter'] = { italic = false },
+
+    -- bash
+    ['@constant.bash'] = { fg = 'foam' },
+    ['@function.builtin.bash'] = { fg = 'text' },
+    ['@function.call.bash'] = { fg = 'text' },
+    ['@keyword.conditional.bash'] = { fg = 'text' },
+    ['@keyword.repeat.bash'] = { fg = 'text' },
+    ['@operator.bash'] = { fg = 'text' },
 }
