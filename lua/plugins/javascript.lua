@@ -68,8 +68,10 @@ return {
                 handlers[handler.name] = handler.callback
             end
             return {
-                on_attach = require('lsp').on_attach,
-                handlers = handlers,
+                config = {
+                    on_attach = require('lsp').on_attach,
+                    handlers = handlers,
+                },
                 settings = {
                     separate_diagnostic_server = true,
                     publish_diagnostic_on = 'insert_leave',

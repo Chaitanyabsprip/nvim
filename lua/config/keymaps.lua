@@ -177,14 +177,6 @@ function keymaps.lazy()
 
     cowboy { 'oil', 'qf', 'help', 'noice', 'lazy', 'dbout' }
     keymap.set('n', 'X', buf_kill, opts 'Close current buffer')
-    keymap.set('n', 'gtn', function()
-        local nu = vim.wo[api.nvim_get_current_win()].number
-        return '<cmd>setlocal ' .. (nu and 'no' or '') .. 'nu<cr>'
-    end, opts 'Toggle line number')
-    keymap.set('n', 'gtN', function()
-        local rnu = vim.wo[api.nvim_get_current_win()].relativenumber
-        return '<cmd>setlocal ' .. (rnu and 'no' or '') .. 'rnu<cr>'
-    end, opts 'Toggle relative line number')
     keymap.set('n', '<c-w>z', toggle_win_zoom(), opts 'Toggle window zoom')
     keymap.set('n', 'gz', toggle_win_zoom(), opts 'Toggle window zoom')
 
