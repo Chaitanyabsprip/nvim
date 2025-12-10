@@ -95,7 +95,15 @@ return {
             'nvim-telescope/telescope.nvim',
             'mfussenegger/nvim-dap-python',
         },
-        opts = { dap_enabled = true },
+        opts = {
+            dap_enabled = true,
+            options = {
+                cached_venv_automatic_activation = true,
+                enable_cached_venvs = true,
+            },
+        },
+        cmd = { 'VenvSelect' },
+        ft = { 'python' },
     },
     {
         'neovim/nvim-lspconfig',
