@@ -132,6 +132,16 @@ tools.spec = {
         'fladson/vim-kitty',
         ft = 'kitty',
     },
+    {
+        'folke/zen-mode.nvim',
+        opts = {},
+        cmd = { 'ZenMode' },
+    },
+    {
+        'folke/twilight.nvim',
+        opts = {},
+        cmd = { 'Twilight', 'TwilightEnable', 'TwilightDisable' },
+    },
 }
 
 return tools.spec
