@@ -84,9 +84,7 @@ return {
             { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
         },
         build = 'make tiktoken', -- Only on MacOS or Linux
-        opts = {
-            copilot_model = 'Claude Sonnet 3.7',
-        },
+        opts = {},
         keys = {
             {
                 '<leader>cc',
@@ -118,7 +116,7 @@ return {
             require('copilot').setup {
                 panel = { enabled = false, auto_refresh = true },
                 suggestion = {
-                    auto_trigger = false,
+                    auto_trigger = true,
                     keymap = {
                         accept = '<C-a>',
                         accept_word = false,
