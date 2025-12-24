@@ -45,6 +45,15 @@ local function ruff()
     configure('ruff', config)
 end
 
+local function find_venv_dir(start_dir)
+    local dir = vim.fn.fnamemodify(start_dir, ':p')
+    while dir ~= '/' do
+        local venv_path = dir .. '/.venv'
+        if vim.fn.isdirectory(venv_path) == 1 then return venv_path end
+        dir = vim.fn.fnamemodify(dir .. '/..', ':p')
+    end
+    return nil
+end
 ---@type LazySpec[]
 return {
     {
@@ -80,11 +89,11 @@ return {
         'mfussenegger/nvim-dap-python',
         dependencies = 'mfussenegger/nvim-dap',
         config = function()
-            -- uses the debugypy installation by mason
-            local debugpyPythonPath = require('mason-registry')
-                .get_package('debugpy')
-                :get_install_path() .. '/venv/bin/python3'
-            require('dap-python').setup(debugpyPythonPath, {})
+            ---@type string
+            local link_path = vim.env.MASON .. '/bin/debugpy'
+            local real_path = vim.fn.fnamemodify(vim.loop.fs_realpath(link_path) or '', ':h')
+            local debugpy_path = real_path .. '/venv/bin/python'
+            require('dap-python').setup(debugpy_path, {})
         end,
     },
     { 'Vimjas/vim-python-pep8-indent' },
@@ -95,15 +104,32 @@ return {
             'nvim-telescope/telescope.nvim',
             'mfussenegger/nvim-dap-python',
         },
+        cmd = { 'VenvSelect' },
+        ft = { 'python' },
         opts = {
             dap_enabled = true,
             options = {
-                cached_venv_automatic_activation = true,
-                enable_cached_venvs = true,
+                cached_venv_automatic_activation = false,
+                enable_cached_venvs = false,
             },
         },
-        cmd = { 'VenvSelect' },
-        ft = { 'python' },
+        config = function(_, opts)
+            vim.api.nvim_create_autocmd('FileType', {
+                pattern = 'python',
+                callback = function()
+                    vim.schedule(function()
+                        local buf_dir = vim.fn.expand '%:p:h'
+                        local venv = find_venv_dir(buf_dir)
+                        local venv_selector = require 'venv-selector'
+                        if venv_selector.venv() ~= nil then return end
+                        if venv ~= nil then
+                            venv_selector.activate_from_path(venv .. '/bin/python')
+                        end
+                    end)
+                end,
+            })
+            require('venv-selector').setup(opts)
+        end,
     },
     {
         'neovim/nvim-lspconfig',
