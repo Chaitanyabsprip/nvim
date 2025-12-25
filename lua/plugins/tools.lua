@@ -134,8 +134,22 @@ tools.spec = {
     },
     {
         'folke/zen-mode.nvim',
-        opts = {},
+        opts = { plugins = { twilight = { enabled = false } } },
         cmd = { 'ZenMode' },
+        keys = {
+            {
+                'gz',
+                function() require('zen-mode').toggle() end,
+                desc = 'Toggle Zen Mode',
+                mode = { 'n' },
+            },
+            {
+                '<c-w>z',
+                function() require('zen-mode').toggle() end,
+                desc = 'Toggle Zen Mode',
+                mode = { 'n' },
+            },
+        },
     },
     {
         'folke/twilight.nvim',

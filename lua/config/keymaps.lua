@@ -1,18 +1,18 @@
 ---@diagnostic disable: no-unknown
-local function toggle_win_zoom()
-    vim.opt.winminwidth = 0
-    vim.opt.winminheight = 0
-    return function()
-        if vim.g.zoom then
-            vim.cmd [[wincmd =]]
-            vim.g.zoom = false
-        else
-            vim.cmd [[wincmd _]]
-            vim.cmd [[wincmd |]]
-            vim.g.zoom = true
-        end
-    end
-end
+-- local function toggle_win_zoom()
+--     vim.opt.winminwidth = 0
+--     vim.opt.winminheight = 0
+--     return function()
+--         if vim.g.zoom then
+--             vim.cmd [[wincmd =]]
+--             vim.g.zoom = false
+--         else
+--             vim.cmd [[wincmd _]]
+--             vim.cmd [[wincmd |]]
+--             vim.g.zoom = true
+--         end
+--     end
+-- end
 
 local function cowboy(disabled_ft)
     ---@type table?
@@ -177,8 +177,8 @@ function keymaps.lazy()
 
     cowboy { 'oil', 'qf', 'help', 'noice', 'lazy', 'dbout' }
     keymap.set('n', 'X', buf_kill, opts 'Close current buffer')
-    keymap.set('n', '<c-w>z', toggle_win_zoom(), opts 'Toggle window zoom')
-    keymap.set('n', 'gz', toggle_win_zoom(), opts 'Toggle window zoom')
+    -- keymap.set('n', '<c-w>z', toggle_win_zoom(), opts 'Toggle window zoom')
+    -- keymap.set('n', 'gz', toggle_win_zoom(), opts 'Toggle window zoom')
 
     local qf = require 'quickfix'
     keymap.set('n', 'gb', qf.buffers, opts 'Quickfix: List buffers')
