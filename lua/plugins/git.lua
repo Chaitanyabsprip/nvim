@@ -12,7 +12,7 @@ local function setup_keymaps(buffer, gs)
     local function nav_hunk(next)
         return function()
             if vim.wo.diff then return next and ']h' or '[h' end
-            vim.schedule(next and gs.next_hunk or gs.prev_hunk)
+            vim.schedule(function() gs.nav_hunk(next and 'next' or 'prev') end)
             return '<Ignore>'
         end
     end
@@ -102,7 +102,7 @@ local function setup_keymaps(buffer, gs)
 end
 
 return {
-    ---@type LazyPluginSpec
+    ---@type LazySpec
     {
         'nvim-treesitter/nvim-treesitter',
         optional = true,
@@ -123,26 +123,6 @@ return {
         cond = is_git_repo,
         event = 'BufReadPre',
         opts = function()
-            local group = vim.api.nvim_create_augroup('cgitsigns', { clear = true })
-            vim.api.nvim_create_autocmd('Filetype', {
-                group = group,
-                pattern = 'qf',
-                ---@param event {buf: integer}
-                callback = function(event)
-                    local source = vim.g.qf_source
-                    local target = (source == 'git-0' and 0) or (source == 'git-all' and 'all')
-                    if target then
-                        vim.keymap.set(
-                            'n',
-                            's',
-                            '<cr><cmd>cclose<cr><cmd>Gitsigns stage_hunk<cr><cmd>sleep 100m<cr><cmd>Gitsigns setqflist '
-                                .. target
-                                .. '<cr>',
-                            { buffer = event.buf, desc = 'Git: Stage hunk from qf' }
-                        )
-                    end
-                end,
-            })
             local gs = require 'gitsigns'
             return {
                 signcolumn = true,

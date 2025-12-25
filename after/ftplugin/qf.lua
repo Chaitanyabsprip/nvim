@@ -16,3 +16,17 @@ vim.keymap.set('n', 'dd', function()
     if vim.g.qf_source == 'buffers' then qf.delete_buf_from_qf() end
     qf.delete_qf_entry()
 end, { noremap = true, buffer = 0, desc = 'Delete current entry from quickfix list' })
+
+local source = vim.g.qf_source
+local has_gitsigns, _ = pcall(require, 'gitsigns')
+local target = (source == 'git-0' and 0) or (source == 'git-all' and 'all')
+if target and has_gitsigns then
+    vim.keymap.set(
+        'n',
+        's',
+        '<cr><cmd>cclose<cr><cmd>Gitsigns stage_hunk<cr><cmd>sleep 100m<cr><cmd>Gitsigns setqflist '
+            .. target
+            .. '<cr>',
+        { buffer = vim.api.nvim_get_current_buf(), desc = 'Git: Stage hunk from qf' }
+    )
+end
