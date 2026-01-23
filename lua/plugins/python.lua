@@ -1,5 +1,10 @@
 local configure = require('plugins.lsp').configure
 
+local function zuban()
+    local config = {}
+    configure('zuban', config)
+end
+
 local function basedpyright()
     local config = {
         root = { 'pyproject.toml', 'pyrightconfig.json', '.venv' },
@@ -54,6 +59,7 @@ local function find_venv_dir(start_dir)
     end
     return nil
 end
+---@module "lazy"
 ---@type LazySpec[]
 return {
     {
