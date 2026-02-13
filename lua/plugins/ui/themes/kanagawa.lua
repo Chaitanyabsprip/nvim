@@ -2,6 +2,7 @@ local config = require 'config.theme'
 
 local name = 'kanagawa'
 
+---@module "lazy"
 ---@type LazySpec
 return {
     'rebelot/kanagawa.nvim',
