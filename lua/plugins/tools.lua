@@ -1,5 +1,7 @@
 local tools = {}
 
+---@module "lazy"
+---@type LazySpec[]
 tools.spec = {
     {
         'NvChad/nvim-colorizer.lua',
@@ -155,6 +157,48 @@ tools.spec = {
         'folke/twilight.nvim',
         opts = {},
         cmd = { 'Twilight', 'TwilightEnable', 'TwilightDisable' },
+    },
+    {
+        'hat0uma/csvview.nvim',
+        ---@module "csvview"
+        ---@type CsvView.Options
+        opts = {
+            parser = { comments = { '#', '//' } },
+            keymaps = {
+                -- Text objects for selecting fields
+                textobject_field_inner = {
+                    'if',
+                    mode = { 'o', 'x' },
+                    buffer = true,
+                },
+                textobject_field_outer = {
+                    'af',
+                    mode = { 'o', 'x' },
+                    buffer = true,
+                },
+                jump_next_field_end = {
+                    'L',
+                    mode = { 'n', 'v' },
+                    buffer = true,
+                },
+                jump_prev_field_end = {
+                    'H',
+                    mode = { 'n', 'v' },
+                    buffer = true,
+                },
+                jump_next_row = {
+                    'J',
+                    mode = { 'n', 'v' },
+                    buffer = true,
+                },
+                jump_prev_row = {
+                    'K',
+                    mode = { 'n', 'v' },
+                    buffer = true,
+                },
+            },
+        },
+        cmd = { 'CsvViewEnable', 'CsvViewDisable', 'CsvViewToggle' },
     },
 }
 
