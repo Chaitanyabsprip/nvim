@@ -1,9 +1,10 @@
 local configure = require('plugins.lsp').configure
 
 local function marksman() configure('marksman', { root = { '.marksman.toml' } }) end
-local function typos() configure('typos_lsp', {}) end
+-- local function typos() configure('typos_lsp', {}) end
 -- local function typos() configure('typos_lsp', { cmd = { 'axon', 'typos-lsp' } }) end
 local function oxide() configure('markdown_oxide', {}) end
+---@module "lazy"
 ---@type LazySpec[]
 return {
     {
@@ -26,7 +27,7 @@ return {
                 opts,
                 'ensure_installed',
                 'ltex-ls',
-                'typos-lsp',
+                -- 'typos-lsp',
                 'cspell',
                 'markdownlint',
                 'markdown-oxide',
@@ -61,11 +62,10 @@ return {
             )
         end,
     },
-    ---@type LazyPluginSpec
     {
         'neovim/nvim-lspconfig',
         optional = true,
-        opts = { servers = { marksman = marksman, typos = typos, oxide = oxide } },
+        opts = { servers = { marksman = marksman, oxide = oxide } },
     },
     {
         'OXY2DEV/markview.nvim',
