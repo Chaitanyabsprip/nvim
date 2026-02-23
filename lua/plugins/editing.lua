@@ -1,14 +1,14 @@
 ---@diagnostic disable: no-unknown
+---@module "lazy"
+---@type table<string, LazySpec>
 local editing = {}
 
----@type LazyPluginSpec
 editing.bigfiles = {
     'LunarVim/bigfile.nvim',
     event = 'BufReadPre',
     opts = {},
 }
 
----@type LazyPluginSpec
 editing.eyeliner = {
     'jinh0/eyeliner.nvim',
     event = 'BufWinEnter',
@@ -20,15 +20,13 @@ editing.eyeliner = {
     },
 }
 
----@type LazyPluginSpec
 editing.surround = {
     'kylechui/nvim-surround',
     version = '*',
     event = 'BufWinEnter',
-    opts = { keymaps = { visual = 's' } },
+    opts = {},
 }
 
----@type LazyPluginSpec
 editing.ufo = {
     'kevinhwang91/nvim-ufo',
     event = 'BufReadPost',

@@ -172,8 +172,6 @@ function keymaps.lazy()
         vim.cmd([[silent grep! ]] .. utils.rg_escape(selection))
         vim.cmd [[copen 12]]
     end, opts())
-    keymap.set('', 's', '<NOP>', opts 'unmap s')
-    keymap.set('', 'S', '<NOP>', opts 'unmap S')
 
     cowboy { 'oil', 'qf', 'help', 'noice', 'lazy', 'dbout' }
     keymap.set('n', 'X', buf_kill, opts 'Close current buffer')
