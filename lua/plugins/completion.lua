@@ -51,31 +51,29 @@ return {
     { 'Alexisvt/flutter-snippets', ft = { 'dart' } },
     { 'Nash0x7E2/awesome-flutter-snippets', ft = { 'dart' } },
     { 'natebosch/dartlang-snippets', ft = 'dart' },
-    {
-        'copilotlsp-nvim/copilot-lsp',
-        event = 'InsertEnter',
-        config = function()
-            vim.g.copilot_nes_debounce = 500
-            vim.lsp.enable 'copilot_ls'
-            vim.keymap.set('n', '<c-c>', function()
-                -- Try to jump to the start of the suggestion edit.
-                -- If already at the start, then apply the pending suggestion and jump to the end of the edit.
-                local _ = require('copilot-lsp.nes').walk_cursor_start_edit()
-                    or (
-                        require('copilot-lsp.nes').apply_pending_nes()
-                        and require('copilot-lsp.nes').walk_cursor_end_edit()
-                    )
-            end)
-            -- Clear copilot suggestion with Esc if visible, otherwise preserve default Esc behavior
-            vim.keymap.set('n', '<esc>', function()
-                if not require('copilot-lsp.nes').clear() then
-                    _ = ''
-                    -- fallback to other functionality
-                end
-            end, { desc = 'Clear Copilot suggestion or fallback' })
-            require('copilot-lsp').setup {}
-        end,
-    },
+    -- {
+    --     'copilotlsp-nvim/copilot-lsp',
+    --     event = 'InsertEnter',
+    --     config = function()
+    --         vim.g.copilot_nes_debounce = 500
+    --         vim.lsp.enable 'copilot_ls'
+    --         vim.keymap.set(
+    --             'n',
+    --             '<c-c>',
+    --             function()
+    --                 local _ = require('copilot-lsp.nes').walk_cursor_start_edit()
+    --                     or (
+    --                         require('copilot-lsp.nes').apply_pending_nes()
+    --                         and require('copilot-lsp.nes').walk_cursor_end_edit()
+    --                     )
+    --             end
+    --         )
+    --         vim.keymap.set('n', '<esc>', function()
+    --             if not require('copilot-lsp.nes').clear() then _ = '' end
+    --         end, { desc = 'Clear Copilot suggestion or fallback' })
+    --         require('copilot-lsp').setup {}
+    --     end,
+    -- },
     {
         'CopilotC-Nvim/CopilotChat.nvim',
         dependencies = {
@@ -84,7 +82,7 @@ return {
             { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
         },
         build = 'make tiktoken', -- Only on MacOS or Linux
-        opts = {},
+        opts = { model = 'Gemini 3.1 Pro' },
         keys = {
             {
                 '<leader>cc',
@@ -112,23 +110,31 @@ return {
     {
         'zbirenbaum/copilot.lua',
         event = 'InsertEnter',
-        config = function()
-            require('copilot').setup {
-                panel = { enabled = false, auto_refresh = true },
-                suggestion = {
-                    auto_trigger = true,
-                    keymap = {
-                        accept = '<C-a>',
-                        accept_word = false,
-                        accept_line = false,
-                        next = '<M-]>',
-                        prev = '<M-[>',
-                        dismiss = '<C-]>',
-                    },
+        dependencies = { 'copilotlsp-nvim/copilot-lsp' },
+        opts = {
+            panel = { enabled = false, auto_refresh = true },
+            suggestion = {
+                auto_trigger = true,
+                keymap = {
+                    accept = '<C-a>',
+                    accept_word = false,
+                    accept_line = false,
+                    next = '<M-]>',
+                    prev = '<M-[>',
+                    dismiss = '<C-]>',
                 },
-                copilot_model = 'Claude Sonnet 3.7',
-            }
-        end,
+            },
+            nes = {
+                enabled = true,
+                auto_trigger = true,
+                keymap = {
+                    accept_and_goto = '<c-c>',
+                    accept = '<c-c>',
+                    dismiss = '<esc>',
+                },
+            },
+            -- copilot_model = 'gpt-41-copilot',
+        },
     },
     {
         'yetone/avante.nvim',
@@ -140,8 +146,6 @@ return {
             'nvim-lua/plenary.nvim',
             'MunifTanjim/nui.nvim',
         },
-        ---@module 'avante'
-        ---@type avante.Config
         opts = { provider = 'copilot' },
     },
     get_capabilities = require('lsp').capabilities,
