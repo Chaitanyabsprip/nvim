@@ -1,7 +1,14 @@
+vim.opt_local.expandtab = true
+vim.opt_local.shiftwidth = 2
+vim.opt_local.softtabstop = 2
+vim.opt_local.tabstop = 2
+vim.opt_local.textwidth = 100
+vim.opt_local.cinoptions = 'j1,w4'
+
 ---@diagnostic disable: unused-function, no-unknown
 ---@diagnostic disable-next-line: unused-local
 local setup = function()
-    vim.cmd [[setlocal shiftwidth=4 softtabstop=4]]
+    vim.cmd [[setlocal shiftwidth=2 softtabstop=2]]
     local status, jdtls = pcall(require, 'jdtls')
     if not status then return end
     -- Determine OS
