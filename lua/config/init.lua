@@ -200,6 +200,7 @@ config.setup = function()
 
     -- running make and jumping to errors (quickfix)
     vim.go.grepprg = 'rg --vimgrep --no-heading --smart-case --multiline'
+    vim.g.python3_host_prog = vim.fn.expand '~/.venvs/neovim/bin/python3'
 
     -- various
     vim.o.sessionoptions = 'buffers,curdir,winsize,resize,winpos,folds,tabpages,globals'
