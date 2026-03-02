@@ -1,5 +1,6 @@
 ---@diagnostic disable: no-unknown
----@type LazyPluginSpec[] | function
+---@module "lazy"
+---@type LazySpec[] | function
 return {
     {
         'saghen/blink.cmp',
