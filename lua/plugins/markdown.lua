@@ -28,7 +28,6 @@ return {
                 'ensure_installed',
                 'ltex-ls',
                 -- 'typos-lsp',
-                'cspell',
                 'markdownlint',
                 'markdown-oxide',
                 'marksman'
@@ -37,13 +36,11 @@ return {
     },
     {
         'nvimtools/none-ls.nvim',
-        dependencies = { { 'davidmh/cspell.nvim' } },
         optional = true,
         ft = function(_, filetypes)
             return vim.list_extend(filetypes, { 'markdown', 'md', 'rmd', 'rst' })
         end,
         opts = function(_, opts)
-            local cspell = require 'cspell'
             require('config.lazy').extend_opts_list(
                 opts,
                 'sources',
@@ -55,8 +52,6 @@ return {
                             extra_args = { '--disable', 'MD024' },
                         },
                         builtins.hover.dictionary,
-                        cspell.diagnostics.with { filetypes = { 'markdown', 'md', 'rmd', 'rst' } },
-                        cspell.code_actions.with { filetypes = { 'markdown', 'md', 'rmd', 'rst' } },
                     }
                 end
             )

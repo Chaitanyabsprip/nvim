@@ -49,6 +49,7 @@ local function mason_ensure_installed(opts)
     end
 end
 
+---@module "lazy"
 ---@return LspConfig
 ---@param config LspConfig
 local function extend(config)
