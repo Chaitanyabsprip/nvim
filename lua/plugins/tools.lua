@@ -4,19 +4,34 @@ local tools = {}
 ---@type LazySpec[]
 tools.spec = {
     {
-        'NvChad/nvim-colorizer.lua',
+        'catgoose/nvim-colorizer.lua',
         cmd = { 'ColorizerAttachToBuffer', 'ColorizerToggle' },
         event = 'BufWinEnter',
         opts = {
             filetypes = { '*', '!lazy' },
             buftypes = { '*', '!prompt', '!nofile' },
-            user_default_options = {
-                names = false,
-                RRGGBBAA = true,
-                AARRGGBB = true,
-                css_fn = true,
-                mode = 'background', -- Available modes for `mode`: foreground, background,  virtualtext
-                virtualtext = '███',
+            options = {
+                parsers = {
+                    css_fn = true,
+                    names = { enable = false },
+                    hex = { default = true },
+                    tailwind = {
+                        enable = false,
+                        update_names = false, -- feed LSP colors back into name parser (requires both enable + lsp.enable)
+                        lsp = {
+                            enable = false, -- use Tailwind LSP documentColor
+                            disable_document_color = true, -- auto-disable vim.lsp.document_color on attach
+                        },
+                    },
+                },
+                display = {
+                    mode = 'backgound',
+                    virtualtext = {
+                        char = '███', -- character used for virtualtext
+                        position = 'eol', -- "eol"|"before"|"after"
+                        hl_mode = 'foreground', -- "background"|"foreground"
+                    },
+                },
             },
         },
     },
