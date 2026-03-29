@@ -1,9 +1,6 @@
 local configure = require('plugins.lsp').configure
 
-local function dockerls()
-    configure('dockerls', { root = { '.sqllsrc.json' } })
-    configure('dockerfilels', {})
-end
+local function dockerls() configure('docker_language_server', {}) end
 
 return {
     ---@type LazyPluginSpec
