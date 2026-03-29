@@ -230,6 +230,7 @@ function config.lazy()
     config.commands()
     require('greeter').setup()
     require('config.tabline').setup()
+    require('vim._core.ui2').enable { enable = true }
     -- require('utils').open_explorer_on_startup()
 end
 
