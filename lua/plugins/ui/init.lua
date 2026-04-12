@@ -164,21 +164,30 @@ return {
     {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
+        branch = 'main',
+        lazy = false,
         event = 'BufReadPre',
-        config = function(_, opts) require('nvim-treesitter.configs').setup(opts) end,
         opts = function(_, opts)
             opts.ensure_installed = opts.ensure_installed or {}
-            local config = {
-                highlight = { enable = true, additional_vim_regex_highlighting = false },
-                refactor = {
-                    highlight_definitions = { enable = true },
-                    highlihgt_scope = { enable = true },
-                },
-                indent = { enable = false, disable = { 'dart' } },
-            }
             vim.list_extend(opts.ensure_installed, { 'regex', 'vim', 'make' })
-            opts = vim.tbl_deep_extend('force', opts, config)
-            return opts
+
+            local augroup = function(group) vim.api.nvim_create_augroup(group, { clear = true }) end
+            local autocmd = function(event, opts)
+                if not opts.disable then vim.api.nvim_create_autocmd(event, opts) end
+            end
+            autocmd('FileType', {
+                group = augroup 'treesitter',
+                pattern = opts.ensure_installed,
+                callback = function()
+                    vim.treesitter.start()
+                    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                    -- vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+                    -- vim.wo[0][0].foldmethod = 'expr'
+                end,
+            })
+
+            require('nvim-treesitter').install(opts.ensure_installed)
+            return {}
         end,
     },
     {
