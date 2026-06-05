@@ -83,7 +83,6 @@ return {
             { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
         },
         build = 'make tiktoken', -- Only on MacOS or Linux
-        opts = { model = 'Gemini 3.1 Pro' },
         keys = {
             {
                 '<leader>cc',
@@ -130,7 +129,6 @@ return {
                 auto_trigger = true,
                 keymap = {
                     accept_and_goto = '<c-c>',
-                    accept = '<c-c>',
                     dismiss = '<esc>',
                 },
             },

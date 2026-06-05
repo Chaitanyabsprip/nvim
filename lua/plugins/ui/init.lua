@@ -193,6 +193,7 @@ return {
     {
         'nvim-treesitter/nvim-treesitter-textobjects',
         event = 'BufReadPre',
+        branch = 'main',
         dependencies = {
             {
                 'nvim-treesitter/nvim-treesitter',

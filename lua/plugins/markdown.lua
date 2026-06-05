@@ -4,6 +4,8 @@ local function marksman() configure('marksman', { root = { '.marksman.toml' } })
 -- local function typos() configure('typos_lsp', {}) end
 -- local function typos() configure('typos_lsp', { cmd = { 'axon', 'typos-lsp' } }) end
 local function oxide() configure('markdown_oxide', {}) end
+-- local function oxide() configure('markdown_oxide', { cmd = { 'axon', 'markdown-oxide' } }) end
+
 ---@module "lazy"
 ---@type LazySpec[]
 return {
