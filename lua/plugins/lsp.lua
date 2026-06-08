@@ -82,7 +82,8 @@ return {
         vim.lsp.enable(server)
     end,
     {
-        dir = vim.env.HOME .. '/projects/fastaction.nvim',
+        dir = vim.env.HOME .. '/projects/chaitanyabsprip/fastaction.nvim',
+        ---@module "fastaction"
         ---@type FastActionConfig
         opts = {
             brackets = { '', '' },
