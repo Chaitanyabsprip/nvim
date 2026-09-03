@@ -77,6 +77,7 @@ return {
     -- },
     {
         'CopilotC-Nvim/CopilotChat.nvim',
+        enabled = false,
         dependencies = {
             { 'zbirenbaum/copilot.lua' },
             -- { 'github/copilot.vim' }, -- or zbirenbaum/copilot.lua
@@ -109,6 +110,7 @@ return {
     },
     {
         'zbirenbaum/copilot.lua',
+        enabled = false,
         event = 'InsertEnter',
         dependencies = { 'copilotlsp-nvim/copilot-lsp' },
         opts = {
